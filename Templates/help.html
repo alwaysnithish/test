@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- SEO Title and Meta Description -->
+  <title>Help & Support - 21K Tools – Free Online Calculators & Utility Tools</title>
+  <meta name="description" content="Get help and support for 21K Tools. Contact us for technical support, feature requests, or general inquiries about our free online tools.">
+  <meta name="keywords" content="help, support, contact, query, 21k tools, technical support, customer service">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <style>
+    * {
+      margin: 0; 
+      padding: 0; 
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background-attachment: fixed;
+      min-height: 100vh;
+      color: #1a1a1a;
+    }
+    .header {
+      background: white;
+      box-shadow: 0 4px 20px rgba(30, 64, 175, 0.3);
+      position: sticky; 
+      top: 0; 
+      z-index: 1000;
+    }
+    
+    .header-container {
+      max-width: 1200px; 
+      margin: 0 auto; 
+      padding: 0 20px;
+    }
+    
+    .logo-container {
+      display: flex;
+      justify-content: center;
+      padding: 15px 0;
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+      font-size: 28px;
+      font-weight: 800;
+      text-decoration: none;
+      color: #2563eb;
+      gap:8px;
+      transition: transform 0.3s ease;
+    }
+    .logo:hover {
+      transform: scale(1.05);
+    }
+    
+    .logo-icon {
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+      border-radius: 102px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      color: white;
+      box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
+    }
+
+    .header-actions-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 0px 10px;
+      gap: 10px;
+    }
+    
+    .search-box {
+      position: relative; 
+      flex-grow: 1;
+      max-width: 700px;
+      width:100%;
+      margin: 0 auto;
+    }
+    .search-input {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.8);
+      border: 2px solid rgba(59, 130, 246, 0.2);
+      border-radius: 30px;
+      padding: 12px 50px 12px 20px;
+      font-size: 15px;
+      transition: all 0.3s ease;
+    }
+    
+    .search-input:focus {
+      outline: none;
+      background: rgba(255, 255, 255, 0.95);
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+    }
+    
+    .search-btn {
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+      border: none;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      color: white;
+      cursor: pointer;
+      font-size: 16px;
+      transition: all 0.3s ease;
+    }
+    
+    .search-btn:hover {
+      transform: translateY(-50%) scale(1.1);
+      box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4);
+    }
+    .mobileToggle {
+      cursor: pointer;
+      padding: 10px;
+      display: none;
+    }
+    
+    .bar1, .bar2, .bar3 {
+      width: 23px; 
+      height: 2px; 
+      background-color: #1e3a8a;
+      margin: 6px 0; 
+      transition: 0.4s;
+    }
+    
+    .change .bar1 { transform: translate(0, 8px) rotate(-45deg); }
+    .change .bar2 { opacity: 0; }
+    .change .bar3 { transform: translate(0, -8px) rotate(45deg); }
+
+    .nav-menu {
+      display: flex; 
+      gap: 10px; 
+      margin-top: 15px; 
+      padding-bottom: 15px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    
+    .nav-link {
+      color: #1e40af;
+      padding: 8px 15px;
+      border-radius: 20px;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .nav-link:hover, .nav-link.active {
+      background: rgba(59, 130, 246, 0.2);
+      color: #1e40af;
+    }
+
+    .mobile-panel {
+      display: none; 
+      flex-direction: column; 
+      gap: 15px;
+      background: white; 
+      padding: 20px; 
+      position: absolute;
+      top: 100%; 
+      left: 0; 
+      width: 100%;
+      animation: slideDown 0.4s ease-in-out;
+      z-index: 999;
+      box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+    }
+    
+    .mobile-panel.show { display: flex; }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    /* Main Content Styles */
+    .main-content {
+      flex: 1; 
+      padding: 40px 20px; 
+      max-width: 1200px;
+      margin: 0 auto; 
+    }
+    
+    .demo-section {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 60px 20px; 
+      border-radius: 20px; 
+      margin: 20px 0;
+      backdrop-filter: blur(10px);
+      text-align: center;
+    }
+    
+    .demo-title {
+      font-size: 2.5rem; 
+      color: white; 
+      margin-bottom: 20px; 
+      font-weight: 700;
+    }
+    
+    .demo-subtitle {
+      font-size: 1.2rem; 
+      color: rgba(255, 255, 255, 0.9); 
+      margin-bottom: 30px;
+    }
+
+    /* Help Form Container */
+    .help-container {
+      background: white;
+      border-radius: 20px;
+      padding: 40px;
+      margin: 40px 0;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+
+    .header-section {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .tool-title {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: #1a1a1a;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .tool-subtitle {
+      font-size: 1.1rem;
+      color: #737373;
+      margin-bottom: 20px;
+    }
+
+    .feature-badges {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+
+    .feature-badge {
+      background: rgba(225, 48, 108, 0.1);
+      color: #e1306c;
+      padding: 6px 12px;
+      border-radius: 9999px;
+      font-size: 13px;
+      font-weight: 600;
+      border: 1px solid rgba(225, 48, 108, 0.2);
+    }
+
+    /* Form Styles */
+    .form-group {
+      margin-bottom: 24px;
+    }
+
+    .form-label {
+      display: block;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-bottom: 8px;
+      font-size: 15px;
+    }
+
+    .form-label.required::after {
+      content: ' *';
+      color: #ed4956;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 16px;
+      border: 1px solid #dbdbdb;
+      border-radius: 8px;
+      font-size: 15px;
+      transition: all 0.2s ease;
+      background: #efefef;
+      color: #1a1a1a;
+      font-family: inherit;
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: #e1306c;
+      background: white;
+      box-shadow: 0 0 0 2px rgba(225, 48, 108, 0.3);
+    }
+
+    .form-control::placeholder {
+      color: #737373;
+    }
+
+    .form-textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .form-select {
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+      background-position: right 12px center;
+      background-repeat: no-repeat;
+      background-size: 16px;
+      padding-right: 48px;
+      appearance: none;
+    }
+
+    .radio-group {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .radio-option {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .radio-option input[type="radio"] {
+      width: 18px;
+      height: 18px;
+      accent-color: #e1306c;
+    }
+
+    .radio-option label {
+      font-size: 14px;
+      color: #1a1a1a;
+      cursor: pointer;
+    }
+
+    .btn {
+      background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+      color: white;
+      border: none;
+      padding: 16px 32px;
+      border-radius: 9999px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn:hover {
+      opacity: 0.9;
+      transform: translateY(-1px);
+    }
+
+    .btn:disabled {
+      background: #dbdbdb;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .alert {
+      border-radius: 8px;
+      padding: 12px;
+      margin-top: 16px;
+      font-size: 14px;
+      text-align: center;
+    }
+
+    .alert-info {
+      background: rgba(0, 149, 246, 0.1);
+      border: 1px solid rgba(0, 149, 246, 0.2);
+      color: #0095f6;
+    }
+
+    .contact-info {
+      background: rgba(225, 48, 108, 0.05);
+      border: 1px solid rgba(225, 48, 108, 0.2);
+      border-radius: 12px;
+      padding: 20px;
+      margin-top: 32px;
+      text-align: center;
+    }
+
+    .contact-info h3 {
+      color: #1a1a1a;
+      margin-bottom: 16px;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .contact-methods {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .contact-method {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #737373;
+      font-size: 14px;
+    }
+
+    .contact-method i {
+      color: #e1306c;
+      font-size: 16px;
+    }
+
+    .contact-method a {
+      color: #737373;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .contact-method a:hover {
+      color: #e1306c;
+    }
+
+    /* Loading state */
+    .loading {
+      opacity: 0.7;
+      pointer-events: none;
+    }
+
+    .spinner {
+      border: 2px solid #dbdbdb;
+      border-top: 2px solid #e1306c;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    /* Dropdown menu for More Tools - Click to open */
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+    
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: white;
+      min-width: 200px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+      border-radius: 12px;
+      z-index: 1;
+      padding: 10px 0;
+      grid-template-columns: 1fr;
+      gap: 5px;
+    }
+    
+    .dropdown.active .dropdown-content {
+      display: grid;
+    }
+    
+    .dropdown-content a {
+      color: #1e40af;
+      padding: 10px 20px;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.8s ease;
+    }
+    
+    .dropdown-content a:hover {
+      background: rgba(59, 130, 246, 0.1);
+    }
+    
+    /* Mobile dropdown - Column Layout */
+    .mobile-dropdown-content {
+      display: none;
+      padding-left: 20px;
+      margin-top: 10px;
+      flex-direction: column;
+      gap: 10px;
+    }
+    
+    .mobile-dropdown.active .mobile-dropdown-content {
+      display: flex;
+    }
+    
+    .mobile-dropdown-content a {
+      color: #1e40af;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 15px;
+      border-radius: 20px;
+      transition: all 0.9s ease;
+    }
+    
+    .mobile-dropdown-content a:hover {
+      background: rgba(59, 130, 246, 0.1);
+    }
+    
+    /* Caret rotation */
+    .rotate-180 {
+      transform: rotate(540deg);
+      transition: transform 2s ease;
+    }
+    
+    .page-nav {
+      background: #f8fafc;
+      padding: 15px 0;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+    
+    .page-nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    .page-nav-link {
+      font-weight: 600;
+      font-size: 16px;
+      color: #2563eb;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      background: rgba(37, 99, 235, 0.1);
+      border-radius: 8px;
+      transition: background 0.3s ease;
+    }
+    
+    .page-nav-link:hover {
+      background: rgba(37, 99, 235, 0.15);
+      color: #1d4ed8;
+    }
+
+    /* Footer Styles */
+    .footer {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+      color: white; 
+      margin-top: 0;
+    }
+    
+    .footer-container {
+      max-width: 1200px; 
+      margin: 0 auto; 
+      padding: 50px 20px 20px;
+    }
+    
+    .footer-content {
+      display: grid; 
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 40px; 
+      margin-bottom: 40px;
+    }
+    
+    .footer-section h3 {
+      color: #60a5fa; 
+      font-size: 18px; 
+      font-weight: 600; 
+      margin-bottom: 20px;
+    }
+    
+    .footer-links {
+      list-style: none;
+    }
+    
+    .footer-links li {
+      margin-bottom: 10px;
+    }
+    
+    .footer-links a {
+      color: rgba(255, 255, 255, 0.8); 
+      text-decoration: none; 
+      transition: color 0.3s ease;
+    }
+    
+    .footer-links a:hover { 
+      color: #60a5fa; 
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 20px 0; 
+      display: flex; 
+      justify-content: space-between;
+      align-items: center; 
+      flex-wrap: wrap; 
+      gap: 15px;
+    }
+    
+    .footer-brand {
+      display: flex; 
+      align-items: center; 
+      gap: 10px;
+    }
+    
+    .footer-brand-icon {
+      width: 38px; 
+      height: 38px; 
+      background: #3b82f6;
+      border-radius: 20px; 
+      display: flex; 
+      align-items: center;
+      justify-content: center; 
+      font-weight: bold;
+    }
+    
+    .social-links {
+      display: flex; 
+      gap: 15px;
+    }
+    
+    .social-link {
+      width: 40px; 
+      height: 40px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%; 
+      display: flex;
+      align-items: center; 
+      justify-content: center;
+      color: white; 
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    
+    .social-link:hover {
+      background: #3b82f6; 
+      transform: translateY(-2px);
+    }
+
+    /* Responsive styles */
+    @media (max-width: 768px) {
+      .nav-menu { 
+        display: none; 
+      }
+      
+      .mobileToggle {
+        display: block;
+      }
+      
+      .demo-title { 
+        font-size: 2rem; 
+      }
+      
+      .footer-bottom { 
+        flex-direction: column; 
+        text-align: center; 
+      }
+      
+      .footer-content {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 30px;
+      }
+      
+      .contact-methods,
+      .radio-group {
+        flex-direction: column;
+        gap: 12px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .header-container, .footer-container {
+        padding-left: 15px; 
+        padding-right: 15px;
+      }
+      
+      .search-input { 
+        min-width: 150px; 
+      }
+      
+      .help-container {
+        padding: 20px;
+      }
+      
+      .tool-title {
+        font-size: 1.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-container">
+    <div class="logo-container">
+      <a href="https://21k.tools" class="logo">
+        <div class="logo-icon">21K</div>
+        <span>Tools</span>
+      </a>
+    </div>
+    
+    <div class="header-actions-container">
+      <div class="search-box">
+        <input type="text" class="search-input" placeholder="Search tools...">
+        <button class="search-btn"><i class="fas fa-search"></i></button>
+      </div>
+      <div class="mobileToggle" id="mobileToggle">
+        <div class="bar1"></div>
+        <div class="bar2"></div>
+        <div class="bar3"></div>
+      </div>
+    </div>
+    <nav class="header-nav">
+      <div class="nav-menu">
+       <a href="https://21k.tools" class="nav-link"><i class="fas fa-home"></i> Home</a>
+        
+        <div class="dropdown" id="desktopToolsDropdown">
+          <a href="#" class="nav-link" onclick="toggleDesktopDropdown(event)"><i class="fas fa-tools"></i> More Tools <i class="fas fa-caret-down"></i></a>
+          
+          <div class="dropdown-content">
+           <a href="https://pdf.21k.tools"><i class="fas fa-file-pdf"></i> PDF Tools</a>
+            <a href="https://time.21k.tools"><i class="fas fa-clock"></i> Time Tools</a>
+            <a href="https://fileconverter.21k.tools"><i class="fas fa-file"></i> File Converter</a>
+            <a href="https://imageresizer.21k.tools"><i class="fas fa-image"></i> Image Resizer</a>
+            <a href="https://ai.21k.tools"><i class="fas fa-robot"></i> AI Generator</a>
+            <a href="https://age.21k.tools"><i class="fas fa-birthday-cake"></i> Age Calculator</a>
+            <a href="https://interest.21k.tools"><i class="fas fa-percentage"></i> Interest Calculator</a>
+            <a href="https://unit.21k.tools"><i class="fas fa-balance-scale"></i> Unit Converter</a>
+            <a href="https://timecalc.21k.tools"><i class="fas fa-stopwatch"></i> Time Calculator</a>
+           </div>
+        
+        </div>
+        <a href="https://blog.21k.tools/" class="nav-link"><i class="fas fa-blog"></i> Blogs</a>
+        <a href="https://21k.tools/help" class="nav-link"><i class="fas fa-question-circle"></i> Help Center</a>
+        <a href="mailto:contact@21k.tools" class="nav-link"><i class="fas fa-envelope"></i> Contact</a>
+      </div>
+    </nav>
+    
+    <div class="mobile-panel" id="mobilePanel">
+      <a href="https://21k.tools" class="nav-link"><i class="fas fa-home"></i> Home</a>
+      
+      <div class="mobile-dropdown" id="mobileToolsDropdown">
+        <a href="#" class="nav-link" onclick="toggleMobileDropdown()"><i class="fas fa-tools"></i> More Tools <i class="fas fa-caret-down"></i></a>
+        <div class="mobile-dropdown-content">
+         <a href="https://pdf.21k.tools"><i class="fas fa-file-pdf"></i> PDF Tools</a>
+          <a href="https://time.21k.tools"><i class="fas fa-clock"></i> Time Tools</a>
+          <a href="https://fileconverter.21k.tools"><i class="fas fa-file"></i> File Converter</a>
+          <a href="https://imageresizer.21k.tools"><i class="fas fa-image"></i> Image Resizer</a>
+          <a href="https://ai.21k.tools"><i class="fas fa-robot"></i> AI Generator</a>
+          <a href="https://age.21k.tools"><i class="fas fa-birthday-cake"></i> Age Calculator</a>
+          <a href="https://interest.21k.tools"><i class="fas fa-percentage"></i> Interest Calculator</a>
+          <a href="https://unit.21k.tools"><i class="fas fa-balance-scale"></i> Unit Converter</a>
+          <a href="https://timecalc.21k.tools"><i class="fas fa-stopwatch"></i> Time Calculator</a>
+          </div>
+      </div>
+      <a href="https://blog.21k.tools/" class="nav-link"><i class="fas fa-blog"></i> Blog</a>
+      <a href="https://21k.tools/help" class="nav-link"><i class="fas fa-question-circle"></i> Help Center</a>
+      <a href="mailto:contact@21k.tools" class="nav-link"><i class="fas fa-envelope"></i> Contact</a>
+    </div>
+  </div>
+</header>
+
+<main class="main-content">
+  <section class="demo-section">
+    <h1 class="demo-title">Help & Support</h1>
+    <p class="demo-subtitle">Get assistance with our tools or send us your feedback</p>
+    <a href="https://21k.tools" class="page-nav-link">
+      <i class="fas fa-home"></i>Home <p style="color:white">/Help and Support</p>
+    </a>
+  </section>
+  
+  <div class="help-container">
+    <div class="header-section">
+      <h1 class="tool-title">
+        <i class="fas fa-headset"></i>
+        Help & Support
+      </h1>
+      <p class="tool-subtitle">Get assistance with our tools or send us your feedback</p>
+      <div class="feature-badges">
+        <span class="feature-badge"><i class="fas fa-clock"></i> 24hr Response</span>
+        <span class="feature-badge"><i class="fas fa-shield-alt"></i> Secure</span>
+        <span class="feature-badge"><i class="fas fa-heart"></i> Free Support</span>
+      </div>
+    </div>
+
+    <form action="https://formspree.io/f/mldlglwe" method="POST" id="helpForm">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_next" value="https://21k.tools/">
+      <input type="hidden" name="_subject" value="New Help Request from 21K Tools">
+      <input type="hidden" name="_template" value="table">
+
+      <div class="form-group">
+        <label class="form-label required" for="name">Your Name</label>
+        <input type="text" id="name" name="name" class="form-control" placeholder="Enter your full name" required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label required" for="email">Your Email</label>
+        <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email address" required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label required" for="subject">Subject</label>
+        <select id="subject" name="subject" class="form-control form-select" required>
+          <option value="">Select a topic</option>
+          <option value="Technical Support">Technical Support</option>
+          <option value="Bug Report">Bug Report</option>
+          <option value="Feature Request">Feature Request</option>
+          <option value="Account Issues">Account Issues</option>
+          <option value="General Question">General Question</option>
+          <option value="Business Inquiry">Business Inquiry</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="tool">Which Tool?</label>
+        <select id="tool" name="tool" class="form-control form-select">
+          <option value="">Select the tool (if applicable)</option>
+         <option value="PDF Tools">PDF Tools</option>
+         <option value="Time Tools">Time Tools</option>
+         <option value="File Converter">File Converter</option>
+         <option value="Image Resizer">Image Resizer</option>
+         <option value="AI Generator">AI Generator</option>
+         <option value="Age Calculator">Age Calculator</option>
+         <option value="Interest Calculator">Interest Calculator</option>
+         <option value="Unit Converter">Unit Converter</option>
+         <option value="Time Calculator">Time Calculator</option>
+         <option value="General/Website">General/Website</option>
+         </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Priority Level</label>
+        <div class="radio-group">
+          <div class="radio-option">
+            <input type="radio" id="priority-low" name="priority" value="Low" checked>
+            <label for="priority-low">Low</label>
+          </div>
+          <div class="radio-option">
+            <input type="radio" id="priority-medium" name="priority" value="Medium">
+            <label for="priority-medium">Medium</label>
+          </div>
+          <div class="radio-option">
+            <input type="radio" id="priority-high" name="priority" value="High">
+            <label for="priority-high">High</label>
+          </div>
+          <div class="radio-option">
+            <input type="radio" id="priority-urgent" name="priority" value="Urgent">
+            <label for="priority-urgent">Urgent</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label required" for="message">Your Message</label>
+        <textarea id="message" name="message" class="form-control form-textarea" placeholder="Please describe your issue or question in detail..." required></textarea>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="browser">Browser & Device (Optional)</label>
+        <input type="text" id="browser" name="browser" class="form-control" placeholder="e.g., Chrome 120 on Windows 11">
+      </div>
+
+      <button type="submit" class="btn" id="submitBtn">
+        <i class="fas fa-paper-plane"></i>
+        Send Help Request
+      </button>
+
+      <div class="alert alert-info">
+        <i class="fas fa-info-circle"></i>
+        We typically respond within 24 hours. For urgent issues, please mark priority as "Urgent".
+      </div>
+    </form>
+
+    <div class="contact-info">
+      <h3><i class="fas fa-address-card"></i> Other Ways to Reach Us</h3>
+      <div class="contact-methods">
+        <div class="contact-method">
+          <i class="fas fa-envelope"></i>
+          <a href="mailto:contact@21k.tools">contact@21k.tools</a>
+        </div>
+        <div class="contact-method">
+          <i class="fab fa-twitter"></i>
+          <a href="https://x.com/@21ktools" target="_blank">@21ktools</a>
+        </div>
+        <div class="contact-method">
+          <i class="fab fa-instagram"></i>
+          <a href="https://instagram.com/@21k.tools" target="_blank">@21k.tools</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="footer-container">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>Popular Tools</h3>
+        <ul class="footer-links">
+          <li><a href="https://age.21k.tools"><i class="fas fa-birthday-cake"></i> Age Calculator</a></li>
+          <li><a href="https://interest.21k.tools"><i class="fas fa-percentage"></i> Interest Calculator</a></li>
+          <li><a href="https://pdf.21k.tools"><i class="fas fa-file-pdf"></i> PDF Toolkit</a></li>
+          <li><a href="https://unit.21k.tools"><i class="fas fa-balance-scale"></i> Unit Converter</a></li>
+          <li><a href="https://timecalc.21k.tools"><i class="fas fa-stopwatch"></i> Time Calculator</a></li>
+          <li><a href="https://finance.21k.tools"><i class="fas fa-chart-line"></i> Financial Calculator</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>Categories</h3>
+        <ul class="footer-links">
+          <li><a href="https://calculators.21k.tools"><i class="fas fa-calculator"></i> Calculators</a></li>
+          <li><a href="https://pdf.21k.tools"><i class="fas fa-file-pdf"></i> PDF Tools</a></li>
+          <li><a href="https://converter.21k.tools"><i class="fas fa-exchange-alt"></i> Converters</a></li>
+          <li><a href="https://time.21k.tools"><i class="fas fa-clock"></i> Time Tools</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>Support</h3>
+        <ul class="footer-links">
+          <li><a href="https://21k.tools/help"><i class="fas fa-question-circle"></i> Help Center</a></li>
+          <li><a href="mailto:contact@21k.tools"><i class="fas fa-envelope"></i> Contact Us</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>Company</h3>
+        <ul class="footer-links">
+          <li><a href="https://21k.tools/about"><i class="fas fa-info-circle"></i> About Us</a></li>
+          <li><a href="https://21k.tools/privacypolicy"><i class="fas fa-shield-alt"></i> Privacy Policy</a></li>
+          <li><a href="https://21k.tools/termsandconditions"><i class="fas fa-file-contract"></i> Terms</a></li>
+          <li><a href="https://blog.21k.tools/"><i class="fas fa-blog"></i> Blogs</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-brand">
+        <div class="footer-brand-icon">21K</div>
+        <span>&copy; 2025 21K Tools. All rights reserved.</span>
+      </div>
+      <div class="social-links">
+        <a href="https://x.com/@21ktools" class="social-link" title="Twitter"><i class="fab fa-twitter"></i></a>
+        <a href="https://instagram.com/@21k.tools" class="social-link" title="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="https://youtube.com/@21ktools" class="social-link" title="YouTube"><i class="fab fa-youtube"></i></a>
+        <a href="#" class="social-link" title="Facebook"><i class="fab fa-facebook"></i></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Toggle desktop dropdown
+  function toggleDesktopDropdown(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    
+    // Close any other open dropdowns
+    document.querySelectorAll('.dropdown.active').forEach(dropdown => {
+      if (dropdown !== event.currentTarget.parentElement) {
+        dropdown.classList.remove('active');
+        dropdown.querySelector('.fa-caret-down').classList.remove('rotate-180');
+      }
+    });
+    
+    // Toggle current dropdown
+    const dropdown = event.currentTarget.parentElement;
+    dropdown.classList.toggle('active');
+    // Rotate caret icon
+    const caret = event.currentTarget.querySelector('.fa-caret-down');
+    caret.classList.toggle('rotate-180');
+  }
+  
+  // Close dropdowns when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.dropdown')) {
+      document.querySelectorAll('.dropdown.active').forEach(dropdown => {
+        dropdown.classList.remove('active');
+        dropdown.querySelector('.fa-caret-down').classList.remove('rotate-180');
+      });
+    }
+  });
+  
+  // Toggle mobile dropdown
+  function toggleMobileDropdown() {
+    const dropdown = document.getElementById('mobileToolsDropdown');
+    dropdown.classList.toggle('active');
+    
+    // Rotate caret icon
+    const caret = dropdown.querySelector('.fa-caret-down');
+    caret.classList.toggle('rotate-180');
+  }
+  
+  document.addEventListener("DOMContentLoaded", () => {
+    const mobileToggle = document.getElementById('mobileToggle');
+    const mobilePanel = document.getElementById('mobilePanel');
+    
+    mobileToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      mobileToggle.classList.toggle('change');
+      mobilePanel.classList.toggle('show');
+    });
+    
+    document.addEventListener('click', (e) => {
+      // Close mobile menu
+      mobileToggle.classList.remove('change');
+      mobilePanel.classList.remove('show');
+      
+      // Close desktop dropdown if clicking outside
+      if (!e.target.closest('.dropdown')) {
+        document.getElementById('desktopToolsDropdown').classList.remove('active');
+        document.querySelector('#desktopToolsDropdown .fa-caret-down').classList.remove('rotate-180');
+      }
+      
+      // Close mobile dropdown if clicking outside
+      if (!e.target.closest('.mobile-dropdown')) {
+        document.getElementById('mobileToolsDropdown').classList.remove('active');
+        document.querySelector('#mobileToolsDropdown .fa-caret-down').classList.remove('rotate-180');
+      }
+    });
+    
+    // Prevent mobile panel from closing when clicking inside it
+    mobilePanel.addEventListener('click', (e) => {
+      e.stopPropagation();
+    });
+    
+    // Search functionality
+    const searchInput = document.querySelector('.search-input');
+    const searchBtn = document.querySelector('.search-btn');
+    
+    const performSearch = () => {
+      const query = searchInput.value.trim();
+      if (query) {
+        window.location.href = `https://21k.tools/search?q=${encodeURIComponent(query)}`;
+      }
+    };
+    
+    searchInput.addEventListener('keypress', e => {
+      if (e.key === 'Enter') performSearch();
+    });
+    
+    searchBtn.addEventListener('click', performSearch);
+    
+    // Form handling
+    const helpForm = document.getElementById('helpForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const messageTextarea = document.getElementById('message');
+
+    // Form submission
+    helpForm.addEventListener('submit', function(e) {
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<div class="spinner"></div> Sending...';
+      submitBtn.classList.add('loading');
+    });
+
+    // Auto-resize textarea
+    messageTextarea.addEventListener('input', function() {
+      this.style.height = 'auto';
+      this.style.height = Math.min(this.scrollHeight, 300) + 'px';
+    });
+
+    // Form validation
+    const requiredFields = document.querySelectorAll('[required]');
+    
+    requiredFields.forEach(field => {
+      field.addEventListener('blur', function() {
+        if (!this.value.trim()) {
+          this.style.borderColor = '#ed4956';
+          this.style.boxShadow = '0 0 0 2px rgba(237, 73, 86, 0.3)';
+        } else {
+          this.style.borderColor = '#dbdbdb';
+          this.style.boxShadow = 'none';
+        }
+      });
+
+      field.addEventListener('input', function() {
+        if (this.value.trim()) {
+          this.style.borderColor = '#dbdbdb';
+          this.style.boxShadow = 'none';
+        }
+      });
+    });
+
+    // Email validation
+    const emailField = document.getElementById('email');
+    emailField.addEventListener('blur', function() {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (this.value && !emailRegex.test(this.value)) {
+        this.style.borderColor = '#ed4956';
+        this.style.boxShadow = '0 0 0 2px rgba(237, 73, 86, 0.3)';
+      } else if (this.value) {
+        this.style.borderColor = '#00ba7c';
+        this.style.boxShadow = '0 0 0 2px rgba(0, 212, 170, 0.3)';
+      }
+    });
+
+    // Auto-detect browser and device info
+    const browserField = document.getElementById('browser');
+    if (!browserField.value) {
+      const userAgent = navigator.userAgent;
+      let browserInfo = '';
+      
+      // Detect browser
+      if (userAgent.includes('Firefox')) {
+        browserInfo = 'Firefox';
+      } else if (userAgent.includes('Edg')) {
+        browserInfo = 'Edge';
+      } else if (userAgent.includes('Chrome')) {
+        browserInfo = 'Chrome';
+      } else if (userAgent.includes('Safari')) {
+        browserInfo = 'Safari';
+      } else if (userAgent.includes('Opera')) {
+        browserInfo = 'Opera';
+      } else {
+        browserInfo = 'Unknown Browser';
+      }
+      
+      // Add version if possible
+      const versionMatch = userAgent.match(/(Firefox|Edg|Chrome|Safari|Opera|Version)\/(\d+)/);
+      if (versionMatch && versionMatch[2]) {
+        browserInfo += ` ${versionMatch[2]}`;
+      }
+      
+      // Detect OS
+      let osInfo = '';
+      if (userAgent.includes('Windows')) {
+        osInfo = 'Windows';
+        const winVersion = userAgent.match(/Windows NT (\d+\.\d+)/);
+        if (winVersion) {
+          osInfo += ` ${winVersion[1]}`;
+        }
+      } else if (userAgent.includes('Macintosh')) {
+        osInfo = 'Mac OS';
+      } else if (userAgent.includes('Linux')) {
+        osInfo = 'Linux';
+      } else if (userAgent.includes('Android')) {
+        osInfo = 'Android';
+      } else if (userAgent.includes('iOS') || userAgent.includes('iPhone') || userAgent.includes('iPad')) {
+        osInfo = 'iOS';
+      } else {
+        osInfo = 'Unknown OS';
+      }
+      
+      // Detect mobile
+      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
+      if (isMobile) {
+        osInfo += ' (Mobile)';
+      }
+      
+      browserField.value = `${browserInfo} on ${osInfo}`;
+    }
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- SEO Title and Meta Description -->
+  <title>Privacy Policy – 21K Tools </title>
+  <meta name="description" content="21K Tools Privacy Policy: Learn how we protect your data and privacy while using our free online tools. No tracking, no data collection for tool usage.">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <style>
+    * {
+      margin: 0; 
+      padding: 0; 
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background-attachment: fixed;
+      min-height: 100vh;
+      color: #1a1a1a;
+    }
+    .header {
+      background: white;
+      box-shadow: 0 4px 20px rgba(30, 64, 175, 0.3);
+      position: sticky; 
+      top: 0; 
+      z-index: 1000;
+    }
+    
+    .header-container {
+      max-width: 1200px; 
+      margin: 0 auto; 
+      padding: 0 20px;
+    }
+    
+    .logo-container {
+      display: flex;
+      justify-content: center;
+      padding: 15px 0;
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+      font-size: 28px;
+      font-weight: 800;
+      text-decoration: none;
+      color: #2563eb;
+      gap:8px;
+      transition: transform 0.3s ease;
+    }
+    .logo:hover {
+      transform: scale(1.05);
+    }
+    
+    .logo-icon {
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+      border-radius: 102px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      color: white;
+      box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
+    }
+
+    .header-actions-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 0px 10px;
+      gap: 10px;
+    }
+    
+    .search-box {
+      position: relative; 
+      flex-grow: 1;
+      max-width: 700px;
+      width:100%;
+      margin: 0 auto;
+    }
+    .search-input {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.8);
+      border: 2px solid rgba(59, 130, 246, 0.2);
+      border-radius: 30px;
+      padding: 12px 50px 12px 20px;
+      font-size: 15px;
+      transition: all 0.3s ease;
+    }
+    
+    .search-input:focus {
+      outline: none;
+      background: rgba(255, 255, 255, 0.95);
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+    }
+    
+    .search-btn {
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+      border: none;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      color: white;
+      cursor: pointer;
+      font-size: 16px;
+      transition: all 0.3s ease;
+    }
+    
+    .search-btn:hover {
+      transform: translateY(-50%) scale(1.1);
+      box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4);
+    }
+    .mobileToggle {
+      cursor: pointer;
+      padding: 10px;
+      display: none;
+    }
+    
+    .bar1, .bar2, .bar3 {
+      width: 23px; 
+      height: 2px; 
+      background-color: #1e3a8a;
+      margin: 6px 0; 
+      transition: 0.4s;
+    }
+    
+    .change .bar1 { transform: translate(0, 8px) rotate(-45deg); }
+    .change .bar2 { opacity: 0; }
+    .change .bar3 { transform: translate(0, -8px) rotate(45deg); }
+
+    .nav-menu {
+      display: flex; 
+      gap: 10px; 
+      margin-top: 15px; 
+      padding-bottom: 15px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    
+    .nav-link {
+      color: #1e40af;
+      padding: 8px 15px;
+      border-radius: 20px;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .nav-link:hover, .nav-link.active {
+      background: rgba(59, 130, 246, 0.2);
+      color: #1e40af;
+    }
+
+    .mobile-panel {
+      display: none; 
+      flex-direction: column; 
+      gap: 15px;
+      background: white; 
+      padding: 20px; 
+      position: absolute;
+      top: 100%; 
+      left: 0; 
+      width: 100%;
+      animation: slideDown 0.4s ease-in-out;
+      z-index: 999;
+      box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+    }
+    
+    .mobile-panel.show { display: flex; }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+     .main-content {
+      flex: 1; 
+      padding: 40px 20px; 
+      max-width: 1200px;
+      margin: 0 auto; 
+    }
+    
+    .demo-section {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 60px 20px; 
+      border-radius: 20px; 
+      margin: 20px 0;
+      backdrop-filter: blur(10px);
+      text-align: center;
+    }
+    
+    .demo-title {
+      font-size: 2.5rem; 
+      color: white; 
+      margin-bottom: 20px; 
+      font-weight: 700;
+    }
+    
+    .demo-subtitle {
+      font-size: 1.2rem; 
+      color: rgba(255, 255, 255, 0.9); 
+      margin-bottom: 30px;
+    }
+
+    .privacy-content {
+      background: white;
+      border-radius: 20px;
+      padding: 40px;
+      margin: 40px 0;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+
+    .privacy-content h2 {
+      color: #1e3a8a;
+      font-size: 2rem;
+      margin-bottom: 20px;
+      font-weight: 800;
+    }
+
+    .privacy-content h3 {
+      color: #2563eb;
+      font-size: 1.5rem;
+      margin: 30px 0 15px;
+      font-weight: 700;
+    }
+
+    .privacy-content p {
+      color: #333;
+      line-height: 1.8;
+      margin-bottom: 20px;
+      font-size: 1.05rem;
+    }
+
+    .privacy-content ul {
+      margin-left: 20px;
+      margin-bottom: 25px;
+    }
+
+    .privacy-content li {
+      margin-bottom: 10px;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    .privacy-content li:before {
+      content: "•";
+      color: #3b82f6;
+        font-weight: bold;
+      display: inline-block;
+      width: 1em;
+      margin-left: -1em;
+    }
+
+    .privacy-summary {
+      background: #f8fafc;
+      border-radius: 15px;
+      padding: 25px;
+      margin: 30px 0;
+      border-left: 4px solid #3b82f6;
+    }
+
+    .privacy-summary h4 {
+      color: #1e3a8a;
+      font-size: 1.3rem;
+      margin-bottom: 15px;
+    }
+
+    .privacy-summary ul {
+      margin-left: 15px;
+    }
+
+    .privacy-summary li {
+      margin-bottom: 8px;
+    }
+   .page-nav {
+      background: #f8fafc;
+      padding: 15px 0;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+    
+    .page-nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    .page-nav-link {
+      font-weight: 600;
+      font-size: 16px;
+      color: #2563eb;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      background: rgba(37, 99, 235, 0.1);
+      border-radius: 8px;
+      transition: background 0.3s ease;
+    }
+    
+    .page-nav-link:hover {
+      background: rgba(37, 99, 235, 0.15);
+      color: #1d4ed8;
+    }
+    /* Dropdown menu for More Tools - Click to open */
+    .dropdown {
+    position: relative;
+    display: inline-block;
+    }
+    .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: 200px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    border-radius: 12px;
+    z-index: 1;
+    padding: 10px 0;
+    grid-template-columns: 1fr;
+    gap: 5px;
+    }
+    
+    .dropdown.active .dropdown-content {
+    display: grid;
+    }
+    
+    .dropdown-content a {
+    color: #1e40af;
+    padding: 10px 20px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.8s ease;
+    }
+    
+    .dropdown-content a:hover {
+    background: rgba(59, 130, 246, 0.1);
+    }
+     /* Mobile dropdown - Column Layout */
+    .mobile-dropdown-content {
+    display: none;
+    padding-left: 20px;
+    margin-top: 10px;
+    flex-direction: column;
+    gap: 10px;
+    }
+    
+    .mobile-dropdown.active .mobile-dropdown-content {
+    display: flex;
+    }
+    
+    .mobile-dropdown-content a {
+    color: #1e40af;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 15px;
+    border-radius: 20px;
+    transition: all 0.9s ease;
+    }
+    
+    .mobile-dropdown-content a:hover {
+    background: rgba(59, 130, 246, 0.1);
+    }
+    
+    /* Caret rotation */
+    .rotate-180 {
+    transform: rotate(540deg);
+    transition: transform 2s ease;
+    }
+    @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+    }
+     .footer {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+      color: white; 
+      margin-top: 0;
+    }
+    
+    .footer-container {
+      max-width: 1200px; 
+      margin: 0 auto; 
+      padding: 50px 20px 20px;
+    }
+    
+    .footer-content {
+      display: grid; 
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 40px; 
+      margin-bottom: 40px;
+    }
+    
+    .footer-section h3 {
+      color: #60a5fa; 
+      font-size: 18px; 
+      font-weight: 600; 
+      margin-bottom: 20px;
+    }
+    .footer-links {
+      list-style: none;
+    }
+    
+    .footer-links li {
+      margin-bottom: 10px;
+    }
+    
+    .footer-links a {
+      color: rgba(255, 255, 255, 0.8); 
+      text-decoration: none; 
+      transition: color 0.3s ease;
+    }
+    
+    .footer-links a:hover { 
+      color: #60a5fa; 
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 20px 0; 
+      display: flex; 
+      justify-content: space-between;
+      align-items: center; 
+      flex-wrap: wrap; 
+      gap: 15px;
+    }
+    
+    .footer-brand {
+      display: flex; 
+      align-items: center; 
+      gap: 10px;
+    }
+    .footer-brand-icon {
+      width: 38px; 
+      height: 38px; 
+      background: #3b82f6;
+      border-radius: 20px; 
+      display: flex; 
+      align-items: center;
+      justify-content: center; 
+      font-weight: bold;
+    }
+    
+    .social-links {
+      display: flex; 
+      gap: 15px;
+    }
+    
+    .social-link {
+      width: 40px; 
+      height: 40px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%; 
+      display: flex;
+      align-items: center; 
+      justify-content: center;
+      color: white; 
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    
+    .social-link:hover {
+      background: #3b82f6; 
+      transform: translateY(-2px);
+    }
+
+    /* Responsive styles */
+    @media (max-width: 1024px) {
+      .tool-detail-content {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav-menu { 
+        display: none; 
+      }
+      
+      .mobileToggle {
+        display: block;
+      }
+      
+      .demo-title { 
+        font-size: 2rem; 
+      }
+      
+      .footer-bottom { 
+        flex-direction: column; 
+        text-align: center; 
+      }
+      
+      .footer-content {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 30px;
+      }
+      .tool-detail {
+        padding: 30px 20px;
+      }
+
+      .tool-detail-title {
+        font-size: 1.8rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .header-container, .footer-container {
+        padding-left: 15px; 
+        padding-right: 15px;
+      }
+      
+      .search-input { 
+        min-width: 150px; 
+      }
+
+      .tool-detail {
+        padding: 25px 15px;
+      }
+
+      .tool-detail-title {
+        font-size: 1.6rem;
+      }
+
+      .tool-detail-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 28px;
+      }
+    }
+  </style>
+</head>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "21K Tools ",
+  "url": "https://21k.tools/"
+}
+</script>
+<body>
+
+<header class="header">
+  <div class="header-container">
+    <div class="logo-container">
+      <a href="https://21k.tools" class="logo">
+        <div class="logo-icon">21K</div>
+        <span>Tools</span>
+      </a>
+    </div>
+    
+    <div class="header-actions-container">
+      <div class="search-box">
+        <input type="text" class="search-input" placeholder="Search tools...">
+        <button class="search-btn"><i class="fas fa-search"></i></button>
+      </div>
+      <div class="mobileToggle" id="mobileToggle">
+        <div class="bar1"></div>
+        <div class="bar2"></div>
+        <div class="bar3"></div>
+      </div>
+    </div>
+    <nav class="header-nav">
+      <div class="nav-menu">
+       <a href="https://21k.tools" class="nav-link"><i class="fas fa-home"></i> Home</a>
+        
+        <div class="dropdown" id="desktopToolsDropdown">
+          <a href="#" class="nav-link" onclick="toggleDesktopDropdown(event)"><i class="fas fa-tools"></i> More Tools <i class="fas fa-caret-down"></i></a>
+          
+          <div class="dropdown-content">
+           <a href="https://pdf.21k.tools"><i class="fas fa-file-pdf"></i> PDF Tools</a>
+            <a href="https://time.21k.tools"><i class="fas fa-clock"></i> Time Tools</a>
+            <a href="https://fileconverter.21k.tools"><i class="fas fa-file"></i> File Converter</a>
+            <a href="https://imageresizer.21k.tools"><i class="fas fa-image"></i> Image Resizer</a>
+            <a href="https://ai.21k.tools"><i class="fas fa-robot"></i> AI Generator</a>
+            <a href="https://age.21k.tools"><i class="fas fa-birthday-cake"></i> Age Calculator</a>
+            <a href="https://interest.21k.tools"><i class="fas fa-percentage"></i> Interest Calculator</a>
+            <a href="https://unit.21k.tools"><i class="fas fa-balance-scale"></i> Unit Converter</a>
+            <a href="https://timecalc.21k.tools"><i class="fas fa-stopwatch"></i> Time Calculator</a>
+           </div>
+        
+        </div>
+        <a href="https://blog.21k.tools/" class="nav-link"><i class="fas fa-blog"></i> Blogs</a>
+        <a href="/help" class="nav-link"><i class="fas fa-question-circle"></i> Help Center</a>
+        <a href="mailto:contact@21k.tools" class="nav-link"><i class="fas fa-envelope"></i> Contact</a>
+      </div>
+    </nav>
+    
+    <div class="mobile-panel" id="mobilePanel">
+      <a href="https://21k.tools" class="nav-link"><i class="fas fa-home"></i> Home</a>
+      
+      <div class="mobile-dropdown" id="mobileToolsDropdown">
+        <a href="#" class="nav-link" onclick="toggleMobileDropdown()"><i class="fas fa-tools"></i> More Tools <i class="fas fa-caret-down"></i></a>
+        <div class="mobile-dropdown-content">
+         <a href="https://pdf.21k.tools"><i class="fas fa-file-pdf"></i> PDF Tools</a>
+          <a href="https://time.21k.tools"><i class="fas fa-clock"></i> Time Tools</a>
+          <a href="https://fileconverter.21k.tools"><i class="fas fa-file"></i> File Converter</a>
+          <a href="https://imageresizer.21k.tools"><i class="fas fa-image"></i> Image Resizer</a>
+          <a href="https://ai.21k.tools"><i class="fas fa-robot"></i> AI Generator</a>
+          <a href="https://age.21k.tools"><i class="fas fa-birthday-cake"></i> Age Calculator</a>
+          <a href="https://interest.21k.tools"><i class="fas fa-percentage"></i> Interest Calculator</a>
+          <a href="https://unit.21k.tools"><i class="fas fa-balance-scale"></i> Unit Converter</a>
+          <a href="https://timecalc.21k.tools"><i class="fas fa-stopwatch"></i> Time Calculator</a>
+          </div>
+      </div>
+      <a href="https://blog.21k.tools/" class="nav-link"><i class="fas fa-blog"></i> Blog</a>
+      <a href="/help" class="nav-link"><i class="fas fa-question-circle"></i> Help Center</a>
+      <a href="mailto:contact@21k.tools" class="nav-link"><i class="fas fa-envelope"></i> Contact</a>
+    </div>
+  </div>
+</header>
+
+<main class="main-content">
+  <section class="demo-section">
+    <h1 class="demo-title">Privacy Policy</h1>
+    <p class="demo-subtitle">Your privacy is our priority at 21K Tools</p>
+     <a href="https://21k.tools" class="page-nav-link">
+      <i class="fas fa-home"></i> Home<p style="color:white;">/Privacy Policy</p></a>
+  </section>
+  
+  <div class="privacy-content">
+    <h2>Welcome to 21K Tools Privacy Policy</h2>
+    <p>Your privacy is critically important to us. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website (https://21k.tools) and its associated subdomains.</p>
+    
+    <p>We are committed to protecting your privacy and ensuring transparency in how your data is handled. By using 21K Tools, you agree to the terms of this Privacy Policy. If you do not agree, please do not use our services.</p>
+    
+    <div class="privacy-summary">
+      <h4>Key Privacy Points:</h4>
+      <ul>
+        <li>We do not collect personal identifiers like name, email, or IP address for tool usage</li>
+        <li>Files uploaded to 21K Tools are used solely for the requested operation and deleted after processing</li>
+        <li>We use minimal cookies, with no invasive tracking or profiling</li>
+        <li>Your privacy is our priority, and we adhere to best practices for data security</li>
+      </ul>
+    </div>
+
+    <h3>1. Information We Collect</h3>
+    <p>At 21K Tools, we minimize data collection and only gather information essential to providing and improving our services. We DO NOT require user registration or personal details for accessing tools.</p>
+    
+    <h4>a) Information You Provide Voluntarily</h4>
+    <p>You may provide information when:</p>
+    <ul>
+      <li>Contacting us via email or help forms</li>
+      <li>Submitting feedback or suggestions</li>
+      <li>Uploading files for conversion or processing</li>
+    </ul>
+    <p>We only use this information for responding to your queries and enhancing user experience.</p>
+    
+    <h4>b) Automatically Collected Information</h4>
+    <p>When you use our services, certain information may be collected automatically, including:</p>
+    <ul>
+      <li><strong>Device Information:</strong> Browser type, operating system, device type</li>
+      <li><strong>Usage Data:</strong> Pages visited, time spent on pages, referring URLs</li>
+      <li><strong>Cookies & Similar Technologies:</strong> Essential cookies for session management and analytics (see section 6)</li>
+    </ul>
+    <p><em>Note:</em> We DO NOT track personal identifiers such as names, emails, or IP addresses for user profiling.</p>
+    
+    <h3>2. Use of Information</h3>
+    <p>We use collected information solely for:</p>
+    <ul>
+      <li>Delivering and operating our online tools</li>
+      <li>Improving website performance and usability</li>
+      <li>Monitoring service security and preventing misuse</li>
+      <li>Analyzing website traffic and usage trends (via anonymized analytics)</li>
+      <li>Responding to user queries or support requests</li>
+    </ul>
+    <p>We DO NOT sell, rent, or share personal data with third parties for advertising purposes.</p>
+    
+    <h3>3. File Handling and User Data Privacy</h3>
+    
+    <h4>a) File Uploads (Converters, Resizers, PDF Tools)</h4>
+    <ul>
+      <li>Files uploaded to 21K Tools for conversion or processing are used only for the purpose of delivering the requested service</li>
+      <li>Uploaded files are processed in-browser (locally) whenever possible</li>
+      <li>For server-side processing (if applicable), files are automatically deleted immediately after processing</li>
+      <li>We do not store, view, share, or analyze user files beyond task execution</li>
+    </ul>
+    
+    <h4>b) AI Content Inputs</h4>
+    <p>Content entered in AI generation tools is processed in real-time and not stored or reused. We do not retain queries, prompts, or generated outputs.</p>
+    
+    <h3>4. Data Sharing and Disclosure</h3>
+    <p>We do not share, sell, or disclose personal data to third parties, except in the following cases:</p>
+    <ul>
+      <li><strong>Service Providers:</strong> We may use trusted third-party services for analytics (e.g., Google Analytics) under strict privacy agreements</li>
+      <li><strong>Legal Obligations:</strong> If required by law, we may disclose information in response to lawful requests by public authorities</li>
+      <li><strong>Protection of Rights:</strong> To protect the security and integrity of our platform, we may share information to prevent fraudulent activities or misuse</li>
+    </ul>
+    <p>We DO NOT use or share user content for marketing, profiling, or third-party advertising purposes.</p>
+    
+    <h3>5. Data Security</h3>
+    <p>We implement robust security measures to protect your data, including:</p>
+    <ul>
+      <li>SSL/TLS encryption for secure data transmission</li>
+      <li>File processing algorithms designed to avoid unnecessary data storage</li>
+      <li>Regular security reviews and infrastructure updates</li>
+    </ul>
+    <p>However, no method of transmission or storage over the internet is 100% secure. While we strive to use commercially acceptable means to protect your data, we cannot guarantee absolute security.</p>
+    
+    <h3>6. Cookies and Tracking Technologies</h3>
+    <p>21K Tools uses cookies and similar tracking technologies to enhance user experience. These cookies may include:</p>
+    
+    <h4>a) Essential Cookies</h4>
+    <ul>
+      <li>Necessary for website functionality, such as session management and tool operations</li>
+      <li>Cannot be disabled without affecting site performance</li>
+    </ul>
+    
+    <h4>b) Analytics Cookies</h4>
+    <ul>
+      <li>Used to collect anonymized data on website traffic, usage patterns, and interactions</li>
+      <li>We utilize Google Analytics to understand how users engage with our services</li>
+      <li>IP anonymization is enabled to protect your identity</li>
+    </ul>
+    
+    <h4>c) Cookie Preferences</h4>
+    <p>You can control or disable cookies through your browser settings. However, disabling essential cookies may limit website functionality.</p>
+    
+    <h3>7. Third-Party Services and Links</h3>
+    <p>Our website may contain links to third-party websites or services not operated by us. We are not responsible for the privacy practices or content of these external sites. We recommend reviewing the privacy policies of any third-party websites you visit.</p>
+    <p>Examples include:</p>
+    <ul>
+      <li>External links for downloading resources</li>
+      <li>Embedded social media buttons (Twitter, Instagram, YouTube)</li>
+    </ul>
+    
+    <h3>8. Children's Privacy</h3>
+    <p>21K Tools does not knowingly collect any personal information from children under the age of 13. If you are a parent or guardian and believe your child has provided us with personal information, please contact us, and we will take steps to delete such information.</p>
+    
+    <h3>9. International Users and Data Transfer</h3>
+    <p>Our services are accessible globally. By using 21K Tools, you consent to the transfer and processing of your information in jurisdictions where privacy laws may differ from those in your location.</p>
+    <p>We ensure that any data handling complies with privacy regulations, including GDPR and other applicable laws.</p>
+    
+    <h3>10. Data Retention Policy</h3>
+    <ul>
+      <li><strong>Uploaded Files:</strong> Automatically deleted after task completion; we do not retain any user files</li>
+      <li><strong>Usage Data (Anonymous):</strong> Retained for analytical purposes in aggregate form only</li>
+      <li><strong>Contact Queries:</strong> Retained as long as needed to address the query, then securely deleted</li>
+    </ul>
+    <p>We practice data minimization, ensuring that no personally identifiable information is unnecessarily stored.</p>
+    
+    <h3>11. Your Data Rights</h3>
+    <p>Depending on your jurisdiction (e.g., EU, California), you may have specific rights regarding your personal data, including:</p>
+    <ul>
+      <li>The right to access, correct, or delete your data</li>
+      <li>The right to object to certain processing activities</li>
+      <li>The right to data portability</li>
+      <li>The right to withdraw consent (where applicable)</li>
+    </ul>
+    <p>Given the minimal data we collect, most of these rights can be exercised by simply ceasing to use our services. For any data-related concerns, you can contact us at contact@21k.tools.</p>
+    
+    <h3>12. Google Analytics & Advertising</h3>
+    <p>We use Google Analytics for aggregated, anonymized website traffic analysis. This data helps us understand user behavior to improve website functionality.</p>
+    <p>We may display contextual ads through Google AdSense or similar platforms. These ads are based on general website content, not personal user profiles. You can manage Google's data usage preferences at Google's Ad Settings.</p>
+    
+    <h3>13. Changes to This Privacy Policy</h3>
+    <p>We reserve the right to update or modify this Privacy Policy at any time. Changes will be effective upon posting to this page. We encourage users to review this policy periodically for updates.</p>
+    <p>If material changes are made, we will notify you via prominent notices on our website.</p>
+    
+    <h3>14. Contact Us</h3>
+    <p>If you have any questions, suggestions, or concerns regarding this Privacy Policy or your data, please reach out to us:</p>
+    <ul>
+      <li><strong>Email:</strong> contact@21k.tools</li>
+      <li><strong>Help Center:</strong> https://21k.tools/help</li>
+    </ul>
+    <p>We are committed to addressing privacy concerns promptly and transparently.</p>
+    
+    <p><strong>Last Updated:</strong> July 28, 2025</p>
+  </div>
+</main>
+<footer class="footer">
+  <div class="footer-container">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>Popular Tools</h3>
+        <ul class="footer-links">
+          <li><a href="https://age.21k.tools"><i class="fas fa-birthday-cake"></i> Age Calculator</a></li>
+          <li><a href="https://interest.21k.tools"><i class="fas fa-percentage"></i> Interest Calculator</a></li>
+          <li><a href="https://pdf.21k.tools"><i class="fas fa-file-pdf"></i> PDF Toolkit</a></li>
+          <li><a href="https://unit.21k.tools"><i class="fas fa-balance-scale"></i> Unit Converter</a></li>
+          <li><a href="https://timecalc.21k.tools"><i class="fas fa-stopwatch"></i> Time Calculator</a></li>
+          <li><a href="https://finance.21k.tools"><i class="fas fa-chart-line"></i> Financial Calculator</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>Categories</h3>
+        <ul class="footer-links">
+          <li><a href="https://calculators.21k.tools"><i class="fas fa-calculator"></i> Calculators</a></li>
+          <li><a href="https://pdf.21k.tools"><i class="fas fa-file-pdf"></i> PDF Tools</a></li>
+          <li><a href="https://converter.21k.tools"><i class="fas fa-exchange-alt"></i> Converters</a></li>
+          <li><a href="https://time.21k.tools"><i class="fas fa-clock"></i> Time Tools</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>Support</h3>
+        <ul class="footer-links">
+          <li><a href="https://21k.tools/help"><i class="fas fa-question-circle"></i> Help Center</a></li>
+          <li><a href="mailto:contact@21k.tools"><i class="fas fa-envelope"></i> Contact Us</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>Company</h3>
+        <ul class="footer-links">
+          <li><a href="https://21k.tools/about"><i class="fas fa-info-circle"></i> About Us</a></li>
+          <li><a href="https://21k.tools/privacypolicy"><i class="fas fa-shield-alt"></i> Privacy Policy</a></li>
+          <li><a href="https://21k.tools/termsandconditions"><i class="fas fa-file-contract"></i> Terms</a></li>
+          <li><a href="https://blog.21k.tools/"><i class="fas fa-blog"></i> Blogs</a></li>
+           </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-brand">
+        <div class="footer-brand-icon">21K</div>
+        <span>&copy; 2025 21K Tools. All rights reserved.</span>
+      </div>
+      <div class="social-links">
+        <a href="https://x.com/@21ktools" class="social-link" title="Twitter"><i class="fab fa-twitter"></i></a>
+        <a href="https://instagram.com/@21k.tools" class="social-link" title="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="https://youtube.com/@21ktools" class="social-link" title="YouTube"><i class="fab fa-youtube"></i></a>
+        <a href="#" class="social-link" title="Facebook"><i class="fab fa-facebook"></i></a>
+      </div>
+    </div>
+  </div>
+</footer>
+      
+
+      <script>
+      // Toggle desktop dropdown
+      function toggleDesktopDropdown(event) {
+      event.preventDefault();
+      event.stopPropagation();
+      
+      // Close any other open dropdowns
+      document.querySelectorAll('.dropdown.active').forEach(dropdown => {
+      if (dropdown !== event.currentTarget.parentElement) {
+      dropdown.classList.remove('active');
+      dropdown.querySelector('.fa-caret-down').classList.remove('rotate-180');
+      }
+      });
+      
+      // Toggle current dropdown
+      const dropdown = event.currentTarget.parentElement;
+      dropdown.classList.toggle('active');
+        // Rotate caret icon
+      const caret = event.currentTarget.querySelector('.fa-caret-down');
+      caret.classList.toggle('rotate-180');
+      }
+      
+      // Close dropdowns when clicking outside
+      document.addEventListener('click', (e) => {
+      if (!e.target.closest('.dropdown')) {
+      document.querySelectorAll('.dropdown.active').forEach(dropdown => {
+      dropdown.classList.remove('active');
+      dropdown.querySelector('.fa-caret-down').classList.remove('rotate-180');
+      });
+      }
+      });
+      // Toggle mobile dropdown
+      function toggleMobileDropdown() {
+      const dropdown = document.getElementById('mobileToolsDropdown');
+      dropdown.classList.toggle('active');
+      
+      // Rotate caret icon
+      const caret = dropdown.querySelector('.fa-caret-down');
+      caret.classList.toggle('rotate-180');
+      }
+      
+      // Close dropdowns when clicking outside
+      document.addEventListener("DOMContentLoaded", () => {
+      const mobileToggle = document.getElementById('mobileToggle');
+      const mobilePanel = document.getElementById('mobilePanel');
+      
+      mobileToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      mobileToggle.classList.toggle('change');
+      mobilePanel.classList.toggle('show');
+      });
+      
+      document.addEventListener('click', (e) => {
+      // Close mobile menu
+       mobileToggle.classList.remove('change');
+      mobilePanel.classList.remove('show');
+      
+      // Close desktop dropdown if clicking outside
+      if (!e.target.closest('.dropdown')) {
+      document.getElementById('desktopToolsDropdown').classList.remove('active');
+      document.querySelector('#desktopToolsDropdown .fa-caret-down').classList.remove('rotate-180');
+      }
+      
+      // Close mobile dropdown if clicking outside
+      if (!e.target.closest('.mobile-dropdown')) {
+      document.getElementById('mobileToolsDropdown').classList.remove('active');
+      document.querySelector('#mobileToolsDropdown .fa-caret-down').classList.remove('rotate-180');
+      }
+      });
+      
+      // Prevent mobile panel from closing when clicking inside it
+      mobilePanel.addEventListener('click', (e) => {
+      e.stopPropagation();
+      });
+      
+      // Search functionality
+      const searchInput = document.querySelector('.search-input');
+      const searchBtn = document.querySelector('.search-btn');
+      
+      const performSearch = () => {
+      const query = searchInput.value.trim();
+      if (query) {
+      window.location.href = `https://21k.tools/search?q=${encodeURIComponent(query)}`;
+      }
+      };
+      
+      searchInput.addEventListener('keypress', e => {
+      if (e.key === 'Enter') performSearch();
+      });
+      
+      searchBtn.addEventListener('click', performSearch);
+      });
+      </script>
+</body>
+</html>

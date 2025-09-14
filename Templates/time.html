@@ -1,0 +1,1292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {% load static %}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Time Calculator | Add/Subtract Time & Calculate Durations</title>
+  <meta name="description" content="Calculate time differences, add/subtract time durations, and convert between time units with our free online time calculator. No sign-up needed.">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link rel="icon" type="image/x-icon" href="{% static '21k.png' %}">
+  
+  <style>
+    /* Reset and Base Styles */
+    * {
+      margin: 0; 
+      padding: 0; 
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background-attachment: fixed;
+      min-height: 100vh;
+      color: #1a1a1a;
+      line-height: 1.6;
+    }
+    
+    /* Header Styles */
+    .header {
+      background: white;
+      box-shadow: 0 4px 20px rgba(30, 64, 175, 0.3);
+      position: sticky; 
+      top: 0; 
+      z-index: 1000;
+    }
+    
+    .header-container {
+      max-width: 1200px; 
+      margin: 0 auto; 
+      padding: 0 20px;
+    }
+    
+    .logo-container {
+      display: flex;
+      justify-content: center;
+      padding: 15px 0;
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+      font-size: 28px;
+      font-weight: 800;
+      text-decoration: none;
+      color: #2563eb;
+      gap: 8px;
+      transition: transform 0.3s ease;
+    }
+    
+    .logo:hover {
+      transform: scale(1.05);
+    }
+    
+    .logo-icon {
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+      border-radius: 102px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      color: white;
+      box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
+    }
+
+    .header-actions-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 0 10px;
+      gap: 10px;
+    }
+    
+    .search-box {
+      position: relative; 
+      flex-grow: 1;
+      max-width: 700px;
+      width: 100%;
+      margin: 0 auto;
+    }
+    
+    .search-input {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.8);
+      border: 2px solid rgba(59, 130, 246, 0.2);
+      border-radius: 30px;
+      padding: 12px 50px 12px 20px;
+      font-size: 15px;
+      transition: all 0.3s ease;
+    }
+    
+    .search-input:focus {
+      outline: none;
+      background: rgba(255, 255, 255, 0.95);
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+    }
+    
+    .search-btn {
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+      border: none;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      color: white;
+      cursor: pointer;
+      font-size: 16px;
+      transition: all 0.3s ease;
+    }
+    
+    .search-btn:hover {
+      transform: translateY(-50%) scale(1.1);
+      box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4);
+    }
+    
+    .mobile-toggle {
+      cursor: pointer;
+      padding: 10px;
+      display: none;
+    }
+    
+    .bar1, .bar2, .bar3 {
+      width: 23px; 
+      height: 2px; 
+      background-color: #1e3a8a;
+      margin: 6px 0; 
+      transition: 0.4s;
+    }
+    
+    .change .bar1 { transform: translate(0, 8px) rotate(-45deg); }
+    .change .bar2 { opacity: 0; }
+    .change .bar3 { transform: translate(0, -8px) rotate(45deg); }
+
+    /* Navigation Styles */
+    .nav-menu {
+      display: flex; 
+      gap: 10px; 
+      margin-top: 15px; 
+      padding-bottom: 15px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    
+    .nav-link {
+      color: #1e40af;
+      padding: 8px 15px;
+      border-radius: 20px;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    
+    .nav-link:hover, .nav-link.active {
+      background: rgba(59, 130, 246, 0.2);
+      color: #1e40af;
+    }
+
+    .mobile-panel {
+      display: none; 
+      flex-direction: column; 
+      gap: 15px;
+      background: white; 
+      padding: 20px; 
+      position: absolute;
+      top: 100%; 
+      left: 0; 
+      width: 100%;
+      animation: slideDown 0.4s ease-in-out;
+      z-index: 999;
+      box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+    }
+    
+    .mobile-panel.show { display: flex; }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    /* Dropdown Styles */
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+    
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: white;
+      min-width: 200px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+      border-radius: 12px;
+      z-index: 1;
+      padding: 10px 0;
+      grid-template-columns: 1fr;
+      gap: 5px;
+    }
+    
+    .dropdown.active .dropdown-content {
+      display: grid;
+    }
+    
+    .dropdown-content a {
+      color: #1e40af;
+      padding: 10px 20px;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.3s ease;
+    }
+    
+    .dropdown-content a:hover {
+      background: rgba(59, 130, 246, 0.1);
+    }
+    
+    /* Mobile Dropdown */
+    .mobile-dropdown-content {
+      display: none;
+      padding-left: 20px;
+      margin-top: 10px;
+      flex-direction: column;
+      gap: 10px;
+    }
+    
+    .mobile-dropdown.active .mobile-dropdown-content {
+      display: flex;
+    }
+    
+    .mobile-dropdown-content a {
+      color: #1e40af;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 15px;
+      border-radius: 20px;
+      transition: all 0.3s ease;
+    }
+    
+    .mobile-dropdown-content a:hover {
+      background: rgba(59, 130, 246, 0.1);
+    }
+    
+    /* Time Calculator Specific Styles */
+    :root {
+      --tc-primary: #4361ee;
+      --tc-secondary: #3a0ca3;
+      --tc-accent: #f72585;
+      --tc-light: #f8f9fa;
+      --tc-dark: #212529;
+      --tc-gray: #6c757d;
+    }
+    
+    .tc-container {
+      max-width: 900px;
+      margin: 40px auto;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+    
+    .tc-header {
+      background: linear-gradient(135deg, var(--tc-primary) 0%, var(--tc-secondary) 100%);
+      color: white;
+      padding: 1.5rem;
+      text-align: center;
+    }
+    
+    .tc-header h1 {
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .tc-subtitle {
+      font-weight: 300;
+      opacity: 0.9;
+      font-size: 0.9rem;
+    }
+    
+    .tc-calculator {
+      padding: 1.5rem;
+    }
+    
+    .tc-tabs {
+      display: flex;
+      border-bottom: 1px solid #dee2e6;
+      margin-bottom: 1.5rem;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    
+    .tc-tabs::-webkit-scrollbar {
+      display: none;
+    }
+    
+    .tc-tab {
+      padding: 0.75rem 1rem;
+      cursor: pointer;
+      font-weight: 500;
+      border-bottom: 3px solid transparent;
+      transition: all 0.3s ease;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    
+    .tc-tab.active {
+      border-bottom: 3px solid var(--tc-accent);
+      color: var(--tc-accent);
+    }
+    
+    .tc-tab-content {
+      display: none;
+    }
+    
+    .tc-tab-content.active {
+      display: block;
+      animation: fadeIn 0.5s ease;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .tc-form-group {
+      margin-bottom: 1.2rem;
+    }
+    
+    .tc-label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      color: var(--tc-dark);
+      font-size: 0.95rem;
+    }
+    
+    .tc-input, .tc-select {
+      width: 100%;
+      padding: 0.7rem 1rem;
+      border: 1px solid #ced4da;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+    }
+    
+    .tc-input:focus, .tc-select:focus {
+      outline: none;
+      border-color: var(--tc-primary);
+      box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+    }
+    
+    .tc-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+    }
+    
+    .tc-btn {
+      background: linear-gradient(135deg, var(--tc-primary) 0%, var(--tc-secondary) 100%);
+      color: white;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      font-size: 1rem;
+      font-weight: 500;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      width: 100%;
+      margin-top: 0.5rem;
+    }
+    
+    .tc-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    
+    .tc-results {
+      margin-top: 1.5rem;
+      padding: 1.2rem;
+      background: #f8f9fa;
+      border-radius: 8px;
+      border-left: 4px solid var(--tc-primary);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+    
+    .tc-results h3 {
+      color: var(--tc-primary);
+      margin-bottom: 0.8rem;
+      font-size: 1.1rem;
+    }
+    
+    .tc-result-item {
+      margin-bottom: 0.8rem;
+      padding: 0.5rem;
+      background: white;
+      border-radius: 4px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .tc-result-label {
+      font-weight: 500;
+      color: var(--tc-gray);
+      font-size: 0.9rem;
+    }
+    
+    .tc-result-value {
+      font-weight: 600;
+      color: var(--tc-dark);
+      font-size: 1rem;
+      background: rgba(67, 97, 238, 0.1);
+      padding: 0.3rem 0.6rem;
+      border-radius: 4px;
+      border-left: 2px solid var(--tc-primary);
+    }
+    
+    /* About Container Styles */
+    .about-container {
+      background-color: white;
+      padding: 20px;
+      max-width: 1200px;
+      margin: 40px auto;
+      border-radius: 8px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    
+    .about-container h1 {
+      color: #2c3e50;
+      font-size: 28px;
+      margin-bottom: 20px;
+      border-bottom: 2px solid #ecf0f1;
+      padding-bottom: 10px;
+    }
+    
+    .about-container h2 {
+      color: #2980b9;
+      font-size: 24px;
+      margin-bottom: 15px;
+      border-bottom: 2px solid #ecf0f1;
+      padding-bottom: 5px;
+    }
+    
+    .about-container h3 {
+      color: #16a085;
+      font-size: 20px;
+      margin: 25px 0 10px;
+    }
+    
+    .about-container h4 {
+      color: #e74c3c;
+      font-size: 16px;
+      margin: 15px 0 5px;
+    }
+    
+    .about-container p {
+      color: #34495e;
+      line-height: 1.6;
+      margin-bottom: 15px;
+    }
+    
+    .about-container ul {
+      margin-left: 20px;
+      margin-bottom: 15px;
+    }
+    
+    .about-container li {
+      margin-bottom: 5px;
+    }
+    
+    .about-container img {
+      max-width: 100%;
+      height: auto;
+      margin: 20px 0;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    
+    /* Footer Styles */
+    .footer {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+      color: white; 
+      margin-top: 40px;
+    }
+    
+    .footer-container {
+      max-width: 1200px; 
+      margin: 0 auto; 
+      padding: 50px 20px 20px;
+    }
+    
+    .footer-content {
+      display: grid; 
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 40px; 
+      margin-bottom: 40px;
+    }
+    
+    .footer-section h3 {
+      color: #60a5fa; 
+      font-size: 18px; 
+      font-weight: 600; 
+      margin-bottom: 20px;
+    }
+    
+    .footer-links {
+      list-style: none;
+    }
+    
+    .footer-links li {
+      margin-bottom: 10px;
+    }
+    
+    .footer-links a {
+      color: rgba(255, 255, 255, 0.8); 
+      text-decoration: none; 
+      transition: color 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .footer-links a:hover { 
+      color: #60a5fa; 
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 20px 0; 
+      display: flex; 
+      justify-content: space-between;
+      align-items: center; 
+      flex-wrap: wrap; 
+      gap: 15px;
+    }
+    
+    .footer-brand {
+      display: flex; 
+      align-items: center; 
+      gap: 10px;
+    }
+    
+    .footer-brand-icon {
+      width: 38px; 
+      height: 38px; 
+      background: #3b82f6;
+      border-radius: 20px; 
+      display: flex; 
+      align-items: center;
+      justify-content: center; 
+      font-weight: bold;
+      color: white;
+    }
+    
+    .social-links {
+      display: flex; 
+      gap: 15px;
+    }
+    
+    .social-link {
+      width: 40px; 
+      height: 40px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%; 
+      display: flex;
+      align-items: center; 
+      justify-content: center;
+      color: white; 
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    
+    .social-link:hover {
+      background: #3b82f6; 
+      transform: translateY(-2px);
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 768px) {
+      .nav-menu { 
+        display: none; 
+      }
+      
+      .mobile-toggle {
+        display: block;
+      }
+      
+      .tc-container {
+        margin: 20px;
+      }
+
+      .tc-header h1 {
+        font-size: 1.5rem;
+      }
+
+      .tc-tab {
+        padding: 0.6rem 0.8rem;
+        font-size: 0.9rem;
+      }
+      
+      .tc-results {
+        padding: 1rem;
+      }
+      
+      .footer-content {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .header-container, .footer-container {
+        padding-left: 15px; 
+        padding-right: 15px;
+      }
+      
+      .search-input { 
+        min-width: 150px; 
+      }
+
+      .tc-calculator {
+        padding: 1rem;
+      }
+
+      .tc-header h1 {
+        font-size: 1.5rem;
+      }
+
+      .tc-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .footer-bottom {
+        flex-direction: column;
+        text-align: center;
+      }
+      
+      .social-links {
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-container">
+    <div class="logo-container">
+      <a href="https://21k.tools" class="logo">
+        <div class="logo-icon">21K</div>
+        <span>Tools</span>
+      </a>
+    </div>
+    
+    <div class="header-actions-container">
+      <div class="search-box">
+        <input type="text" class="search-input" placeholder="Search tools...">
+        <button class="search-btn"><i class="fas fa-search"></i></button>
+      </div>
+      <div class="mobile-toggle" id="mobileToggle">
+        <div class="bar1"></div>
+        <div class="bar2"></div>
+        <div class="bar3"></div>
+      </div>
+    </div>
+    
+    <nav class="header-nav">
+      <div class="nav-menu">
+        <a href="https://21k.tools" class="nav-link"><i class="fas fa-home"></i> Home</a>
+        
+        <div class="dropdown" id="desktopToolsDropdown">
+          <a href="#" class="nav-link" onclick="toggleDesktopDropdown(event)"><i class="fas fa-tools"></i> More Tools <i class="fas fa-caret-down"></i></a>
+          
+          <div class="dropdown-content">
+            <a href="https://pdf.21k.tools"><i class="fas fa-file-pdf"></i> PDF Tools</a>
+            <a href="https://time.21k.tools"><i class="fas fa-clock"></i> Time Tools</a>
+            <a href="https://fileconverter.21k.tools"><i class="fas fa-file"></i> File Converter</a>
+            <a href="https://imageresizer.21k.tools"><i class="fas fa-image"></i> Image Resizer</a>
+            <a href="https://ai.21k.tools"><i class="fas fa-robot"></i> AI Generator</a>
+            <a href="https://age.21k.tools"><i class="fas fa-birthday-cake"></i> Age Calculator</a>
+            <a href="https://interest.21k.tools"><i class="fas fa-percentage"></i> Interest Calculator</a>
+            <a href="https://unit.21k.tools"><i class="fas fa-balance-scale"></i> Unit Converter</a>
+            <a href="https://timecalc.21k.tools"><i class="fas fa-stopwatch"></i> Time Calculator</a>
+          </div>
+        </div>
+        
+        <a href="https://21k.tools/blog" class="nav-link"><i class="fas fa-blog"></i> Blogs</a>
+        <a href="/help" class="nav-link"><i class="fas fa-question-circle"></i> Help Center</a>
+        <a href="mailto:contact@21k.tools" class="nav-link"><i class="fas fa-envelope"></i> Contact</a>
+      </div>
+    </nav>
+    
+    <div class="mobile-panel" id="mobilePanel">
+      <a href="https://21k.tools" class="nav-link"><i class="fas fa-home"></i> Home</a>
+      
+      <div class="dropdown mobile-dropdown" id="mobileToolsDropdown">
+        <a href="#" class="nav-link" onclick="toggleMobileDropdown()"><i class="fas fa-tools"></i> More Tools <i class="fas fa-caret-down"></i></a>
+        <div class="dropdown-content mobile-dropdown-content">
+          <a href="https://pdf.21k.tools"><i class="fas fa-file-pdf"></i> PDF Tools</a>
+          <a href="https://time.21k.tools"><i class="fas fa-clock"></i> Time Tools</a>
+          <a href="https://fileconverter.21k.tools"><i class="fas fa-file"></i> File Converter</a>
+          <a href="https://imageresizer.21k.tools"><i class="fas fa-image"></i> Image Resizer</a>
+          <a href="https://ai.21k.tools"><i class="fas fa-robot"></i> AI Generator</a>
+          <a href="https://age.21k.tools"><i class="fas fa-birthday-cake"></i> Age Calculator</a>
+          <a href="https://interest.21k.tools"><i class="fas fa-percentage"></i> Interest Calculator</a>
+          <a href="https://unit.21k.tools"><i class="fas fa-balance-scale"></i> Unit Converter</a>
+          <a href="https://timecalc.21k.tools"><i class="fas fa-stopwatch"></i> Time Calculator</a>
+        </div>
+      </div>
+      
+      <a href="https://21k.tools/blog" class="nav-link"><i class="fas fa-blog"></i> Blog</a>
+      <a href="/help" class="nav-link"><i class="fas fa-question-circle"></i> Help Center</a>
+      <a href="mailto:contact@21k.tools" class="nav-link"><i class="fas fa-envelope"></i> Contact</a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- Time Calculator -->
+  <div class="tc-container">
+    <div class="tc-header">
+      <h1>Time Calculator</h1>
+      <p class="tc-subtitle">Calculate durations, add/subtract time, and convert between time units</p>
+    </div>
+    
+    <div class="tc-calculator">
+      <div class="tc-tabs">
+        <div class="tc-tab active" onclick="switchTab('difference')">Time Difference</div>
+        <div class="tc-tab" onclick="switchTab('add-subtract')">Add/Subtract</div>
+        <div class="tc-tab" onclick="switchTab('convert')">Converter</div>
+      </div>
+      
+      <!-- Time Difference Calculator -->
+      <div id="difference" class="tc-tab-content active">
+        <div class="tc-grid">
+          <div class="tc-form-group">
+            <label for="start-time" class="tc-label">Start Time</label>
+            <input type="datetime-local" id="start-time" class="tc-input">
+          </div>
+          <div class="tc-form-group">
+            <label for="end-time" class="tc-label">End Time</label>
+            <input type="datetime-local" id="end-time" class="tc-input">
+          </div>
+        </div>
+        <button class="tc-btn" id="calculate-difference-btn">Calculate Difference</button>
+        
+        <div id="difference-results" class="tc-results" style="display: none;">
+          <h3>Time Duration</h3>
+          <div class="tc-result-item">
+            <span class="tc-result-label">Total Difference:</span>
+            <span id="total-difference" class="tc-result-value"></span>
+          </div>
+          <div class="tc-result-item">
+            <span class="tc-result-label">In Days:</span>
+            <span id="days-difference" class="tc-result-value"></span>
+          </div>
+          <div class="tc-result-item">
+            <span class="tc-result-label">In Hours:</span>
+            <span id="hours-difference" class="tc-result-value"></span>
+          </div>
+          <div class="tc-result-item">
+            <span class="tc-result-label">In Minutes:</span>
+            <span id="minutes-difference" class="tc-result-value"></span>
+          </div>
+          <div class="tc-result-item">
+            <span class="tc-result-label">In Seconds:</span>
+            <span id="seconds-difference" class="tc-result-value"></span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Add/Subtract Time Calculator -->
+      <div id="add-subtract" class="tc-tab-content">
+        <div class="tc-grid">
+          <div class="tc-form-group">
+            <label for="base-time" class="tc-label">Base Time</label>
+            <input type="datetime-local" id="base-time" class="tc-input">
+          </div>
+          <div class="tc-form-group">
+            <label for="operation" class="tc-label">Operation</label>
+            <select id="operation" class="tc-select">
+              <option value="add">Add Time</option>
+              <option value="subtract">Subtract Time</option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="tc-grid">
+          <div class="tc-form-group">
+            <label for="add-days" class="tc-label">Days</label>
+            <input type="number" id="add-days" min="0" value="0" class="tc-input">
+          </div>
+          <div class="tc-form-group">
+            <label for="add-hours" class="tc-label">Hours</label>
+            <input type="number" id="add-hours" min="0" max="23" value="0" class="tc-input">
+          </div>
+          <div class="tc-form-group">
+            <label for="add-minutes" class="tc-label">Minutes</label>
+            <input type="number" id="add-minutes" min="0" max="59" value="0" class="tc-input">
+          </div>
+          <div class="tc-form-group">
+            <label for="add-seconds" class="tc-label">Seconds</label>
+            <input type="number" id="add-seconds" min="0" max="59" value="0" class="tc-input">
+          </div>
+        </div>
+        <button class="tc-btn" id="calculate-add-subtract-btn">Calculate</button>
+        
+        <div id="add-subtract-results" class="tc-results" style="display: none;">
+          <h3>Resulting Time</h3>
+          <div class="tc-result-item">
+            <span class="tc-result-label">New Date/Time:</span>
+            <span id="result-time" class="tc-result-value"></span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Time Conversion Calculator -->
+      <div id="convert" class="tc-tab-content">
+        <div class="tc-grid">
+          <div class="tc-form-group">
+            <label for="convert-value" class="tc-label">Value</label>
+            <input type="number" id="convert-value" min="0" value="1" class="tc-input">
+          </div>
+          <div class="tc-form-group">
+            <label for="convert-from" class="tc-label">From</label>
+            <select id="convert-from" class="tc-select">
+              <option value="seconds">Seconds</option>
+              <option value="minutes">Minutes</option>
+              <option value="hours">Hours</option>
+              <option value="days">Days</option>
+              <option value="weeks">Weeks</option>
+            </select>
+          </div>
+          <div class="tc-form-group">
+            <label for="convert-to" class="tc-label">To</label>
+            <select id="convert-to" class="tc-select">
+              <option value="seconds">Seconds</option>
+              <option value="minutes">Minutes</option>
+              <option value="hours">Hours</option>
+              <option value="days">Days</option>
+              <option value="weeks">Weeks</option>
+            </select>
+          </div>
+        </div>
+        <button class="tc-btn" id="convert-time-btn">Convert</button>
+        
+        <div id="convert-results" class="tc-results" style="display: none;">
+          <h3>Conversion Result</h3>
+          <div class="tc-result-item">
+            <span class="tc-result-label">Result:</span>
+            <span id="conversion-result" class="tc-result-value"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- About Section -->
+  <div class="about-container">
+    <h1>About the Time Calculator</h1>
+    
+    <p>Time is one of the most valuable resources we have. Whether it's planning events, calculating work hours, managing schedules, or simply figuring out how much time has passed between two dates, accurate time calculations can make life much easier. The Time Calculator from 21K Tools is a smart, user-friendly, and completely free online utility designed to handle all kinds of time-related calculations in just a few clicks. It's built to be simple enough for everyday use but powerful enough for professional tasks.</p>
+    
+    <p>The calculator has been designed with a clean and responsive interface so it works smoothly on desktops, tablets, and mobile devices. You don't need to download anything or create an account—everything works instantly in your browser. Whether you're a student working on a project, an employee calculating shifts, a traveler planning itineraries, or simply curious about time differences, this tool is here to help.</p>
+    
+    <h2>Key Features</h2>
+    <p>The Time Calculator offers three main functionalities—each tailored for a specific type of time-related task:</p>
+    
+    <h3>1. Time Difference Calculator</h3>
+    <p>This feature allows you to find the exact duration between two points in time. You simply select a start date and time and an end date and time, and the tool instantly calculates:</p>
+    <ul>
+      <li>Total Difference in days, hours, minutes, and seconds.</li>
+      <li>Precise breakdown for each unit of time.</li>
+      <li>Automatic handling of past and future dates (even if the end time is earlier than the start time—it will still show the absolute difference).</li>
+    </ul>
+    
+    <h4>Example Uses:</h4>
+    <ul>
+      <li>Finding out how long you worked on a project.</li>
+      <li>Calculating the time passed since a past event (birthdays, anniversaries, deadlines).</li>
+      <li>Measuring exact time intervals for experiments or sports.</li>
+    </ul>
+    
+    <h3>2. Add or Subtract Time</h3>
+    <p>The add/subtract feature lets you take a base date and time and either add or subtract a chosen duration from it. You can enter adjustments in:</p>
+    <ul>
+      <li>Days</li>
+      <li>Hours</li>
+      <li>Minutes</li>
+      <li>Seconds</li>
+    </ul>
+    
+    <p>After entering your values and selecting the operation, the calculator instantly shows the resulting date and time.</p>
+    
+    <h4>Example Uses:</h4>
+    <ul>
+      <li>Adding 2 days and 5 hours to a given time to find a future deadline.</li>
+      <li>Subtracting hours from a schedule to plan earlier meetings.</li>
+      <li>Adjusting times for different time zones when traveling.</li>
+    </ul>
+    
+    <h3>3. Time Unit Converter</h3>
+    <p>Time isn't always measured the same way for every task. Sometimes you need to convert between units like seconds, minutes, hours, days, or even weeks. The Time Converter feature makes this quick and easy.</p>
+    <p>You simply:</p>
+    <ol>
+      <li>Enter the value you want to convert.</li>
+      <li>Choose the "from" unit.</li>
+      <li>Choose the "to" unit.</li>
+    </ol>
+    
+    <p>The calculator instantly gives you the converted value with precision up to six decimal places.</p>
+    
+    {% load static %}
+    <img src="{% static 'timecalculator.png' %}" alt="Time Calculator">
+    
+    <h4>Example Uses:</h4>
+    <ul>
+      <li>Converting hours into seconds for coding or data input.</li>
+      <li>Changing days into hours for better scheduling.</li>
+      <li>Turning weeks into minutes for scientific calculations.</li>
+    </ul>
+    
+    <h2>Why This Tool is Different</h2>
+    <p>While there are many time calculators available online, the 21K Tools Time Calculator stands out for several reasons:</p>
+    <ul>
+      <li><strong>Clean, Modern Interface</strong> – The design is colorful yet simple, making it pleasant to use.</li>
+      <li><strong>Three Tools in One</strong> – No need to switch between different websites; you can calculate differences, add/subtract, and convert all in the same place.</li>
+      <li><strong>No Sign-Up or Ads Interruptions</strong> – You get an uninterrupted, focused experience.</li>
+      <li><strong>Responsive Design</strong> – Works on mobile phones, tablets, laptops, and desktops equally well.</li>
+      <li><strong>Accuracy</strong> – Handles leap years, time differences, and precise conversions without errors.</li>
+      <li><strong>Instant Results</strong> – All calculations happen instantly in your browser without delays.</li>
+    </ul>
+    
+    <h2>Practical Applications</h2>
+    <p>Here are a few real-life scenarios where the Time Calculator can save you time and effort:</p>
+    <ul>
+      <li><strong>Event Planning:</strong> Figure out how long until an event starts or how long it will last.</li>
+      <li><strong>Work Schedules:</strong> Calculate the exact number of hours worked between shifts.</li>
+      <li><strong>Travel Planning:</strong> Adjust times for flights, time zones, and layovers.</li>
+      <li><strong>Sports & Fitness:</strong> Measure time intervals for training sessions or matches.</li>
+      <li><strong>Education:</strong> Convert time units for science experiments or homework.</li>
+      <li><strong>Project Management:</strong> Keep track of deadlines and progress durations.</li>
+      <li><strong>Personal Use:</strong> Track countdowns to birthdays, vacations, or special occasions.</li>
+    </ul>
+    
+    <h2>Ease of Use</h2>
+    <p>The calculator is built to be straightforward:</p>
+    <ol>
+      <li><strong>Choose a Tab</strong> – Time Difference, Add/Subtract, or Converter.</li>
+      <li><strong>Enter Your Data</strong> – Use the date/time pickers or number inputs.</li>
+      <li><strong>Click Calculate</strong> – Instantly see your results, neatly displayed with clear labels.</li>
+    </ol>
+    
+    <p>There's no complicated setup, no confusing menus, and no distracting elements—just the tools you need.</p>
+    
+    <h2>Privacy and Security</h2>
+    <p>The Time Calculator runs completely in your browser. This means:</p>
+    <ul>
+      <li>Your data isn't sent to any server.</li>
+      <li>There's no tracking of your inputs.</li>
+      <li>You can safely use it for personal or professional purposes without worrying about privacy.</li>
+    </ul>
+    
+    <h2>Compatibility</h2>
+    <p>Thanks to its responsive HTML/CSS design, this calculator works perfectly on:</p>
+    <ul>
+      <li>Windows and Mac computers</li>
+      <li>Android and iOS smartphones</li>
+      <li>Tablets of all sizes</li>
+    </ul>
+    
+    <p>It also works in all major browsers, including Chrome, Firefox, Safari, Edge, and Opera.</p>
+    
+    <h2>Conclusion</h2>
+    <p>The 21K Tools Time Calculator is an all-in-one solution for anyone who needs accurate and fast time calculations. With its three main features—Time Difference, Add/Subtract, and Time Converter—it covers almost every possible time-related need, from daily tasks to professional projects.</p>
+    
+    <p>It's free, easy to use, and available anytime you need it. Whether you're scheduling meetings, tracking project timelines, converting time units, or simply curious about time intervals, this tool is designed to give you the results you need instantly and accurately.</p>
+    
+    <p>If time is valuable, then a tool that helps you measure and manage it should be too—and that's exactly what this calculator offers.</p>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="footer-container">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>Popular Tools</h3>
+        <ul class="footer-links">
+          <li><a href="https://age.21k.tools"><i class="fas fa-birthday-cake"></i> Age Calculator</a></li>
+          <li><a href="https://interest.21k.tools"><i class="fas fa-percentage"></i> Interest Calculator</a></li>
+          <li><a href="https://pdf.21k.tools"><i class="fas fa-file-pdf"></i> PDF Toolkit</a></li>
+          <li><a href="https://unit.21k.tools"><i class="fas fa-balance-scale"></i> Unit Converter</a></li>
+          <li><a href="https://timecalc.21k.tools"><i class="fas fa-stopwatch"></i> Time Calculator</a></li>
+          <li><a href="https://finance.21k.tools"><i class="fas fa-chart-line"></i> Financial Calculator</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>Categories</h3>
+        <ul class="footer-links">
+          <li><a href="https://calculators.21k.tools"><i class="fas fa-calculator"></i> Calculators</a></li>
+          <li><a href="https://pdf.21k.tools"><i class="fas fa-file-pdf"></i> PDF Tools</a></li>
+          <li><a href="https://converter.21k.tools"><i class="fas fa-exchange-alt"></i> Converters</a></li>
+          <li><a href="https://time.21k.tools"><i class="fas fa-clock"></i> Time Tools</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>Support</h3>
+        <ul class="footer-links">
+          <li><a href="https://21k.tools/help"><i class="fas fa-question-circle"></i> Help Center</a></li>
+          <li><a href="mailto:contact@21k.tools"><i class="fas fa-envelope"></i> Contact Us</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>Company</h3>
+        <ul class="footer-links">
+          <li><a href="https://21k.tools/about"><i class="fas fa-info-circle"></i> About Us</a></li>
+          <li><a href="https://21k.tools/privacypolicy"><i class="fas fa-shield-alt"></i> Privacy Policy</a></li>
+          <li><a href="https://21k.tools/termsandconditions"><i class="fas fa-file-contract"></i> Terms</a></li>
+          <li><a href="https://21k.tools/blog"><i class="fas fa-blog"></i> Blogs</a></li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <div class="footer-brand">
+        <div class="footer-brand-icon">21K</div>
+        <span>&copy; 2025 21K Tools. All rights reserved.</span>
+      </div>
+      <div class="social-links">
+        <a href="https://x.com/@21ktools" class="social-link" title="Twitter"><i class="fab fa-twitter"></i></a>
+        <a href="https://instagram.com/21k.tools" class="social-link" title="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="https://youtube.com/@21ktools" class="social-link" title="YouTube"><i class="fab fa-youtube"></i></a>
+        <a href="#" class="social-link" title="Facebook"><i class="fab fa-facebook"></i></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Set default datetime values to now
+  const now = new Date();
+  const nowStr = now.toISOString().slice(0, 16);
+  document.getElementById('start-time').value = nowStr;
+  document.getElementById('end-time').value = nowStr;
+  document.getElementById('base-time').value = nowStr;
+  
+  // Tab switching functionality
+  function switchTab(tabId) {
+    // Hide all tab contents
+    document.querySelectorAll('.tc-tab-content').forEach(content => {
+      content.classList.remove('active');
+    });
+    
+    // Deactivate all tabs
+    document.querySelectorAll('.tc-tab').forEach(tab => {
+      tab.classList.remove('active');
+    });
+    
+    // Activate selected tab
+    document.getElementById(tabId).classList.add('active');
+    event.currentTarget.classList.add('active');
+  }
+  
+  // Time Difference Calculator
+  function calculateTimeDifference() {
+    const startTime = new Date(document.getElementById('start-time').value);
+    const endTime = new Date(document.getElementById('end-time').value);
+    
+    if (isNaN(startTime.getTime())) {
+      alert("Please enter valid start time");
+      return;
+    }
+    
+    if (isNaN(endTime.getTime())) {
+      alert("Please enter valid end time");
+      return;
+    }
+    
+    let diffMs = endTime - startTime;
+    
+    if (diffMs < 0) {
+      diffMs = Math.abs(diffMs);
+      alert("End time is before start time. Showing absolute difference.");
+    }
+    
+    const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+    const diffHours = Math.floor((diffMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const diffMinutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+    const diffSeconds = Math.floor((diffMs % (1000 * 60)) / 1000);
+    
+    // Format the difference as "X days, Y hours, Z minutes, A seconds"
+    let differenceStr = [];
+    if (diffDays > 0) differenceStr.push(`${diffDays} day${diffDays !== 1 ? 's' : ''}`);
+    if (diffHours > 0) differenceStr.push(`${diffHours} hour${diffHours !== 1 ? 's' : ''}`);
+    if (diffMinutes > 0) differenceStr.push(`${diffMinutes} minute${diffMinutes !== 1 ? 's' : ''}`);
+    if (diffSeconds > 0) differenceStr.push(`${diffSeconds} second${diffSeconds !== 1 ? 's' : ''}`);
+    
+    if (differenceStr.length === 0) {
+      differenceStr = ["0 seconds"];
+    }
+    
+    document.getElementById('total-difference').textContent = differenceStr.join(', ');
+    document.getElementById('days-difference').textContent = (diffMs / (1000 * 60 * 60 * 24)).toFixed(6);
+    document.getElementById('hours-difference').textContent = (diffMs / (1000 * 60 * 60)).toFixed(6);
+    document.getElementById('minutes-difference').textContent = (diffMs / (1000 * 60)).toFixed(6);
+    document.getElementById('seconds-difference').textContent = (diffMs / 1000).toFixed(6);
+    
+    document.getElementById('difference-results').style.display = 'block';
+  }
+  
+  // Add/Subtract Time Calculator
+  function calculateAddSubtract() {
+    const baseTime = new Date(document.getElementById('base-time').value);
+    const operation = document.getElementById('operation').value;
+    
+    if (isNaN(baseTime.getTime())) {
+      alert("Please enter a valid base time");
+      return;
+    }
+    
+    const days = parseInt(document.getElementById('add-days').value) || 0;
+    const hours = parseInt(document.getElementById('add-hours').value) || 0;
+    const minutes = parseInt(document.getElementById('add-minutes').value) || 0;
+    const seconds = parseInt(document.getElementById('add-seconds').value) || 0;
+    
+    const resultTime = new Date(baseTime);
+    
+    if (operation === 'add') {
+      resultTime.setDate(resultTime.getDate() + days);
+      resultTime.setHours(resultTime.getHours() + hours);
+      resultTime.setMinutes(resultTime.getMinutes() + minutes);
+      resultTime.setSeconds(resultTime.getSeconds() + seconds);
+    } else {
+      resultTime.setDate(resultTime.getDate() - days);
+      resultTime.setHours(resultTime.getHours() - hours);
+      resultTime.setMinutes(resultTime.getMinutes() - minutes);
+      resultTime.setSeconds(resultTime.getSeconds() - seconds);
+    }
+    
+    document.getElementById('result-time').textContent = resultTime.toLocaleString();
+    document.getElementById('add-subtract-results').style.display = 'block';
+  }
+  
+  // Time Conversion Calculator
+  function convertTime() {
+    const value = parseFloat(document.getElementById('convert-value').value);
+    const fromUnit = document.getElementById('convert-from').value;
+    const toUnit = document.getElementById('convert-to').value;
+    
+    if (isNaN(value) || value < 0) {
+      alert("Please enter a valid positive number");
+      return;
+    }
+    
+    // Convert to seconds first
+    let valueInSeconds;
+    switch (fromUnit) {
+      case 'weeks': valueInSeconds = value * 7 * 24 * 60 * 60; break;
+      case 'days': valueInSeconds = value * 24 * 60 * 60; break;
+      case 'hours': valueInSeconds = value * 60 * 60; break;
+      case 'minutes': valueInSeconds = value * 60; break;
+      case 'seconds': valueInSeconds = value; break;
+    }
+    
+    // Convert to target unit
+    let result;
+    switch (toUnit) {
+      case 'weeks': result = valueInSeconds / (7 * 24 * 60 * 60); break;
+      case 'days': result = valueInSeconds / (24 * 60 * 60); break;
+      case 'hours': result = valueInSeconds / (60 * 60); break;
+      case 'minutes': result = valueInSeconds / 60; break;
+      case 'seconds': result = valueInSeconds; break;
+    }
+    
+    document.getElementById('conversion-result').textContent = `${value} ${fromUnit} = ${result.toFixed(6)} ${toUnit}`;
+    document.getElementById('convert-results').style.display = 'block';
+  }
+  
+  // Event listeners for buttons
+  document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('calculate-difference-btn').addEventListener('click', calculateTimeDifference);
+    document.getElementById('calculate-add-subtract-btn').addEventListener('click', calculateAddSubtract);
+    document.getElementById('convert-time-btn').addEventListener('click', convertTime);
+  });
+</script>
+
+<script>
+  // Toggle desktop dropdown
+  function toggleDesktopDropdown(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    
+    // Close any other open dropdowns
+    document.querySelectorAll('.dropdown.active').forEach(dropdown => {
+      if (dropdown !== event.currentTarget.parentElement) {
+        dropdown.classList.remove('active');
+        dropdown.querySelector('.fa-caret-down').classList.remove('rotate-180');
+      }
+    });
+    
+    // Toggle current dropdown
+    const dropdown = event.currentTarget.parentElement;
+    dropdown.classList.toggle('active');
+    
+    // Rotate caret icon
+    const caret = event.currentTarget.querySelector('.fa-caret-down');
+    caret.classList.toggle('rotate-180');
+  }
+  
+  // Toggle mobile dropdown
+  function toggleMobileDropdown() {
+    const dropdown = document.getElementById('mobileToolsDropdown');
+    dropdown.classList.toggle('active');
+    
+    // Rotate caret icon
+    const caret = dropdown.querySelector('.fa-caret-down');
+    caret.classList.toggle('rotate-180');
+  }
+  
+  // Initialize mobile menu
+  document.addEventListener("DOMContentLoaded", () => {
+    const mobileToggle = document.getElementById('mobileToggle');
+    const mobilePanel = document.getElementById('mobilePanel');
+    
+    mobileToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      mobileToggle.classList.toggle('change');
+      mobilePanel.classList.toggle('show');
+    });
+    
+    // Close menus when clicking outside
+    document.addEventListener('click', (e) => {
+      // Close mobile menu
+      mobileToggle.classList.remove('change');
+      mobilePanel.classList.remove('show');
+      
+      // Close desktop dropdown if clicking outside
+      if (!e.target.closest('.dropdown')) {
+        document.getElementById('desktopToolsDropdown').classList.remove('active');
+        document.querySelector('#desktopToolsDropdown .fa-caret-down').classList.remove('rotate-180');
+      }
+      
+      // Close mobile dropdown if clicking outside
+      if (!e.target.closest('.mobile-dropdown')) {
+        document.getElementById('mobileToolsDropdown').classList.remove('active');
+        document.querySelector('#mobileToolsDropdown .fa-caret-down').classList.remove('rotate-180');
+      }
+    });
+    
+    // Prevent mobile panel from closing when clicking inside it
+    mobilePanel.addEventListener('click', (e) => {
+      e.stopPropagation();
+    });
+    
+    // Search functionality
+    const searchInput = document.querySelector('.search-input');
+    const searchBtn = document.querySelector('.search-btn');
+    
+    const performSearch = () => {
+      const query = searchInput.value.trim();
+      if (query) {
+        window.location.href = `https://21k.tools/search?q=${encodeURIComponent(query)}`;
+      }
+    };
+    
+    searchInput.addEventListener('keypress', e => {
+      if (e.key === 'Enter') performSearch();
+    });
+    
+    searchBtn.addEventListener('click', performSearch);
+  });
+</script>
+</body>
+</html>
