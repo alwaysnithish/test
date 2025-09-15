@@ -9,6 +9,8 @@ urlpatterns = [
     path('video/', include('videodownloader.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 """
+from django.views.decorators.csrf import csrf_exempt
+
 from django.contrib import admin
 from django.urls import path, include,re_path
 from django.conf import settings
@@ -31,7 +33,7 @@ urlpatterns = [
     path('interestcalculator/',views.interest,name='interest'),
     #path('download/', include('videodownloader.urls')),  # Include app URLs at root
     path('convert/',include('fileconverter.urls')),
-    path('pdftools',include('pdftools.urls')),
+    path('pdftools',csrf_exempt(include('pdftools.urls'))),
     re_path(r'^sitemap\.xml$', serve, {'document_root': settings.STATIC_ROOT, 'path': 'sitemap.xml'}),
     re_path(r'^ads\.txt$', serve, {'document_root': settings.STATIC_ROOT, 'path': 'ads.txt'}),
 ]
