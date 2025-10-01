@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-KFN0JYYWDG"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-KFN0JYYWDG');
+</script>
+</script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7334106972896741"
+     crossorigin="anonymous"></script>
+  
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- SEO Title and Meta Description -->
+  <title>About - 21K Tools</title>
+  <meta name="description" content="Calculate age, interest, convert units, work with PDFs, and track time intervals — all free with 21K Tools . No sign-up needed.">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <style>
+    * {
+      margin: 0; 
+      padding: 0; 
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background-attachment: fixed;
+      min-height: 100vh;
+      color: #1a1a1a;
+    }
+    .header {
+      background: white;
+      box-shadow: 0 4px 20px rgba(30, 64, 175, 0.3);
+      position: sticky; 
+      top: 0; 
+      z-index: 1000;
+    }
+    
+    .header-container {
+      max-width: 1200px; 
+      margin: 0 auto; 
+      padding: 0 20px;
+    }
+    
+    .logo-container {
+      display: flex;
+      justify-content: center;
+      padding: 15px 0;
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+      font-size: 28px;
+      font-weight: 800;
+      text-decoration: none;
+      color: #2563eb;
+      gap:8px;
+      transition: transform 0.3s ease;
+    }
+    .logo:hover {
+      transform: scale(1.05);
+    }
+    
+    .logo-icon {
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+      border-radius: 102px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      color: white;
+      box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
+    }
+
+    .header-actions-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 0px 10px;
+      gap: 10px;
+    }
+    
+    .search-box {
+      position: relative; 
+      flex-grow: 1;
+      max-width: 700px;
+      width:100%;
+      margin: 0 auto;
+    }
+    .search-input {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.8);
+      border: 2px solid rgba(59, 130, 246, 0.2);
+      border-radius: 30px;
+      padding: 12px 50px 12px 20px;
+      font-size: 15px;
+      transition: all 0.3s ease;
+    }
+    
+    .search-input:focus {
+      outline: none;
+      background: rgba(255, 255, 255, 0.95);
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+    }
+    
+    .search-btn {
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+      border: none;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      color: white;
+      cursor: pointer;
+      font-size: 16px;
+      transition: all 0.3s ease;
+    }
+    
+    .search-btn:hover {
+      transform: translateY(-50%) scale(1.1);
+      box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4);
+    }
+    .mobileToggle {
+      cursor: pointer;
+      padding: 10px;
+      display: none;
+    }
+    
+    .bar1, .bar2, .bar3 {
+      width: 23px; 
+      height: 2px; 
+      background-color: #1e3a8a;
+      margin: 6px 0; 
+      transition: 0.4s;
+    }
+    
+    .change .bar1 { transform: translate(0, 8px) rotate(-45deg); }
+    .change .bar2 { opacity: 0; }
+    .change .bar3 { transform: translate(0, -8px) rotate(45deg); }
+
+    .nav-menu {
+      display: flex; 
+      gap: 10px; 
+      margin-top: 15px; 
+      padding-bottom: 15px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    
+    .nav-link {
+      color: #1e40af;
+      padding: 8px 15px;
+      border-radius: 20px;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .nav-link:hover, .nav-link.active {
+      background: rgba(59, 130, 246, 0.2);
+      color: #1e40af;
+    }
+
+    .mobile-panel {
+      display: none; 
+      flex-direction: column; 
+      gap: 15px;
+      background: white; 
+      padding: 20px; 
+      position: absolute;
+      top: 100%; 
+      left: 0; 
+      width: 100%;
+      animation: slideDown 0.4s ease-in-out;
+      z-index: 999;
+      box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+    }
+    
+    .mobile-panel.show { display: flex; }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+     .main-content {
+      flex: 1; 
+      padding: 40px 20px; 
+      max-width: 1200px;
+      margin: 0 auto; 
+    }
+    
+    .demo-section {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 60px 20px; 
+      border-radius: 20px; 
+      margin: 20px 0;
+      backdrop-filter: blur(10px);
+      text-align: center;
+    }
+    
+    .demo-title {
+      font-size: 2.5rem; 
+      color: white; 
+      margin-bottom: 20px; 
+      font-weight: 700;
+    }
+    
+    .demo-subtitle {
+      font-size: 1.2rem; 
+      color: rgba(255, 255, 255, 0.9); 
+      margin-bottom: 30px;
+    }
+
+    .about-content {
+      background: white;
+      border-radius: 20px;
+      padding: 40px;
+      margin: 40px 0;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+       }
+
+    .about-content h2 {
+      color: #1e3a8a;
+      font-size: 2rem;
+      margin-bottom: 20px;
+      font-weight: 800;
+    }
+
+    .about-content h3 {
+      color: #2563eb;
+      font-size: 1.5rem;
+      margin: 30px 0 15px;
+      font-weight: 700;
+    }
+
+    .about-content p {
+      color: #333;
+      line-height: 1.8;
+      margin-bottom: 20px;
+      font-size: 1.05rem;
+    }
+
+    .about-content ul {
+      margin-left: 20px;
+      margin-bottom: 25px;
+    }
+
+    .about-content li {
+      margin-bottom: 10px;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    .about-content li:before {
+      content: "•";
+      color: #3b82f6;
+        font-weight: bold;
+      display: inline-block;
+      width: 1em;
+      margin-left: -1em;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 25px;
+      margin: 30px 0;
+    }
+
+    .feature-card {
+      background: #f8fafc;
+      border-radius: 15px;
+      padding: 25px;
+      transition: transform 0.3s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .feature-card i {
+      font-size: 2.5rem;
+      color: #3b82f6;
+      margin-bottom: 15px;
+      display: inline-block;
+    }
+
+    .feature-card h4 {
+      font-size: 1.3rem;
+      color: #1e40af;
+      margin-bottom: 10px;
+    }
+   .page-nav {
+      background: #f8fafc;
+      padding: 15px 0;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+    
+    .page-nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    .page-nav-link {
+      font-weight: 600;
+      font-size: 16px;
+      color: #2563eb;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      background: rgba(37, 99, 235, 0.1);
+      border-radius: 8px;
+      transition: background 0.3s ease;
+    }
+    
+    .page-nav-link:hover {
+      background: rgba(37, 99, 235, 0.15);
+      color: #1d4ed8;
+    }
+    /* Dropdown menu for More Tools - Click to open */
+    .dropdown {
+    position: relative;
+    display: inline-block;
+    }
+    .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: 200px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    border-radius: 12px;
+    z-index: 1;
+    padding: 10px 0;
+    grid-template-columns: 1fr;
+    gap: 5px;
+    }
+    
+    .dropdown.active .dropdown-content {
+    display: grid;
+    }
+    
+    .dropdown-content a {
+    color: #1e40af;
+    padding: 10px 20px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.8s ease;
+    }
+    
+    .dropdown-content a:hover {
+    background: rgba(59, 130, 246, 0.1);
+    }
+     /* Mobile dropdown - Column Layout */
+    .mobile-dropdown-content {
+    display: none;
+    padding-left: 20px;
+    margin-top: 10px;
+    flex-direction: column;
+    gap: 10px;
+    }
+    
+    .mobile-dropdown.active .mobile-dropdown-content {
+    display: flex;
+    }
+    
+    .mobile-dropdown-content a {
+    color: #1e40af;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 15px;
+    border-radius: 20px;
+    transition: all 0.9s ease;
+    }
+    
+    .mobile-dropdown-content a:hover {
+    background: rgba(59, 130, 246, 0.1);
+    }
+    
+    /* Caret rotation */
+    .rotate-180 {
+    transform: rotate(540deg);
+    transition: transform 2s ease;
+    }
+    @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+    }
+     .footer {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+      color: white; 
+      margin-top: 0;
+    }
+    
+    .footer-container {
+      max-width: 1200px; 
+      margin: 0 auto; 
+      padding: 50px 20px 20px;
+    }
+    
+    .footer-content {
+      display: grid; 
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 40px; 
+      margin-bottom: 40px;
+    }
+    
+    .footer-section h3 {
+      color: #60a5fa; 
+      font-size: 18px; 
+      font-weight: 600; 
+      margin-bottom: 20px;
+    }
+    .footer-links {
+      list-style: none;
+    }
+    
+    .footer-links li {
+      margin-bottom: 10px;
+    }
+    
+    .footer-links a {
+      color: rgba(255, 255, 255, 0.8); 
+      text-decoration: none; 
+      transition: color 0.3s ease;
+    }
+    
+    .footer-links a:hover { 
+      color: #60a5fa; 
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 20px 0; 
+      display: flex; 
+      justify-content: space-between;
+      align-items: center; 
+      flex-wrap: wrap; 
+      gap: 15px;
+    }
+    
+    .footer-brand {
+      display: flex; 
+      align-items: center; 
+      gap: 10px;
+    }
+    .footer-brand-icon {
+      width: 38px; 
+      height: 38px; 
+      background: #3b82f6;
+      border-radius: 20px; 
+      display: flex; 
+      align-items: center;
+      justify-content: center; 
+      font-weight: bold;
+    }
+    
+    .social-links {
+      display: flex; 
+      gap: 15px;
+    }
+    
+    .social-link {
+      width: 40px; 
+      height: 40px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%; 
+      display: flex;
+      align-items: center; 
+      justify-content: center;
+      color: white; 
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    
+    .social-link:hover {
+      background: #3b82f6; 
+      transform: translateY(-2px);
+    }
+
+    /* Responsive styles */
+    @media (max-width: 1024px) {
+      .tool-detail-content {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav-menu { 
+        display: none; 
+      }
+      
+      .mobileToggle {
+        display: block;
+      }
+      
+      .demo-title { 
+        font-size: 2rem; 
+      }
+      
+      .footer-bottom { 
+        flex-direction: column; 
+        text-align: center; 
+      }
+      
+      .footer-content {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 30px;
+      }
+      .tool-detail {
+        padding: 30px 20px;
+      }
+
+      .tool-detail-title {
+        font-size: 1.8rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .header-container, .footer-container {
+        padding-left: 15px; 
+        padding-right: 15px;
+      }
+      
+      .search-input { 
+        min-width: 150px; 
+      }
+
+      .tool-detail {
+        padding: 25px 15px;
+      }
+
+      .tool-detail-title {
+        font-size: 1.6rem;
+      }
+
+      .tool-detail-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 28px;
+      }
+    }
+  </style>
+</head>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "21K Tools ",
+  "url": "https://21k.tools/"
+}
+</script>
+<body>
+
+<header class="header">
+  <div class="header-container">
+    <div class="logo-container">
+      <a href="https://21k.tools" class="logo">
+        <div class="logo-icon">21K</div>
+        <span>Tools</span>
+      </a>
+    </div>
+    
+    <div class="header-actions-container">
+      <div class="search-box">
+        <input type="text" class="search-input" placeholder="Search tools...">
+        <button class="search-btn"><i class="fas fa-search"></i></button>
+      </div>
+      <div class="mobileToggle" id="mobileToggle">
+        <div class="bar1"></div>
+        <div class="bar2"></div>
+        <div class="bar3"></div>
+      </div>
+    </div>
+    <nav class="header-nav">
+      <div class="nav-menu">
+       <a href="https://21k.tools" class="nav-link"><i class="fas fa-home"></i> Home</a>
+        
+        <div class="dropdown" id="desktopToolsDropdown">
+          <a href="#" class="nav-link" onclick="toggleDesktopDropdown(event)"><i class="fas fa-tools"></i> More Tools <i class="fas fa-caret-down"></i></a>
+          
+          <div class="dropdown-content">
+           <a href="https://pdf.21k.tools"><i class="fas fa-file-pdf"></i> PDF Tools</a>
+            <a href="https://time.21k.tools"><i class="fas fa-clock"></i> Time Tools</a>
+            <a href="https://fileconverter.21k.tools"><i class="fas fa-file"></i> File Converter</a>
+            <a href="https://imageresizer.21k.tools"><i class="fas fa-image"></i> Image Resizer</a>
+            <a href="https://ai.21k.tools"><i class="fas fa-robot"></i> AI Generator</a>
+            <a href="https://age.21k.tools"><i class="fas fa-birthday-cake"></i> Age Calculator</a>
+            <a href="https://interest.21k.tools"><i class="fas fa-percentage"></i> Interest Calculator</a>
+            <a href="https://unit.21k.tools"><i class="fas fa-balance-scale"></i> Unit Converter</a>
+            <a href="https://timecalc.21k.tools"><i class="fas fa-stopwatch"></i> Time Calculator</a>
+           </div>
+        
+        </div>
+        <a href="https://blog.21k.tools/" class="nav-link"><i class="fas fa-blog"></i> Blogs</a>
+        <a href="/help" class="nav-link"><i class="fas fa-question-circle"></i> Help Center</a>
+        <a href="mailto:contact@21k.tools" class="nav-link"><i class="fas fa-envelope"></i> Contact</a>
+      </div>
+    </nav>
+    
+    <div class="mobile-panel" id="mobilePanel">
+      <a href="https://21k.tools" class="nav-link"><i class="fas fa-home"></i> Home</a>
+      
+      <div class="mobile-dropdown" id="mobileToolsDropdown">
+        <a href="#" class="nav-link" onclick="toggleMobileDropdown()"><i class="fas fa-tools"></i> More Tools <i class="fas fa-caret-down"></i></a>
+        <div class="mobile-dropdown-content">
+         <a href="https://pdf.21k.tools"><i class="fas fa-file-pdf"></i> PDF Tools</a>
+          <a href="https://time.21k.tools"><i class="fas fa-clock"></i> Time Tools</a>
+          <a href="https://fileconverter.21k.tools"><i class="fas fa-file"></i> File Converter</a>
+          <a href="https://imageresizer.21k.tools"><i class="fas fa-image"></i> Image Resizer</a>
+          <a href="https://ai.21k.tools"><i class="fas fa-robot"></i> AI Generator</a>
+          <a href="https://age.21k.tools"><i class="fas fa-birthday-cake"></i> Age Calculator</a>
+          <a href="https://interest.21k.tools"><i class="fas fa-percentage"></i> Interest Calculator</a>
+          <a href="https://unit.21k.tools"><i class="fas fa-balance-scale"></i> Unit Converter</a>
+          <a href="https://timecalc.21k.tools"><i class="fas fa-stopwatch"></i> Time Calculator</a>
+          </div>
+      </div>
+      <a href="https://blog.21k.tools/" class="nav-link"><i class="fas fa-blog"></i> Blog</a>
+      <a href="/help" class="nav-link"><i class="fas fa-question-circle"></i> Help Center</a>
+      <a href="mailto:contact@21k.tools" class="nav-link"><i class="fas fa-envelope"></i> Contact</a>
+    </div>
+  </div>
+</header>
+
+<main class="main-content">
+  <section class="demo-section">
+    <h1 class="demo-title">About 21K Tools</h1>
+    <p class="demo-subtitle">Your trusted source for free online utilities</p>
+     <a href="https://21k.tools" class="page-nav-link">
+      <i class="fas fa-home"></i> Home<p style="color:white;">/About</p></a>
+    
+    
+  </section>
+  
+  <div class="about-content">
+    <h2>Welcome to 21K Tools</h2>
+    <p>Your all-in-one hub for free, powerful, and easy-to-use online tools that simplify everyday digital tasks. Whether you need to convert files, resize images, calculate interest, manage PDFs, or generate AI content, 21K Tools brings everything together in a seamless platform designed for speed, precision, and convenience.</p>
+    
+    <p>At 21K Tools, we believe technology should make life easier, not more complicated. In a world where productivity is key, people waste hours switching between different websites and apps for simple tasks. That's why we built 21K Tools — a centralized platform offering a variety of online utility tools accessible with a single click. No sign-ups. No downloads. No hidden fees. Just instant solutions.</p>
+    
+    <h3>Our Story</h3>
+    <p>The idea of 21K Tools was born from a simple frustration: why should users struggle to find reliable, ad-free tools for basic tasks like converting a PDF or calculating an age? With so many fragmented services online, we envisioned a unified platform where anyone — from students and freelancers to business professionals — could get their work done faster and smarter.</p>
+    
+    <p>What started as a small collection of utility tools has now evolved into a growing ecosystem of calculators, converters, and smart assistants. Today, 21K Tools serves thousands of users daily, simplifying tasks that would otherwise consume valuable time and energy.</p>
+    
+    <h3>Our Mission</h3>
+    <p>Our mission is to democratize access to essential digital tools by making them:</p>
+    <ul>
+      <li><strong>Completely Free:</strong> No subscriptions, no paywalls, no intrusive ads.</li>
+      <li><strong>Simple to Use:</strong> Clean, intuitive interfaces designed for everyone.</li>
+     = <li><strong>Reliable & Fast:</strong> High-performance tools that deliver results instantly.</li>
+      <li><strong>Privacy-Focused:</strong> We don't track personal data or force sign-ups. Your tasks are processed securely in your browser.</li>
+    </ul>
+    
+    <p>We aim to empower individuals, students, businesses, and content creators with a one-stop solution that saves time, enhances productivity, and eliminates the hassle of searching for dependable online utilities.</p>
+    
+    <h3>What Makes 21K Tools Unique?</h3>
+    
+    <div class="feature-grid">
+      <div class="feature-card">
+        <i class="fas fa-layer-group"></i>
+        <h4>Unified Platform</h4>
+        <p>Unlike websites that focus on just one category, 21K Tools offers a diverse range of utilities under one roof.</p>
+      </div>
+      <div class="feature-card">
+        <i class="fas fa-bolt"></i>
+        <h4>Instant Access</h4>
+        <p>All tools are accessible without registration or login. Just visit, use, and get instant results.</p>
+      </div>
+      <div class="feature-card">
+        <i class="fas fa-mobile-alt"></i>
+        <h4>Optimized for All Devices</h4>
+        <p>Our tools are designed to provide a smooth experience across all devices.</p>
+      </div>
+      <div class="feature-card">
+        <i class="fas fa-lock"></i>
+        <h4>Privacy First</h4>
+        <p>Your files and data stay private. Most tasks are processed directly in your browser.</p>
+      </div>
+    </div>
+    
+    <h3>Our Featured Tools</h3>
+    <p>At 21K Tools, we are continuously expanding our toolset. Some of our most popular utilities include:</p>
+    <ul>
+      <li><strong>File Converter:</strong> Convert between 100+ formats, including documents, images, audio, and videos.</li>
+      <li><strong>Image Resizer:</strong> Resize, compress, and optimize images while preserving quality.</li>
+        <li><strong>PDF Toolkit:</strong> Merge, split, compress, and convert PDFs with ease.</li>
+      <li><strong>AI Content Generator:</strong> Create high-quality articles, product descriptions, and marketing content.</li>
+      <li><strong>Age Calculator:</strong> Accurately calculate age in years, months, and days.</li>
+      <li><strong>Interest Calculator:</strong> Compute simple and compound interest for loans and investments.</li>
+      <li><strong>Unit Converter:</strong> Convert between measurement units, including real-time currency conversion.</li>
+      <li><strong>Time Calculator:</strong> Calculate date differences, add/subtract time, and manage time zones.</li>
+    </ul>
+    
+    <h3>Our Vision for the Future</h3>
+    <p>We envision 21K Tools becoming the largest free online utility platform globally, where millions of users can find the tools they need without the hassle of subscriptions, advertisements, or complex user flows.</p>
+    
+    <p>Our future roadmap includes:</p>
+    <ul>
+      <li>Introducing more advanced AI-driven tools</li>
+      <li>Expanding into niche calculators and industry-specific utilities</li>
+      <li>Launching browser extensions for even quicker access</li>
+      <li>Providing offline versions of popular tools</li>
+      <li>Maintaining a strict focus on privacy and ethical data usage</li>
+    </ul>
+    
+    <h3>Community-Driven Growth</h3>
+    <p>At 21K Tools, we consider our users as our biggest asset. Your feedback shapes the development of our tools. We invite our community to suggest new tool ideas, report bugs, and share their experiences. This collaborative approach ensures we always align with real-world needs.</p>
+    
+    <p>You can connect with us via:</p>
+    <ul>
+      <li>Email: contact@21k.tools</li>
+      <li>Twitter/X: @21KTools</li>
+      <li>Instagram: @21K.Tools</li>
+      <li>YouTube: @21KTools</li>
+    </ul>
+    
+    <h3>Why 21K?</h3>
+    <p>The name 21K represents simplicity, scalability, and modernity — a platform that keeps growing with user needs while maintaining the speed and clarity that today's fast-paced world demands. We want to become your go-to destination for useful tools, all under one unified brand.</p>
+  </div>
+</main>
+<footer class="footer">
+  <div class="footer-container">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>Popular Tools</h3>
+        <ul class="footer-links">
+          <li><a href="https://age.21k.tools"><i class="fas fa-birthday-cake"></i> Age Calculator</a></li>
+          <li><a href="https://interest.21k.tools"><i class="fas fa-percentage"></i> Interest Calculator</a></li>
+          <li><a href="https://pdf.21k.tools"><i class="fas fa-file-pdf"></i> PDF Toolkit</a></li>
+          <li><a href="https://unit.21k.tools"><i class="fas fa-balance-scale"></i> Unit Converter</a></li>
+          <li><a href="https://timecalc.21k.tools"><i class="fas fa-stopwatch"></i> Time Calculator</a></li>
+          <li><a href="https://finance.21k.tools"><i class="fas fa-chart-line"></i> Financial Calculator</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>Categories</h3>
+        <ul class="footer-links">
+          <li><a href="https://calculators.21k.tools"><i class="fas fa-calculator"></i> Calculators</a></li>
+          <li><a href="https://pdf.21k.tools"><i class="fas fa-file-pdf"></i> PDF Tools</a></li>
+          <li><a href="https://converter.21k.tools"><i class="fas fa-exchange-alt"></i> Converters</a></li>
+          <li><a href="https://time.21k.tools"><i class="fas fa-clock"></i> Time Tools</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>Support</h3>
+        <ul class="footer-links">
+          <li><a href="/help"><i class="fas fa-question-circle"></i> Help Center</a></li>
+          <li><a href="mailto:contact@21k.tools"><i class="fas fa-envelope"></i> Contact Us</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>Company</h3>
+        <ul class="footer-links">
+          <li><a href="/about"><i class="fas fa-info-circle"></i> About Us</a></li>
+          <li><a href="/privacypolicy"><i class="fas fa-shield-alt"></i> Privacy Policy</a></li>
+          <li><a href="/termsandconditions"><i class="fas fa-file-contract"></i> Terms</a></li>
+          <li><a href="https://blog.21k.tools/"><i class="fas fa-blog"></i> Blogs</a></li>
+           </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-brand">
+        <div class="footer-brand-icon">21K</div>
+        <span>&copy; 2025 21K Tools. All rights reserved.</span>
+      </div>
+      <div class="social-links">
+        <a href="https://x.com/@21ktools" class="social-link" title="Twitter"><i class="fab fa-twitter"></i></a>
+        <a href="https://instagram.com/@21k.tools" class="social-link" title="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="https://youtube.com/@21ktools" class="social-link" title="YouTube"><i class="fab fa-youtube"></i></a>
+        <a href="#" class="social-link" title="Facebook"><i class="fab fa-facebook"></i></a>
+      </div>
+    </div>
+  </div>
+</footer>
+      
+
+      <script>
+      // Toggle desktop dropdown
+      function toggleDesktopDropdown(event) {
+      event.preventDefault();
+      event.stopPropagation();
+      
+      // Close any other open dropdowns
+      document.querySelectorAll('.dropdown.active').forEach(dropdown => {
+      if (dropdown !== event.currentTarget.parentElement) {
+      dropdown.classList.remove('active');
+      dropdown.querySelector('.fa-caret-down').classList.remove('rotate-180');
+      }
+      });
+      
+      // Toggle current dropdown
+      const dropdown = event.currentTarget.parentElement;
+      dropdown.classList.toggle('active');
+        // Rotate caret icon
+      const caret = event.currentTarget.querySelector('.fa-caret-down');
+      caret.classList.toggle('rotate-180');
+      }
+      
+      // Close dropdowns when clicking outside
+      document.addEventListener('click', (e) => {
+      if (!e.target.closest('.dropdown')) {
+      document.querySelectorAll('.dropdown.active').forEach(dropdown => {
+      dropdown.classList.remove('active');
+      dropdown.querySelector('.fa-caret-down').classList.remove('rotate-180');
+      });
+      }
+      });
+      // Toggle mobile dropdown
+      function toggleMobileDropdown() {
+      const dropdown = document.getElementById('mobileToolsDropdown');
+      dropdown.classList.toggle('active');
+      
+      // Rotate caret icon
+      const caret = dropdown.querySelector('.fa-caret-down');
+      caret.classList.toggle('rotate-180');
+      }
+      
+      // Close dropdowns when clicking outside
+      document.addEventListener("DOMContentLoaded", () => {
+      const mobileToggle = document.getElementById('mobileToggle');
+      const mobilePanel = document.getElementById('mobilePanel');
+      
+      mobileToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      mobileToggle.classList.toggle('change');
+      mobilePanel.classList.toggle('show');
+      });
+      
+      document.addEventListener('click', (e) => {
+      // Close mobile menu
+       mobileToggle.classList.remove('change');
+      mobilePanel.classList.remove('show');
+      
+      // Close desktop dropdown if clicking outside
+      if (!e.target.closest('.dropdown')) {
+      document.getElementById('desktopToolsDropdown').classList.remove('active');
+      document.querySelector('#desktopToolsDropdown .fa-caret-down').classList.remove('rotate-180');
+      }
+      
+      // Close mobile dropdown if clicking outside
+      if (!e.target.closest('.mobile-dropdown')) {
+      document.getElementById('mobileToolsDropdown').classList.remove('active');
+      document.querySelector('#mobileToolsDropdown .fa-caret-down').classList.remove('rotate-180');
+      }
+      });
+      
+      // Prevent mobile panel from closing when clicking inside it
+      mobilePanel.addEventListener('click', (e) => {
+      e.stopPropagation();
+      });
+      
+      // Search functionality
+      const searchInput = document.querySelector('.search-input');
+      const searchBtn = document.querySelector('.search-btn');
+      
+      const performSearch = () => {
+      const query = searchInput.value.trim();
+      if (query) {
+      window.location.href = `https://21k.tools/search?q=${encodeURIComponent(query)}`;
+      }
+      };
+      
+      searchInput.addEventListener('keypress', e => {
+      if (e.key === 'Enter') performSearch();
+      });
+      
+      searchBtn.addEventListener('click', performSearch);
+      });
+      </script>
+</body>
+</html>

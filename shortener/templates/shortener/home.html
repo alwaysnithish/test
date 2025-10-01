@@ -1,0 +1,1864 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Shortener - Free Online Link Shortener | 21K Tools</title>
+    <meta name="description" content="Free URL shortener with advanced analytics. Create short links, track clicks, and manage your URLs with our professional link shortening service.">
+    
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-attachment: fixed;
+            min-height: 100vh;
+            color: #1a1a1a;
+            line-height: 1.6;
+        }
+
+        /* Header Styles */
+        .header {
+            background: white;
+            box-shadow: 0 4px 20px rgba(30, 64, 175, 0.3);
+            position: sticky; 
+            top: 0; 
+            z-index: 1000;
+        }
+        
+        .header-container {
+            max-width: 1200px; 
+            margin: 0 auto; 
+            padding: 0 20px;
+        }
+        
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 28px;
+            font-weight: 800;
+            text-decoration: none;
+            color: #2563eb;
+            gap: 8px;
+            transition: transform 0.3s ease;
+        }
+        .logo:hover {
+            transform: scale(1.05);
+        }
+        
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            border-radius: 102px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: white;
+            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
+        }
+
+        .header-actions-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 0px 10px;
+            gap: 10px;
+        }
+        
+        .search-box {
+            position: relative; 
+            flex-grow: 1;
+            max-width: 700px;
+            width: 100%;
+            margin: 0 auto;
+        }
+        .search-input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            border: 2px solid rgba(59, 130, 246, 0.2);
+            border-radius: 30px;
+            padding: 12px 50px 12px 20px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.95);
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+        }
+        
+        .search-btn {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            border: none;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .search-btn:hover {
+            transform: translateY(-50%) scale(1.1);
+            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4);
+        }
+        .mobileToggle {
+            cursor: pointer;
+            padding: 10px;
+            display: none;
+        }
+        
+        .bar1, .bar2, .bar3 {
+            width: 23px; 
+            height: 2px; 
+            background-color: #1e3a8a;
+            margin: 6px 0; 
+            transition: 0.4s;
+        }
+        
+        .change .bar1 { transform: translate(0, 8px) rotate(-45deg); }
+        .change .bar2 { opacity: 0; }
+        .change .bar3 { transform: translate(0, -8px) rotate(45deg); }
+
+        .nav-menu {
+            display: flex; 
+            gap: 10px; 
+            margin-top: 15px; 
+            padding-bottom: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .nav-link {
+            color: #1e40af;
+            padding: 8px 15px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .nav-link:hover, .nav-link.active {
+            background: rgba(59, 130, 246, 0.2);
+            color: #1e40af;
+        }
+
+        .mobile-panel {
+            display: none; 
+            flex-direction: column; 
+            gap: 15px;
+            background: white; 
+            padding: 20px; 
+            position: absolute;
+            top: 100%; 
+            left: 0; 
+            width: 100%;
+            animation: slideDown 0.4s ease-in-out;
+            z-index: 999;
+            box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+        }
+        
+        .mobile-panel.show { display: flex; }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Dropdown menu for More Tools */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: white;
+            min-width: 200px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            border-radius: 12px;
+            z-index: 1;
+            padding: 10px 0;
+            grid-template-columns: 1fr;
+            gap: 5px;
+        }
+        
+        .dropdown.active .dropdown-content {
+            display: grid;
+        }
+        
+        .dropdown-content a {
+            color: #1e40af;
+            padding: 10px 20px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.8s ease;
+        }
+        
+        .dropdown-content a:hover {
+            background: rgba(59, 130, 246, 0.1);
+        }
+
+        /* Mobile dropdown */
+        .mobile-dropdown-content {
+            display: none;
+            padding-left: 20px;
+            margin-top: 10px;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .mobile-dropdown.active .mobile-dropdown-content {
+            display: flex;
+        }
+        
+        .mobile-dropdown-content a {
+            color: #1e40af;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 15px;
+            border-radius: 20px;
+            transition: all 0.9s ease;
+        }
+        
+        .mobile-dropdown-content a:hover {
+            background: rgba(59, 130, 246, 0.1);
+        }
+        
+        .rotate-180 {
+            transform: rotate(540deg);
+            transition: transform 2s ease;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .main-content {
+            background: white;
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+            margin: 20px 0;
+            backdrop-filter: blur(10px);
+        }
+
+        .shortener-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .shortener-header h1 {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: white;
+            font-weight: 700;
+        }
+
+        .shortener-header h1 i {
+            margin-right: 15px;
+            color: white;
+        }
+
+        .shortener-header p {
+            font-size: 1.2rem;
+            color: white;
+            font-weight: 400;
+        }
+
+        /* Form Styles */
+        .form-section {
+            background: linear-gradient(135deg, #f8f9ff 0%, #f0f4ff 100%);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            border: 2px solid #e6f3ff;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #333;
+            font-size: 1.1rem;
+        }
+
+        .form-group label i {
+            margin-right: 8px;
+            color: #667eea;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 15px rgba(102, 126, 234, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn i {
+            margin-right: 8px;
+        }
+
+        /* Alert Styles */
+        .alert {
+            padding: 25px;
+            border-radius: 15px;
+            margin: 25px 0;
+            font-weight: 500;
+            border: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .alert-success {
+            background: linear-gradient(135deg, #e8f5e8 0%, #d4edda 100%);
+            color: #155724;
+            border-left: 5px solid #28a745;
+        }
+
+        .alert-danger {
+            background: linear-gradient(135deg, #ffe6e6 0%, #fdd8d8 100%);
+            color: #721c24;
+            border-left: 5px solid #dc3545;
+        }
+
+        .alert h5 {
+            color: #155724;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .alert h5 i {
+            margin-right: 10px;
+            color: #28a745;
+        }
+
+        .input-group {
+            display: flex;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .input-group input {
+            flex: 1;
+            border-right: none;
+            border-radius: 12px 0 0 12px;
+        }
+
+        .input-group .btn {
+            border-radius: 0 12px 12px 0;
+            padding: 15px 20px;
+            background: linear-gradient(135deg, #6c757d, #5a6268);
+            border: 2px solid #6c757d;
+            color: white;
+        }
+
+        .input-group .btn:hover {
+            background: linear-gradient(135deg, #5a6268, #495057);
+            transform: none;
+            box-shadow: none;
+        }
+
+        .text-danger {
+            color: #dc3545;
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+
+        .text-muted {
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+
+        .text-break {
+            word-break: break-all;
+        }
+
+        /* About Section */
+        .about-section {
+            padding: 60px 0;
+            margin-top: 40px;
+        }
+
+        .info-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: 1px solid #e9ecef;
+        }
+
+        .info-card h2 {
+            color: #667eea;
+            font-size: 2rem;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .info-card h2 i {
+            font-size: 1.8rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, #f8f9ff 0%, #e6f3ff 100%);
+            padding: 30px;
+            border-radius: 15px;
+            border: 2px solid #667eea;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(102, 126, 234, 0.15);
+        }
+
+        .feature-card .icon {
+            font-size: 3rem;
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+
+        .feature-card p {
+            color: #6c757d;
+            line-height: 1.6;
+        }
+
+        /* FAQ Styles */
+        .faq-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .faq-item {
+            background: white;
+            border-radius: 15px;
+            border: 2px solid #e9ecef;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .faq-item:hover {
+            border-color: #667eea;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.1);
+        }
+
+        .faq-question {
+            padding: 25px;
+            background: linear-gradient(135deg, #f8f9ff 0%, #e6f3ff 100%);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background: linear-gradient(135deg, #e6f3ff 0%, #dae8ff 100%);
+        }
+
+        .faq-question h3 {
+            color: #667eea;
+            font-size: 1.2rem;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .faq-toggle {
+            color: #667eea;
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-toggle {
+            transform: rotate(45deg);
+        }
+
+        .faq-answer {
+            padding: 0 25px;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .faq-item.active .faq-answer {
+            padding: 25px;
+            max-height: 500px;
+        }
+
+        .faq-answer p {
+            color: #6c757d;
+            line-height: 1.7;
+            margin: 0;
+        }
+
+        /* Footer Styles */
+        .footer {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+            color: white; 
+            margin-top: 0;
+        }
+        
+        .footer-container {
+            max-width: 1200px; 
+            margin: 0 auto; 
+            padding: 50px 20px 20px;
+        }
+        
+        .footer-content {
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px; 
+            margin-bottom: 40px;
+        }
+        
+        .footer-section h3 {
+            color: #60a5fa; 
+            font-size: 18px; 
+            font-weight: 600; 
+            margin-bottom: 20px;
+        }
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.8); 
+            text-decoration: none; 
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover { 
+            color: #60a5fa; 
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 20px 0; 
+            display: flex; 
+            justify-content: space-between;
+            align-items: center; 
+            flex-wrap: wrap; 
+            gap: 15px;
+        }
+        
+        .footer-brand {
+            display: flex; 
+            align-items: center; 
+            gap: 10px;
+        }
+        .footer-brand-icon {
+            width: 38px; 
+            height: 38px; 
+            background: #3b82f6;
+            border-radius: 20px; 
+            display: flex; 
+            align-items: center;
+            justify-content: center; 
+            font-weight: bold;
+        }
+        
+        .social-links {
+            display: flex; 
+            gap: 15px;
+        }
+        
+        .social-link {
+            width: 40px; 
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%; 
+            display: flex;
+            align-items: center; 
+            justify-content: center;
+            color: white; 
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .social-link:hover {
+            background: #3b82f6; 
+            transform: translateY(-2px);
+        }
+
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .nav-menu { 
+                display: none; 
+            }
+            
+            .mobileToggle {
+                display: block;
+            }
+            
+            .shortener-header h1 { 
+                font-size: 2.5rem; 
+            }
+            
+            .main-content {
+                padding: 25px;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .footer-bottom { 
+                flex-direction: column; 
+                text-align: center; 
+            }
+            
+            .footer-content {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 30px;
+            }
+
+            .faq-question {
+                padding: 20px;
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+            
+            .faq-item.active .faq-answer {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header-container, .footer-container {
+                padding-left: 15px; 
+                padding-right: 15px;
+            }
+            
+            .search-input { 
+                min-width: 150px; 
+            }
+
+            .container {
+                padding: 15px;
+            }
+
+            .main-content {
+                padding: 20px 15px;
+            }
+
+            .shortener-header h1 {
+                font-size: 2rem;
+            }
+
+            .form-section {
+                padding: 30px 20px;
+            }
+
+            .info-card {
+                padding: 25px;
+                margin-bottom: 25px;
+            }
+            
+            .info-card h2 {
+                font-size: 1.6rem;
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="header-container">
+            <div class="logo-container">
+                <a href="https://21k.tools" class="logo">
+                    <div class="logo-icon">21K</div>
+                    <span>Tools</span>
+                </a>
+            </div>
+            
+            <div class="header-actions-container">
+                <div class="search-box">
+                    <input type="text" class="search-input" placeholder="Search tools...">
+                    <button class="search-btn"><i class="fas fa-search"></i></button>
+                </div>
+                <div class="mobileToggle" id="mobileToggle">
+                    <div class="bar1"></div>
+                    <div class="bar2"></div>
+                    <div class="bar3"></div>
+                </div>
+            </div>
+            <nav class="header-nav">
+                <div class="nav-menu">
+                    <a href="https://21k.tools" class="nav-link"><i class="fas fa-home"></i> Home</a>
+                    
+                    <div class="dropdown" id="desktopToolsDropdown">
+                        <a href="#" class="nav-link" onclick="toggleDesktopDropdown(event)"><i class="fas fa-tools"></i> More Tools <i class="fas fa-caret-down"></i></a>
+                        
+                        <div class="dropdown-content">
+                            <a href="https://21k.tools/pdftools"><i class="fas fa-file-pdf"></i> PDF Tools</a>
+                            <a href="https://21k.tools/shortener" class="active"><i class="fas fa-link"></i> URL Shortener</a>
+                            <a href="https://21k.tools/timecalculator"><i class="fas fa-clock"></i> Time Tools</a>
+                            <a href="https://21k.tools/fileconverter"><i class="fas fa-file"></i> File Converter</a>
+                            <a href="https://21k.tools/imageresizer"><i class="fas fa-image"></i> Image Resizer</a>
+                            <a href="https://ai.21k.tools"><i class="fas fa-robot"></i> AI Generator</a>
+                            <a href="https://21k.tools/agecalculator"><i class="fas fa-birthday-cake"></i> Age Calculator</a>
+                            <a href="https://21k.tools/interestcalculator"><i class="fas fa-percentage"></i> Interest Calculator</a>
+                            <a href="https://21k.tools/unitconverter"><i class="fas fa-balance-scale"></i> Unit Converter</a>
+                            <a href="https://21k.tools/timecalculator"><i class="fas fa-stopwatch"></i> Time Calculator</a>
+                        </div>
+                    </div>
+                    <a href="https://21k.tools/blog" class="nav-link"><i class="fas fa-blog"></i> Blogs</a>
+                    <a href="/help" class="nav-link"><i class="fas fa-question-circle"></i> Help Center</a>
+                    <a href="mailto:contact@21k.tools" class="nav-link"><i class="fas fa-envelope"></i> Contact</a>
+                </div>
+            </nav>
+            
+            <div class="mobile-panel" id="mobilePanel">
+                <a href="https://21k.tools" class="nav-link"><i class="fas fa-home"></i> Home</a>
+                
+                <div class="mobile-dropdown" id="mobileToolsDropdown">
+                    <a href="#" class="nav-link" onclick="toggleMobileDropdown()"><i class="fas fa-tools"></i> More Tools <i class="fas fa-caret-down"></i></a>
+                    <div class="mobile-dropdown-content">
+                        <a href="https://21k.tools/pdftools"><i class="fas fa-file-pdf"></i> PDF Tools</a>
+                        <a href="https://21k.tools/shortener" class="active"><i class="fas fa-link"></i> URL Shortener</a>
+                        <a href="https://21k.tools/timecalculator"><i class="fas fa-clock"></i> Time Tools</a>
+                        <a href="https://21k.tools/fileconverter"><i class="fas fa-file"></i> File Converter</a>
+                        <a href="https://21k.tools/imageresizer"><i class="fas fa-image"></i> Image Resizer</a>
+                        <a href="https://ai.21k.tools"><i class="fas fa-robot"></i> AI Generator</a>
+                        <a href="https://21k.tools/agecalculator"><i class="fas fa-birthday-cake"></i> Age Calculator</a>
+                        <a href="https://21k.tools/interestcalculator"><i class="fas fa-percentage"></i> Interest Calculator</a>
+                        <a href="https://21k.tools/unitconverter"><i class="fas fa-balance-scale"></i> Unit Converter</a>
+                        <a href="https://21k.tools/timecalculator"><i class="fas fa-stopwatch"></i> Time Calculator</a>
+                    </div>
+                </div>
+                <a href="https://blog.21k.tools/" class="nav-link"><i class="fas fa-blog"></i> Blog</a>
+                <a href="/help" class="nav-link"><i class="fas fa-question-circle"></i> Help Center</a>
+                <a href="mailto:contact@21k.tools" class="nav-link"><i class="fas fa-envelope"></i> Contact</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="shortener-header">
+            <h1><i class="fas fa-link"></i>URL Shortener</h1>
+            <p>Create short, memorable links with advanced analytics and tracking</p>
+        </div>
+
+        <div class="main-content">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">
+                        <i class="fas fa-info-circle"></i>{{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            <div class="form-section">
+                <h2 style="color: #667eea; margin-bottom: 20px; text-align: center;">
+                    <i class="fas fa-scissors"></i> Shorten Your URL
+                </h2>
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="{{ form.original_url.id_for_label }}">
+                            <i class="fas fa-globe"></i>Enter Your URL
+                        </label>
+                        {{ form.original_url }}
+                        {% if form.original_url.errors %}
+                            <div class="text-danger">
+                                {% for error in form.original_url.errors %}
+                                    <small>{{ error }}</small>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div style="text-align: center;">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-magic"></i>Shorten URL
+                        </button>
+                    </div>
+                </form>
+                               {% if short_url %}
+                <div class="alert alert-success mt-4">
+                    <h5><i class="fas fa-check-circle"></i> Your shortened URL is ready!</h5>
+                    
+                    <div class="form-group">
+                        <label><strong><i class="fas fa-share-alt"></i> Short URL (for sharing):</strong></label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" 
+                                   value="{{ request.get_host }}{% url 'shortener:redirect' short_url.short_code %}" 
+                                   readonly id="shortUrl">
+                            <button class="btn" type="button" onclick="copyToClipboard('shortUrl')">
+                                <i class="fas fa-copy"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label><strong><i class="fas fa-chart-bar"></i> Analytics URL (private):</strong></label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" 
+                                   value="{{ request.get_host }}{% url 'shortener:analytics' short_url.secret_code %}" 
+                                   readonly id="analyticsUrl">
+                            <button class="btn" type="button" onclick="copyToClipboard('analyticsUrl')">
+                                <i class="fas fa-copy"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+                     <div class="form-group">
+        <label><strong><i class="fas fa-qrcode"></i> QR Code:</strong></label>
+        <div class="qr-code-section">
+            {% if qr_code_data %}
+            <div class="qr-code-container">
+                <img src="{{ qr_code_data }}" alt="QR Code for {{ short_url.short_code }}" class="qr-code-image">
+                <div class="qr-actions">
+                    <a href="{% url 'shortener:download_qr' short_url.short_code %}" class="btn btn-primary">
+                        <i class="fas fa-download"></i> Download QR Code
+                    </a>
+                    <button class="btn" type="button" onclick="shareQRCode()">
+                        <i class="fas fa-share-alt"></i> Share
+                    </button>
+                </div>
+            </div>
+            {% else %}
+            <div class="text-muted">
+                <i class="fas fa-info-circle"></i> QR code generation is temporarily unavailable.
+            </div>
+            {% endif %}
+        </div>
+    </div>
+                    <small class="text-muted">
+                        <i class="fas fa-info-circle"></i> 
+                        Keep the analytics URL private - it allows anyone to view click statistics for this link.
+                    </small>
+                </div>
+                {% endif %}
+            </div>
+
+           
+    
+        </div>
+    </div>
+<!-- About URL Shortener Section -->
+<div class="about-section">
+  <div class="container">
+    <div class="about-content">
+      
+      <!-- How to Use Section -->
+      <div class="info-card">
+        <h2><i class="fas fa-question-circle"></i>How to Use Our URL Shortener</h2>
+        <div class="steps-container">
+          <div class="step">
+            <div class="step-number">1</div>
+            <div class="step-content">
+              <h3><i class="fas fa-paste"></i>Paste Your Long URL</h3>
+              <p>Copy any long URL from your browser or application and paste it into our URL shortening input field. Our system accepts URLs of any length and automatically validates them to ensure they are properly formatted and accessible. Make sure to include the full protocol (http:// or https://) for guaranteed proper redirection.</p>
+            </div>
+          </div>
+          
+          <div class="step">
+            <div class="step-number">2</div>
+            <div class="step-content">
+              <h3><i class="fas fa-edit"></i>Customize Your Short Link (Optional)</h3>
+              <p>Create memorable, branded short URLs using our custom alias feature. Instead of a randomly generated string, specify your own custom alias that reflects your brand or campaign. Custom aliases must be 4-30 characters using letters, numbers, and hyphens. Our system checks availability in real-time.</p>
+            </div>
+          </div>
+          
+          <div class="step">
+            <div class="step-number">3</div>
+            <div class="step-content">
+              <h3><i class="fas fa-rocket"></i>Generate and Share</h3>
+              <p>Click "Shorten URL" to instantly create your shortened link. Our high-performance infrastructure processes requests in milliseconds. Copy your shortened URL with one click and share it across social media, emails, texts, or printed materials. All shortened URLs remain active indefinitely with no expiration date.</p>
+            </div>
+          </div>
+          
+          <div class="step">
+            <div class="step-number">4</div>
+            <div class="step-content">
+              <h3><i class="fas fa-chart-bar"></i>Track Performance</h3>
+              <p>Monitor your shortened URLs through our private analytics dashboard. Each shortened link comes with a unique, private analytics URL that provides detailed insights into click patterns, geographic distribution, and referral sources. Access real-time analytics to track campaign performance and understand audience behavior.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- What We Offer Section -->
+      <div class="info-card">
+        <h2><i class="fas fa-star"></i>What We Offer</h2>
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="icon"><i class="fas fa-link"></i></div>
+            <h3>URL Shortening</h3>
+            <p>Transform long, cumbersome URLs into short, manageable links perfect for sharing anywhere space is limited.</p>
+          </div>
+          
+          <div class="feature-card">
+            <div class="icon"><i class="fas fa-chart-line"></i></div>
+            <h3>Private Analytics</h3>
+            <p>Track clicks, geographic data, and referral sources through secure, private analytics URLs accessible only to you.</p>
+          </div>
+          
+          <div class="feature-card">
+            <div class="icon"><i class="fas fa-qrcode"></i></div>
+            <h3>QR Code Generation</h3>
+            <p>Automatically generate QR codes for your shortened URLs, perfect for print materials and offline marketing.</p>
+          </div>
+          
+          <div class="feature-card">
+            <div class="icon"><i class="fas fa-infinity"></i></div>
+            <h3>Unlimited Links</h3>
+            <p>Create as many shortened URLs as you need with no restrictions or limitations on the number of links.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Analytics Section -->
+      <div class="info-card">
+        <h2><i class="fas fa-chart-line"></i>Advanced Analytics & Tracking</h2>
+        <div class="analytics-content">
+          <p>Our comprehensive analytics platform provides detailed insights into how your shortened URLs are performing. Each shortened link comes with a private analytics dashboard accessible only through your unique analytics URL.</p>
+          
+          <div class="analytics-grid">
+            <div class="analytics-category">
+              <h3><i class="fas fa-mouse-pointer"></i>Click Analytics</h3>
+              <div class="analytics-features">
+                <div class="analytics-item">
+                  <i class="fas fa-chart-bar"></i>
+                  <div>
+                    <h4>Total Click Tracking</h4>
+                    <p>Monitor the total number of clicks your shortened URL receives with daily, weekly, and monthly breakdowns.</p>
+                  </div>
+                </div>
+                
+                <div class="analytics-item">
+                  <i class="fas fa-clock"></i>
+                  <div>
+                    <h4>Time-Based Analysis</h4>
+                    <p>Identify peak engagement times with hourly click distribution to optimize your content sharing schedule.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="analytics-category">
+              <h3><i class="fas fa-globe-americas"></i>Geographic Analytics</h3>
+              <div class="analytics-features">
+                <div class="analytics-item">
+                  <i class="fas fa-map-marker-alt"></i>
+                  <div>
+                    <h4>Country-Level Data</h4>
+                    <p>See which countries are generating the most clicks with interactive maps and country-specific metrics.</p>
+                  </div>
+                </div>
+                
+                <div class="analytics-item">
+                  <i class="fas fa-city"></i>
+                  <div>
+                    <h4>City-Level Insights</h4>
+                    <p>Drill down to city-level data for major metropolitan areas to understand regional engagement patterns.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="privacy-notice">
+            <h4><i class="fas fa-lock"></i>Analytics Privacy</h4>
+            <p>Your analytics data is completely private and accessible only through your unique analytics URL. We never share your analytics data with third parties, and all click information is anonymized to protect user privacy while still providing valuable insights into your link performance.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- QR Code Section -->
+      <div class="info-card">
+        <h2><i class="fas fa-qrcode"></i>QR Code Generation</h2>
+        <div class="qr-content">
+          <p>Every shortened URL automatically includes a downloadable QR code, making it easy to bridge the gap between digital and physical marketing.</p>
+          
+          <div class="qr-features">
+            <div class="qr-feature-item">
+              <i class="fas fa-download"></i>
+              <h4>Instant Generation</h4>
+              <p>QR codes are generated instantly alongside your shortened URL, ready for immediate download and use.</p>
+            </div>
+            
+            <div class="qr-feature-item">
+              <i class="fas fa-paint-brush"></i>
+              <h4>High Quality</h4>
+              <p>Download high-resolution QR codes in PNG format suitable for both digital use and professional printing.</p>
+            </div>
+            
+            <div class="qr-feature-item">
+              <i class="fas fa-mobile-alt"></i>
+              <h4>Mobile Optimized</h4>
+              <p>QR codes are optimized for mobile scanning with appropriate size and contrast for reliable scanning.</p>
+            </div>
+          </div>
+          
+          <div class="qr-usage">
+            <h4><i class="fas fa-lightbulb"></i>Usage Ideas</h4>
+            <ul>
+              <li><strong>Business Cards:</strong> Include QR codes that direct to your website or portfolio</li>
+              <li><strong>Marketing Materials:</strong> Add QR codes to brochures, flyers, and posters</li>
+              <li><strong>Product Packaging:</strong> Direct customers to tutorials, reviews, or additional information</li>
+              <li><strong>Event Materials:</strong> Use QR codes on tickets and programs for additional content</li>
+              <li><strong>Restaurant Menus:</strong> Provide links to nutritional information or special offers</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- FAQ Section -->
+      <div class="info-card">
+        <h2><i class="fas fa-question-circle"></i>Frequently Asked Questions</h2>
+        <div class="faq-container">
+          <div class="faq-item">
+            <div class="faq-question">
+              <h3><i class="fas fa-link"></i>How long do shortened URLs remain active?</h3>
+              <i class="fas fa-plus faq-toggle"></i>
+            </div>
+            <div class="faq-answer">
+              <p>All shortened URLs created through our service remain active indefinitely. We do not automatically delete or deactivate links due to inactivity. Your shortened links will continue to work for as long as our service is operational, ensuring that your shared links remain accessible to your audience.</p>
+            </div>
+          </div>
+          
+          <div class="faq-item">
+            <div class="faq-question">
+              <h3><i class="fas fa-chart-bar"></i>What analytics data do you track?</h3>
+              <i class="fas fa-plus faq-toggle"></i>
+            </div>
+            <div class="faq-answer">
+              <p>We track total click counts, geographic location data (country and city level), referral sources, timestamps of clicks, and device information. All analytics data is presented through an intuitive dashboard that updates in real-time. Your analytics are completely private and accessible only through your unique analytics URL.</p>
+            </div>
+          </div>
+          
+          <div class="faq-item">
+            <div class="faq-question">
+              <h3><i class="fas fa-lock"></i>Is my analytics data private?</h3>
+              <i class="fas fa-plus faq-toggle"></i>
+            </div>
+            <div class="faq-answer">
+              <p>Yes, your analytics data is completely private. Each shortened URL generates a unique, secret analytics URL that only you can access. We never share your analytics data with third parties, and all personal information is anonymized to protect user privacy while still providing valuable insights into your link performance.</p>
+            </div>
+          </div>
+          
+          <div class="faq-item">
+            <div class="faq-question">
+              <h3><i class="fas fa-qrcode"></i>Do you provide QR codes for shortened URLs?</h3>
+              <i class="fas fa-plus faq-toggle"></i>
+            </div>
+            <div class="faq-answer">
+              <p>Yes, every shortened URL automatically includes a downloadable QR code. The QR code is generated instantly and can be downloaded in high-resolution PNG format. This feature is perfect for print materials, business cards, event promotions, and any situation where you want to bridge digital and physical marketing.</p>
+            </div>
+          </div>
+          
+          <div class="faq-item">
+            <div class="faq-question">
+              <h3><i class="fas fa-ban"></i>Are there any restrictions on the URLs I can shorten?</h3>
+              <i class="fas fa-plus faq-toggle"></i>
+            </div>
+            <div class="faq-answer">
+              <p>We do not allow shortening of URLs that point to malicious, illegal, or inappropriate content. All URLs are automatically scanned for security threats before being shortened. We reserve the right to block or remove any shortened URLs that violate our terms of service or pose security risks to our users.</p>
+            </div>
+          </div>
+          
+          <div class="faq-item">
+            <div class="faq-question">
+              <h3><i class="fas fa-pencil-alt"></i>Can I edit a shortened URL after creating it?</h3>
+              <i class="fas fa-plus faq-toggle"></i>
+            </div>
+            <div class="faq-answer">
+              <p>Currently, shortened URLs cannot be edited once created. The destination URL and custom alias are permanent. If you need to change the destination or alias, you'll need to create a new shortened URL. This ensures consistency and prevents broken links for users who may have already saved or shared your shortened URL.</p>
+            </div>
+          </div>
+          
+          <div class="faq-item">
+            <div class="faq-question">
+              <h3><i class="fas fa-dollar-sign"></i>Is this URL shortener completely free to use?</h3>
+              <i class="fas fa-plus faq-toggle"></i>
+            </div>
+            <div class="faq-answer">
+              <p>Yes, our URL shortening service is completely free with no limitations. You can create unlimited shortened URLs, access comprehensive analytics, and generate QR codes without any cost. We may introduce premium features in the future, but the core URL shortening functionality will always remain free to use.</p>
+            </div>
+          </div>
+          
+          <div class="faq-item">
+            <div class="faq-question">
+              <h3><i class="fas fa-tachometer-alt"></i>How fast is the URL redirection?</h3>
+              <i class="fas fa-plus faq-toggle"></i>
+            </div>
+            <div class="faq-answer">
+              <p>Our URL redirection is extremely fast, with average response times under 100 milliseconds. We use optimized server infrastructure and global content delivery networks to ensure that your shortened URLs redirect instantly, providing a seamless experience for anyone clicking your links regardless of their location.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<style>
+/* About Section Styles */
+.about-section {
+  padding: 60px 0;
+  margin-top: 40px;
+}
+
+.about-content {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.info-card {
+  background: white;
+  border-radius: 20px;
+  padding: 40px;
+  margin-bottom: 40px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  border: 1px solid #e9ecef;
+}
+
+.info-card h2 {
+  color: #667eea;
+  font-size: 2rem;
+  margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.info-card h2 i {
+  font-size: 1.8rem;
+}
+
+/* Steps Styles */
+.steps-container {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.step {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 25px;
+  background: linear-gradient(135deg, #f8f9ff 0%, #e6f3ff 100%);
+  border-radius: 15px;
+  border-left: 5px solid #667eea;
+}
+
+.step-number {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.step-content h3 {
+  color: #667eea;
+  margin-bottom: 10px;
+  font-size: 1.3rem;
+}
+
+.step-content p {
+  color: #6c757d;
+  line-height: 1.7;
+}
+
+/* Features Grid */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 25px;
+  margin-top: 30px;
+}
+
+.feature-card {
+  background: linear-gradient(135deg, #f8f9ff 0%, #e6f3ff 100%);
+  padding: 30px;
+  border-radius: 15px;
+  border: 2px solid #667eea;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(102, 126, 234, 0.15);
+}
+
+.feature-card .icon {
+  font-size: 3rem;
+  color: #667eea;
+  margin-bottom: 20px;
+}
+
+.feature-card h3 {
+  color: #667eea;
+  margin-bottom: 15px;
+  font-size: 1.4rem;
+}
+
+.feature-card p {
+  color: #6c757d;
+  line-height: 1.6;
+}
+
+/* Analytics Styles */
+.analytics-content {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.analytics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 30px;
+  margin-top: 20px;
+}
+
+.analytics-category {
+  background: #f8f9fa;
+  padding: 25px;
+  border-radius: 15px;
+  border: 2px solid #e9ecef;
+}
+
+.analytics-category h3 {
+  color: #667eea;
+  margin-bottom: 20px;
+  font-size: 1.3rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.analytics-features {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.analytics-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  padding: 15px;
+  background: white;
+  border-radius: 10px;
+  border-left: 3px solid #667eea;
+}
+
+.analytics-item i {
+  font-size: 1.5rem;
+  color: #667eea;
+  margin-top: 5px;
+  flex-shrink: 0;
+}
+
+.analytics-item h4 {
+  color: #667eea;
+  margin-bottom: 8px;
+  font-size: 1.1rem;
+}
+
+.analytics-item p {
+  color: #6c757d;
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
+
+.privacy-notice {
+  background: linear-gradient(135deg, #e8f5e8 0%, #d4edda 100%);
+  padding: 25px;
+  border-radius: 15px;
+  border-left: 5px solid #28a745;
+  margin-top: 20px;
+}
+
+.privacy-notice h4 {
+  color: #155724;
+  margin-bottom: 15px;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.privacy-notice p {
+  color: #155724;
+  line-height: 1.6;
+}
+
+/* QR Code Styles */
+.qr-content {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.qr-features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.qr-feature-item {
+  background: white;
+  padding: 25px;
+  border-radius: 15px;
+  text-align: center;
+  border: 2px solid #e9ecef;
+  transition: all 0.3s ease;
+}
+
+.qr-feature-item:hover {
+  border-color: #667eea;
+  transform: translateY(-3px);
+}
+
+.qr-feature-item i {
+  font-size: 2.5rem;
+  color: #667eea;
+  margin-bottom: 15px;
+}
+
+.qr-feature-item h4 {
+  color: #667eea;
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+}
+
+.qr-feature-item p {
+  color: #6c757d;
+  line-height: 1.5;
+}
+
+.qr-usage {
+  background: #f8f9fa;
+  padding: 25px;
+  border-radius: 15px;
+  margin-top: 20px;
+}
+
+.qr-usage h4 {
+  color: #667eea;
+  margin-bottom: 20px;
+  font-size: 1.3rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.qr-usage ul {
+  list-style: none;
+  padding: 0;
+}
+
+.qr-usage li {
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(102, 126, 234, 0.1);
+  color: #6c757d;
+  line-height: 1.6;
+}
+
+.qr-usage li:last-child {
+  border-bottom: none;
+}
+
+.qr-usage li strong {
+  color: #667eea;
+}
+/* QR Code Styles */
+.qr-code-section {
+    margin-top: 15px;
+}
+
+.qr-code-container {
+    text-align: center;
+    padding: 20px;
+    background: linear-gradient(135deg, #f8f9ff 0%, #e6f3ff 100%);
+    border-radius: 15px;
+    border: 2px solid #667eea;
+}
+
+.qr-code-image {
+    max-width: 200px;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    margin-bottom: 15px;
+}
+
+.qr-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.qr-actions .btn {
+    padding: 10px 20px;
+    font-size: 14px;
+}
+
+@media (max-width: 480px) {
+    .qr-actions {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .qr-actions .btn {
+        width: 100%;
+        max-width: 200px;
+    }
+}
+/* FAQ Styles */
+.faq-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.faq-item {
+  background: white;
+  border-radius: 15px;
+  border: 2px solid #e9ecef;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.faq-item:hover {
+  border-color: #667eea;
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.1);
+}
+
+.faq-question {
+  padding: 25px;
+  background: linear-gradient(135deg, #f8f9ff 0%, #e6f3ff 100%);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+.faq-question:hover {
+  background: linear-gradient(135deg, #e6f3ff 0%, #dae8ff 100%);
+}
+
+.faq-question h3 {
+  color: #667eea;
+  font-size: 1.2rem;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.faq-question h3 i {
+  font-size: 1.1rem;
+}
+
+.faq-toggle {
+  color: #667eea;
+  font-size: 1.2rem;
+  transition: transform 0.3s ease;
+}
+
+.faq-item.active .faq-toggle {
+  transform: rotate(45deg);
+}
+
+.faq-answer {
+  padding: 0 25px;
+  max-height: 0;
+  overflow: hidden;
+  transition: all 0.4s ease;
+}
+
+.faq-item.active .faq-answer {
+  padding: 25px;
+  max-height: 500px;
+}
+
+.faq-answer p {
+  color: #6c757d;
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .about-section {
+    padding: 40px 0;
+  }
+  
+  .info-card {
+    padding: 25px;
+    margin-bottom: 25px;
+  }
+  
+  .info-card h2 {
+    font-size: 1.6rem;
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
+  
+  .steps-container {
+    gap: 20px;
+  }
+  
+  .step {
+    flex-direction: column;
+    text-align: center;
+    gap: 15px;
+  }
+  
+  .features-grid,
+  .analytics-grid,
+  .qr-features {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .analytics-item {
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
+  }
+  
+  .faq-question {
+    padding: 20px;
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+  }
+  
+  .faq-item.active .faq-answer {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .info-card {
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .info-card h2 {
+    font-size: 1.4rem;
+  }
+  
+  .step {
+    padding: 20px;
+  }
+  
+  .feature-card,
+  .analytics-category,
+  .qr-feature-item {
+    padding: 20px;
+  }
+  
+  .faq-question {
+    padding: 15px;
+  }
+  
+  .faq-item.active .faq-answer {
+    padding: 15px;
+  }
+}
+</style>
+
+<script>
+// FAQ Toggle Functionality
+document.addEventListener('DOMContentLoaded', function() {
+  const faqItems = document.querySelectorAll('.faq-item');
+  
+  faqItems.forEach(item => {
+    const question = item.querySelector('.faq-question');
+    
+    question.addEventListener('click', function() {
+      const isActive = item.classList.contains('active');
+      
+      // Close all other FAQ items
+      faqItems.forEach(otherItem => {
+        if (otherItem !== item) {
+          otherItem.classList.remove('active');
+        }
+      });
+      
+      // Toggle current item
+      if (isActive) {
+        item.classList.remove('active');
+      } else {
+        item.classList.add('active');
+      }
+    });
+  });
+  
+  // Add animation on scroll for info cards
+  const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -100px 0px'
+  };
+  
+  const observer = new IntersectionObserver(function(entries) {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, observerOptions);
+  
+  // Observe all info cards
+  document.querySelectorAll('.info-card').forEach(card => {
+    card.style.opacity = '0';
+    card.style.transform = 'translateY(30px)';
+    card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    observer.observe(card);
+  });
+});
+</script>
+    
+<footer class="footer">
+  <div class="footer-container">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>Popular Tools</h3>
+        <ul class="footer-links">
+          <li><a href="https://21k.tools/agecalculator"><i class="fas fa-birthday-cake"></i> Age Calculator</a></li>
+          <li><a href="https://21k.tools/interestcalculator"><i class="fas fa-percentage"></i> Interest Calculator</a></li>
+          <li><a href="https://21k.tools/pdftools"><i class="fas fa-file-pdf"></i> PDF Toolkit</a></li>
+          <li><a href="https://21k.tools/unitconverter"><i class="fas fa-balance-scale"></i> Unit Converter</a></li>
+          <li><a href="https://21k.tools/timecalculator"><i class="fas fa-stopwatch"></i> Time Calculator</a></li>
+          <li><a href="https://finance.21k.tools"><i class="fas fa-chart-line"></i> Financial Calculator</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>Categories</h3>
+        <ul class="footer-links">
+          <li><a href="https://calculators.21k.tools"><i class="fas fa-calculator"></i> Calculators</a></li>
+          <li><a href="https://21k.tools/pdftools"><i class="fas fa-file-pdf"></i> PDF Tools</a></li>
+          <li><a href="https://converter.21k.tools"><i class="fas fa-exchange-alt"></i> Converters</a></li>
+          <li><a href="https://21k.tools/timecalculator"><i class="fas fa-clock"></i> Time Tools</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>Support</h3>
+        <ul class="footer-links">
+          <li><a href="/help"><i class="fas fa-question-circle"></i> Help Center</a></li>
+          <li><a href="mailto:contact@21k.tools"><i class="fas fa-envelope"></i> Contact Us</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>Company</h3>
+        <ul class="footer-links">
+          <li><a href="https://21k.tools/about"><i class="fas fa-info-circle"></i> About Us</a></li>
+          <li><a href="https://21k.tools/privacypolicy"><i class="fas fa-shield-alt"></i> Privacy Policy</a></li>
+          <li><a href="https://21k.tools/termsandconditions"><i class="fas fa-file-contract"></i> Terms</a></li>
+          <li><a href="https://21k.tools/blog"><i class="fas fa-blog"></i> Blogs</a></li>
+           </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-brand">
+        <div class="footer-brand-icon">21K</div>
+        <span>&copy; 2025 21K Tools. All rights reserved.</span>
+      </div>
+      <div class="social-links">
+        <a href="https://x.com/@21ktools" class="social-link" title="Twitter"><i class="fab fa-twitter"></i></a>
+        <a href="https://instagram.com/@21k.tools" class="social-link" title="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="https://youtube.com/@21ktools" class="social-link" title="YouTube"><i class="fab fa-youtube"></i></a>
+        <a href="#" class="social-link" title="Facebook"><i class="fab fa-facebook"></i></a>
+      </div>
+    </div>
+  </div>
+</footer>
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobileToggle').addEventListener('click', function() {
+            this.classList.toggle('change');
+            document.getElementById('mobilePanel').classList.toggle('show');
+        });
+
+        // Dropdown functionality
+        function toggleDesktopDropdown(event) {
+            event.preventDefault();
+            document.getElementById('desktopToolsDropdown').classList.toggle('active');
+        }
+
+        function toggleMobileDropdown() {
+            document.getElementById('mobileToolsDropdown').classList.toggle('active');
+        }
+
+        // FAQ toggle functionality
+        function toggleFAQ(element) {
+            const faqItem = element.parentElement;
+            faqItem.classList.toggle('active');
+            
+            const toggleIcon = element.querySelector('.faq-toggle i');
+            if (faqItem.classList.contains('active')) {
+                toggleIcon.classList.remove('fa-plus');
+                toggleIcon.classList.add('fa-minus');
+            } else {
+                toggleIcon.classList.remove('fa-minus');
+                toggleIcon.classList.add('fa-plus');
+            }
+        }
+        // Share QR Code function
+function shareQRCode() {
+    const shortUrl = document.getElementById('shortUrl').value;
+    
+    if (navigator.share) {
+        navigator.share({
+            title: 'Shortened URL QR Code',
+            text: 'Check out this shortened URL: ' + shortUrl,
+            url: shortUrl
+        }).catch(console.error);
+    } else {
+        // Fallback: copy URL to clipboard
+        copyToClipboard('shortUrl');
+        alert('URL copied to clipboard! You can now share it.');
+    }
+}
+
+        // Copy to clipboard function
+        function copyToClipboard(elementId) {
+            const element = document.getElementById(elementId);
+            element.select();
+            element.setSelectionRange(0, 99999);
+            navigator.clipboard.writeText(element.value);
+            
+            // Show feedback
+            const button = element.nextElementSibling;
+            const originalText = button.innerHTML;
+            button.innerHTML = '<i class="fas fa-check"></i> Copied!';
+            button.classList.remove('btn-outline-secondary');
+            button.classList.add('btn-success');
+            
+            setTimeout(() => {
+                button.innerHTML = originalText;
+                button.classList.remove('btn-success');
+                button.classList.add('btn-outline-secondary');
+            }, 2000);
+        }
+
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', function(event) {
+            const desktopDropdown = document.getElementById('desktopToolsDropdown');
+            if (!desktopDropdown.contains(event.target)) {
+                desktopDropdown.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>
