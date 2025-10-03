@@ -7,12 +7,12 @@ from django.utils import timezone
 def generate_short_code():
     """Generate a random 6-character alphanumeric code"""
     chars = string.ascii_letters + string.digits
-    return ''.join(secrets.choice(chars) for _ in range(6))
+    return ''.join(secrets.choice(chars) for _ in range(5))
 
 def generate_secret_code():
     """Generate a random 8-character alphanumeric code for analytics"""
     chars = string.ascii_letters + string.digits
-    return ''.join(secrets.choice(chars) for _ in range(8))
+    return ''.join(secrets.choice(chars) for _ in range(6))
 
 class ShortURL(models.Model):
     original_url = models.URLField(max_length=2048)
