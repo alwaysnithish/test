@@ -884,7 +884,7 @@
                                    value="{{ request.get_host }}{% url 'shortener:redirect' short_url.short_code %}" 
                                    readonly id="shortUrl">
                             <button class="btn" type="button" onclick="copyToClipboard('shortUrl')">
-                                <i class="fas fa-copy"></i> Copy
+                                <i class="fas fa-copy"></i> 
                             </button>
                         </div>
                     </div>
@@ -896,7 +896,7 @@
                                    value="{{ request.get_host }}{% url 'shortener:analytics' short_url.secret_code %}" 
                                    readonly id="analyticsUrl">
                             <button class="btn" type="button" onclick="copyToClipboard('analyticsUrl')">
-                                <i class="fas fa-copy"></i> Copy
+                                <i class="fas fa-copy"></i> 
                             </button>
                         </div>
                     </div>
@@ -905,7 +905,7 @@
         <div class="qr-code-section">
             {% if qr_code_data %}
             <div class="qr-code-container">
-                <img src="{{ qr_code_data }}" alt="QR Code for {{ short_url.short_code }}" class="qr-code-image">
+                <center><img src="{{ qr_code_data }}" alt="QR Code for {{ short_url.short_code }}" class="qr-code-image"></center>
                 <div class="qr-actions">
                     <a href="{% url 'shortener:download_qr' short_url.short_code %}" class="btn btn-primary">
                         <i class="fas fa-download"></i> Download QR Code
