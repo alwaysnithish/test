@@ -884,7 +884,7 @@
                                    value="{{ request.get_host }}{% url 'shortener:redirect' short_url.short_code %}" 
                                    readonly id="shortUrl">
                             <button class="btn" type="button" onclick="copyToClipboard('shortUrl')">
-                                <i class="fas fa-copy"></i> 
+                                <i class="fas fa-copy"></i> copy
                             </button>
                         </div>
                     </div>
@@ -896,7 +896,7 @@
                                    value="{{ request.get_host }}{% url 'shortener:analytics' short_url.secret_code %}" 
                                    readonly id="analyticsUrl">
                             <button class="btn" type="button" onclick="copyToClipboard('analyticsUrl')">
-                                <i class="fas fa-copy"></i> 
+                                <i class="fas fa-copy"></i> copy
                             </button>
                         </div>
                     </div>
@@ -1480,12 +1480,18 @@
     margin-top: 15px;
 }
 
+
 .qr-code-container {
     text-align: center;
     padding: 20px;
     background: linear-gradient(135deg, #f8f9ff 0%, #e6f3ff 100%);
     border-radius: 15px;
     border: 2px solid #667eea;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 }
 
 .qr-code-image {
@@ -1494,6 +1500,8 @@
     border-radius: 10px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.1);
     margin-bottom: 15px;
+    display: block;
+    margin: 0 auto 15px auto;
 }
 
 .qr-actions {
@@ -1593,7 +1601,20 @@
   line-height: 1.7;
   margin: 0;
 }
-
+@media (max-width: 768px) {
+    .input-group .btn {
+        padding: 15px; /* Make button square */
+        min-width: auto;
+    }
+    
+    .input-group .btn i {
+        margin-right: 0; /* Remove icon spacing */
+    }
+    
+    .input-group .btn span {
+        display: none; /* Hide text on mobile */
+    }
+    }
 /* Responsive Design */
 @media (max-width: 768px) {
   .about-section {
