@@ -2,6 +2,7 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
+    path('', views.blog_list, name='blog_list'),
     # Authentication (Registration disabled)
     # path('register/', views.register_view, name='register'),
     path('login/', views.login_view, name='login'),
@@ -24,6 +25,6 @@ urlpatterns = [
     path('author/<str:username>/', views.author_profile, name='author_profile'),
     
     # Public Blog - IMPORTANT: Empty path MUST come BEFORE slug pattern!
-    path('', views.blog_list, name='blog_list'),  # ← This FIRST
+      # ← This FIRST
     path('<slug:slug>/', views.blog_detail, name='blog_detail'),  # ← This LAST
 ]
