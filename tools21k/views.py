@@ -14,8 +14,7 @@ def termsandconditions(request):
 def about(request):
     return render(request, 'about.html')
 
-def blog(request):
-    return render(request, 'blog.html')
+
 
 def age(request):
     return render(request, 'age.html')

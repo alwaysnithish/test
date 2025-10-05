@@ -30,6 +30,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     
+    # Third-party apps
+    'ckeditor',
+    'ckeditor_uploader',
+    
     # Custom apps
     'main',
     'textutils',
@@ -38,6 +42,8 @@ INSTALLED_APPS = [
     'videodownloader',
     'pdftools',
     'shortener',
+    'qrscanner',
+    'blog',  # Blog app
 ]
 
 MIDDLEWARE = [
@@ -104,14 +110,62 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Media files (uploads)
-# Media Files Configuration
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-# Create downloads directory if not exists
+
+# Create necessary directories if not exists
 os.makedirs(os.path.join(MEDIA_ROOT, 'downloads'), exist_ok=True)
+os.makedirs(os.path.join(MEDIA_ROOT, 'blog_thumbnails'), exist_ok=True)
+os.makedirs(os.path.join(MEDIA_ROOT, 'uploads'), exist_ok=True)
+
+# CKEditor Configuration
+CKEDITOR_UPLOAD_PATH = "uploads/"
+CKEDITOR_IMAGE_BACKEND = "pillow"
+CKEDITOR_JQUERY_URL = 'https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js'
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'Custom',
+        'toolbar_Custom': [
+            ['Bold', 'Italic', 'Underline', 'Strike'],
+            ['Format', 'Styles'],
+            ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent'],
+            ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+            ['Link', 'Unlink'],
+            ['Image', 'Table', 'HorizontalRule'],
+            ['TextColor', 'BGColor'],
+            ['Smiley', 'SpecialChar'],
+            ['Source'],
+            ['Maximize'],
+        ],
+        'height': 400,
+        'width': '100%',
+        'filebrowserUploadUrl': '/ckeditor/upload/',
+        'filebrowserBrowseUrl': '/ckeditor/browse/',
+        'extraPlugins': ','.join([
+            'uploadimage',
+            'image2',
+            'uploadwidget',
+            'widget',
+            'lineutils',
+            'clipboard',
+            'dialog',
+            'dialogui',
+        ]),
+        'removePlugins': 'image',
+        'image2_alignClasses': ['image-left', 'image-center', 'image-right'],
+        'image2_captionedClass': 'image-captioned',
+    },
+}
+
+# Authentication Configuration
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'dashboard'
+LOGOUT_REDIRECT_URL = 'blog_list'
+
 # Video Downloader Config
 VIDEODOWNLOADER_CONFIG = {
     'MAX_FILE_SIZE': 1024 * 1024 * 500,  # 500MB
@@ -132,6 +186,23 @@ CACHES = {
         'TIMEOUT': 3600,  # 1 hour
     }
 }
-
+os.makedirs(os.path.join(MEDIA_ROOT, 'downloads'), exist_ok=True)
+os.makedirs(os.path.join(MEDIA_ROOT, 'blog_thumbnails'), exist_ok=True)
+os.makedirs(os.path.join(MEDIA_ROOT, 'uploads'), exist_ok=True)
+os.makedirs(os.path.join(MEDIA_ROOT, 'author_profiles'), exist_ok=True)
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'your-email@gmail.com'
+EMAIL_HOST_PASSWORD = 'your-app-password'  # NOT your regular password
+DEFAULT_FROM_EMAIL = 'your-email@gmail.com'
+PASSWORD_RESET_TIMEOUT = 86400  # 24 hours
+# File upload settings
+FILE_UPLOAD_MAX_MEMORY_SIZE = 100 * 1024 * 1024  # 100MB
+DATA_UPLOAD_MAX_MEMORY_SIZE = 100 * 1024 * 1024  # 100MB
+# In settings.py
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

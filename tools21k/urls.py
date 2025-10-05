@@ -8,7 +8,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('blog/', views.blog, name='blog'),
+   
     path('agecalculator/', views.age, name='age'),
     path('about/', views.about, name='about'),
     path('help/', views.help, name='help'),
@@ -20,7 +20,14 @@ urlpatterns = [
     path('interestcalculator/', views.interest, name='interest'),
     path('convert/', include('fileconverter.urls')),
     path('pdftools/', include('pdftools.urls')),
-    path('',include('shortener.urls')),
+    path('shortener/', include('shortener.urls')),
+    path('qrscanner/', include('qrscanner.urls')),
+    path('ckeditor/', include('ckeditor_uploader.urls')),
+    path('fileconverter',include('fileconverter.urls')),
+    
+    path('', include('blog.urls')),
+    
+    path('ckeditor/', include('ckeditor_uploader.urls')),
     
     # Serve sitemap and ads.txt files
     re_path(r'^sitemap\.xml$', serve, {
