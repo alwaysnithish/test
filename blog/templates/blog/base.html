@@ -2,114 +2,554 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Blog System{% endblock %}</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
+        * {
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box;
+        }
+        
         body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-attachment: fixed;
             min-height: 100vh;
+            color: #1a1a1a;
             display: flex;
             flex-direction: column;
         }
+
+        .header {
+            background: white;
+            box-shadow: 0 4px 20px rgba(30, 64, 175, 0.3);
+            position: sticky; 
+            top: 0; 
+            z-index: 1000;
+        }
+        
+        .header-container {
+            max-width: 1200px; 
+            margin: 0 auto; 
+            padding: 0 20px;
+        }
+        
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 28px;
+            font-weight: 800;
+            text-decoration: none;
+            color: #2563eb;
+            gap: 8px;
+            transition: transform 0.3s ease;
+        }
+        
+        .logo:hover {
+            transform: scale(1.05);
+        }
+        
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            border-radius: 102px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: white;
+            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
+        }
+
+        .header-actions-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 0px 10px;
+            gap: 10px;
+        }
+        
+        .search-box {
+            position: relative; 
+            flex-grow: 1;
+            max-width: 700px;
+            width: 100%;
+            margin: 0 auto;
+        }
+        
+        .search-input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            border: 2px solid rgba(59, 130, 246, 0.2);
+            border-radius: 30px;
+            padding: 12px 50px 12px 20px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.95);
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+        }
+        
+        .search-btn {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            border: none;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .search-btn:hover {
+            transform: translateY(-50%) scale(1.1);
+            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4);
+        }
+        
+        .mobileToggle {
+            cursor: pointer;
+            padding: 10px;
+            display: none;
+        }
+        
+        .bar1, .bar2, .bar3 {
+            width: 23px; 
+            height: 2px; 
+            background-color: #1e3a8a;
+            margin: 6px 0; 
+            transition: 0.4s;
+        }
+        
+        .change .bar1 { transform: translate(0, 8px) rotate(-45deg); }
+        .change .bar2 { opacity: 0; }
+        .change .bar3 { transform: translate(0, -8px) rotate(45deg); }
+
+        .nav-menu {
+            display: flex; 
+            gap: 10px; 
+            margin-top: 15px; 
+            padding-bottom: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .nav-link {
+            color: #1e40af;
+            padding: 8px 15px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .nav-link:hover, .nav-link.active {
+            background: rgba(59, 130, 246, 0.2);
+            color: #1e40af;
+        }
+
+        .mobile-panel {
+            display: none; 
+            flex-direction: column; 
+            gap: 15px;
+            background: white; 
+            padding: 20px; 
+            position: absolute;
+            top: 100%; 
+            left: 0; 
+            width: 100%;
+            animation: slideDown 0.4s ease-in-out;
+            z-index: 999;
+            box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+        }
+        
+        .mobile-panel.show { display: flex; }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: white;
+            min-width: 200px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            border-radius: 12px;
+            z-index: 1;
+            padding: 10px 0;
+            grid-template-columns: 1fr;
+            gap: 5px;
+        }
+        
+        .dropdown.active .dropdown-content {
+            display: grid;
+        }
+        
+        .dropdown-content a {
+            color: #1e40af;
+            padding: 10px 20px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.8s ease;
+        }
+        
+        .dropdown-content a:hover {
+            background: rgba(59, 130, 246, 0.1);
+        }
+        
+        .mobile-dropdown-content {
+            display: none;
+            padding-left: 20px;
+            margin-top: 10px;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .mobile-dropdown.active .mobile-dropdown-content {
+            display: flex;
+        }
+        
+        .mobile-dropdown-content a {
+            color: #1e40af;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 15px;
+            border-radius: 20px;
+            transition: all 0.9s ease;
+        }
+        
+        .mobile-dropdown-content a:hover {
+            background: rgba(59, 130, 246, 0.1);
+        }
+        
+        .rotate-180 {
+            transform: rotate(540deg);
+            transition: transform 2s ease;
+        }
+
         .content-wrapper {
             flex: 1;
         }
-        .navbar-brand {
+
+        .footer {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+            color: white; 
+            margin-top: 0;
+        }
+        
+        .footer-container {
+            max-width: 1200px; 
+            margin: 0 auto; 
+            padding: 50px 20px 20px;
+        }
+        
+        .footer-content {
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px; 
+            margin-bottom: 40px;
+        }
+        
+        .footer-section h3 {
+            color: #60a5fa; 
+            font-size: 18px; 
+            font-weight: 600; 
+            margin-bottom: 20px;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.8); 
+            text-decoration: none; 
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover { 
+            color: #60a5fa; 
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 20px 0; 
+            display: flex; 
+            justify-content: space-between;
+            align-items: center; 
+            flex-wrap: wrap; 
+            gap: 15px;
+        }
+        
+        .footer-brand {
+            display: flex; 
+            align-items: center; 
+            gap: 10px;
+        }
+        
+        .footer-brand-icon {
+            width: 38px; 
+            height: 38px; 
+            background: #3b82f6;
+            border-radius: 20px; 
+            display: flex; 
+            align-items: center;
+            justify-content: center; 
             font-weight: bold;
         }
-        .blog-card {
-            transition: transform 0.3s, box-shadow 0.3s;
-            height: 100%;
+        
+        .social-links {
+            display: flex; 
+            gap: 15px;
         }
-        .blog-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        
+        .social-link {
+            width: 40px; 
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%; 
+            display: flex;
+            align-items: center; 
+            justify-content: center;
+            color: white; 
+            text-decoration: none;
+            transition: all 0.3s ease;
         }
-        .blog-thumbnail {
-            height: 200px;
-            object-fit: cover;
+        
+        .social-link:hover {
+            background: #3b82f6; 
+            transform: translateY(-2px);
         }
-        .footer {
-            background-color: #f8f9fa;
-            padding: 2rem 0;
-            margin-top: 4rem;
+
+        @media (max-width: 768px) {
+            .nav-menu { 
+                display: none; 
+            }
+            
+            .mobileToggle {
+                display: block;
+            }
+            
+            .footer-bottom { 
+                flex-direction: column; 
+                text-align: center; 
+            }
+            
+            .footer-content {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 30px;
+            }
         }
-        .ck-content img {
-            max-width: 100%;
-            height: auto;
+
+        @media (max-width: 480px) {
+            .header-container, .footer-container {
+                padding-left: 15px; 
+                padding-right: 15px;
+            }
+            
+            .search-input { 
+                min-width: 150px; 
+            }
         }
-        .ck-content img.image-center {
-            display: block;
-            margin: 1rem auto;
-        }
-        .ck-content video {
-            max-width: 100%;
-            display: block;
-            margin: 1rem auto;
-        }
+
+        {% block extra_css %}{% endblock %}
     </style>
-    {% block extra_css %}{% endblock %}
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <a class="navbar-brand" href="{% url 'blog_list' %}">
-                <i class="fas fa-blog"></i> Blog System
+
+<header class="header">
+    <div class="header-container">
+        <div class="logo-container">
+            <a href="https://21k.tools" class="logo">
+                <div class="logo-icon">21K</div>
+                <span>Tools</span>
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'blog_list' %}">Blog</a>
-                    </li>
-                    {% if user.is_authenticated %}
-                        {% if user.is_staff %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'edit_profile' %}">Profile</a>
-                        </li>
-                        {% endif %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'logout' %}">Logout ({{ user.username }})</a>
-                        </li>
-                    {% else %}
-                        <!--li class="nav-item">
-                            <a class="nav-link" href="{% url 'login' %}">Login</a>
-                        </li-->
-                    {% endif %}
+        </div>
+        
+        <div class="header-actions-container">
+            <div class="search-box">
+                <input type="text" class="search-input" placeholder="Search tools...">
+                <button class="search-btn"><i class="fas fa-search"></i></button>
+            </div>
+            <div class="mobileToggle" id="mobileToggle">
+                <div class="bar1"></div>
+                <div class="bar2"></div>
+                <div class="bar3"></div>
+            </div>
+        </div>
+        
+        <nav class="header-nav">
+            <div class="nav-menu">
+                <a href="https://21k.tools" class="nav-link"><i class="fas fa-home"></i> Home</a>
+                
+                <div class="dropdown" id="desktopToolsDropdown">
+                    <a href="#" class="nav-link" onclick="toggleDesktopDropdown(event)"><i class="fas fa-tools"></i> More Tools <i class="fas fa-caret-down"></i></a>
+                    
+                    <div class="dropdown-content">
+                        <a href="https://21k.tools/pdftools"><i class="fas fa-file-pdf"></i> PDF Tools</a>
+                        <a href="https://file21k.tools/fileconverter"><i class="fas fa-file"></i> File Converter</a>
+                        <a href="https://imageresizer.21k.tools"><i class="fas fa-image"></i> Image Resizer</a>
+                        <a href="https://ai.21k.tools"><i class="fas fa-robot"></i> AI Generator</a>
+                        <a href="https://21k.tools/agecalculator/"><i class="fas fa-birthday-cake"></i> Age Calculator</a>
+                        <a href="https://21k.tools/interestcalculator/"><i class="fas fa-percentage"></i> Interest Calculator</a>
+                        <a href="https://21k.tools/unitconverter/"><i class="fas fa-balance-scale"></i> Unit Converter</a>
+                        <a href="https://21k.tools/timecalculator/"><i class="fas fa-stopwatch"></i> Time Calculator</a>
+                    </div>
+                </div>
+                
+                <a href="/blog" class="nav-link active"><i class="fas fa-blog"></i> Blog</a>
+                <a href="/help" class="nav-link"><i class="fas fa-question-circle"></i> Help Center</a>
+                <a href="mailto:contact@21k.tools" class="nav-link"><i class="fas fa-envelope"></i> Contact</a>
+            </div>
+        </nav>
+        
+        <div class="mobile-panel" id="mobilePanel">
+            <a href="https://21k.tools" class="nav-link"><i class="fas fa-home"></i> Home</a>
+            
+            <div class="mobile-dropdown" id="mobileToolsDropdown">
+                <a href="#" class="nav-link" onclick="toggleMobileDropdown()"><i class="fas fa-tools"></i> More Tools <i class="fas fa-caret-down"></i></a>
+                <div class="mobile-dropdown-content">
+                    <a href="https://21k.tools/pdftools"><i class="fas fa-file-pdf"></i> PDF Tools</a>
+                    <a href="https://file21k.tools/fileconverter"><i class="fas fa-file"></i> File Converter</a>
+                    <a href="https://imageresizer.21k.tools"><i class="fas fa-image"></i> Image Resizer</a>
+                    <a href="https://ai.21k.tools"><i class="fas fa-robot"></i> AI Generator</a>
+                    <a href="https://21k.tools/agecalculator/"><i class="fas fa-birthday-cake"></i> Age Calculator</a>
+                    <a href="https://21k.tools/interestcalculator/"><i class="fas fa-percentage"></i> Interest Calculator</a>
+                    <a href="https://21k.tools/unitconverter/"><i class="fas fa-balance-scale"></i> Unit Converter</a>
+                    <a href="https://21k.tools/timecalculator/"><i class="fas fa-stopwatch"></i> Time Calculator</a>
+                </div>
+            </div>
+            
+            <a href="/blog" class="nav-link active"><i class="fas fa-blog"></i> Blog</a>
+            <a href="/help" class="nav-link"><i class="fas fa-question-circle"></i> Help Center</a>
+            <a href="mailto:contact@21k.tools" class="nav-link"><i class="fas fa-envelope"></i> Contact</a>
+        </div>
+    </div>
+</header>
+
+<div class="content-wrapper">
+    {% if messages %}
+        <div class="container mt-3">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% block content %}{% endblock %}
+</div>
+
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Popular Tools</h3>
+                <ul class="footer-links">
+                    <li><a href="https://21k.tools/agecalculator/"><i class="fas fa-birthday-cake"></i> Age Calculator</a></li>
+                    <li><a href="https://21k.tools/interestcalculator/"><i class="fas fa-percentage"></i> Interest Calculator</a></li>
+                    <li><a href="https://21k.tools/pdftools"><i class="fas fa-file-pdf"></i> PDF Toolkit</a></li>
+                    <li><a href="https://21k.tools/unitcalculator/"><i class="fas fa-balance-scale"></i> Unit Converter</a></li>
+                    <li><a href="https://21k.tools/timecalculator"><i class="fas fa-stopwatch"></i> Time Calculator</a></li>
+                    <li><a href="https://21k.tools/financecalculator"><i class="fas fa-chart-line"></i> Financial Calculator</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Categories</h3>
+                <ul class="footer-links">
+                    <li><a href="https://21k.tools/calculators"><i class="fas fa-calculator"></i> Calculators</a></li>
+                    <li><a href="https://21k.tools/pdftools"><i class="fas fa-file-pdf"></i> PDF Tools</a></li>
+                    <li><a href="https://21k.tools/fileconverter"><i class="fas fa-exchange-alt"></i> Converters</a></li>
+                    <li><a href="https://21k.tools/timecalculator/"><i class="fas fa-clock"></i> Time Tools</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Support</h3>
+                <ul class="footer-links">
+                    <li><a href="/help"><i class="fas fa-question-circle"></i> Help Center</a></li>
+                    <li><a href="mailto:contact@21k.tools"><i class="fas fa-envelope"></i> Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Company</h3>
+                <ul class="footer-links">
+                    <li><a href="/about"><i class="fas fa-info-circle"></i> About Us</a></li>
+                    <li><a href="/privacypolicy"><i class="fas fa-shield-alt"></i> Privacy Policy</a></li>
+                    <li><a href="/termsandconditions"><i class="fas fa-file-contract"></i> Terms</a></li>
+                    <li><a href="/blog"><i class="fas fa-blog"></i> Blog</a></li>
                 </ul>
             </div>
         </div>
-    </nav>
-
-    <div class="content-wrapper">
-        {% if messages %}
-            <div class="container mt-3">
-                {% for message in messages %}
-                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-                        {{ message }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                    </div>
-                {% endfor %}
+        <div class="footer-bottom">
+            <div class="footer-brand">
+                <div class="footer-brand-icon">21K</div>
+                <span>&copy; 2025 21K Tools. All rights reserved.</span>
             </div>
-        {% endif %}
-
-        {% block content %}{% endblock %}
-    </div>
-
-    <footer class="footer">
-        <div class="container text-center">
-            <p class="text-muted mb-0">&copy; 2025 Blog System. All rights reserved.</p>
+            <div class="social-links">
+                <a href="https://x.com/@21ktools" class="social-link" title="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="https://instagram.com/21k.tools" class="social-link" title="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="https://youtube.com/@21ktools" class="social-link" title="YouTube"><i class="fab fa-youtube"></i></a>
+                <a href="#" class="social-link" title="Facebook"><i class="fab fa-facebook"></i></a>
+            </div>
         </div>
-    </footer>
+    </div>
+</footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    {% block extra_js %}{% endblock %}
-</body>
-</html>
+<script>
+    function toggleDesktopDropdown(event) {
+        event.preventDefault();
+        event.stopPropagation();
+        
+        document.querySelectorAll('.dropdown.active').forEach(dropdown => {
+            if (dropdown !== event.currentTarget.parentElement) {
+                dropdown.classList.remove('active');
+                dropdown.querySelector('.fa-caret-down').classList.remove('rotate-180');
+            }
+        });
+        
+        const dropdown = event.currentTarget.parentElement;
+        dropdown.classList.toggle('active');
+        
+        const caret = event.currentTarget.querySelector('.fa-caret-down');
+        caret.classList.toggle('rotate-180');
+    }
+    
+ 
