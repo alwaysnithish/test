@@ -37,12 +37,12 @@ INSTALLED_APPS = [
     # Custom apps
     'main',
     'textutils',
-    'fileconverter',
+  #  'fileconverter',
     'imageresizer',
     'videodownloader',
     'pdftools',
-    'shortener',
-    'qrscanner',
+  #  'shortener',
+    #'qrscanner',
     'blog',  # Blog app
 ]
 
