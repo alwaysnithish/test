@@ -23,8 +23,7 @@ urlpatterns = [
     # Author Profile (Public)
     path('author/<str:username>/', views.author_profile, name='author_profile'),
     
-    # Public Blog
-    
-    path('<slug:slug>/', views.blog_detail, name='blog_detail'),
-    path('', views.blog_list, name='blog_list'),
+    # Public Blog - IMPORTANT: Empty path MUST come BEFORE slug pattern!
+    path('', views.blog_list, name='blog_list'),  # ← This FIRST
+    path('<slug:slug>/', views.blog_detail, name='blog_detail'),  # ← This LAST
 ]
