@@ -82,3 +82,4 @@ yt-dlp==2025.6.30
 zipp==3.23.0
 qrcode[pil]>=7.0
 Pillow>=9.0
+django-ckeditor>=6.7.0
