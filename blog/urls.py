@@ -24,6 +24,6 @@ urlpatterns = [
     path('author/<str:username>/', views.author_profile, name='author_profile'),
     
     # Public Blog
-    path('blog/', views.blog_list, name='blog_list'),
-    path('blog/<slug:slug>/', views.blog_detail, name='blog_detail'),
+    path('', views.blog_list, name='blog_list'),
+    path('<slug:slug>/', views.blog_detail, name='blog_detail'),
 ]
