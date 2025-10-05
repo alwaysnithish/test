@@ -240,26 +240,8 @@
 </div>
 
 <div class="blog-container">
-    <div class="search-section">
-        <form method="get" id="searchForm" class="search-form">
-            <div class="input-group">
-                <input type="text" 
-                       name="search" 
-                       class="form-control" 
-                       placeholder="Search posts by title, tags, or category..." 
-                       value="{{ search_query }}"
-                       id="searchInput">
-                <button class="btn" type="submit">
-                    <i class="fas fa-search"></i> Search
-                </button>
-                {% if search_query %}
-                <a href="{% url 'blog_list' %}" class="btn btn-outline-secondary">
-                    <i class="fas fa-times"></i> Clear
-                </a>
-                {% endif %}
-            </div>
-        </form>
-    </div>
+    
+                
 
     {% if search_query %}
     <div class="alert alert-info">
