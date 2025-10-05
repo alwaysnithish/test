@@ -22,10 +22,10 @@ urlpatterns = [
     path('pdftools/', include('pdftools.urls')),
     path('', include('shortener.urls')),
     #path('qrscanner/', include('qrscanner.urls')),
-    path('ckeditor/', include('ckeditor_uploader.urls')),
+    #path('ckeditor/', include('ckeditor_uploader.urls')),
   #  path('fileconverter',include('fileconverter.urls')),
     
-    path('blog', include('blog.urls')),
+    path('blog/', include('blog.urls')),
     
     path('ckeditor/', include('ckeditor_uploader.urls')),
     
