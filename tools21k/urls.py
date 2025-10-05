@@ -28,7 +28,7 @@ urlpatterns = [
     path('blog/', include('blog.urls')),
     
     path('ckeditor/', include('ckeditor_uploader.urls')),
-    
+    path('', include('shortener.urls')),
     # Serve sitemap and ads.txt files
     re_path(r'^sitemap\.xml$', serve, {
         'document_root': settings.STATIC_ROOT, 
