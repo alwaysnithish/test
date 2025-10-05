@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'imageresizer',
     'videodownloader',
     'pdftools',
-  #  'shortener',
+    'shortener',
     #'qrscanner',
     'blog',  # Blog app
 ]
