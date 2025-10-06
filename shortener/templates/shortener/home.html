@@ -43,38 +43,39 @@
             padding: 0 20px;
         }
         
-        .logo-container {
-            display: flex;
-            justify-content: center;
-            padding: 15px 0;
-        }
-        
-        .logo {
-            display: flex;
-            align-items: center;
-            font-size: 28px;
-            font-weight: 800;
-            text-decoration: none;
-            color: #2563eb;
-            gap: 8px;
-            transition: transform 0.3s ease;
-        }
-        .logo:hover {
-            transform: scale(1.05);
-        }
-        
-        .logo-icon {
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
-            border-radius: 102px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            color: white;
-            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
-        }
+     .logo-container {
+     display: flex;
+     justify-content: center;
+     padding: 15px 0;
+     }
+     
+     .logo {
+     display: flex;
+     align-items: center;
+     font-size: 28px;
+     font-weight: 800;
+     text-decoration: none;
+     color: #2563eb;
+     gap:8px;
+     transition: transform 0.3s ease;
+     }
+     
+     .logo:hover {
+     transform: scale(1.05);
+     }
+     
+     .logo-icon {
+     width: 50px;
+     height: 50px;
+     background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+     border-radius: 102px;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     font-size: 20px;
+     color: white;
+     box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
+     }
 
         .header-actions-container {
             display: flex;
@@ -639,7 +640,7 @@
         .footer-brand {
             display: flex; 
             align-items: center; 
-            gap: 10px;
+            gap: 5px;
         }
         .footer-brand-icon {
             width: 38px; 
@@ -881,7 +882,7 @@
                         <label><strong><i class="fas fa-share-alt"></i> Short URL (for sharing):</strong></label>
                         <div class="input-group">
                             <input type="text" class="form-control" 
-                                   value="{{ request.get_host }}{% url 'shortener:redirect' short_url.short_code %}" 
+                                   value="{{ 21k.tools/abc123 }}{% url 'shortener:redirect' short_url.short_code %}" 
                                    readonly id="shortUrl">
                             <button class="btn" type="button" onclick="copyToClipboard('shortUrl')">
                                 <i class="fas fa-copy"></i> Copy
@@ -893,7 +894,7 @@
                         <label><strong><i class="fas fa-chart-bar"></i> Analytics URL (private):</strong></label>
                         <div class="input-group">
                             <input type="text" class="form-control" 
-                                   value="{{ request.get_host }}{% url 'shortener:analytics' short_url.secret_code %}" 
+                                   value=" 21k.tools/abc123 }}{% url 'shortener:analytics' short_url.secret_code %}" 
                                    readonly id="analyticsUrl">
                             <button class="btn" type="button" onclick="copyToClipboard('analyticsUrl')">
                                 <i class="fas fa-copy"></i> Copy
@@ -1478,21 +1479,28 @@
 /* QR Code Styles */
 .qr-code-section {
     margin-top: 15px;
+   
 }
 
 .qr-code-container {
     text-align: center;
-    padding: 20px;
+    padding: 15px;
     background: linear-gradient(135deg, #f8f9ff 0%, #e6f3ff 100%);
     border-radius: 15px;
     border: 2px solid #667eea;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%; /* Make it full width of parent */
+    max-width: 1000px; /* Set maximum width */
+    margin: 0 auto; /* Center the container */
 }
-
 .qr-code-image {
     max-width: 200px;
     height: auto;
     border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    box-shadow: 0 5px  rgba(0,0,0,0.1);
     margin-bottom: 15px;
 }
 
@@ -1518,6 +1526,11 @@
         width: 100%;
         max-width: 200px;
     }
+    .qr-code-container {
+     width: 0%;
+     max-width:400px;
+     }
+    
 }
 /* FAQ Styles */
 .faq-container {
@@ -1600,6 +1613,32 @@
     padding: 40px 0;
   }
   
+  .qr-code-container {
+    width: 100%;
+    margin: 0 0px;
+  }
+  
+  .qr-code-image {
+    width: 170px;
+  }
+  
+  /* COPY BUTTON STYLES - TEXT REMOVED & NARROWER */
+  .input-group .btn {
+    padding: 7px 7px; /* Reduced padding for narrower button */
+    min-width: auto;
+    width: auto; 
+    margin-left:-2px;
+    font-size:0;/* Remove full width */
+  }
+  
+  .input-group .btn i {
+    margin-right: 0; /* Remove icon spacing */
+    font-size: 14px; /* Optional: smaller icon */
+  }
+  
+  .input-group .btn span {
+    display: none; /* Hide text on mobile */
+  }
   .info-card {
     padding: 25px;
     margin-bottom: 25px;
@@ -1646,7 +1685,6 @@
     padding: 20px;
   }
 }
-
 @media (max-width: 480px) {
   .info-card {
     padding: 20px;
