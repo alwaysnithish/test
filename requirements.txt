@@ -83,3 +83,5 @@ zipp==3.23.0
 qrcode[pil]>=7.0
 Pillow>=9.0
 django-ckeditor>=6.7.0
+dj-database-url
+psycopg2-binary
