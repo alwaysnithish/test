@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>21K Tools - Universal Header & Footer</title>
+  <style>
+    * {
+      margin: 0; 
+      padding: 0; 
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background-attachment: fixed;
+      min-height: 100vh;
+      color: #1a1a1a;
+    }
+
+    .header {
+      background: white;
+      box-shadow: 0 4px 20px rgba(30, 64, 175, 0.3);
+      position: sticky; 
+      top: 0; 
+      z-index: 1000;
+    }
+    
+    .header-container {
+      max-width: 1200px; 
+      margin: 0 auto; 
+      padding: 0 20px;
+    }
+    
+    .logo-container {
+      display: flex;
+      justify-content: center;
+      padding: 15px 0;
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+      font-size: 28px;
+      font-weight: 800;
+      text-decoration: none;
+      color: #2563eb;
+      gap:8px;
+      transition: transform 0.3s ease;
+    }
+    
+    .logo:hover {
+      transform: scale(1.05);
+    }
+    
+    .logo-icon {
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+      border-radius: 102px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      color: white;
+      box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
+    }
+
+    .header-actions-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 0px 10px;
+      gap: 10px;
+    }
+    
+    .search-box {
+      position: relative; 
+      flex-grow: 1;
+      max-width: 700px;
+      width:100%;
+      margin: 0 auto;
+    }
+    
+    .search-input {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.8);
+      border: 2px solid rgba(59, 130, 246, 0.2);
+      border-radius: 30px;
+      padding: 12px 50px 12px 20px;
+      font-size: 15px;
+      transition: all 0.3s ease;
+    }
+    
+    .search-input:focus {
+      outline: none;
+      background: rgba(255, 255, 255, 0.95);
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+    }
+    
+    .search-btn {
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+      border: none;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      color: white;
+      cursor: pointer;
+      font-size: 16px;
+      transition: all 0.3s ease;
+    }
+    
+    .search-btn:hover {
+      transform: translateY(-50%) scale(1.1);
+      box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4);
+    }
+    
+    .mobileToggle {
+      cursor: pointer;
+      padding: 10px;
+    }
+    
+    .bar1, .bar2, .bar3 {
+      width: 23px; 
+      height: 2px; 
+      background-color: #1e3a8a;
+      margin: 6px 0; 
+      transition: 0.4s;
+    }
+    
+    .change .bar1 { transform: translate(0, 8px) rotate(-45deg); }
+    .change .bar2 { opacity: 0; }
+    .change .bar3 { transform: translate(0, -8px) rotate(45deg); }
+
+    .nav-menu {
+      display: flex; 
+      gap: 10px; 
+      margin-top: 15px; 
+      padding-bottom: 15px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    
+    .nav-link {
+      color: #1e40af;
+      padding: 8px 15px;
+      border-radius: 20px;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    
+    .nav-link:hover, .nav-link.active {
+      background: rgba(59, 130, 246, 0.2);
+      color: #1e40af;
+    }
+
+    .mobile-panel {
+      display: none; 
+      flex-direction: column; 
+      gap: 15px;
+      background: white; 
+      padding: 20px; 
+      position: absolute;
+      top: 100%; 
+      left: 0; 
+      width: 100%;
+      animation: slideDown 0.4s ease-in-out;
+      z-index: 999;
+      box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+    }
+    
+    .mobile-panel.show { display: flex; }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .main-content {
+      flex: 1; 
+      padding: 40px 20px; 
+      max-width: 1200px;
+      margin: 0 auto; 
+      text-align: center;
+    }
+    
+    .demo-section {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 60px 20px; 
+      border-radius: 20px; 
+      margin: 20px 0;
+      backdrop-filter: blur(10px);
+    }
+    
+    .demo-title {
+      font-size: 2.5rem; 
+      color: white; 
+      margin-bottom: 20px; 
+      font-weight: 700;
+    }
+    
+    .demo-subtitle {
+      font-size: 1.2rem; 
+      color: rgba(255, 255, 255, 0.9); 
+      margin-bottom: 30px;
+    }
+
+    .tools-section {
+      max-width: 1400px;
+      margin: 60px auto;
+      padding: 0px;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    .section-title {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: white;
+      margin-bottom: 15px;
+      text-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .section-subtitle {
+      font-size: 1.2rem;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 25px;
+      margin-bottom: 60px;
+    }
+
+    .tool-app {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      border-radius: 24px;
+      padding: 30px;
+      text-align: center;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .tool-app::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.05), rgba(147, 51, 234, 0.05));
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .tool-app:hover::before {
+      opacity: 1;
+    }
+
+    .tool-app:hover {
+      transform: translateY(-12px) scale(1.02);
+      box-shadow: 0 25px 70px rgba(0, 0, 0, 0.15);
+    }
+
+    .app-icon {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 36px;
+      margin: 0 auto 20px;
+      box-shadow: 0 8px 30px rgba(59, 130, 246, 0.3);
+      transition: all 0.3s ease;
+      position: relative;
+      z-index: 1;
+    }
+
+    .tool-app:hover .app-icon {
+      transform: scale(1.1) rotate(5deg);
+      box-shadow: 0 15px 50px rgba(59, 130, 246, 0.4);
+    }
+
+    .app-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .app-description {
+      color: #64748b;
+      font-size: 14px;
+      line-height: 1.6;
+      margin-bottom: 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .app-features {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      margin-bottom: 25px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .feature-badge {
+      background: rgba(59, 130, 246, 0.1);
+      color: #2563eb;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .app-button {
+      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+      color: white;
+      border: none;
+      padding: 14px 30px;
+      border-radius: 30px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+      position: relative;
+      z-index: 1;
+      font-size: 14px;
+    }
+
+    .app-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(59, 130, 246, 0.4);
+    }
+
+    .footer {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+      color: white; 
+      margin-top: 60px;
+    }
+    
+    .footer-container {
+      max-width: 1200px; 
+      margin: 0 auto; 
+      padding: 50px 20px 20px;
+    }
+    
+    .footer-content {
+      display: grid; 
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 40px; 
+      margin-bottom: 40px;
+    }
+    
+    .footer-section h3 {
+      color: #60a5fa; 
+      font-size: 18px; 
+      font-weight: 600; 
+      margin-bottom: 20px;
+    }
+    
+    .footer-links {
+      list-style: none;
+    }
+    
+    .footer-links li {
+      margin-bottom: 10px;
+    }
+    
+    .footer-links a {
+      color: rgba(255, 255, 255, 0.8); 
+      text-decoration: none; 
+      transition: color 0.3s ease;
+    }
+    
+    .footer-links a:hover { 
+      color: #60a5fa; 
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 20px 0; 
+      display: flex; 
+      justify-content: space-between;
+      align-items: center; 
+      flex-wrap: wrap; 
+      gap: 15px;
+    }
+    
+    .footer-brand {
+      display: flex; 
+      align-items: center; 
+      gap: 10px;
+    }
+    
+    .footer-brand-icon {
+      width: 38px; 
+      height: 38px; 
+      background: #3b82f6;
+      border-radius: 20px; 
+      display: flex; 
+      align-items: center;
+      justify-content: center; 
+      font-weight: bold;
+    }
+    
+    .social-links {
+      display: flex; 
+      gap: 15px;
+    }
+    
+    .social-link {
+      width: 40px; 
+      height: 40px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%; 
+      display: flex;
+      align-items: center; 
+      justify-content: center;
+      color: white; 
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    
+    .social-link:hover {
+      background: #3b82f6; 
+      transform: translateY(-2px);
+    }
+
+    @media (max-width: 768px) {
+      .nav-menu { 
+        display: none; 
+      }
+      
+      .mobileToggle {
+        display: block;
+      }
+      
+      .demo-title { 
+        font-size: 2rem; 
+      }
+      
+      .footer-bottom { 
+        flex-direction: column; 
+        text-align: center; 
+      }
+      
+      .footer-content {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 30px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .header-container, .footer-container {
+        padding-left: 15px; 
+        padding-right: 15px;
+      }
+      
+      .search-input { 
+        min-width: 150px; 
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-container">
+    <div class="logo-container">
+      <a href="/" class="logo">
+        <div class="logo-icon">21K</div>
+        <span>Tools</span>
+      </a>
+    </div>
+    
+    <div class="header-actions-container">
+      <div class="search-box">
+        <input type="text" class="search-input" placeholder="Search tools...">
+        <button class="search-btn">🔍</button>
+      </div>
+      <div class="mobileToggle" id="mobileToggle">
+        <div class="bar1"></div>
+        <div class="bar2"></div>
+        <div class="bar3"></div>
+      </div>
+    </div>
+    
+    <nav class="header-nav">
+      <div class="nav-menu">
+        <a href="https://21k.tools" class="nav-link">🏠 Home</a>
+        <a href="https://video.21k.tools" class="nav-link">🎥 Video Tools</a>
+        <a href="https://image.21k.tools" class="nav-link">🖼️ Image Tools</a>
+        <a href="https://pdf.21k.tools" class="nav-link">📄 PDF Tools</a>
+        <a href="https://audio.21k.tools" class="nav-link">🎵 Audio Tools</a>
+        <a href="https://text.21k.tools" class="nav-link">📝 Text Tools</a>
+        <a href="https://dev.21k.tools" class="nav-link">💻 Dev Tools</a>
+      </div>
+    </nav>
+    
+    <div class="mobile-panel" id="mobilePanel">
+      <a href="https://21k.tools" class="nav-link">🏠 Home</a>
+      <a href="https://video.21k.tools" class="nav-link">🎥 Video Tools</a>
+      <a href="https://image.21k.tools" class="nav-link">🖼️ Image Tools</a>
+      <a href="https://pdf.21k.tools" class="nav-link">📄 PDF Tools</a>
+      <a href="https://audio.21k.tools" class="nav-link">🎵 Audio Tools</a>
+      <a href="https://text.21k.tools" class="nav-link">📝 Text Tools</a>
+      <a href="https://dev.21k.tools" class="nav-link">💻 Dev Tools</a>
+    </div>
+  </div>
+</header>
+
+<main class="main-content">
+  <div class="demo-section">
+    <h1 class="demo-title">Welcome to 21K Tools</h1>
+    <p class="demo-subtitle">Your one-stop destination for powerful online tools</p>
+    <p style="color:rgba(255,255,255,0.9)">Transform, optimize, and enhance your digital content with our powerful online tools</p>
+  </div>
+  <section class="tools-section">
+  <div class="section-header">
+  <h2 class="section-title">Featured Tools</h2>
+  <p class="section-subtitle">Our most popular and powerful tools used by millions</p>
+  </div>
+  <div class="tools-grid">
+    <div class="tool-app" onclick="window.open('/download', '_blank')">
+      <div class="app-icon">📥</div>
+      <h3 class="app-title">Video Downloader</h3>
+      <p class="app-description">Download videos from YouTube, Instagram, TikTok, and 100+ platforms in high quality</p>
+      <div class="app-features">
+        <span class="feature-badge">4K Quality</span>
+        <span class="feature-badge">MP4/MP3</span>
+        <span class="feature-badge">Fast</span>
+      </div>
+      <button class="app-button">Launch Tool</button>
+    </div>
+    
+    <div class="tool-app" onclick="window.open('/image/background-remover', '_blank')">
+      <div class="app-icon">🎭</div>
+      <h3 class="app-title">Background Remover</h3>
+      <p class="app-description">Remove backgrounds from images instantly using advanced AI technology</p>
+      <div class="app-features">
+        <span class="feature-badge">AI Powered</span>
+        <span class="feature-badge">Instant</span>
+        <span class="feature-badge">HD Quality</span>
+      </div>
+      <button class="app-button">Launch Tool</button>
+    </div>
+    
+    <div class="tool-app" onclick="window.open('/pdf/merger', '_blank')">
+      <div class="app-icon">📋</div>
+      <h3 class="app-title">PDF Merger</h3>
+      <p class="app-description">Combine multiple PDF files into one document with drag & drop simplicity</p>
+      <div class="app-features">
+        <span class="feature-badge">Drag & Drop</span>
+        <span class="feature-badge">Secure</span>
+        <span class="feature-badge">No Limits</span>
+      </div>
+      <button class="app-button">Launch Tool</button>
+    </div>
+    
+    <div class="tool-app" onclick="window.open('/image/resize', '_blank')">
+      <div class="app-icon">📏</div>
+      <h3 class="app-title">Image Resizer</h3>
+      <p class="app-description">Resize, compress, and optimize images while maintaining perfect quality</p>
+      <div class="app-features">
+        <span class="feature-badge">Batch Process</span>
+        <span class="feature-badge">Smart Crop</span>
+        <span class="feature-badge">All Formats</span>
+      </div>
+      <button class="app-button">Launch Tool</button>
+    </div>
+    
+    <div class="tool-app" onclick="window.open('/video/converter', '_blank')">
+      <div class="app-icon">🔄</div>
+      <h3 class="app-title">Video Converter</h3>
+      <p class="app-description">Convert videos between all popular formats with lightning-fast speed</p>
+      <div class="app-features">
+        <span class="feature-badge">50+ Formats</span>
+        <span class="feature-badge">GPU Accelerated</span>
+        <span class="feature-badge">Quality</span>
+      </div>
+      <button class="app-button">Launch Tool</button>
+    </div>
+    
+    <div class="tool-app" onclick="window.open('/ai/content-generator', '_blank')">
+      <div class="app-icon">🤖</div>
+      <h3 class="app-title">AI Content Generator</h3>
+      <p class="app-description">Generate high-quality content, articles, and copy using advanced AI</p>
+      <div class="app-features">
+        <span class="feature-badge">GPT-4</span>
+        <span class="feature-badge">Multi-language</span>
+        <span class="feature-badge">SEO Ready</span>
+      </div>
+      <button class="app-button">Launch Tool</button>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="footer-container">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>Popular Tools</h3>
+        <ul class="footer-links">
+          <li><a href="https://video.21k.tools/downloader">Video Downloader</a></li>
+          <li><a href="https://image.21k.tools/resize">Image Resizer</a></li>
+          <li><a href="https://pdf.21k.tools/merge">PDF Merger</a></li>
+          <li><a href="https://audio.21k.tools/converter">Audio Converter</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>Categories</h3>
+        <ul class="footer-links">
+          <li><a href="https://video.21k.tools">Video Tools</a></li>
+          <li><a href="https://image.21k.tools">Image Tools</a></li>
+          <li><a href="https://pdf.21k.tools">PDF Tools</a></li>
+          <li><a href="https://audio.21k.tools">Audio Tools</a></li>
+          <li><a href="https://text.21k.tools">Text Tools</a></li>
+          <li><a href="https://dev.21k.tools">Developer Tools</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>Support</h3>
+        <ul class="footer-links">
+          <li><a href="/help">Help Center</a></li>
+          <li><a href="/contact">Contact Us</a></li>
+          <li><a href="/api">API Documentation</a></li>
+          <li><a href="/status">Server Status</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>Company</h3>
+        <ul class="footer-links">
+          <li><a href="/about">About Us</a></li>
+          <li><a href="/privacy">Privacy Policy</a></li>
+          <li><a href="/terms">Terms of Service</a></li>
+          <li><a href="/blog">Blog</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-brand">
+        <div class="footer-brand-icon">21K</div>
+        <span>&copy; 2025 21K Tools. All rights reserved.</span>
+      </div>
+      <div class="social-links">
+        <a href="#" class="social-link" title="Twitter">🐦</a>
+        <a href="#" class="social-link" title="Facebook">📘</a>
+        <a href="#" class="social-link" title="LinkedIn">💼</a>
+        <a href="#" class="social-link" title="GitHub">🐙</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const mobileToggle = document.getElementById('mobileToggle');
+  const mobilePanel = document.getElementById('mobilePanel');
+  
+  mobileToggle.addEventListener('click', (e) => {
+    e.stopPropagation();
+    mobileToggle.classList.toggle('change');
+    mobilePanel.classList.toggle('show');
+  });
+  
+  document.addEventListener('click', () => {
+    mobileToggle.classList.remove('change');
+    mobilePanel.classList.remove('show');
+  });
+  
+  mobilePanel.addEventListener('click', (e) => {
+    e.stopPropagation();
+  });
+  
+  document.querySelectorAll(".nav-link").forEach(link => {
+    if (location.href.includes(link.href.replace('https://', '').split('/')[0])) {
+      link.classList.add("active");
+    }
+  });
+  
+  const searchInput = document.querySelector('.search-input');
+  const searchBtn = document.querySelector('.search-btn');
+  
+  const performSearch = () => {
+    const query = searchInput.value.trim();
+    if (query) {
+      window.location.href = `https://21k.tools/search?q=${encodeURIComponent(query)}`;
+    }
+  };
+  
+  searchInput.addEventListener('keypress', e => {
+    if (e.key === 'Enter') performSearch();
+  });
+  
+  searchBtn.addEventListener('click', performSearch);
+});
+</script>
+
+</body>
+</html>

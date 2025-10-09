@@ -1,0 +1,3561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-KFN0JYYWDG"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-KFN0JYYWDG');
+</script>
+{% load static %}
+<link rel="icon" type="image/x-icon" href="{% static '21k.png' %}">
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PDF Tools - Fee Online PDF Tools | 21K Tools</title>
+<meta name="description" content="Free online PDF tools to merge, compress, create, edit and convert PDFs. Quick and Easy. Without installation. Without registration.">
+<!-- Font Awesome CDN -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+* {
+margin: 0; 
+padding: 0; 
+box-sizing: border-box;
+}
+
+body {
+font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+background-attachment: fixed;
+min-height: 100vh;
+color: #1a1a1a;
+line-height: 1.6;
+}
+
+/* Header Styles */
+.header {
+background: white;
+box-shadow: 0 4px 20px rgba(30, 64, 175, 0.3);
+position: sticky; 
+top: 0; 
+z-index: 1000;
+}
+
+.header-container {
+max-width: 1200px; 
+margin: 0 auto; 
+padding: 0 20px;
+}
+
+.logo-container {
+display: flex;
+justify-content: center;
+padding: 15px 0;
+}
+
+.logo {
+display: flex;
+align-items: center;
+font-size: 28px;
+font-weight: 800;
+text-decoration: none;
+color: #2563eb;
+gap: 8px;
+transition: transform 0.3s ease;
+}
+.logo:hover {
+transform: scale(1.05);
+}
+
+.logo-icon {
+width: 50px;
+height: 50px;
+background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+border-radius: 102px;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 20px;
+color: white;
+box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
+}
+
+.header-actions-container {
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 0 0px 10px;
+gap: 10px;
+}
+
+.search-box {
+position: relative; 
+flex-grow: 1;
+max-width: 700px;
+width: 100%;
+margin: 0 auto;
+}
+.search-input {
+width: 100%;
+background: rgba(255, 255, 255, 0.8);
+border: 2px solid rgba(59, 130, 246, 0.2);
+border-radius: 30px;
+padding: 12px 50px 12px 20px;
+font-size: 15px;
+transition: all 0.3s ease;
+}
+
+.search-input:focus {
+outline: none;
+background: rgba(255, 255, 255, 0.95);
+border-color: #3b82f6;
+box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+}
+
+.search-btn {
+position: absolute;
+right: 8px;
+top: 50%;
+transform: translateY(-50%);
+background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+border: none;
+border-radius: 50%;
+width: 36px;
+height: 36px;
+color: white;
+cursor: pointer;
+font-size: 16px;
+transition: all 0.3s ease;
+}
+
+.search-btn:hover {
+transform: translateY(-50%) scale(1.1);
+box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4);
+}
+.mobileToggle {
+cursor: pointer;
+padding: 10px;
+display: none;
+}
+
+.bar1, .bar2, .bar3 {
+width: 23px; 
+height: 2px; 
+background-color: #1e3a8a;
+margin: 6px 0; 
+transition: 0.4s;
+}
+
+.change .bar1 { transform: translate(0, 8px) rotate(-45deg); }
+.change .bar2 { opacity: 0; }
+.change .bar3 { transform: translate(0, -8px) rotate(45deg); }
+
+.nav-menu {
+display: flex; 
+gap: 10px; 
+margin-top: 15px; 
+padding-bottom: 15px;
+flex-wrap: wrap;
+justify-content: center;
+}
+
+.nav-link {
+color: #1e40af;
+padding: 8px 15px;
+border-radius: 20px;
+transition: all 0.3s ease;
+text-decoration: none;
+font-weight: 500;
+}
+.nav-link:hover, .nav-link.active {
+background: rgba(59, 130, 246, 0.2);
+color: #1e40af;
+}
+
+.mobile-panel {
+display: none; 
+flex-direction: column; 
+gap: 15px;
+background: white; 
+padding: 20px; 
+position: absolute;
+top: 100%; 
+left: 0; 
+width: 100%;
+animation: slideDown 0.4s ease-in-out;
+z-index: 999;
+box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+}
+
+.mobile-panel.show { display: flex; }
+
+@keyframes slideDown {
+from { opacity: 0; transform: translateY(-10px); }
+to { opacity: 1; transform: translateY(0); }
+}
+
+/* Dropdown menu for More Tools */
+.dropdown {
+position: relative;
+display: inline-block;
+}
+.dropdown-content {
+display: none;
+position: absolute;
+background-color: white;
+min-width: 200px;
+box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+border-radius: 12px;
+z-index: 1;
+padding: 10px 0;
+grid-template-columns: 1fr;
+gap: 5px;
+}
+
+.dropdown.active .dropdown-content {
+display: grid;
+}
+
+.dropdown-content a {
+color: #1e40af;
+padding: 10px 20px;
+text-decoration: none;
+display: flex;
+align-items: center;
+gap: 10px;
+transition: all 0.8s ease;
+}
+
+.dropdown-content a:hover {
+background: rgba(59, 130, 246, 0.1);
+}
+
+/* Mobile dropdown */
+.mobile-dropdown-content {
+display: none;
+padding-left: 20px;
+margin-top: 10px;
+flex-direction: column;
+gap: 10px;
+}
+
+.mobile-dropdown.active .mobile-dropdown-content {
+display: flex;
+}
+
+.mobile-dropdown-content a {
+color: #1e40af;
+text-decoration: none;
+display: flex;
+align-items: center;
+gap: 10px;
+padding: 8px 15px;
+border-radius: 20px;
+transition: all 0.9s ease;
+}
+
+.mobile-dropdown-content a:hover {
+background: rgba(59, 130, 246, 0.1);
+}
+
+.rotate-180 {
+transform: rotate(540deg);
+transition: transform 2s ease;
+}
+
+/* PDF Tools Specific Styles */
+.container {
+max-width: 1400px;
+margin: 0 auto;
+padding: 20px;
+}
+
+.main-content {
+background: white;
+border-radius: 24px;
+padding: 40px;
+box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+margin: 20px 0;
+backdrop-filter: blur(10px);
+}
+
+.pdf-header {
+text-align: center;
+margin-bottom: 40px;
+}
+
+.pdf-header h1 {
+font-size: 3rem;
+margin-bottom: 15px;
+background: linear-gradient(135deg, white,white);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+font-weight: 700;
+}
+
+.pdf-header h1 i {
+margin-right: 15px;
+color: white;
+}
+
+.pdf-header p {
+font-size: 1.2rem;
+color: white;
+font-weight: 400;
+}
+
+.upload-section {
+text-align: center;
+padding: 50px 30px;
+border: 3px dashed #667eea;
+border-radius: 20px;
+margin-bottom: 40px;
+transition: all 0.4s ease;
+background: linear-gradient(135deg, #f8f9ff 0%, #f0f4ff 100%);
+position: relative;
+overflow: hidden;
+}
+
+.upload-section::before {
+content: '';
+position: absolute;
+top: -50%;
+left: -50%;
+width: 200%;
+height: 200%;
+background: radial-gradient(circle, rgba(102,126,234,0.1) 0%, transparent 70%);
+opacity: 0;
+transition: opacity 0.4s ease;
+}
+
+.upload-section:hover::before {
+opacity: 1;
+}
+
+.upload-section.dragover {
+border-color: #48bb78;
+background: linear-gradient(135deg, #f0fff4 0%, #e6fffa 100%);
+transform: scale(1.02);
+box-shadow: 0 15px 30px rgba(72,187,120,0.2);
+}
+
+.upload-section input[type="file"] {
+display: none;
+}
+
+.upload-section h2 {
+font-size: 1.8rem;
+margin-bottom: 15px;
+color: #667eea;
+}
+
+.upload-section h2 i {
+margin-right: 10px;
+font-size: 2rem;
+}
+
+.upload-btn {
+display: inline-block;
+padding: 18px 36px;
+background: linear-gradient(135deg, #667eea, #764ba2);
+color: white;
+border: none;
+border-radius: 50px;
+cursor: pointer;
+font-size: 16px;
+font-weight: 600;
+text-decoration: none;
+transition: all 0.3s ease;
+margin: 15px;
+box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+}
+
+.upload-btn:hover {
+transform: translateY(-3px);
+box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
+}
+
+.upload-btn i {
+margin-right: 8px;
+}
+
+.file-info {
+display: none;
+background: linear-gradient(135deg, #e8f5e8 0%, #d4edda 100%);
+padding: 25px;
+border-radius: 15px;
+margin: 25px 0;
+border-left: 5px solid #28a745;
+box-shadow: 0 5px 15px rgba(40, 167, 69, 0.1);
+}
+
+.file-info h3 {
+color: #155724;
+margin-bottom: 15px;
+font-size: 1.2rem;
+}
+
+.file-info h3 i {
+margin-right: 10px;
+color: #28a745;
+}
+
+.tools-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+gap: 25px;
+margin-top: 40px;
+}
+
+.tool-card {
+background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+border-radius: 20px;
+padding: 30px;
+box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+border: 2px solid #e9ecef;
+transition: all 0.4s ease;
+cursor: pointer;
+text-align: center;
+position: relative;
+overflow: hidden;
+}
+
+.tool-card::before {
+content: '';
+position: absolute;
+top: 0;
+left: -100%;
+width: 100%;
+height: 100%;
+background: linear-gradient(90deg, transparent, rgba(102,126,234,0.1), transparent);
+transition: left 0.5s ease;
+}
+
+.tool-card:hover::before {
+left: 100%;
+}
+
+.tool-card:hover {
+transform: translateY(-8px) scale(1.02);
+box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+border-color: #667eea;
+}
+
+.tool-card.disabled {
+opacity: 0.5;
+cursor: not-allowed;
+pointer-events: none;
+}
+
+.tool-card .icon {
+font-size: 2.5rem;
+margin-bottom: 15px;
+display: block;
+color: #667eea;
+}
+
+.tool-card h3 {
+color: #667eea;
+margin-bottom: 12px;
+font-size: 1.4rem;
+font-weight: 600;
+}
+
+.tool-card p {
+color: #6c757d;
+font-size: 0.95rem;
+line-height: 1.6;
+}
+
+.tool-form {
+display: none;
+margin-top: 30px;
+padding: 30px;
+background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+border-radius: 20px;
+border-left: 5px solid #667eea;
+box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+.tool-form h3 {
+color: #667eea;
+margin-bottom: 15px;
+font-size: 1.5rem;
+}
+
+.tool-form h3 i {
+margin-right: 10px;
+}
+
+.form-group {
+margin-bottom: 20px;
+}
+
+.form-group label {
+display: block;
+margin-bottom: 10px;
+font-weight: 600;
+color: #333;
+}
+
+.form-group label i {
+margin-right: 8px;
+color: #667eea;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+width: 100%;
+padding: 12px 15px;
+border: 2px solid #e0e0e0;
+border-radius: 10px;
+font-size: 14px;
+transition: all 0.3s ease;
+background: white;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+outline: none;
+border-color: #667eea;
+box-shadow: 0 0 15px rgba(102, 126, 234, 0.1);
+}
+
+.btn-primary {
+background: linear-gradient(135deg, #667eea, #764ba2);
+color: white;
+border: none;
+padding: 15px 25px;
+border-radius: 25px;
+cursor: pointer;
+font-size: 16px;
+font-weight: 600;
+transition: all 0.3s ease;
+display: inline-block;
+margin-right: 10px;
+}
+
+.btn-primary:hover {
+transform: translateY(-2px);
+box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+}
+
+.btn-primary i {
+margin-right: 8px;
+}
+
+.btn-secondary {
+background: linear-gradient(135deg, #6c757d, #5a6268);
+color: white;
+border: none;
+padding: 15px 25px;
+border-radius: 25px;
+cursor: pointer;
+font-size: 16px;
+font-weight: 600;
+transition: all 0.3s ease;
+display: inline-block;
+}
+
+.btn-secondary:hover {
+transform: translateY(-2px);
+box-shadow: 0 8px 20px rgba(108, 117, 125, 0.3);
+}
+
+.btn-secondary i {
+margin-right: 8px;
+}
+
+.alert {
+padding: 20px;
+border-radius: 12px;
+margin: 20px 0;
+display: none;
+font-weight: 500;
+}
+
+.alert i {
+margin-right: 10px;
+font-size: 1.2rem;
+}
+
+.alert-error {
+background: linear-gradient(135deg, #ffe6e6 0%, #fdd8d8 100%);
+color: #721c24;
+border-left: 5px solid #dc3545;
+}
+
+.alert-success {
+background: linear-gradient(135deg, #e8f5e8 0%, #d4edda 100%);
+color: #155724;
+border-left: 5px solid #28a745;
+}
+
+.loading {
+display: none;
+text-align: center;
+padding: 30px;
+}
+
+.spinner {
+border: 4px solid #f3f3f3;
+border-top: 4px solid #667eea;
+border-radius: 50%;
+width: 50px;
+height: 50px;
+animation: spin 1s linear infinite;
+margin: 0 auto 20px;
+}
+
+@keyframes spin {
+0% { transform: rotate(0deg); }
+100% { transform: rotate(360deg); }
+}
+
+.range-input {
+display: flex;
+gap: 15px;
+align-items: center;
+margin: 15px 0;
+}
+
+.range-input input {
+flex: 1;
+}
+
+.range-value {
+min-width: 60px;
+text-align: center;
+font-weight: bold;
+color: #667eea;
+background: #f8f9ff;
+padding: 5px 10px;
+border-radius: 8px;
+border: 1px solid #667eea;
+}
+
+.tool-actions {
+display: flex;
+gap: 15px;
+justify-content: center;
+margin-top: 25px;
+flex-wrap: wrap;
+}
+
+.preview-section {
+display: none;
+margin-top: 30px;
+padding: 25px;
+background: linear-gradient(135deg, #f8f9ff 0%, #e6f3ff 100%);
+border-radius: 20px;
+border: 2px solid #667eea;
+}
+
+.preview-section h3 {
+color: #667eea;
+margin-bottom: 20px;
+font-size: 1.4rem;
+}
+
+.preview-section h3 i {
+margin-right: 10px;
+}
+
+.preview-content {
+max-height: 500px;
+overflow-y: auto;
+background: white;
+border-radius: 10px;
+padding: 20px;
+border: 1px solid #dee2e6;
+}
+
+.preview-image {
+max-width: 100%;
+height: auto;
+border-radius: 10px;
+box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+margin: 10px 0;
+}
+
+.preview-text {
+background: #f8f9fa;
+padding: 15px;
+border-radius: 8px;
+font-family: 'Courier New', monospace;
+white-space: pre-wrap;
+max-height: 300px;
+overflow-y: auto;
+border: 1px solid #dee2e6;
+}
+
+.preview-gallery {
+display: grid;
+grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+gap: 15px;
+margin-top: 15px;
+}
+
+.preview-image-item {
+text-align: center;
+}
+
+.preview-image-item img {
+width: 100%;
+border-radius: 8px;
+box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+.preview-image-item p {
+margin-top: 8px;
+font-size: 0.9rem;
+color: #6c757d;
+font-weight: 500;
+}
+
+.download-section {
+display: none;
+margin-top: 20px;
+text-align: center;
+padding: 25px;
+background: linear-gradient(135deg, #e8f5e8 0%, #d4edda 100%);
+border-radius: 15px;
+border: 2px solid #28a745;
+}
+
+.download-section h3 {
+color: #155724;
+margin-bottom: 15px;
+}
+
+.download-section h3 i {
+margin-right: 10px;
+color: #28a745;
+}
+
+.download-btn {
+background: linear-gradient(135deg, #28a745, #20c997);
+color: white;
+border: none;
+padding: 15px 30px;
+border-radius: 25px;
+cursor: pointer;
+font-size: 16px;
+font-weight: 600;
+transition: all 0.3s ease;
+box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+}
+
+.download-btn:hover {
+transform: translateY(-2px);
+box-shadow: 0 8px 20px rgba(40, 167, 69, 0.4);
+}
+
+.download-btn i {
+margin-right: 8px;
+}
+
+.operation-info {
+background: white;
+padding: 20px;
+border-radius: 15px;
+margin-top: 20px;
+border: 1px solid #dee2e6;
+}
+
+.operation-info h4 {
+color: #667eea;
+margin-bottom: 15px;
+font-size: 1.2rem;
+}
+
+.operation-info h4 i {
+margin-right: 10px;
+}
+
+.info-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+gap: 15px;
+margin-top: 15px;
+}
+
+.info-item {
+background: #f8f9fa;
+padding: 15px;
+border-radius: 10px;
+text-align: center;
+border: 1px solid #e9ecef;
+}
+
+.info-item strong {
+display: block;
+color: #667eea;
+font-size: 0.9rem;
+margin-bottom: 8px;
+font-weight: 600;
+}
+
+.info-item strong i {
+margin-right: 5px;
+}
+
+.metadata-table {
+width: 100%;
+border-collapse: collapse;
+margin-top: 15px;
+}
+
+.metadata-table th,
+.metadata-table td {
+padding: 12px 15px;
+text-align: left;
+border-bottom: 1px solid #dee2e6;
+}
+
+.metadata-table th {
+background: #f8f9fa;
+font-weight: 600;
+color: #667eea;
+}
+
+.metadata-table th i {
+margin-right: 8px;
+}
+
+.files-list {
+background: white;
+border-radius: 10px;
+overflow: hidden;
+border: 1px solid #dee2e6;
+margin-top: 15px;
+}
+
+.file-item {
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 15px 20px;
+border-bottom: 1px solid #f0f0f0;
+}
+
+.file-item:last-child {
+border-bottom: none;
+}
+
+.file-item:nth-child(even) {
+background: #f8f9fa;
+}
+
+.file-name {
+font-weight: 500;
+color: #333;
+}
+
+.file-name i {
+margin-right: 8px;
+color: #667eea;
+}
+
+.file-details {
+color: #6c757d;
+font-size: 0.9rem;
+}
+
+.small-text {
+font-size: 0.85rem;
+color: #6c757d;
+margin-top: 5px;
+}
+
+.progress-bar {
+width: 100%;
+height: 6px;
+background: #e9ecef;
+border-radius: 3px;
+overflow: hidden;
+margin: 15px 0;
+}
+
+.progress-fill {
+height: 100%;
+background: linear-gradient(90deg, #667eea, #764ba2);
+width: 0%;
+transition: width 0.3s ease;
+}
+
+/* Footer Styles */
+.footer {
+background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+color: white; 
+margin-top: 0;
+}
+
+.footer-container {
+max-width: 1200px; 
+margin: 0 auto; 
+padding: 50px 20px 20px;
+}
+
+.footer-content {
+display: grid; 
+grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+gap: 40px; 
+margin-bottom: 40px;
+}
+
+.footer-section h3 {
+color: #60a5fa; 
+font-size: 18px; 
+font-weight: 600; 
+margin-bottom: 20px;
+}
+.footer-links {
+list-style: none;
+}
+
+.footer-links li {
+margin-bottom: 10px;
+}
+
+.footer-links a {
+color: rgba(255, 255, 255, 0.8); 
+text-decoration: none; 
+transition: color 0.3s ease;
+}
+
+.footer-links a:hover { 
+color: #60a5fa; 
+}
+
+.footer-bottom {
+border-top: 1px solid rgba(255, 255, 255, 0.1);
+padding: 20px 0; 
+display: flex; 
+justify-content: space-between;
+align-items: center; 
+flex-wrap: wrap; 
+gap: 15px;
+}
+
+.footer-brand {
+display: flex; 
+align-items: center; 
+gap: 10px;
+}
+.footer-brand-icon {
+width: 38px; 
+height: 38px; 
+background: #3b82f6;
+border-radius: 20px; 
+display: flex; 
+align-items: center;
+justify-content: center; 
+font-weight: bold;
+}
+
+.social-links {
+display: flex; 
+gap: 15px;
+}
+
+.social-link {
+width: 40px; 
+height: 40px;
+background: rgba(255, 255, 255, 0.1);
+border-radius: 50%; 
+display: flex;
+align-items: center; 
+justify-content: center;
+color: white; 
+text-decoration: none;
+transition: all 0.3s ease;
+}
+
+.social-link:hover {
+background: #3b82f6; 
+transform: translateY(-2px);
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+.nav-menu { 
+display: none; 
+}
+
+.mobileToggle {
+display: block;
+}
+
+.pdf-header h1 { 
+font-size: 2.5rem; 
+}
+
+.main-content {
+padding: 25px;
+}
+
+.tools-grid {
+grid-template-columns: 1fr;
+gap: 20px;
+}
+
+.tool-actions {
+flex-direction: column;
+align-items: center;
+}
+
+.info-grid {
+grid-template-columns: 1fr;
+}
+
+.preview-gallery {
+grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+
+.footer-bottom { 
+flex-direction: column; 
+text-align: center; 
+}
+
+.footer-content {
+grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+gap: 30px;
+}
+}
+
+@media (max-width: 480px) {
+.header-container, .footer-container {
+padding-left: 15px; 
+padding-right: 15px;
+}
+
+.search-input { 
+min-width: 150px; 
+}
+
+.container {
+padding: 15px;
+}
+
+.main-content {
+padding: 20px 15px;
+}
+
+.pdf-header h1 {
+font-size: 2rem;
+}
+
+.upload-section {
+padding: 30px 20px;
+}
+}
+</style>
+</head>
+
+<script type="application/ld+json">
+{
+"@context": "https://schema.org",
+"@type": "WebSite",
+"name": "21K Tools",
+"url": "https://21k.tools/pdftools"
+}
+</script>
+
+<body>
+<header class="header">
+<div class="header-container">
+<div class="logo-container">
+<a href="https://21k.tools" class="logo">
+<div class="logo-icon">21K</div>
+<span>Tools</span>
+</a>
+</div>
+
+<div class="header-actions-container">
+<div class="search-box">
+<input type="text" class="search-input" placeholder="Search tools...">
+<button class="search-btn"><i class="fas fa-search"></i></button>
+</div>
+<div class="mobileToggle" id="mobileToggle">
+<div class="bar1"></div>
+<div class="bar2"></div>
+<div class="bar3"></div>
+</div>
+</div>
+<nav class="header-nav">
+<div class="nav-menu">
+<a href="https://21k.tools" class="nav-link"><i class="fas fa-home"></i> Home</a>
+
+<div class="dropdown" id="desktopToolsDropdown">
+<a href="#" class="nav-link" onclick="toggleDesktopDropdown(event)"><i class="fas fa-tools"></i> More Tools <i class="fas fa-caret-down"></i></a>
+
+<div class="dropdown-content">
+<a href="https://21k.tools/pdftools" class="active"><i class="fas fa-file-pdf"></i> PDF Tools</a>
+<a href="https://21k.tools/timecalculator"><i class="fas fa-clock"></i> Time Tools</a>
+<a href="https://21k.tools/fileconverter"><i class="fas fa-file"></i> File Converter</a>
+<a href="https://21k.tools/imageresizer"><i class="fas fa-image"></i> Image Resizer</a>
+<a href="https://ai.21k.tools"><i class="fas fa-robot"></i> AI Generator</a>
+<a href="https://21k.tools/agecalculator"><i class="fas fa-birthday-cake"></i> Age Calculator</a>
+<a href="https://21k.tools/interestcalculator"><i class="fas fa-percentage"></i> Interest Calculator</a>
+<a href="https://21k.tools/unitconverter"><i class="fas fa-balance-scale"></i> Unit Converter</a>
+<a href="https://21k.tools/timecalculator"><i class="fas fa-stopwatch"></i> Time Calculator</a>
+</div>
+
+</div>
+<a href="https://21k.tools/blog" class="nav-link"><i class="fas fa-blog"></i> Blogs</a>
+<a href="/help" class="nav-link"><i class="fas fa-question-circle"></i> Help Center</a>
+<a href="mailto:contact@21k.tools" class="nav-link"><i class="fas fa-envelope"></i> Contact</a>
+</div>
+</nav>
+
+<div class="mobile-panel" id="mobilePanel">
+<a href="https://21k.tools" class="nav-link"><i class="fas fa-home"></i> Home</a>
+
+<div class="mobile-dropdown" id="mobileToolsDropdown">
+<a href="#" class="nav-link" onclick="toggleMobileDropdown()"><i class="fas fa-tools"></i> More Tools <i class="fas fa-caret-down"></i></a>
+<div class="mobile-dropdown-content">
+<a href="https://21k.tools/pdftools" class="active"><i class="fas fa-file-pdf"></i> PDF Tools</a>
+<a href="https://21k.tools/timecalculator"><i class="fas fa-clock"></i> Time Tools</a>
+<a href="https://21k.tools/fileconverter"><i class="fas fa-file"></i> File Converter</a>
+<a href="https://21k.tools/imageresizer"><i class="fas fa-image"></i> Image Resizer</a>
+<a href="https://ai.21k.tools"><i class="fas fa-robot"></i> AI Generator</a>
+<a href="https://21k.tools/agecalculator"><i class="fas fa-birthday-cake"></i> Age Calculator</a>
+<a href="https://21k.tools/interestcalculator"><i class="fas fa-percentage"></i> Interest Calculator</a>
+<a href="https://21k.tools/unitconverter"><i class="fas fa-balance-scale"></i> Unit Converter</a>
+<a href="https://21k.tools/timecalculator"><i class="fas fa-stopwatch"></i> Time Calculator</a>
+</div>
+</div>
+<a href="https://blog.21k.tools/" class="nav-link"><i class="fas fa-blog"></i> Blog</a>
+<a href="/help" class="nav-link"><i class="fas fa-question-circle"></i> Help Center</a>
+<a href="mailto:contact@21k.tools" class="nav-link"><i class="fas fa-envelope"></i> Contact</a>
+</div>
+</div>
+</header>
+
+<div class="container">
+<div class="pdf-header">
+<h1><i class="fas fa-file-pdf"></i>PDF Tools</h1>
+<p>Professional PDF processing with real-time preview and advanced features</p>
+</div>
+<div class="main-content">
+
+<!-- CSRF Token (this would normally be provided by Django template) -->
+<input type="hidden" id="csrfToken" value="dummy_csrf_token">
+
+
+
+<!-- Upload Section -->
+<div class="upload-section" id="uploadSection">
+<h2><i class="fas fa-cloud-upload-alt"></i>Upload Your PDF</h2>
+<p>Click to select or drag and drop your PDF file here</p>
+<input type="file" id="pdfUpload" accept=".pdf">
+<label for="pdfUpload" class="upload-btn">
+<i class="fas fa-file-plus"></i>Choose PDF File
+</label>
+<div class="small-text">
+<i class="fas fa-info-circle"></i>
+Supported format: PDF files up to 100MB
+</div>
+</div>
+
+<!-- File Info -->
+<div class="file-info" id="fileInfo">
+<h3><i class="fas fa-file-alt"></i>File Information</h3>
+<div id="fileDetails"></div>
+</div>
+
+<!-- Tools Grid -->
+<div class="tools-grid" id="toolsGrid">
+<div class="tool-card disabled" data-tool="extract-text">
+<i class="fas fa-file-text icon"></i>
+<h3>Extract Text</h3>
+<p>Extract all text content from your PDF with formatting preserved and character recognition</p>
+</div>
+
+<div class="tool-card disabled" data-tool="split-pdf">
+<i class="fas fa-cut icon"></i>
+<h3>Split PDF</h3>
+<p>Split your PDF into individual pages or custom page ranges with flexible options</p>
+</div>
+
+<div class="tool-card disabled" data-tool="merge-pdfs">
+<i class="fas fa-object-group icon"></i>
+<h3>Merge PDFs</h3>
+<p>Combine multiple PDF files into a single document with preserved quality</p>
+</div>
+
+<div class="tool-card disabled" data-tool="compress-pdf">
+<i class="fas fa-compress icon"></i>
+<h3>Compress PDF</h3>
+<p>Reduce file size while maintaining quality and readability using advanced algorithms</p>
+</div>
+
+<div class="tool-card disabled" data-tool="add-watermark">
+<i class="fas fa-stamp icon"></i>
+<h3>Add Watermark</h3>
+<p>Add custom text watermarks to protect your document with various positioning options</p>
+</div>
+
+<div class="tool-card disabled" data-tool="rotate-pages">
+<i class="fas fa-redo icon"></i>
+<h3>Rotate Pages</h3>
+<p>Rotate pages by 90, 180, or 270 degrees with selective page targeting</p>
+</div>
+
+<div class="tool-card disabled" data-tool="view-metadata">
+<i class="fas fa-info-circle icon"></i>
+<h3>View Metadata</h3>
+<p>View detailed information and properties of your PDF file including creation date and author</p>
+</div>
+
+<div class="tool-card disabled" data-tool="convert-to-images">
+<i class="fas fa-images icon"></i>
+<h3>Convert to Images</h3>
+<p>Convert PDF pages to high-quality images (PNG/JPEG) with customizable resolution</p>
+</div>
+</div>
+
+<!-- Tool Forms Container -->
+<div id="toolFormsContainer"></div>
+
+<!-- Preview Section -->
+<div class="preview-section" id="previewSection">
+<h3><i class="fas fa-eye"></i>Preview</h3>
+<div class="preview-content" id="previewContent"></div>
+</div>
+
+<!-- Download Section -->
+<div class="download-section" id="downloadSection">
+<h3><i class="fas fa-check-circle"></i>Operation Complete!</h3>
+<p id="downloadMessage">Your file is ready for download.</p>
+<button class="download-btn" id="downloadBtn">
+<i class="fas fa-download"></i>Download File
+</button>
+<div class="operation-info" id="operationInfo"></div>
+</div>
+
+<!-- Alerts and Loading -->
+<div class="alert" id="alertBox"></div>
+<div class="loading" id="loadingIndicator">
+<div class="spinner"></div>
+<p><i class="fas fa-cog fa-spin"></i>Processing your request...</p>
+</div>
+</div>
+</div>
+<!-- About PDF Tools Section -->
+<div class="about-section">
+<div class="container">
+<div class="about-content">
+
+<!-- How to Use Section -->
+<div class="info-card">
+<h2><i class="fas fa-question-circle"></i>How to Use Our PDF Tools</h2>
+<div class="steps-container">
+<div class="step">
+<div class="step-number">1</div>
+<div class="step-content">
+<h3><i class="fas fa-upload"></i>Upload Your PDF</h3>
+<p>Simply click the upload button or drag and drop your PDF file into the designated area. Our tool supports PDF files up to 100MB in size. You can also paste files directly from your clipboard using Ctrl+V for quick access.</p>
+</div>
+</div>
+
+<div class="step">
+<div class="step-number">2</div>
+<div class="step-content">
+<h3><i class="fas fa-tools"></i>Choose Your Tool</h3>
+<p>Select from our comprehensive suite of PDF processing tools. Each tool is designed for specific tasks - from extracting text and splitting documents to adding watermarks and compressing files. Tool cards will become active once your PDF is uploaded.</p>
+</div>
+</div>
+
+<div class="step">
+<div class="step-number">3</div>
+<div class="step-content">
+<h3><i class="fas fa-cogs"></i>Configure Options</h3>
+<p>Customize your processing with advanced options. Set compression quality, specify page ranges, choose image formats, adjust watermark properties, or select rotation angles. Our intuitive interface makes configuration simple yet powerful.</p>
+</div>
+</div>
+
+<div class="step">
+<div class="step-number">4</div>
+<div class="step-content">
+<h3><i class="fas fa-play"></i>Process & Preview</h3>
+<p>Click the process button to execute your chosen operation. Our system provides real-time feedback and displays a comprehensive preview of the results before download, ensuring accuracy and quality.</p>
+</div>
+</div>
+
+<div class="step">
+<div class="step-number">5</div>
+<div class="step-content">
+<h3><i class="fas fa-download"></i>Download Results</h3>
+<p>Download your processed files instantly. Multiple files are automatically packaged in ZIP archives for convenience. All downloads are prepared with optimized compression and maintain original quality standards.</p>
+</div>
+</div>
+</div>
+</div>
+
+<!-- How It Works Section -->
+<div class="info-card">
+<h2><i class="fas fa-cog"></i>How Our PDF Tools Work</h2>
+<div class="technology-grid">
+<div class="tech-item">
+<div class="tech-icon">
+<i class="fas fa-server"></i>
+</div>
+<h3>Server-Side Processing</h3>
+<p>All PDF operations are performed on our secure servers using industry-standard libraries and algorithms. This ensures consistent results across all devices and operating systems while maintaining high processing speeds.</p>
+</div>
+
+<div class="tech-item">
+<div class="tech-icon">
+<i class="fas fa-shield-alt"></i>
+</div>
+<h3>Advanced Security</h3>
+<p>Your files are processed in isolated environments with enterprise-grade security protocols. We employ encryption during transfer and processing, ensuring your sensitive documents remain protected throughout the entire workflow.</p>
+</div>
+
+<div class="tech-item">
+<div class="tech-icon">
+<i class="fas fa-magic"></i>
+</div>
+<h3>Intelligent Algorithms</h3>
+<p>Our tools utilize sophisticated algorithms for optimal results. Text extraction employs OCR technology for scanned documents, compression maintains visual quality while reducing size, and image conversion preserves document fidelity.</p>
+</div>
+
+<div class="tech-item">
+<div class="tech-icon">
+<i class="fas fa-tachometer-alt"></i>
+</div>
+<h3>Optimized Performance</h3>
+<p>High-performance servers and optimized code ensure rapid processing times. Large files are handled efficiently through streaming techniques and memory management, delivering results quickly regardless of document complexity.</p>
+</div>
+</div>
+
+<div class="process-details">
+<h3><i class="fas fa-flow-chart"></i>Processing Workflow</h3>
+<div class="workflow-steps">
+<div class="workflow-item">
+<strong>File Validation:</strong> Your PDF undergoes comprehensive validation to ensure format integrity, security scanning, and compatibility assessment before processing begins.
+</div>
+<div class="workflow-item">
+<strong>Content Analysis:</strong> Our system analyzes document structure, page count, embedded elements, metadata, and security settings to optimize processing parameters.
+</div>
+<div class="workflow-item">
+<strong>Operation Execution:</strong> Selected operations are performed using specialized algorithms tailored for each task, with real-time monitoring and error handling.
+</div>
+<div class="workflow-item">
+<strong>Quality Assurance:</strong> Results undergo automated quality checks, format validation, and integrity verification to ensure output meets our standards.
+</div>
+<div class="workflow-item">
+<strong>Secure Delivery:</strong> Processed files are packaged securely and made available for immediate download through encrypted connections.
+</div>
+</div>
+</div>
+</div>
+
+<!-- Tool Features Section -->
+<div class="info-card">
+<h2><i class="fas fa-star"></i>Comprehensive Tool Features</h2>
+<div class="features-grid">
+<div class="feature-category">
+<h3><i class="fas fa-file-text"></i>Text Operations</h3>
+<ul>
+<li><strong>Advanced OCR:</strong> Extract text from scanned documents and images with high accuracy</li>
+<li><strong>Format Preservation:</strong> Maintain original formatting, fonts, and layout structure</li>
+<li><strong>Language Support:</strong> Process documents in multiple languages and character sets</li>
+<li><strong>Selective Extraction:</strong> Extract text from specific pages or regions</li>
+</ul>
+</div>
+
+<div class="feature-category">
+<h3><i class="fas fa-cut"></i>Document Management</h3>
+<ul>
+<li><strong>Flexible Splitting:</strong> Split by page ranges, bookmarks, or file size limits</li>
+<li><strong>Smart Merging:</strong> Combine multiple PDFs with bookmark preservation</li>
+<li><strong>Page Manipulation:</strong> Rotate, reorder, and extract specific pages</li>
+<li><strong>Batch Processing:</strong> Handle multiple documents simultaneously</li>
+</ul>
+</div>
+
+<div class="feature-category">
+<h3><i class="fas fa-compress"></i>Optimization Tools</h3>
+<ul>
+<li><strong>Intelligent Compression:</strong> Reduce file size while maintaining quality</li>
+<li><strong>Image Optimization:</strong> Compress embedded images with minimal quality loss</li>
+<li><strong>Font Subsetting:</strong> Remove unused font data to reduce file size</li>
+<li><strong>Content Cleanup:</strong> Remove redundant elements and optimize structure</li>
+</ul>
+</div>
+
+<div class="feature-category">
+<h3><i class="fas fa-shield-alt"></i>Security Features</h3>
+<ul>
+<li><strong>Watermark Protection:</strong> Add custom text or image watermarks</li>
+<li><strong>Position Control:</strong> Place watermarks with pixel-perfect precision</li>
+<li><strong>Transparency Options:</strong> Adjust opacity for subtle or prominent marking</li>
+<li><strong>Batch Watermarking:</strong> Apply consistent branding across documents</li>
+</ul>
+</div>
+</div>
+</div>
+
+<!-- Storage and Security Section -->
+<div class="info-card">
+<h2><i class="fas fa-database"></i>File Storage & Security</h2>
+<div class="security-content">
+<div class="security-feature">
+<h3><i class="fas fa-clock"></i>Temporary Storage Policy</h3>
+<p>Your uploaded files are stored temporarily on our secure servers only during the processing period. We maintain strict data retention policies to protect your privacy and ensure optimal security.</p>
+<div class="storage-timeline">
+<div class="timeline-item">
+<strong>Upload:</strong> Files are immediately encrypted and stored in isolated processing containers
+</div>
+<div class="timeline-item">
+<strong>Processing:</strong> Documents remain in secure memory during operation execution (typically 1-5 minutes)
+</div>
+<div class="timeline-item">
+<strong>Download Window:</strong> Processed files available for download for 60 minutes maximum
+</div>
+<div class="timeline-item">
+<strong>Auto-Deletion:</strong> All files and processing data permanently deleted after download or timeout
+</div>
+</div>
+</div>
+
+<div class="security-measures">
+<h3><i class="fas fa-lock"></i>Security Measures</h3>
+<div class="measures-grid">
+<div class="measure-item">
+<i class="fas fa-encrypt"></i>
+<h4>End-to-End Encryption</h4>
+<p>All file transfers use TLS 1.3 encryption, and files are encrypted at rest using AES-256 standards</p>
+</div>
+
+<div class="measure-item">
+<i class="fas fa-user-shield"></i>
+<h4>Access Controls</h4>
+<p>Strict access controls and authentication prevent unauthorized access to your documents</p>
+</div>
+
+<div class="measure-item">
+<i class="fas fa-virus"></i>
+<h4>Malware Scanning</h4>
+<p>All uploaded files undergo comprehensive malware and virus scanning before processing</p>
+</div>
+
+<div class="measure-item">
+<i class="fas fa-eye-slash"></i>
+<h4>No Content Access</h4>
+<p>Our systems process files algorithmically without human access to content</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- File Deletion Section -->
+<div class="info-card">
+<h2><i class="fas fa-trash-alt"></i>Automatic File Deletion</h2>
+<div class="deletion-policy">
+<div class="policy-overview">
+<h3><i class="fas fa-info-circle"></i>Deletion Overview</h3>
+<p>We prioritize your privacy and data security through comprehensive automatic deletion policies. Your files and all associated processing data are permanently removed from our systems according to strict timelines.</p>
+</div>
+
+<div class="deletion-details">
+<div class="deletion-stage">
+<div class="stage-icon"><i class="fas fa-upload"></i></div>
+<div class="stage-content">
+<h4>Upon Upload</h4>
+<p>Files are assigned unique temporary identifiers and stored in isolated, encrypted containers with automatic expiration timestamps.</p>
+</div>
+</div>
+
+<div class="deletion-stage">
+<div class="stage-icon"><i class="fas fa-cog"></i></div>
+<div class="stage-content">
+<h4>During Processing</h4>
+<p>Temporary processing files, cache data, and system logs are continuously monitored and cleaned up in real-time during operation.</p>
+</div>
+</div>
+
+<div class="deletion-stage">
+<div class="stage-icon"><i class="fas fa-download"></i></div>
+<div class="stage-content">
+<h4>After Download</h4>
+<p>Once you download your processed file, all related data including original uploads, processed results, and metadata are immediately purged.</p>
+</div>
+</div>
+
+<div class="deletion-stage">
+<div class="stage-icon"><i class="fas fa-clock"></i></div>
+<div class="stage-content">
+<h4>Timeout Protection</h4>
+<p>Files not downloaded within 60 minutes are automatically deleted, ensuring no data remains on our servers beyond necessary processing time.</p>
+</div>
+</div>
+</div>
+
+<div class="verification-methods">
+<h3><i class="fas fa-check-double"></i>Deletion Verification</h3>
+<div class="verification-grid">
+<div class="verification-item">
+<i class="fas fa-database"></i>
+<h4>Database Cleanup</h4>
+<p>All database entries, file references, and metadata records are permanently removed</p>
+</div>
+
+<div class="verification-item">
+<i class="fas fa-hdd"></i>
+<h4>Storage Wiping</h4>
+<p>Physical storage sectors are securely wiped using industry-standard data destruction methods</p>
+</div>
+
+<div class="verification-item">
+<i class="fas fa-memory"></i>
+<h4>Memory Clearing</h4>
+<p>RAM and cache memory containing file data are cleared and overwritten multiple times</p>
+</div>
+
+<div class="verification-item">
+<i class="fas fa-file-contract"></i>
+<h4>Log Purging</h4>
+<p>All system logs, access records, and processing histories are automatically expunged</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Privacy Section -->
+<div class="info-card">
+<h2><i class="fas fa-user-secret"></i>Privacy Protection</h2>
+<div class="privacy-content">
+<div class="privacy-principles">
+<h3><i class="fas fa-balance-scale"></i>Core Privacy Principles</h3>
+<div class="principles-list">
+<div class="principle-item">
+<i class="fas fa-eye-slash"></i>
+<div>
+<h4>No Content Inspection</h4>
+<p>We never view, read, or analyze the content of your documents. All processing is performed algorithmically without human intervention or content access.</p>
+</div>
+</div>
+
+<div class="principle-item">
+<i class="fas fa-user-times"></i>
+<div>
+<h4>No User Tracking</h4>
+<p>We don't create user profiles, track usage patterns, or store personal information. Each session is independent and anonymous.</p>
+</div>
+</div>
+
+<div class="principle-item">
+<i class="fas fa-share-alt-slash"></i>
+<div>
+<h4>No Third-Party Sharing</h4>
+<p>Your files and processing data are never shared, sold, or transmitted to third parties under any circumstances.</p>
+</div>
+</div>
+
+<div class="principle-item">
+<i class="fas fa-cookie-bite"></i>
+<div>
+<h4>Minimal Data Collection</h4>
+<p>We collect only essential technical data required for service functionality, with no personal identification or content storage.</p>
+</div>
+</div>
+</div>
+</div>
+
+          <div class="compliance-info">
+            <h3><i class="fas fa-certificate"></i>Compliance & Standards</h3>
+            <div class="compliance-grid">
+              <div class="compliance-item">
+                <i class="fas fa-shield-check"></i>
+                <h4>GDPR Compliant</h4>
+                <p>Full compliance with European Union General Data Protection Regulation requirements</p>
+              </div>
+              
+              <div class="compliance-item">
+                <i class="fas fa-flag-usa"></i>
+                <h4>CCPA Compliant</h4>
+                <p>Adherence to California Consumer Privacy Act standards for data protection</p>
+              </div>
+              
+              <div class="compliance-item">
+                <i class="fas fa-lock"></i>
+                <h4>SOC 2 Type II</h4>
+                <p>Security controls audited and certified for service organization standards</p>
+              </div>
+              
+              <div class="compliance-item">
+                <i class="fas fa-medical-briefcase"></i>
+                <h4>HIPAA Ready</h4>
+                <p>Infrastructure and processes designed to support healthcare privacy requirements</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+<!-- FAQ Section -->
+<div class="info-card">
+<h2><i class="fas fa-question-circle"></i>Frequently Asked Questions</h2>
+<div class="faq-container">
+<div class="faq-item">
+<div class="faq-question">
+<h3><i class="fas fa-file-upload"></i>What file formats do you support?</h3>
+<i class="fas fa-plus faq-toggle"></i>
+</div>
+<div class="faq-answer">
+<p>We currently support PDF files exclusively for our PDF tools. Supported versions include PDF 1.0 through PDF 2.0, including password-protected PDFs (with password provided), portfolios, and documents with embedded multimedia content. Files can be up to 100MB in size.</p>
+</div>
+</div>
+
+<div class="faq-item">
+<div class="faq-question">
+<h3><i class="fas fa-clock"></i>How long does processing take?</h3>
+<i class="fas fa-plus faq-toggle"></i>
+</div>
+<div class="faq-answer">
+<p>Processing times vary by operation and file size. Simple operations like metadata viewing are instant, while text extraction typically takes 10-30 seconds. Large file compression or image conversion may require 1-5 minutes. Our system provides real-time progress updates during processing.</p>
+</div>
+</div>
+
+<div class="faq-item">
+<div class="faq-question">
+<h3><i class="fas fa-mobile-alt"></i>Can I use these tools on mobile devices?</h3>
+<i class="fas fa-plus faq-toggle"></i>
+</div>
+<div class="faq-answer">
+<p>Yes, our PDF tools are fully responsive and work seamlessly on smartphones and tablets. The interface adapts automatically to your screen size, and all functionality including drag-and-drop file upload is supported on touch devices.</p>
+</div>
+</div>
+
+<div class="faq-item">
+<div class="faq-question">
+<h3><i class="fas fa-wifi"></i>Do I need an internet connection?</h3>
+<i class="fas fa-plus faq-toggle"></i>
+</div>
+<div class="faq-answer">
+<p>Yes, an active internet connection is required as all processing occurs on our secure servers. This ensures consistent results across all devices and access to powerful processing capabilities without installing software.</p>
+</div>
+</div>
+
+<div class="faq-item">
+<div class="faq-question">
+<h3><i class="fas fa-key"></i>How do you handle password-protected PDFs?</h3>
+<i class="fas fa-plus faq-toggle"></i>
+</div>
+<div class="faq-answer">
+<p>For password-protected PDFs, you'll need to provide the document password during upload. The password is used only for document decryption and is never stored or logged. Once processing is complete, the password is immediately purged from system memory.</p>
+</div>
+</div>
+
+<div class="faq-item">
+<div class="faq-question">
+<h3><i class="fas fa-download"></i>What happens if I don't download my processed file?</h3>
+<i class="fas fa-plus faq-toggle"></i>
+</div>
+<div class="faq-answer">
+<p>Processed files are available for download for 60 minutes after completion. If not downloaded within this timeframe, all files and processing data are automatically and permanently deleted from our servers for your security and privacy.</p>
+</div>
+</div>
+
+<div class="faq-item">
+<div class="faq-question">
+<h3><i class="fas fa-exclamation-triangle"></i>What if processing fails?</h3>
+<i class="fas fa-plus faq-toggle"></i>
+</div>
+<div class="faq-answer">
+<p>If processing fails, you'll receive a detailed error message explaining the issue. Common causes include corrupted files, unsupported PDF features, or extremely large documents. Our system automatically cleans up any failed processing attempts and securely deletes associated data.</p>
+</div>
+</div>
+
+<div class="faq-item">
+<div class="faq-question">
+<h3><i class="fas fa-batch"></i>Can I process multiple files simultaneously?</h3>
+<i class="fas fa-plus faq-toggle"></i>
+</div>
+<div class="faq-answer">
+<p>Some tools like PDF merging support multiple file inputs in a single operation. For other tools, you can open multiple browser tabs to process several files concurrently. Each processing session is independent and secure.</p>
+</div>
+</div>
+
+<div class="faq-item">
+<div class="faq-question">
+<h3><i class="fas fa-quality"></i>Will processing affect PDF quality?</h3>
+<i class="fas fa-plus faq-toggle"></i>
+</div>
+<div class="faq-answer">
+<p>Most operations preserve original quality completely. Compression tools offer quality settings to balance file size with visual fidelity. Image conversion allows custom DPI settings, and our algorithms are optimized to maintain maximum quality at your chosen settings.</p>
+</div>
+</div>
+
+<div class="faq-item">
+<div class="faq-question">
+<h3><i class="fas fa-support"></i>Do you provide technical support?</h3>
+<i class="fas fa-plus faq-toggle"></i>
+</div>
+<div class="faq-answer">
+<p>Yes, we offer comprehensive technical support through our help center and email assistance. Our support team can help with processing issues, feature questions, and technical guidance. Response times are typically within 24 hours for most inquiries.</p>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+
+<style>
+/* About Section Styles */
+.about-section {
+
+padding: 60px 0;
+margin-top: 40px;
+}
+
+.about-content {
+max-width: 1200px;
+margin: 0 auto;
+}
+
+.info-card {
+background: white;
+border-radius: 20px;
+padding: 40px;
+margin-bottom: 40px;
+box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+border: 1px solid #e9ecef;
+}
+
+.info-card h2 {
+color: #667eea;
+font-size: 2rem;
+margin-bottom: 30px;
+display: flex;
+align-items: center;
+gap: 15px;
+}
+
+.info-card h2 i {
+font-size: 1.8rem;
+}
+
+/* Steps Styles */
+.steps-container {
+display: flex;
+flex-direction: column;
+gap: 30px;
+}
+
+.step {
+display: flex;
+align-items: flex-start;
+gap: 20px;
+padding: 25px;
+background: linear-gradient(135deg, #f8f9ff 0%, #e6f3ff 100%);
+border-radius: 15px;
+border-left: 5px solid #667eea;
+}
+
+.step-number {
+background: linear-gradient(135deg, #667eea, #764ba2);
+color: white;
+width: 50px;
+height: 50px;
+border-radius: 50%;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 1.5rem;
+font-weight: bold;
+flex-shrink: 0;
+}
+
+.step-content h3 {
+color: #667eea;
+margin-bottom: 10px;
+font-size: 1.3rem;
+}
+
+.step-content p {
+color: #6c757d;
+line-height: 1.7;
+}
+
+/* Technology Grid */
+.technology-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+gap: 25px;
+margin-bottom: 40px;
+}
+
+.tech-item {
+text-align: center;
+padding: 30px 20px;
+background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+border-radius: 15px;
+border: 2px solid #e9ecef;
+transition: all 0.3s ease;
+}
+
+.tech-item:hover {
+transform: translateY(-5px);
+border-color: #667eea;
+box-shadow: 0 10px 25px rgba(102, 126, 234, 0.1);
+}
+
+.tech-icon {
+width: 70px;
+height: 70px;
+background: linear-gradient(135deg, #667eea, #764ba2);
+border-radius: 50%;
+display: flex;
+align-items: center;
+justify-content: center;
+margin: 0 auto 20px;
+font-size: 2rem;
+color: white;
+}
+
+.tech-item h3 {
+color: #667eea;
+margin-bottom: 15px;
+font-size: 1.2rem;
+}
+
+.tech-item p {
+color: #6c757d;
+line-height: 1.6;
+}
+
+/* Process Details */
+.process-details {
+background: #f8f9fa;
+padding: 30px;
+border-radius: 15px;
+margin-top: 30px;
+}
+
+.process-details h3 {
+color: #667eea;
+margin-bottom: 20px;
+font-size: 1.3rem;
+}
+
+.workflow-steps {
+display: flex;
+flex-direction: column;
+gap: 15px;
+}
+
+.workflow-item {
+padding: 20px;
+background: white;
+border-radius: 10px;
+border-left: 4px solid #667eea;
+}
+
+.workflow-item strong {
+color: #667eea;
+margin-right: 10px;
+}
+
+/* Features Grid */
+.features-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+gap: 30px;
+}
+
+.feature-category {
+background: linear-gradient(135deg, #f8f9ff 0%, #e6f3ff 100%);
+padding: 30px;
+border-radius: 15px;
+border: 2px solid #667eea;
+}
+
+.feature-category h3 {
+color: #667eea;
+margin-bottom: 20px;
+font-size: 1.3rem;
+}
+
+.feature-category ul {
+list-style: none;
+padding: 0;
+}
+
+.feature-category li {
+padding: 10px 0;
+border-bottom: 1px solid rgba(102, 126, 234, 0.1);
+color: #6c757d;
+}
+
+.feature-category li:last-child {
+border-bottom: none;
+}
+
+.feature-category li strong {
+color: #667eea;
+}
+
+/* Security Content */
+.security-content {
+display: flex;
+flex-direction: column;
+gap: 40px;
+}
+
+.storage-timeline {
+background: #f8f9fa;
+padding: 25px;
+border-radius: 15px;
+margin-top: 20px;
+}
+
+.timeline-item {
+padding: 15px 0;
+border-left: 3px solid #667eea;
+padding-left: 20px;
+margin-bottom: 15px;
+position: relative;
+}
+
+.timeline-item:before {
+content: '';
+width: 10px;
+height: 10px;
+background: #667eea;
+border-radius: 50%;
+position: absolute;
+left: -6px;
+top: 20px;
+}
+
+.timeline-item strong {
+color: #667eea;
+margin-right: 10px;
+}
+
+.measures-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+gap: 25px;
+margin-top: 20px;
+}
+
+.measure-item {
+background: white;
+padding: 25px;
+border-radius: 15px;
+text-align: center;
+border: 2px solid #e9ecef;
+transition: all 0.3s ease;
+}
+
+.measure-item:hover {
+border-color: #667eea;
+transform: translateY(-3px);
+}
+
+.measure-item i {
+font-size: 2.5rem;
+color: #667eea;
+margin-bottom: 15px;
+}
+
+.measure-item h4 {
+color: #667eea;
+margin-bottom: 10px;
+}
+
+/* Deletion Policy */
+.deletion-policy {
+display: flex;
+flex-direction: column;
+gap: 40px;
+}
+
+.deletion-details {
+display: grid;
+gap: 25px;
+}
+
+.deletion-stage {
+display: flex;
+align-items: center;
+gap: 20px;
+padding: 25px;
+background: linear-gradient(135deg, #f8f9ff 0%, #e6f3ff 100%);
+border-radius: 15px;
+border: 2px solid #667eea;
+}
+
+.stage-icon {
+width: 60px;
+height: 60px;
+background: linear-gradient(135deg, #667eea, #764ba2);
+border-radius: 50%;
+display: flex;
+align-items: center;
+justify-content: center;
+color: white;
+font-size: 1.5rem;
+flex-shrink: 0;
+}
+
+.stage-content h4 {
+color: #667eea;
+margin-bottom: 10px;
+font-size: 1.2rem;
+}
+
+.stage-content p {
+color: #6c757d;
+line-height: 1.6;
+}
+
+.verification-methods {
+margin-top: 30px;
+}
+
+.verification-methods h3 {
+color: #667eea;
+margin-bottom: 20px;
+font-size: 1.3rem;
+}
+
+.verification-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+gap: 20px;
+}
+
+.verification-item {
+background: white;
+padding: 20px;
+border-radius: 12px;
+text-align: center;
+border: 2px solid #e9ecef;
+transition: all 0.3s ease;
+}
+
+.verification-item:hover {
+border-color: #667eea;
+transform: translateY(-3px);
+}
+
+.verification-item i {
+font-size: 2rem;
+color: #667eea;
+margin-bottom: 15px;
+}
+
+.verification-item h4 {
+color: #667eea;
+margin-bottom: 10px;
+font-size: 1.1rem;
+}
+
+.verification-item p {
+color: #6c757d;
+font-size: 0.9rem;
+line-height: 1.5;
+}
+
+/* Privacy Content */
+.privacy-content {
+display: flex;
+flex-direction: column;
+gap: 40px;
+}
+
+.privacy-principles h3 {
+color: #667eea;
+margin-bottom: 25px;
+font-size: 1.3rem;
+}
+
+.principles-list {
+display: flex;
+flex-direction: column;
+gap: 20px;
+}
+
+.principle-item {
+display: flex;
+align-items: flex-start;
+gap: 20px;
+padding: 25px;
+background: linear-gradient(135deg, #f8f9ff 0%, #e6f3ff 100%);
+border-radius: 15px;
+border-left: 4px solid #667eea;
+}
+
+.principle-item i {
+font-size: 2rem;
+color: #667eea;
+margin-top: 5px;
+flex-shrink: 0;
+}
+
+.principle-item h4 {
+color: #667eea;
+margin-bottom: 10px;
+font-size: 1.2rem;
+}
+
+.principle-item p {
+color: #6c757d;
+line-height: 1.6;
+}
+
+.compliance-info {
+margin-top: 30px;
+}
+
+.compliance-info h3 {
+color: #667eea;
+margin-bottom: 25px;
+font-size: 1.3rem;
+}
+
+.compliance-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+gap: 25px;
+}
+
+.compliance-item {
+background: white;
+padding: 25px;
+border-radius: 15px;
+text-align: center;
+border: 2px solid #e9ecef;
+transition: all 0.3s ease;
+}
+
+.compliance-item:hover {
+border-color: #667eea;
+transform: translateY(-3px);
+box-shadow: 0 10px 25px rgba(102, 126, 234, 0.1);
+}
+
+.compliance-item i {
+font-size: 2.5rem;
+color: #667eea;
+margin-bottom: 15px;
+}
+
+.compliance-item h4 {
+color: #667eea;
+margin-bottom: 10px;
+font-size: 1.2rem;
+}
+
+.compliance-item p {
+color: #6c757d;
+line-height: 1.5;
+font-size: 0.95rem;
+}
+
+/* FAQ Styles */
+.faq-container {
+display: flex;
+flex-direction: column;
+gap: 20px;
+}
+
+.faq-item {
+background: white;
+border-radius: 15px;
+border: 2px solid #e9ecef;
+overflow: hidden;
+transition: all 0.3s ease;
+}
+
+.faq-item:hover {
+border-color: #667eea;
+box-shadow: 0 5px 15px rgba(102, 126, 234, 0.1);
+}
+
+.faq-question {
+padding: 25px;
+background: linear-gradient(135deg, #f8f9ff 0%, #e6f3ff 100%);
+cursor: pointer;
+display: flex;
+justify-content: space-between;
+align-items: center;
+transition: all 0.3s ease;
+}
+
+.faq-question:hover {
+background: linear-gradient(135deg, #e6f3ff 0%, #dae8ff 100%);
+}
+
+.faq-question h3 {
+color: #667eea;
+font-size: 1.2rem;
+margin: 0;
+display: flex;
+align-items: center;
+gap: 10px;
+}
+
+.faq-question h3 i {
+font-size: 1.1rem;
+}
+
+.faq-toggle {
+color: #667eea;
+font-size: 1.2rem;
+transition: transform 0.3s ease;
+}
+
+.faq-item.active .faq-toggle {
+transform: rotate(45deg);
+}
+
+.faq-answer {
+padding: 0 25px;
+max-height: 0;
+overflow: hidden;
+transition: all 0.4s ease;
+}
+
+.faq-item.active .faq-answer {
+padding: 25px;
+max-height: 500px;
+}
+
+.faq-answer p {
+color: #6c757d;
+line-height: 1.7;
+margin: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+.about-section {
+padding: 40px 0;
+}
+
+.info-card {
+padding: 25px;
+margin-bottom: 25px;
+}
+
+.info-card h2 {
+font-size: 1.6rem;
+flex-direction: column;
+gap: 10px;
+text-align: center;
+}
+
+.steps-container {
+gap: 20px;
+}
+
+.step {
+flex-direction: column;
+text-align: center;
+gap: 15px;
+}
+
+.technology-grid,
+.features-grid,
+.measures-grid,
+.verification-grid,
+.compliance-grid {
+grid-template-columns: 1fr;
+gap: 20px;
+}
+
+.deletion-stage {
+flex-direction: column;
+text-align: center;
+gap: 15px;
+}
+
+.principle-item {
+flex-direction: column;
+text-align: center;
+gap: 15px;
+}
+
+.faq-question {
+padding: 20px;
+flex-direction: column;
+gap: 15px;
+text-align: center;
+}
+
+.faq-question h3 {
+font-size: 1.1rem;
+}
+
+.faq-item.active .faq-answer {
+padding: 20px;
+}
+}
+
+@media (max-width: 480px) {
+.info-card {
+padding: 20px;
+margin-bottom: 20px;
+}
+
+.info-card h2 {
+font-size: 1.4rem;
+}
+
+.step {
+padding: 20px;
+}
+
+.tech-item,
+.measure-item,
+.verification-item,
+.compliance-item {
+padding: 20px;
+}
+
+.deletion-stage,
+.principle-item {
+padding: 20px;
+}
+
+.faq-question {
+padding: 15px;
+}
+
+.faq-item.active .faq-answer {
+padding: 15px;
+}
+}
+</style>
+
+<script>
+// FAQ Toggle Functionality
+document.addEventListener('DOMContentLoaded', function() {
+const faqItems = document.querySelectorAll('.faq-item');
+
+faqItems.forEach(item => {
+const question = item.querySelector('.faq-question');
+
+question.addEventListener('click', function() {
+const isActive = item.classList.contains('active');
+
+// Close all other FAQ items
+faqItems.forEach(otherItem => {
+if (otherItem !== item) {
+otherItem.classList.remove('active');
+}
+});
+
+// Toggle current item
+if (isActive) {
+item.classList.remove('active');
+} else {
+item.classList.add('active');
+}
+});
+});
+
+// Add smooth scrolling for internal links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+anchor.addEventListener('click', function (e) {
+e.preventDefault();
+const target = document.querySelector(this.getAttribute('href'));
+if (target) {
+target.scrollIntoView({
+behavior: 'smooth',
+block: 'start'
+});
+}
+});
+});
+
+// Add animation on scroll for info cards
+const observerOptions = {
+threshold: 0.1,
+rootMargin: '0px 0px -100px 0px'
+};
+
+const observer = new IntersectionObserver(function(entries) {
+entries.forEach(entry => {
+if (entry.isIntersecting) {
+entry.target.style.opacity = '1';
+entry.target.style.transform = 'translateY(0)';
+}
+});
+}, observerOptions);
+
+// Observe all info cards
+document.querySelectorAll('.info-card').forEach(card => {
+card.style.opacity = '0';
+card.style.transform = 'translateY(30px)';
+card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+observer.observe(card);
+});
+});
+</script>
+<footer class="footer">
+<div class="footer-container">
+<div class="footer-content">
+<div class="footer-section">
+<h3>Popular Tools</h3>
+<ul class="footer-links">
+<li><a href="https://21k.tools/agecalculator"><i class="fas fa-birthday-cake"></i> Age Calculator</a></li>
+<li><a href="https://21k.tools/interestcalculator"><i class="fas fa-percentage"></i> Interest Calculator</a></li>
+<li><a href="https://21k.tools/pdftools"><i class="fas fa-file-pdf"></i> PDF Toolkit</a></li>
+<li><a href="https://21k.tools/unitconverter"><i class="fas fa-balance-scale"></i> Unit Converter</a></li>
+<li><a href="https://21k.tools/timecalculator"><i class="fas fa-stopwatch"></i> Time Calculator</a></li>
+<li><a href="https://finance.21k.tools"><i class="fas fa-chart-line"></i> Financial Calculator</a></li>
+</ul>
+</div>
+<div class="footer-section">
+<h3>Categories</h3>
+<ul class="footer-links">
+<li><a href="https://calculators.21k.tools"><i class="fas fa-calculator"></i> Calculators</a></li>
+<li><a href="https://21k.tools/pdftools"><i class="fas fa-file-pdf"></i> PDF Tools</a></li>
+<li><a href="https://converter.21k.tools"><i class="fas fa-exchange-alt"></i> Converters</a></li>
+<li><a href="https://21k.tools/timecalculator"><i class="fas fa-clock"></i> Time Tools</a></li>
+</ul>
+</div>
+<div class="footer-section">
+<h3>Support</h3>
+<ul class="footer-links">
+<li><a href="/help"><i class="fas fa-question-circle"></i> Help Center</a></li>
+<li><a href="mailto:contact@21k.tools"><i class="fas fa-envelope"></i> Contact Us</a></li>
+</ul>
+</div>
+<div class="footer-section">
+<h3>Company</h3>
+<ul class="footer-links">
+<li><a href="https://21k.tools/about"><i class="fas fa-info-circle"></i> About Us</a></li>
+<li><a href="https://21k.tools/privacypolicy"><i class="fas fa-shield-alt"></i> Privacy Policy</a></li>
+<li><a href="https://21k.tools/termsandconditions"><i class="fas fa-file-contract"></i> Terms</a></li>
+<li><a href="https://21k.tools/blog"><i class="fas fa-blog"></i> Blogs</a></li>
+</ul>
+</div>
+</div>
+<div class="footer-bottom">
+<div class="footer-brand">
+<div class="footer-brand-icon">21K</div>
+<span>&copy; 2025 21K Tools. All rights reserved.</span>
+</div>
+<div class="social-links">
+<a href="https://x.com/@21ktools" class="social-link" title="Twitter"><i class="fab fa-twitter"></i></a>
+<a href="https://instagram.com/@21k.tools" class="social-link" title="Instagram"><i class="fab fa-instagram"></i></a>
+<a href="https://youtube.com/@21ktools" class="social-link" title="YouTube"><i class="fab fa-youtube"></i></a>
+<a href="#" class="social-link" title="Facebook"><i class="fab fa-facebook"></i></a>
+</div>
+</div>
+</div>
+</footer>
+
+<script>
+// Global variables
+let currentPDF = null;
+let currentPDFName = '';
+let currentPDFSize = 0;
+let currentTool = null;
+let currentResult = null;
+
+// DOM elements
+const uploadSection = document.getElementById('uploadSection');
+const pdfUpload = document.getElementById('pdfUpload');
+const fileInfo = document.getElementById('fileInfo');
+const fileDetails = document.getElementById('fileDetails');
+const toolsGrid = document.getElementById('toolsGrid');
+const toolFormsContainer = document.getElementById('toolFormsContainer');
+const alertBox = document.getElementById('alertBox');
+const loadingIndicator = document.getElementById('loadingIndicator');
+const previewSection = document.getElementById('previewSection');
+const previewContent = document.getElementById('previewContent');
+const downloadSection = document.getElementById('downloadSection');
+const downloadBtn = document.getElementById('downloadBtn');
+const operationInfo = document.getElementById('operationInfo');
+
+// Event listeners
+document.addEventListener('DOMContentLoaded', function() {
+setupEventListeners();
+setupHeaderEvents();
+setTimeout(addLoadingAnimation, 500);
+});
+
+function setupEventListeners() {
+// File upload
+pdfUpload.addEventListener('change', handleFileUpload);
+uploadSection.addEventListener('click', () => pdfUpload.click());
+
+// Drag and drop
+uploadSection.addEventListener('dragover', handleDragOver);
+uploadSection.addEventListener('dragleave', handleDragLeave);
+uploadSection.addEventListener('drop', handleDrop);
+
+// Tool cards
+toolsGrid.addEventListener('click', handleToolClick);
+
+// Download button
+downloadBtn.addEventListener('click', downloadCurrentFile);
+}
+
+// Header navigation functions
+function toggleDesktopDropdown(event) {
+event.preventDefault();
+event.stopPropagation();
+
+// Close any other open dropdowns
+document.querySelectorAll('.dropdown.active').forEach(dropdown => {
+if (dropdown !== event.currentTarget.parentElement) {
+dropdown.classList.remove('active');
+dropdown.querySelector('.fa-caret-down').classList.remove('rotate-180');
+}
+});
+
+// Toggle current dropdown
+const dropdown = event.currentTarget.parentElement;
+dropdown.classList.toggle('active');
+// Rotate caret icon
+const caret = event.currentTarget.querySelector('.fa-caret-down');
+caret.classList.toggle('rotate-180');
+}
+
+function toggleMobileDropdown() {
+const dropdown = document.getElementById('mobileToolsDropdown');
+dropdown.classList.toggle('active');
+
+// Rotate caret icon
+const caret = dropdown.querySelector('.fa-caret-down');
+caret.classList.toggle('rotate-180');
+}
+
+function setupHeaderEvents() {
+const mobileToggle = document.getElementById('mobileToggle');
+const mobilePanel = document.getElementById('mobilePanel');
+
+mobileToggle.addEventListener('click', (e) => {
+e.stopPropagation();
+mobileToggle.classList.toggle('change');
+mobilePanel.classList.toggle('show');
+});
+
+document.addEventListener('click', (e) => {
+// Close mobile menu
+mobileToggle.classList.remove('change');
+mobilePanel.classList.remove('show');
+
+// Close desktop dropdown if clicking outside
+if (!e.target.closest('.dropdown')) {
+document.getElementById('desktopToolsDropdown').classList.remove('active');
+const caret = document.querySelector('#desktopToolsDropdown .fa-caret-down');
+if (caret) caret.classList.remove('rotate-180');
+}
+
+// Close mobile dropdown if clicking outside
+if (!e.target.closest('.mobile-dropdown')) {
+document.getElementById('mobileToolsDropdown').classList.remove('active');
+const caret = document.querySelector('#mobileToolsDropdown .fa-caret-down');
+if (caret) caret.classList.remove('rotate-180');
+}
+});
+
+// Prevent mobile panel from closing when clicking inside it
+mobilePanel.addEventListener('click', (e) => {
+e.stopPropagation();
+});
+
+// Search functionality
+const searchInput = document.querySelector('.search-input');
+const searchBtn = document.querySelector('.search-btn');
+
+const performSearch = () => {
+const query = searchInput.value.trim();
+if (query) {
+window.location.href = `https://21k.tools/search?q=${encodeURIComponent(query)}`;
+}
+};
+
+searchInput.addEventListener('keypress', e => {
+if (e.key === 'Enter') performSearch();
+});
+
+searchBtn.addEventListener('click', performSearch);
+}
+
+// File handling functions
+function handleFileUpload(event) {
+const file = event.target.files[0];
+if (file && file.type === 'application/pdf') {
+processPDFFile(file);
+} else {
+showAlert('<i class="fas fa-exclamation-triangle"></i>Please upload a valid PDF file.', 'error');
+}
+}
+
+function handleDragOver(event) {
+event.preventDefault();
+uploadSection.classList.add('dragover');
+}
+
+function handleDragLeave(event) {
+event.preventDefault();
+uploadSection.classList.remove('dragover');
+}
+
+function handleDrop(event) {
+event.preventDefault();
+uploadSection.classList.remove('dragover');
+
+const file = event.dataTransfer.files[0];
+if (file && file.type === 'application/pdf') {
+processPDFFile(file);
+} else {
+showAlert('<i class="fas fa-exclamation-triangle"></i>Please upload a valid PDF file.', 'error');
+}
+}
+
+function processPDFFile(file) {
+currentPDF = file;
+currentPDFName = file.name;
+currentPDFSize = file.size;
+
+showFileInfo(file);
+enableTools();
+hidePreviewAndDownload();
+showAlert('<i class="fas fa-check-circle"></i>PDF file uploaded successfully! Now select a tool to process it.', 'success');
+}
+
+function showFileInfo(file) {
+fileDetails.innerHTML = `
+       <div class="info-grid">
+         <div class="info-item">
+           <strong><i class="fas fa-file-signature"></i>Filename</strong>
+           ${file.name}
+         </div>
+         <div class="info-item">
+           <strong><i class="fas fa-weight-hanging"></i>Size</strong>
+           ${formatFileSize(file.size)}
+         </div>
+         <div class="info-item">
+           <strong><i class="fas fa-file-code"></i>Type</strong>
+           ${file.type}
+         </div>
+         <div class="info-item">
+           <strong><i class="fas fa-calendar-alt"></i>Last Modified</strong>
+           ${new Date(file.lastModified).toLocaleDateString()}
+         </div>
+       </div>
+     `;
+fileInfo.style.display = 'block';
+}
+
+function enableTools() {
+const toolCards = document.querySelectorAll('.tool-card.disabled');
+toolCards.forEach((card, index) => {
+setTimeout(() => {
+card.classList.remove('disabled');
+card.style.transform = 'scale(1.05)';
+setTimeout(() => {
+card.style.transform = '';
+}, 300);
+}, index * 100);
+});
+}
+
+function hidePreviewAndDownload() {
+previewSection.style.display = 'none';
+downloadSection.style.display = 'none';
+}
+
+// Tool handling
+function handleToolClick(event) {
+const toolCard = event.target.closest('.tool-card');
+if (!toolCard || toolCard.classList.contains('disabled')) return;
+
+const tool = toolCard.dataset.tool;
+currentTool = tool;
+hidePreviewAndDownload();
+showToolForm(tool);
+}
+
+function showToolForm(tool) {
+toolFormsContainer.innerHTML = '';
+
+const form = document.createElement('div');
+form.className = 'tool-form';
+form.id = 'currentToolForm';
+form.style.display = 'block';
+
+form.innerHTML = `
+       <h3>${getToolTitle(tool)}</h3>
+       <p>${getToolDescription(tool)}</p>
+       ${getToolOptions(tool)}
+       <div class="tool-actions">
+         <button class="btn-primary" onclick="processTool()">
+           <i class="fas fa-play"></i>Process
+         </button>
+         <button class="btn-secondary" onclick="cancelTool()">
+           <i class="fas fa-times"></i>Cancel
+         </button>
+       </div>
+     `;
+
+toolFormsContainer.appendChild(form);
+setupToolEventListeners(tool);
+form.scrollIntoView({ behavior: 'smooth' });
+}
+
+function getToolTitle(tool) {
+const titles = {
+'extract-text': '<i class="fas fa-file-text"></i>Extract Text from PDF',
+'split-pdf': '<i class="fas fa-cut"></i>Split PDF',
+'merge-pdfs': '<i class="fas fa-object-group"></i>Merge PDF Files',
+'compress-pdf': '<i class="fas fa-compress"></i>Compress PDF',
+'add-watermark': '<i class="fas fa-stamp"></i>Add Watermark',
+'rotate-pages': '<i class="fas fa-redo"></i>Rotate Pages',
+'view-metadata': '<i class="fas fa-info-circle"></i>View PDF Metadata',
+'convert-to-images': '<i class="fas fa-images"></i>Convert to Images'
+};
+return titles[tool] || '<i class="fas fa-cog"></i>PDF Tool';
+}
+
+function getToolDescription(tool) {
+const descriptions = {
+'extract-text': 'Extract all text content from your PDF file with formatting preserved and OCR capabilities.',
+'split-pdf': 'Split your PDF into individual pages or custom page ranges with flexible options.',
+'merge-pdfs': 'Combine multiple PDF files into a single document maintaining quality.',
+'compress-pdf': 'Reduce file size while maintaining quality and readability using advanced compression.',
+'add-watermark': 'Add custom text watermarks to protect your document with positioning control.',
+'rotate-pages': 'Rotate specific pages or all pages by 90, 180, or 270 degrees.',
+'view-metadata': 'View detailed information and properties of your PDF file.',
+'convert-to-images': 'Convert PDF pages to high-quality images (PNG/JPEG) with custom DPI.'
+};
+return descriptions[tool] || 'Process your PDF file with advanced options.';
+}
+
+function getToolOptions(tool) {
+switch (tool) {
+case 'extract-text':
+return `
+           <div class="form-group">
+             <div class="info-item">
+               <strong><i class="fas fa-info-circle"></i>Information</strong>
+               Text will be extracted with page numbers and formatting preserved. 
+               The process supports both regular text and OCR for scanned documents.
+             </div>
+           </div>
+         `;
+
+case 'split-pdf':
+return `
+           <div class="form-group">
+             <label for="splitType"><i class="fas fa-scissors"></i>Split Type:</label>
+             <select id="splitType" name="split_type">
+               <option value="pages">Individual Pages</option>
+               <option value="ranges">Custom Page Ranges</option>
+             </select>
+           </div>
+           <div class="form-group" id="pageRangesGroup" style="display: none;">
+             <label for="pageRanges"><i class="fas fa-list-ol"></i>Page Ranges (e.g., 1-3,5,7-9):</label>
+             <input type="text" id="pageRanges" name="page_ranges" placeholder="1-3,5,7-9">
+             <div class="small-text">
+               <i class="fas fa-lightbulb"></i>
+               Separate ranges with commas. Use dash for ranges (1-3) or single numbers (5)
+             </div>
+           </div>
+         `;
+
+case 'merge-pdfs':
+return `
+           <div class="form-group">
+             <label for="additionalFiles"><i class="fas fa-plus"></i>Additional PDF files to merge:</label>
+             <input type="file" id="additionalFiles" name="additional_files" accept=".pdf" multiple>
+             <div class="small-text">
+               <i class="fas fa-info-circle"></i>
+               Select additional PDF files to merge with the uploaded file. Files will be merged in the order selected.
+             </div>
+           </div>
+         `;
+
+case 'compress-pdf':
+return `
+           <div class="form-group">
+             <label for="quality"><i class="fas fa-sliders-h"></i>Compression Quality (1-100):</label>
+             <div class="range-input">
+               <input type="range" id="quality" name="quality" min="1" max="100" value="75">
+               <span class="range-value" id="qualityValue">75</span>
+             </div>
+             <div class="small-text">
+               <i class="fas fa-balance-scale"></i>
+               Higher values = better quality but larger file size. Lower values = smaller file size but reduced quality.
+             </div>
+           </div>
+         `;
+
+case 'add-watermark':
+return `
+           <div class="form-group">
+             <label for="watermarkText"><i class="fas fa-font"></i>Watermark Text:</label>
+             <input type="text" id="watermarkText" name="watermark_text" value="CONFIDENTIAL" required>
+           </div>
+           <div class="form-group">
+             <label for="opacity"><i class="fas fa-adjust"></i>Opacity (0-1):</label>
+             <div class="range-input">
+               <input type="range" id="opacity" name="opacity" min="0" max="1" step="0.1" value="0.3">
+               <span class="range-value" id="opacityValue">0.3</span>
+             </div>
+           </div>
+           <div class="form-group">
+             <label for="position"><i class="fas fa-crosshairs"></i>Position:</label>
+             <select id="position" name="position">
+               <option value="center">Center (Diagonal)</option>
+               <option value="top-left">Top Left</option>
+               <option value="top-right">Top Right</option>
+               <option value="bottom-left">Bottom Left</option>
+               <option value="bottom-right">Bottom Right</option>
+             </select>
+           </div>
+           <div class="form-group">
+             <label for="color"><i class="fas fa-palette"></i>Color:</label>
+             <select id="color" name="color">
+               <option value="gray">Gray</option>
+               <option value="red">Red</option>
+               <option value="blue">Blue</option>
+               <option value="green">Green</option>
+               <option value="black">Black</option>
+             </select>
+           </div>
+           <div class="form-group">
+             <label for="fontSize"><i class="fas fa-text-height"></i>Font Size:</label>
+             <input type="number" id="fontSize" name="font_size" min="10" max="100" value="50">
+           </div>
+         `;
+
+case 'rotate-pages':
+return `
+           <div class="form-group">
+             <label for="rotation"><i class="fas fa-undo"></i>Rotation Angle:</label>
+             <select id="rotation" name="rotation">
+               <option value="90">90° Clockwise</option>
+               <option value="180">180° (Upside Down)</option>
+               <option value="270">270° Clockwise (90° Counter-Clockwise)</option>
+             </select>
+           </div>
+           <div class="form-group">
+             <label for="pagesToRotate"><i class="fas fa-list"></i>Pages to Rotate:</label>
+             <input type="text" id="pagesToRotate" name="pages" placeholder="e.g., 1,3,5-7 or leave empty for all">
+             <div class="small-text">
+               <i class="fas fa-info-circle"></i>
+               Leave empty to rotate all pages, or specify page numbers/ranges (e.g., 1,3,5-7)
+             </div>
+           </div>
+         `;
+
+case 'view-metadata':
+return `
+           <div class="form-group">
+             <div class="info-item">
+               <strong><i class="fas fa-database"></i>Metadata Information</strong>
+               This tool will extract and display detailed metadata including title, author, 
+               creation date, modification date, file properties, and security settings.
+             </div>
+           </div>
+         `;
+
+case 'convert-to-images':
+return `
+           <div class="form-group">
+             <label for="format"><i class="fas fa-image"></i>Image Format:</label>
+             <select id="format" name="format">
+               <option value="PNG">PNG (Better Quality, Transparent Background)</option>
+               <option value="JPEG">JPEG (Smaller Size, No Transparency)</option>
+             </select>
+           </div>
+           <div class="form-group">
+             <label for="dpi"><i class="fas fa-expand"></i>DPI (Resolution):</label>
+             <div class="range-input">
+               <input type="range" id="dpi" name="dpi" min="72" max="600" value="150">
+               <span class="range-value" id="dpiValue">150</span>
+             </div>
+             <div class="small-text">
+               <i class="fas fa-chart-line"></i>
+               Higher DPI = better quality but larger file size. 150 DPI is recommended for most uses.
+             </div>
+           </div>
+         `;
+
+default:
+return '<p>No additional options needed for this tool.</p>';
+}
+}
+
+function setupToolEventListeners(tool) {
+switch (tool) {
+case 'split-pdf':
+const splitType = document.getElementById('splitType');
+if (splitType) {
+splitType.addEventListener('change', function() {
+const pageRangesGroup = document.getElementById('pageRangesGroup');
+pageRangesGroup.style.display = this.value === 'ranges' ? 'block' : 'none';
+});
+}
+break;
+
+case 'compress-pdf':
+const quality = document.getElementById('quality');
+if (quality) {
+quality.addEventListener('input', function() {
+const valueDisplay = document.getElementById('qualityValue');
+valueDisplay.textContent = this.value;
+valueDisplay.style.background = this.value < 30 ? '#ffe6e6' : 
+this.value < 60 ? '#fff3cd' : '#e8f5e8';
+});
+}
+break;
+
+case 'add-watermark':
+const opacity = document.getElementById('opacity');
+if (opacity) {
+opacity.addEventListener('input', function() {
+document.getElementById('opacityValue').textContent = this.value;
+});
+}
+break;
+
+case 'convert-to-images':
+const dpi = document.getElementById('dpi');
+if (dpi) {
+dpi.addEventListener('input', function() {
+const valueDisplay = document.getElementById('dpiValue');
+valueDisplay.textContent = this.value;
+valueDisplay.style.background = this.value < 100 ? '#fff3cd' : 
+this.value > 300 ? '#ffe6e6' : '#e8f5e8';
+});
+}
+break;
+}
+}
+
+function processTool() {
+if (!currentPDF || !currentTool) return;
+
+const formData = new FormData();
+formData.append('pdf_file', currentPDF);
+
+// Add tool-specific form data
+addToolSpecificData(formData);
+
+// Add the correct URL prefix for pdftools
+const endpoint = `/pdftools/${currentTool.replace(/-/g, '-')}/`;
+
+loadingIndicator.style.display = 'block';
+alertBox.style.display = 'none';
+hidePreviewAndDownload();
+
+fetch(endpoint, {
+method: 'POST',
+body: formData,
+headers: {
+'X-Requested-With': 'XMLHttpRequest',
+'X-CSRFToken': getCsrfToken()
+}
+})
+.then(async response => {
+const ct = response.headers.get("content-type") || "";
+if (ct.includes("application/json")) {
+return response.json();
+} else {
+const text = await response.text();
+throw new Error("Unexpected response: " + text.substring(0, 200));
+}
+})
+.then(data => {
+if (data.success) {
+currentResult = data;
+showPreview(data);
+showDownloadSection(data);
+showAlert('<i class="fas fa-check-circle"></i>Operation completed successfully! Check the preview and download your file.', 'success');
+} else {
+throw new Error(data.error || 'Unknown error occurred');
+}
+})
+.catch(error => {
+showAlert(`<i class="fas fa-exclamation-triangle"></i>Error: ${error.message || 'An error occurred during processing'}`, 'error');
+})
+.finally(() => {
+loadingIndicator.style.display = 'none';
+});
+}
+
+function addToolSpecificData(formData) {
+switch (currentTool) {
+case 'split-pdf':
+const splitType = document.getElementById('splitType');
+if (splitType) formData.append('split_type', splitType.value);
+
+if (splitType && splitType.value === 'ranges') {
+const pageRanges = document.getElementById('pageRanges');
+if (pageRanges) formData.append('page_ranges', pageRanges.value);
+}
+break;
+
+case 'merge-pdfs':
+const additionalFiles = document.getElementById('additionalFiles');
+if (additionalFiles && additionalFiles.files.length > 0) {
+for (let i = 0; i < additionalFiles.files.length; i++) {
+formData.append('additional_files', additionalFiles.files[i]);
+}
+}
+break;
+
+case 'compress-pdf':
+const quality = document.getElementById('quality');
+if (quality) formData.append('quality', quality.value);
+break;
+
+case 'add-watermark':
+const watermarkText = document.getElementById('watermarkText');
+if (watermarkText) formData.append('watermark_text', watermarkText.value);
+
+const opacity = document.getElementById('opacity');
+if (opacity) formData.append('opacity', opacity.value);
+
+const position = document.getElementById('position');
+if (position) formData.append('position', position.value);
+
+const color = document.getElementById('color');
+if (color) formData.append('color', color.value);
+
+const fontSize = document.getElementById('fontSize');
+if (fontSize) formData.append('font_size', fontSize.value);
+break;
+
+case 'rotate-pages':
+const rotation = document.getElementById('rotation');
+if (rotation) formData.append('rotation', rotation.value);
+
+const pagesToRotate = document.getElementById('pagesToRotate');
+if (pagesToRotate) formData.append('pages', pagesToRotate.value);
+break;
+
+case 'convert-to-images':
+const format = document.getElementById('format');
+if (format) formData.append('format', format.value);
+
+const dpi = document.getElementById('dpi');
+if (dpi) formData.append('dpi', dpi.value);
+break;
+}
+}
+
+function showPreview(data) {
+let previewHTML = '';
+
+switch (data.operation) {
+case 'text_extraction':
+previewHTML = `
+           <h4><i class="fas fa-file-text"></i>Extracted Text Preview</h4>
+           <div class="preview-text">${data.preview}</div>
+           ${data.preview.length < data.full_content.length ? 
+             `<div class="small-text"><i class="fas fa-info-circle"></i>Showing first 2000 characters. Full text will be available in download.</div>` : ''}
+         `;
+break;
+
+case 'pdf_split':
+previewHTML = `
+           <h4><i class="fas fa-cut"></i>Split Results</h4>
+           <div class="info-grid">
+             <div class="info-item">
+               <strong><i class="fas fa-file-pdf"></i>Total Files Created</strong>
+               ${data.total_files}
+             </div>
+             <div class="info-item">
+               <strong><i class="fas fa-archive"></i>Archive Format</strong>
+               ZIP
+             </div>
+           </div>
+           <div class="files-list">
+             ${data.files_info.map(file => `
+               <div class="file-item">
+                 <span class="file-name">
+                   <i class="fas fa-file-pdf"></i>${file.name}
+                 </span>
+                 <span class="file-details">
+                   ${file.pages} page(s) • ${formatFileSize(file.size)}
+                 </span>
+               </div>
+             `).join('')}
+           </div>
+         `;
+break;
+
+case 'pdf_merge':
+previewHTML = `
+           <h4><i class="fas fa-object-group"></i>Merge Results</h4>
+           <div class="info-grid">
+             <div class="info-item">
+               <strong><i class="fas fa-file-alt"></i>Total Pages</strong>
+               ${data.total_pages}
+             </div>
+             <div class="info-item">
+               <strong><i class="fas fa-layer-group"></i>Files Merged</strong>
+               ${data.merge_info.length}
+             </div>
+           </div>
+           ${data.preview_image ? `<img src="data:image/png;base64,${data.preview_image}" class="preview-image" alt="PDF Preview">` : ''}
+           <div class="files-list">
+             ${data.merge_info.map(file => `
+               <div class="file-item">
+                 <span class="file-name">
+                   <i class="fas fa-file-pdf"></i>${file.name}
+                 </span>
+                 <span class="file-details">
+                   ${file.pages} pages • ${formatFileSize(file.size)}
+                 </span>
+               </div>
+             `).join('')}
+           </div>
+         `;
+break;
+
+case 'pdf_compression':
+previewHTML = `
+           <h4><i class="fas fa-compress"></i>Compression Results</h4>
+           <div class="info-grid">
+             <div class="info-item">
+               <strong><i class="fas fa-weight"></i>Original Size</strong>
+               ${formatFileSize(data.original_size)}
+             </div>
+             <div class="info-item">
+               <strong><i class="fas fa-feather-alt"></i>Compressed Size</strong>
+               ${formatFileSize(data.compressed_size)}
+             </div>
+             <div class="info-item">
+               <strong><i class="fas fa-percentage"></i>Space Saved</strong>
+               ${data.compression_ratio}%
+             </div>
+             <div class="info-item">
+               <strong><i class="fas fa-chart-line"></i>Compression Ratio</strong>
+               ${(data.original_size / data.compressed_size).toFixed(2)}:1
+             </div>
+           </div>
+           ${data.preview_image ? `<img src="data:image/png;base64,${data.preview_image}" class="preview-image" alt="PDF Preview">` : ''}
+         `;
+break;
+
+case 'watermark':
+previewHTML = `
+           <h4><i class="fas fa-stamp"></i>Watermark Applied</h4>
+           <div class="info-grid">
+             <div class="info-item">
+               <strong><i class="fas fa-font"></i>Text</strong>
+               ${data.watermark_info.text}
+             </div>
+             <div class="info-item">
+               <strong><i class="fas fa-crosshairs"></i>Position</strong>
+               ${data.watermark_info.position}
+             </div>
+             <div class="info-item">
+               <strong><i class="fas fa-adjust"></i>Opacity</strong>
+               ${data.watermark_info.opacity}
+             </div>
+             <div class="info-item">
+               <strong><i class="fas fa-palette"></i>Color</strong>
+               ${data.watermark_info.color}
+             </div>
+           </div>
+           ${data.preview_image ? `<img src="data:image/png;base64,${data.preview_image}" class="preview-image" alt="Watermarked PDF Preview">` : ''}
+         `;
+break;
+
+case 'rotation':
+previewHTML = `
+           <h4><i class="fas fa-redo"></i>Page Rotation Results</h4>
+           <div class="info-grid">
+             <div class="info-item">
+               <strong><i class="fas fa-undo"></i>Rotation Applied</strong>
+               ${data.rotation_info.rotation}°
+             </div>
+             <div class="info-item">
+               <strong><i class="fas fa-file-alt"></i>Pages Rotated</strong>
+               ${data.rotation_info.rotated_pages.length}
+             </div>
+           </div>
+           ${data.preview_image ? `<img src="data:image/png;base64,${data.preview_image}" class="preview-image" alt="Rotated PDF Preview">` : ''}
+           <div class="info-item">
+             <strong><i class="fas fa-list-ol"></i>Rotated Pages:</strong> 
+             ${data.rotation_info.rotated_pages.join(', ')}
+           </div>
+         `;
+break;
+
+case 'metadata':
+previewHTML = `
+           <h4><i class="fas fa-info-circle"></i>PDF Metadata</h4>
+           ${data.preview_image ? `<img src="data:image/png;base64,${data.preview_image}" class="preview-image" alt="PDF Preview">` : ''}
+           <table class="metadata-table">
+             ${Object.entries(data.metadata).map(([key, value]) => `
+               <tr>
+                 <th><i class="fas fa-tag"></i>${key.replace(/_/g, ' ').toUpperCase()}</th>
+                 <td>${value}</td>
+               </tr>
+             `).join('')}
+           </table>
+         `;
+break;
+
+case 'image_conversion':
+previewHTML = `
+           <h4><i class="fas fa-images"></i>Image Conversion Results</h4>
+           <div class="info-grid">
+             <div class="info-item">
+               <strong><i class="fas fa-image"></i>Format</strong>
+               ${data.format}
+             </div>
+             <div class="info-item">
+               <strong><i class="fas fa-expand"></i>Resolution</strong>
+               ${data.dpi} DPI
+             </div>
+             <div class="info-item">
+               <strong><i class="fas fa-images"></i>Images Created</strong>
+               ${data.total_images}
+             </div>
+             <div class="info-item">
+               <strong><i class="fas fa-archive"></i>Archive Type</strong>
+               ZIP
+             </div>
+           </div>
+           <h5><i class="fas fa-eye"></i>Preview of First Pages:</h5>
+           <div class="preview-gallery">
+             ${data.preview_images.map(img => `
+               <div class="preview-image-item">
+                 <img src="data:image/${img.format};base64,${img.data}" alt="Page ${img.page}">
+                 <p><i class="fas fa-file-image"></i>Page ${img.page}</p>
+               </div>
+             `).join('')}
+           </div>
+         `;
+break;
+
+default:
+previewHTML = '<h4><i class="fas fa-check-circle"></i>Operation completed successfully!</h4>';
+}
+
+previewContent.innerHTML = previewHTML;
+previewSection.style.display = 'block';
+previewSection.scrollIntoView({ behavior: 'smooth' });
+}
+
+function showDownloadSection(data) {
+const downloadMessage = document.getElementById('downloadMessage');
+
+if (data.operation === 'metadata') {
+downloadMessage.textContent = 'Metadata information displayed above.';
+downloadBtn.style.display = 'none';
+} else {
+downloadMessage.innerHTML = `<i class="fas fa-file-download"></i>Your <strong>${data.filename}</strong> is ready for download.`;
+downloadBtn.style.display = 'inline-block';
+}
+
+// Show operation-specific info
+let infoHTML = '';
+switch (data.operation) {
+case 'pdf_compression':
+infoHTML = `
+           <h4><i class="fas fa-chart-bar"></i>Compression Statistics</h4>
+           <div class="info-grid">
+             <div class="info-item">
+               <strong><i class="fas fa-weight"></i>Original Size</strong>
+               ${formatFileSize(data.original_size)}
+             </div>
+             <div class="info-item">
+               <strong><i class="fas fa-feather-alt"></i>New Size</strong>
+               ${formatFileSize(data.compressed_size)}
+             </div>
+             <div class="info-item">
+               <strong><i class="fas fa-savings"></i>Space Saved</strong>
+               ${formatFileSize(data.original_size - data.compressed_size)}
+             </div>
+             <div class="info-item">
+               <strong><i class="fas fa-percentage"></i>Reduction</strong>
+               ${data.compression_ratio}%
+             </div>
+           </div>
+         `;
+break;
+
+case 'pdf_split':
+infoHTML = `
+           <h4><i class="fas fa-archive"></i>Archive Information</h4>
+           <div class="info-grid">
+             <div class="info-item">
+               <strong><i class="fas fa-file-archive"></i>Files in Archive</strong>
+               ${data.total_files}
+             </div>
+             <div class="info-item">
+               <strong><i class="fas fa-file-zip"></i>Archive Type</strong>
+               ZIP
+             </div>
+             <div class="info-item">
+               <strong><i class="fas fa-download"></i>Download Size</strong>
+               ${formatFileSize(data.files_info.reduce((sum, file) => sum + file.size, 0))}
+             </div>
+           </div>
+         `;
+break;
+
+case 'image_conversion':
+infoHTML = `
+           <h4><i class="fas fa-images"></i>Image Archive Information</h4>
+           <div class="info-grid">
+             <div class="info-item">
+               <strong><i class="fas fa-image"></i>Images Created</strong>
+               ${data.total_images}
+             </div>
+             <div class="info-item">
+               <strong><i class="fas fa-file-image"></i>Format</strong>
+               ${data.format}
+             </div>
+             <div class="info-item">
+               <strong><i class="fas fa-expand-arrows-alt"></i>Resolution</strong>
+               ${data.dpi} DPI
+             </div>
+             <div class="info-item">
+               <strong><i class="fas fa-file-archive"></i>Archive Type</strong>
+               ZIP
+             </div>
+           </div>
+         `;
+break;
+}
+
+operationInfo.innerHTML = infoHTML;
+downloadSection.style.display = 'block';
+downloadSection.scrollIntoView({ behavior: 'smooth' });
+}
+
+function downloadCurrentFile() {
+if (!currentResult) return;
+
+const downloadData = {
+data: currentResult.data,
+filename: currentResult.filename,
+content_type: currentResult.content_type,
+full_content: currentResult.full_content
+};
+
+if (currentResult.content_type === 'text/plain') {
+// Direct download for text files
+const blob = new Blob([currentResult.full_content], { type: 'text/plain' });
+const url = window.URL.createObjectURL(blob);
+const a = document.createElement('a');
+a.style.display = 'none';
+a.href = url;
+a.download = currentResult.filename;
+document.body.appendChild(a);
+a.click();
+window.URL.revokeObjectURL(url);
+document.body.removeChild(a);
+} else {
+// Download endpoint for other file types
+fetch('/pdftools/download-file/', {
+method: 'POST',
+headers: {
+'Content-Type': 'application/json',
+'X-CSRFToken': getCsrfToken()
+},
+body: JSON.stringify(downloadData)
+})
+.then(response => {
+if (!response.ok) throw new Error('Download failed');
+return response.blob();
+})
+.then(blob => {
+const url = window.URL.createObjectURL(blob);
+const a = document.createElement('a');
+a.style.display = 'none';
+a.href = url;
+a.download = currentResult.filename;
+document.body.appendChild(a);
+a.click();
+window.URL.revokeObjectURL(url);
+document.body.removeChild(a);
+})
+.catch(error => {
+showAlert(`<i class="fas fa-exclamation-triangle"></i>Error downloading file: ${error.message}`, 'error');
+});
+}
+}
+
+function cancelTool() {
+toolFormsContainer.innerHTML = '';
+currentTool = null;
+hidePreviewAndDownload();
+showAlert('<i class="fas fa-info-circle"></i>Tool selection cancelled. Choose another tool to continue.', 'success');
+}
+
+function showAlert(message, type) {
+alertBox.innerHTML = message;
+alertBox.className = `alert alert-${type}`;
+alertBox.style.display = 'block';
+alertBox.scrollIntoView({ behavior: 'smooth' });
+
+// Auto-hide success messages after 5 seconds
+if (type === 'success') {
+setTimeout(() => {
+alertBox.style.display = 'none';
+}, 5000);
+}
+}
+
+function formatFileSize(bytes) {
+if (bytes === 0) return '0 Bytes';
+const k = 1024;
+const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+const i = Math.floor(Math.log(bytes) / Math.log(k));
+return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+}
+
+function getCsrfToken() {
+// In a real Django application, this would get the token from a cookie or meta tag
+// For demo purposes, we'll use a placeholder
+const csrfInput = document.getElementById('csrfToken');
+if (csrfInput) {
+return csrfInput.value;
+}
+
+// Try to get from cookie
+const cookies = document.cookie.split(';');
+for (let cookie of cookies) {
+const [name, value] = cookie.trim().split('=');
+if (name === 'csrftoken') {
+return value;
+}
+}
+
+// Try to get from meta tag
+const csrfMeta = document.querySelector('meta[name=csrf-token]');
+if (csrfMeta) {
+return csrfMeta.getAttribute('content');
+}
+
+return '';
+}
+
+// Add loading animations
+function addLoadingAnimation() {
+const cards = document.querySelectorAll('.tool-card');
+cards.forEach((card, index) => {
+card.style.opacity = '0';
+card.style.transform = 'translateY(20px)';
+setTimeout(() => {
+card.style.transition = 'all 0.5s ease';
+card.style.opacity = '1';
+card.style.transform = 'translateY(0)';
+}, index * 100);
+});
+}
+
+// Enhanced file validation
+function validatePDFFile(file) {
+if (!file) {
+showAlert('<i class="fas fa-exclamation-triangle"></i>No file selected.', 'error');
+return false;
+}
+
+if (file.type !== 'application/pdf') {
+showAlert('<i class="fas fa-file-times"></i>Please select a valid PDF file.', 'error');
+return false;
+}
+
+// Check file size (100MB limit)
+const maxSize = 100 * 1024 * 1024; // 100MB
+if (file.size > maxSize) {
+showAlert('<i class="fas fa-exclamation-triangle"></i>File size too large. Please select a PDF file under 100MB.', 'error');
+return false;
+}
+
+return true;
+}
+
+// Enhanced error handling
+window.addEventListener('error', function(e) {
+console.error('JavaScript error:', e.error);
+showAlert('<i class="fas fa-exclamation-triangle"></i>An unexpected error occurred. Please refresh the page and try again.', 'error');
+});
+
+// Keyboard shortcuts
+document.addEventListener('keydown', function(e) {
+if (e.ctrlKey || e.metaKey) {
+switch (e.key) {
+case 'u':
+e.preventDefault();
+pdfUpload.click();
+break;
+case 'p':
+if (currentTool && !loadingIndicator.style.display) {
+e.preventDefault();
+processTool();
+}
+break;
+case 'd':
+if (currentResult && downloadBtn.style.display !== 'none') {
+e.preventDefault();
+downloadCurrentFile();
+}
+break;
+}
+}
+
+if (e.key === 'Escape') {
+if (currentTool) {
+cancelTool();
+}
+}
+});
+
+// Add support for paste from clipboard
+document.addEventListener('paste', function(e) {
+if (e.clipboardData && e.clipboardData.files.length > 0) {
+const file = e.clipboardData.files[0];
+if (validatePDFFile(file)) {
+processPDFFile(file);
+showAlert('<i class="fas fa-clipboard"></i>PDF file pasted from clipboard successfully!', 'success');
+}
+}
+});
+
+// Add drag and drop for the entire window
+window.addEventListener('dragover', function(e) {
+e.preventDefault();
+});
+
+window.addEventListener('drop', function(e) {
+e.preventDefault();
+if (e.dataTransfer.files.length > 0) {
+const file = e.dataTransfer.files[0];
+if (validatePDFFile(file)) {
+processPDFFile(file);
+}
+}
+});
+</script>
+</body>
+</html>

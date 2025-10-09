@@ -1,0 +1,155 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}Edit Profile - Blog System{% endblock %}
+
+{% block content %}
+<div class="container mt-4 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h1><i class="fas fa-user-edit"></i> Edit Profile</h1>
+                <a href="{% url 'dashboard' %}" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Back to Dashboard
+                </a>
+            </div>
+
+            <div class="card shadow">
+                <div class="card-body p-4">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+
+                        <!-- Profile Picture Preview -->
+                        {% if profile.profile_picture %}
+                        <div class="text-center mb-4">
+                            <img src="{{ profile.profile_picture.url }}" 
+                                 alt="{{ user.username }}" 
+                                 class="rounded-circle mb-2"
+                                 style="width: 150px; height: 150px; object-fit: cover; border: 3px solid #007bff;">
+                            <p class="text-muted small">Current Profile Picture</p>
+                        </div>
+                        {% endif %}
+
+                        <!-- Basic Info -->
+                        <h5 class="mb-3"><i class="fas fa-info-circle"></i> Basic Information</h5>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Username</label>
+                                <input type="text" class="form-control" value="{{ user.username }}" disabled>
+                                <small class="text-muted">Cannot be changed</small>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Email</label>
+                                <input type="email" class="form-control" value="{{ user.email }}" disabled>
+                                <small class="text-muted">Cannot be changed</small>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="{{ form.profile_picture.id_for_label }}" class="form-label">Profile Picture</label>
+                            {{ form.profile_picture }}
+                            {% if form.profile_picture.errors %}
+                                <div class="text-danger small mt-1">{{ form.profile_picture.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="{{ form.job_title.id_for_label }}" class="form-label">Job Title</label>
+                                {{ form.job_title }}
+                                {% if form.job_title.errors %}
+                                    <div class="text-danger small mt-1">{{ form.job_title.errors }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-6">
+                                <label for="{{ form.location.id_for_label }}" class="form-label">Location</label>
+                                {{ form.location }}
+                                {% if form.location.errors %}
+                                    <div class="text-danger small mt-1">{{ form.location.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="{{ form.bio.id_for_label }}" class="form-label">Bio</label>
+                            {{ form.bio }}
+                            {% if form.bio.errors %}
+                                <div class="text-danger small mt-1">{{ form.bio.errors }}</div>
+                            {% endif %}
+                            <small class="form-text text-muted">{{ form.bio.help_text }}</small>
+                        </div>
+
+                        <hr class="my-4">
+
+                        <!-- Social Links -->
+                        <h5 class="mb-3"><i class="fas fa-share-alt"></i> Social Media & Website</h5>
+
+                        <div class="mb-3">
+                            <label for="{{ form.website.id_for_label }}" class="form-label">
+                                <i class="fas fa-globe"></i> Website
+                            </label>
+                            {{ form.website }}
+                            {% if form.website.errors %}
+                                <div class="text-danger small mt-1">{{ form.website.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="{{ form.twitter.id_for_label }}" class="form-label">
+                                    <i class="fab fa-twitter"></i> Twitter
+                                </label>
+                                {{ form.twitter }}
+                                {% if form.twitter.errors %}
+                                    <div class="text-danger small mt-1">{{ form.twitter.errors }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-6">
+                                <label for="{{ form.instagram.id_for_label }}" class="form-label">
+                                    <i class="fab fa-instagram"></i> Instagram
+                                </label>
+                                {{ form.instagram }}
+                                {% if form.instagram.errors %}
+                                    <div class="text-danger small mt-1">{{ form.instagram.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="{{ form.facebook.id_for_label }}" class="form-label">
+                                    <i class="fab fa-facebook"></i> Facebook
+                                </label>
+                                {{ form.facebook }}
+                                {% if form.facebook.errors %}
+                                    <div class="text-danger small mt-1">{{ form.facebook.errors }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-6">
+                                <label for="{{ form.linkedin.id_for_label }}" class="form-label">
+                                    <i class="fab fa-linkedin"></i> LinkedIn
+                                </label>
+                                {{ form.linkedin }}
+                                {% if form.linkedin.errors %}
+                                    <div class="text-danger small mt-1">{{ form.linkedin.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <hr class="my-4">
+
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Save Profile
+                            </button>
+                            <a href="{% url 'author_profile' user.username %}" class="btn btn-outline-secondary" target="_blank">
+                                <i class="fas fa-eye"></i> View Public Profile
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
