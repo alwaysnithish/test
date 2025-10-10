@@ -1,214 +1,859 @@
 {% extends 'blog/base1.html' %}
+{% load static %}
 
-{% block title %}{{ post.title }} - Blog{% endblock %}
+{% block title %}{{ post.title }} - TwentyK Blog{% endblock %}
 
 {% block extra_css %}
 <style>
-    .blog-content {
-        font-size: 1.1rem;
-        line-height: 1.8;
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@600;700;800&display=swap');
+    
+    :root {
+        --primary: #667eea;
+        --primary-dark: #5568d3;
+        --secondary: #764ba2;
+        --text-dark: #1a1a1a;
+        --text-light: #64748b;
+        --bg-light: #f8fafc;
+        --border-light: #e2e8f0;
+        --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+        --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+        --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+        --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1);
     }
-    .blog-content h1, .blog-content h2, .blog-content h3 {
-        margin-top: 2rem;
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Inter', sans-serif;
+        background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+        background-attachment: fixed;
+        color: var(--text-dark);
+    }
+
+    /* Hero Section */
+    .hero-detail {
+        position: relative;
+        padding: 4rem 1.5rem 2rem;
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2));
+        color: white;
+        overflow: hidden;
+    }
+
+    .hero-detail::before,
+    .hero-detail::after {
+        content: '';
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(80px);
+    }
+
+    .hero-detail::before {
+        top: -50%;
+        right: -10%;
+        width: 500px;
+        height: 500px;
+        background: rgba(255, 255, 255, 0.05);
+    }
+
+    .hero-detail::after {
+        bottom: -30%;
+        left: 0;
+        width: 400px;
+        height: 400px;
+        background: rgba(255, 255, 255, 0.05);
+    }
+
+    .hero-content-detail {
+        position: relative;
+        z-index: 1;
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+
+    .breadcrumb {
+        font-size: 0.9rem;
+        opacity: 0.9;
         margin-bottom: 1rem;
     }
-    .blog-content img {
-        max-width: 100%;
+
+    .breadcrumb a {
+        color: white;
+        text-decoration: none;
+    }
+
+    .article-hero h1 {
+        font-family: 'Poppins', sans-serif;
+        font-size: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 1.5rem;
+        line-height: 1.2;
+    }
+
+    .article-meta {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        flex-wrap: wrap;
+        font-size: 0.95rem;
+    }
+
+    .author-info {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+    .author-avatar-lg {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        font-size: 1rem;
+    }
+
+    /* Container */
+    .container-detail {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+    }
+
+    /* Article Layout - Desktop: 2 cols, Mobile: 1 col */
+    .article-wrapper {
+        display: grid;
+        grid-template-columns: 1fr 320px;
+        gap: 2rem;
+        margin: 2rem 0;
+    }
+
+    @media (max-width: 1024px) {
+        .article-wrapper {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    /* Featured Image */
+    .article-image {
+        width: 100%;
         height: auto;
-        border-radius: 8px;
-        margin: 1.5rem 0;
+        border-radius: 1rem;
+        box-shadow: var(--shadow-lg);
+        margin-bottom: 2rem;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
     }
-    .blog-content img[style*="display: block"] {
-        margin-left: auto;
-        margin-right: auto;
+
+    /* Article Content */
+    .article-content {
+        background: white;
+        border-radius: 1rem;
+        padding: 3rem;
+        box-shadow: var(--shadow-md);
     }
-    .blog-content video {
-        max-width: 100%;
-        border-radius: 8px;
-        margin: 1.5rem auto;
-        display: block;
+
+    @media (max-width: 768px) {
+        .article-content {
+            padding: 2rem 1.5rem;
+        }
+
+        .article-hero h1 {
+            font-size: 1.75rem;
+        }
     }
-    .blog-content p {
-        margin-bottom: 1rem;
+
+    .article-content h2 {
+        font-family: 'Poppins', sans-serif;
+        font-size: 1.75rem;
+        font-weight: 700;
+        margin: 2rem 0 1rem;
+        color: var(--text-dark);
     }
-    .blog-content a {
-        color: #0d6efd;
+
+    .article-content h3 {
+        font-family: 'Poppins', sans-serif;
+        font-size: 1.35rem;
+        font-weight: 700;
+        margin: 1.75rem 0 1rem;
+        color: var(--text-dark);
+    }
+
+    .article-content p {
+        font-size: 1.05rem;
+        line-height: 1.8;
+        color: var(--text-light);
+        margin-bottom: 1.5rem;
+    }
+
+    .article-content ul,
+    .article-content ol {
+        margin-left: 2rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .article-content li {
+        margin-bottom: 0.75rem;
+        line-height: 1.6;
+    }
+
+    .article-content a {
+        color: var(--primary);
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+    .article-content a:hover {
         text-decoration: underline;
     }
-    .blog-content blockquote {
-        border-left: 4px solid #0d6efd;
-        padding-left: 1rem;
-        margin: 1.5rem 0;
+
+    .article-content img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 1rem;
+        margin: 2rem 0;
+        box-shadow: var(--shadow-md);
+    }
+
+    .article-content blockquote {
+        border-left: 4px solid var(--primary);
+        padding-left: 1.5rem;
+        margin: 2rem 0;
         font-style: italic;
-        color: #6c757d;
+        color: var(--text-light);
+        background: var(--bg-light);
+        padding: 1.5rem;
+        border-radius: 0.5rem;
     }
-    .blog-header-image {
+
+    .article-content code {
+        background: var(--bg-light);
+        padding: 0.25rem 0.5rem;
+        border-radius: 0.3rem;
+        font-family: 'Monaco', monospace;
+        font-size: 0.9rem;
+    }
+
+    .article-content pre {
+        background: #2d3748;
+        color: #e2e8f0;
+        padding: 1.5rem;
+        border-radius: 0.75rem;
+        overflow-x: auto;
+        margin: 1.5rem 0;
+        font-family: 'Monaco', monospace;
+        font-size: 0.9rem;
+    }
+
+    /* Author Bio */
+    .author-bio {
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.05), rgba(118, 75, 162, 0.05));
+        border: 2px solid var(--border-light);
+        border-radius: 1rem;
+        padding: 2rem;
+        margin: 3rem 0;
+        display: flex;
+        gap: 1.5rem;
+    }
+
+    @media (max-width: 768px) {
+        .author-bio {
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+    }
+
+    .author-bio-avatar {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 2rem;
+        font-weight: 600;
+        flex-shrink: 0;
+    }
+
+    .author-bio-info h4 {
+        font-family: 'Poppins', sans-serif;
+        font-size: 1.1rem;
+        font-weight: 700;
+        margin-bottom: 0.25rem;
+    }
+
+    .author-bio-info p {
+        font-size: 0.95rem;
+        color: var(--text-light);
+        margin-bottom: 1rem;
+    }
+
+    /* Share Buttons */
+    .share-buttons {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 2rem;
+        flex-wrap: wrap;
+    }
+
+    .share-btn {
+        padding: 0.75rem 1.25rem;
+        border: 2px solid var(--border-light);
+        background: white;
+        border-radius: 0.75rem;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .share-btn:hover {
+        border-color: var(--primary);
+        color: var(--primary);
+        transform: translateY(-2px);
+    }
+
+    /* Sidebar */
+    .sidebar-detail {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .sidebar-card {
+        background: white;
+        border-radius: 1rem;
+        padding: 1.5rem;
+        box-shadow: var(--shadow-md);
+        position: sticky;
+        top: 20px;
+    }
+
+    @media (max-width: 1024px) {
+        .sidebar-card {
+            position: static;
+        }
+
+        .sidebar-detail {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (max-width: 768px) {
+        .sidebar-detail {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .sidebar-card h3 {
+        font-family: 'Poppins', sans-serif;
+        font-size: 1.1rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        color: var(--text-dark);
+    }
+
+    .recent-item {
+        margin-bottom: 1.5rem;
+        padding-bottom: 1.5rem;
+        border-bottom: 1px solid var(--border-light);
+        transition: all 0.3s ease;
+    }
+
+    .recent-item:last-child {
+        margin-bottom: 0;
+        padding-bottom: 0;
+        border-bottom: none;
+    }
+
+    .recent-item:hover {
+        transform: translateX(4px);
+    }
+
+    .recent-item h4 {
+        font-weight: 600;
+        font-size: 0.95rem;
+        margin-bottom: 0.5rem;
+        line-height: 1.3;
+    }
+
+    .recent-item p {
+        font-size: 0.85rem;
+        color: var(--text-light);
+    }
+
+    .recent-item a {
+        text-decoration: none;
+        color: inherit;
+    }
+
+    /* Related Posts */
+    .related-section {
+        margin: 4rem 0;
+    }
+
+    .related-section h2 {
+        font-family: 'Poppins', sans-serif;
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 2rem;
+        color: white;
+    }
+
+    .related-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+    }
+
+    @media (max-width: 1024px) {
+        .related-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (max-width: 768px) {
+        .related-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .related-card {
+        background: white;
+        border-radius: 1rem;
+        overflow: hidden;
+        box-shadow: var(--shadow-md);
+        transition: all 0.3s ease;
+    }
+
+    .related-card:hover {
+        transform: translateY(-6px);
+        box-shadow: var(--shadow-lg);
+    }
+
+    .related-image {
         width: 100%;
-        max-height: 500px;
+        height: 180px;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
         object-fit: cover;
-        border-radius: 8px;
     }
-    .related-post-card {
-        transition: transform 0.2s;
+
+    .related-body {
+        padding: 1.5rem;
     }
-    .related-post-card:hover {
-        transform: translateY(-3px);
+
+    .related-body h3 {
+        font-family: 'Poppins', sans-serif;
+        font-size: 1.1rem;
+        font-weight: 700;
+        margin-bottom: 0.75rem;
+        line-height: 1.3;
+    }
+
+    .related-body p {
+        font-size: 0.9rem;
+        color: var(--text-light);
+        margin-bottom: 1rem;
+        line-height: 1.5;
+    }
+
+    .related-link {
+        display: inline-block;
+        color: var(--primary);
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+    /* Tools Grid */
+    .tools-section {
+        background: white;
+        border-radius: 1.5rem;
+        padding: 3rem 1.5rem;
+        margin: 3rem 0;
+        box-shadow: var(--shadow-md);
+    }
+
+    .tools-section h2 {
+        font-family: 'Poppins', sans-serif;
+        font-size: 1.75rem;
+        font-weight: 700;
+        margin-bottom: 2rem;
+        text-align: center;
+        color: var(--text-dark);
+    }
+
+    .tools-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1.5rem;
+    }
+
+    @media (max-width: 1024px) {
+        .tools-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (max-width: 768px) {
+        .tools-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .tool-item {
+        padding: 1.5rem;
+        background: var(--bg-light);
+        border-radius: 1rem;
+        text-align: center;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        color: inherit;
+    }
+
+    .tool-item:hover {
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        color: white;
+    }
+
+    .tool-icon {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .tool-item h3 {
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+    }
+
+    .tool-item p {
+        font-size: 0.85rem;
+        opacity: 0.8;
+    }
+
+    /* Comments Section */
+    .comments-section {
+        background: white;
+        border-radius: 1rem;
+        padding: 2rem;
+        box-shadow: var(--shadow-md);
+        margin: 3rem 0;
+    }
+
+    .comments-section h2 {
+        font-family: 'Poppins', sans-serif;
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 2rem;
+        color: var(--text-dark);
+    }
+
+    .comment-form {
+        margin-bottom: 2rem;
+        padding-bottom: 2rem;
+        border-bottom: 2px solid var(--border-light);
+    }
+
+    .form-group {
+        margin-bottom: 1rem;
+    }
+
+    .form-group label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        color: var(--text-dark);
+    }
+
+    .form-group input,
+    .form-group textarea {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        border: 2px solid var(--border-light);
+        border-radius: 0.5rem;
+        font-family: 'Inter', sans-serif;
+        font-size: 1rem;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+        outline: none;
+        border-color: var(--primary);
+    }
+
+    .comment-btn {
+        padding: 0.75rem 1.5rem;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        color: white;
+        border: none;
+        border-radius: 0.5rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .comment-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-lg);
+    }
+
+    .comment-list {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .comment-item {
+        display: flex;
+        gap: 1rem;
+    }
+
+    .comment-avatar {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: 600;
+        font-size: 1rem;
+        flex-shrink: 0;
+    }
+
+    .comment-body h4 {
+        font-weight: 700;
+        margin-bottom: 0.25rem;
+    }
+
+    .comment-time {
+        font-size: 0.85rem;
+        color: var(--text-light);
+        margin-bottom: 0.5rem;
+    }
+
+    .comment-text {
+        color: var(--text-light);
+        line-height: 1.6;
+        margin-bottom: 0.75rem;
+    }
+
+    .reply-btn {
+        color: var(--primary);
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.9rem;
     }
 </style>
 {% endblock %}
 
 {% block content %}
-<article class="container mt-4 mb-5">
-    <div class="row justify-content-center">
-        <div class="col-lg-8">
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{% url 'blog_list' %}">Blog</a></li>
-                    {% if post.category %}
-                    <li class="breadcrumb-item">{{ post.category.name }}</li>
-                    {% endif %}
-                    <li class="breadcrumb-item active" aria-current="page">{{ post.title|truncatewords:5 }}</li>
-                </ol>
-            </nav>
-
-            <header class="mb-4">
-                <h1 class="display-4 mb-3">{{ post.title }}</h1>
-                
-                <div class="d-flex flex-wrap align-items-center gap-3 mb-3">
-                    <div class="d-flex align-items-center">
-                        {% if post.author.author_profile.profile_picture %}
-                            <img src="{{ post.author.author_profile.profile_picture.url }}" 
-                                 alt="{{ post.author.username }}"
-                                 class="rounded-circle me-2"
-                                 style="width: 40px; height: 40px; object-fit: cover;">
-                        {% else %}
-                            <div class="rounded-circle bg-secondary text-white d-inline-flex align-items-center justify-content-center me-2"
-                                 style="width: 40px; height: 40px;">
-                                <i class="fas fa-user"></i>
-                            </div>
-                        {% endif %}
-                        <div>
-                            <a href="{% url 'author_profile' post.author.username %}" class="text-decoration-none">
-                                <strong>{{ post.author.get_full_name|default:post.author.username }}</strong>
-                            </a>
-                            {% if post.author.author_profile.job_title %}
-                                <br><small class="text-muted">{{ post.author.author_profile.job_title }}</small>
-                            {% endif %}
-                        </div>
-                    </div>
-                    <div>
-                        <i class="far fa-calendar text-primary"></i>
-                        <span class="text-muted">{{ post.published_at|date:"F d, Y" }}</span>
-                    </div>
-                    {% if post.category %}
-                    <div>
-                        <span class="badge bg-primary">{{ post.category.name }}</span>
-                    </div>
-                    {% endif %}
-                </div>
-
-                {% if post.tags.exists %}
-                <div class="mb-3">
-                    {% for tag in post.tags.all %}
-                        <span class="badge bg-secondary me-1">
-                            <i class="fas fa-tag"></i> {{ tag.name }}
-                        </span>
-                    {% endfor %}
-                </div>
-                {% endif %}
-
-                {% if post.thumbnail %}
-                <img src="{{ post.thumbnail.url }}" alt="{{ post.title }}" class="blog-header-image mb-4">
-                {% endif %}
-            </header>
-
-            <div class="blog-content">
-                {{ post.content|safe }}
+<!-- Hero Section -->
+<section class="hero-detail">
+    <div class="hero-content-detail">
+        <div class="breadcrumb">
+            <a href="{% url 'blog_list' %}">Blog</a> / 
+            {% if post.category %}<span>{{ post.category.name }}</span>{% else %}<span>Article</span>{% endif %}
+        </div>
+        <h1 class="article-hero">{{ post.title }}</h1>
+        <div class="article-meta">
+            <div class="author-info">
+                <div class="author-avatar-lg">{{ post.author.username|slice:":1"|upper }}</div>
+                <span>{{ post.author.get_full_name|default:post.author.username }}</span>
             </div>
+            <span>•</span>
+            <span>{{ post.published_at|date:"F d, Y" }}</span>
+            <span>•</span>
+            <span>5 min read</span>
+        </div>
+    </div>
+</section>
 
-            <hr class="my-5">
+<div class="container-detail">
+    {% if post.thumbnail %}
+    <img src="{{ post.thumbnail.url }}" alt="{{ post.title }}" class="article-image">
+    {% endif %}
 
-            <!-- Author Bio Box -->
-            <div class="card shadow-sm mb-4">
-                <div class="card-body p-4">
-                    <div class="row align-items-center">
-                        <div class="col-md-2 text-center mb-3 mb-md-0">
-                            {% if post.author.author_profile.profile_picture %}
-                                <img src="{{ post.author.author_profile.profile_picture.url }}" 
-                                     alt="{{ post.author.username }}"
-                                     class="rounded-circle img-fluid"
-                                     style="width: 100px; height: 100px; object-fit: cover;">
-                            {% else %}
-                                <div class="rounded-circle bg-secondary text-white d-inline-flex align-items-center justify-content-center"
-                                     style="width: 100px; height: 100px; font-size: 2.5rem;">
-                                    <i class="fas fa-user"></i>
-                                </div>
-                            {% endif %}
-                        </div>
-                        <div class="col-md-10">
-                            <h5 class="mb-2">
-                                <a href="{% url 'author_profile' post.author.username %}" class="text-decoration-none">
-                                    {{ post.author.get_full_name|default:post.author.username }}
-                                </a>
-                            </h5>
-                            {% if post.author.author_profile.job_title %}
-                                <p class="text-muted mb-2">{{ post.author.author_profile.job_title }}</p>
-                            {% endif %}
-                            {% if post.author.author_profile.bio %}
-                                <p class="mb-2">{{ post.author.author_profile.bio|truncatewords:30 }}</p>
-                            {% endif %}
-                            <a href="{% url 'author_profile' post.author.username %}" class="btn btn-sm btn-outline-primary">
-                                View All Posts <i class="fas fa-arrow-right"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="d-flex justify-content-between align-items-center">
-                <a href="{% url 'blog_list' %}" class="btn btn-outline-primary">
-                    <i class="fas fa-arrow-left"></i> Back to Blog
+    <div class="article-wrapper">
+        <!-- Main Article -->
+        <div class="article-content">
+            <!-- Share Buttons -->
+            <div class="share-buttons">
+                <a href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri }}&text={{ post.title }}" class="share-btn" target="_blank">
+                    <span>Twitter</span>
                 </a>
-                <div>
-                    <button class="btn btn-outline-secondary" onclick="window.print()">
-                        <i class="fas fa-print"></i> Print
-                    </button>
-                    <button class="btn btn-outline-secondary" onclick="window.history.back()">
-                        <i class="fas fa-history"></i> Previous Page
-                    </button>
+                <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" class="share-btn" target="_blank">
+                    <span>Facebook</span>
+                </a>
+                <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri }}&title={{ post.title }}" class="share-btn" target="_blank">
+                    <span>LinkedIn</span>
+                </a>
+            </div>
+
+            <!-- Article Content -->
+            {{ post.content|safe }}
+
+            <!-- Author Bio -->
+            <div class="author-bio">
+                <div class="author-bio-avatar">{{ post.author.username|slice:":1"|upper }}</div>
+                <div class="author-bio-info">
+                    <h4>{{ post.author.get_full_name|default:post.author.username }}</h4>
+                    {% if post.author.author_profile.job_title %}
+                    <p>{{ post.author.author_profile.job_title }}</p>
+                    {% endif %}
+                    {% if post.author.author_profile.bio %}
+                    <p>{{ post.author.author_profile.bio|truncatewords:30 }}</p>
+                    {% endif %}
+                    <a href="{% url 'author_profile' post.author.username %}" class="related-link">View Profile →</a>
                 </div>
             </div>
         </div>
-    </div>
 
-    {% if related_posts %}
-    <div class="row justify-content-center mt-5">
-        <div class="col-lg-10">
-            <h3 class="mb-4"><i class="fas fa-link"></i> Related Posts</h3>
-            <div class="row g-4">
-                {% for related in related_posts %}
-                <div class="col-md-4">
-                    <div class="card related-post-card h-100 shadow-sm">
-                        {% if related.thumbnail %}
-                            <img src="{{ related.thumbnail.url }}" class="card-img-top" alt="{{ related.title }}" style="height: 180px; object-fit: cover;">
-                        {% else %}
-                            <div class="bg-secondary" style="height: 180px; display: flex; align-items: center; justify-content: center;">
-                                <i class="fas fa-image fa-2x text-white"></i>
-                            </div>
-                        {% endif %}
-                        <div class="card-body">
-                            <h5 class="card-title">{{ related.title|truncatewords:8 }}</h5>
-                            <p class="card-text text-muted small">{{ related.excerpt|truncatewords:15 }}</p>
-                            <a href="{% url 'blog_detail' related.slug %}" class="btn btn-sm btn-outline-primary">
-                                Read More <i class="fas fa-arrow-right"></i>
-                            </a>
-                        </div>
+        <!-- Sidebar -->
+        <div class="sidebar-detail">
+            <!-- Recent Posts -->
+            <div class="sidebar-card">
+                <h3>Recent Posts</h3>
+                {% for recent in related_posts|slice:":4" %}
+                <a href="{% url 'blog_detail' recent.slug %}" style="text-decoration: none; color: inherit;">
+                    <div class="recent-item">
+                        <h4>{{ recent.title|truncatewords:10 }}</h4>
+                        <p>{{ recent.published_at|date:"M d, Y" }}</p>
                     </div>
-                </div>
+                </a>
+                {% endfor %}
+            </div>
+
+            <!-- Categories -->
+            <div class="sidebar-card">
+                <h3>Categories</h3>
+                {% if post.category %}
+                <a href="?search={{ post.category.name }}" style="text-decoration: none; color: inherit;">
+                    <div class="recent-item">
+                        <h4>{{ post.category.name }}</h4>
+                    </div>
+                </a>
+                {% endif %}
+                {% for tag in post.tags.all|slice:":5" %}
+                <a href="?search={{ tag.name }}" style="text-decoration: none; color: inherit;">
+                    <div class="recent-item">
+                        <h4>{{ tag.name }}</h4>
+                    </div>
+                </a>
                 {% endfor %}
             </div>
         </div>
     </div>
+
+    <!-- Related Posts -->
+    {% if related_posts %}
+    <section class="related-section">
+        <h2>Related Articles</h2>
+        <div class="related-grid">
+            {% for related in related_posts|slice:":3" %}
+            <a href="{% url 'blog_detail' related.slug %}" style="text-decoration: none; color: inherit;">
+                <article class="related-card">
+                    {% if related.thumbnail %}
+                        <img src="{{ related.thumbnail.url }}" alt="{{ related.title }}" class="related-image">
+                    {% else %}
+                        <div class="related-image"></div>
+                    {% endif %}
+                    <div class="related-body">
+                        <h3>{{ related.title }}</h3>
+                        <p>{{ related.excerpt|truncatewords:15 }}</p>
+                        <span class="related-link">Read More →</span>
+                    </div>
+                </article>
+            </a>
+            {% endfor %}
+        </div>
+    </section>
     {% endif %}
-</article>
+
+    <!-- Tools Section -->
+    <section class="tools-section">
+        <h2>Explore 21K Tools</h2>
+        <div class="tools-grid">
+            <a href="https://21k.tools/pdftools" class="tool-item">
+                <div class="tool-icon">📄</div>
+                <h3>PDF Tools</h3>
+                <p>Merge, split & convert</p>
+            </a>
+            <a href="https://imageresizer.21k.tools" class="tool-item">
+                <div class="tool-icon">🖼️</div>
+                <h3>Image Resizer</h3>
+                <p>Resize & optimize</p>
+            </a>
+            <a href="https://ai.21k.tools" class="tool-item">
+                <div class="tool-icon">✨</div>
+                <h3>AI Generator</h3>
+                <p>Generate with AI</p>
+            </a>
+            <a href="https://21k.tools/agecalculator" class="tool-item">
+                <div class="tool-icon">🎂</div>
+                <h3>Age Calculator</h3>
+                <p>Calculate your age</p>
+            </a>
+        </div>
+    </section>
+
+    <!-- Comments Section -->
+    <section class="comments-section">
+        <h2>Comments</h2>
+        
+        <div class="comment-form">
+            <h3 style="font-size: 1.1rem; margin-bottom: 1.5rem;">Leave a Comment</h3>
+            <form>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" placeholder="Your name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" placeholder="Your email" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Comment</label>
+                    <textarea rows="5" placeholder="Your comment here..." required></textarea>
+                </div>
+                <button type="submit" class="comment-btn">Post Comment</button>
+            </form>
+        </div>
+
+        <div class="comment-list">
+            <div class="comment-item">
+                <div class="comment-avatar">JD</div>
+                <div>
+                    <h4>John Doe</h4>
+                    <p class="comment-time">2 days ago</p>
+                    <p class="comment-text">This is a great article! Really helpful tips and well explained. Keep up the good work!</p>
+                    <a href="#" class="reply-btn">Reply</a>
+                </div>
+            </div>
+
+            <div class="comment-item">
+                <div class="comment-avatar">SM</div>
+                <div>
+                    <h4>Sarah Miller</h4>
+                    <p class="comment-time">1 day ago</p>
+                    <p class="comment-text">I've been looking for this information everywhere. Thank you for the comprehensive guide!</p>
+                    <a href="#" class="reply-btn">Reply</a>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
 {% endblock %}
