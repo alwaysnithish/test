@@ -6,7 +6,7 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib import messages
 from django.core.paginator import Paginator
-from django.db.models import Q
+from django.db.models import Q, Count
 from django.utils import timezone
 from django.http import JsonResponse
 from django.contrib.auth.models import User
@@ -48,26 +48,6 @@ class CustomPasswordResetCompleteView(PasswordResetCompleteView):
 
 
 # Authentication Views
-# Registration disabled - admin only system
-# def register_view(request):
-#     if request.user.is_authenticated:
-#         return redirect('dashboard')
-#     
-#     if request.method == 'POST':
-#         form = UserCreationForm(request.POST)
-#         if form.is_valid():
-#             user = form.save()
-#             user.is_staff = True
-#             user.save()
-#             login(request, user)
-#             messages.success(request, 'Account created successfully!')
-#             return redirect('dashboard')
-#     else:
-#         form = UserCreationForm()
-#     
-#     return render(request, 'blog/register.html', {'form': form})
-
-
 def login_view(request):
     if request.user.is_authenticated:
         return redirect('dashboard')
@@ -196,10 +176,14 @@ def delete_post(request, slug):
 
 # Public Blog Views
 def blog_list(request):
+    """Main blog list view with search and filtering"""
     search_query = request.GET.get('search', '')
+    selected_categories = request.GET.getlist('category')
+    sort = request.GET.get('sort', '-published_at')
     
     posts = BlogPost.objects.filter(status='published')
     
+    # Search functionality
     if search_query:
         posts = posts.filter(
             Q(title__icontains=search_query) |
@@ -209,35 +193,174 @@ def blog_list(request):
             Q(category__name__icontains=search_query)
         ).distinct()
     
+    # Category filtering
+    if selected_categories:
+        posts = posts.filter(category__slug__in=selected_categories)
+    
+    # Sorting
+    posts = posts.order_by(sort)
+    
+    # Pagination
     paginator = Paginator(posts, 9)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     
+    # Get data for sidebar
+    categories = Category.objects.annotate(post_count=Count('posts', filter=Q(posts__status='published')))
+    all_categories = categories
+    recent_posts = BlogPost.objects.filter(status='published').order_by('-published_at')[:5]
+    popular_tags = Tag.objects.annotate(post_count=Count('posts', filter=Q(posts__status='published'))).order_by('-post_count')[:10]
+    
+    # Blog stats
+    total_posts = BlogPost.objects.filter(status='published').count()
+    total_categories = categories.count()
+    total_authors = User.objects.filter(blog_posts__status='published').distinct().count()
+    
     context = {
         'page_obj': page_obj,
         'search_query': search_query,
+        'selected_categories': selected_categories,
+        'categories': categories,
+        'all_categories': all_categories,
+        'recent_posts': recent_posts,
+        'popular_tags': popular_tags,
+        'total_posts': total_posts,
+        'total_categories': total_categories,
+        'total_authors': total_authors,
+        'sort': sort,
     }
     return render(request, 'blog/blog_list.html', context)
 
 
 def blog_detail(request, slug):
+    """Individual blog post detail view"""
     post = get_object_or_404(BlogPost, slug=slug, status='published')
+    
+    # Get related posts from same category
     related_posts = BlogPost.objects.filter(
         status='published',
         category=post.category
-    ).exclude(id=post.id)[:3]
+    ).exclude(id=post.id).order_by('-published_at')[:3]
+    
+    # Get recent posts for sidebar
+    recent_posts = BlogPost.objects.filter(status='published').order_by('-published_at')[:5]
+    
+    # Get categories for sidebar
+    categories = Category.objects.annotate(post_count=Count('posts', filter=Q(posts__status='published')))
     
     context = {
         'post': post,
         'related_posts': related_posts,
+        'recent_posts': recent_posts,
+        'categories': categories,
     }
     return render(request, 'blog/blog_detail.html', context)
+
+
+def category_posts(request, slug):
+    """View posts filtered by category"""
+    category = get_object_or_404(Category, slug=slug)
+    search_query = request.GET.get('search', '')
+    sort = request.GET.get('sort', '-published_at')
+    
+    posts = BlogPost.objects.filter(status='published', category=category)
+    
+    # Search functionality
+    if search_query:
+        posts = posts.filter(
+            Q(title__icontains=search_query) |
+            Q(excerpt__icontains=search_query) |
+            Q(content__icontains=search_query) |
+            Q(tags__name__icontains=search_query)
+        )
+    
+    # Sorting
+    posts = posts.order_by(sort)
+    
+    # Pagination
+    paginator = Paginator(posts, 9)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    
+    # Get sidebar data
+    categories = Category.objects.annotate(post_count=Count('posts', filter=Q(posts__status='published')))
+    recent_posts = BlogPost.objects.filter(status='published').order_by('-published_at')[:5]
+    popular_tags = Tag.objects.annotate(post_count=Count('posts', filter=Q(posts__status='published'))).order_by('-post_count')[:10]
+    
+    # Blog stats
+    total_posts = BlogPost.objects.filter(status='published').count()
+    total_categories = categories.count()
+    total_authors = User.objects.filter(blog_posts__status='published').distinct().count()
+    
+    context = {
+        'page_obj': page_obj,
+        'category': category,
+        'search_query': search_query,
+        'categories': categories,
+        'recent_posts': recent_posts,
+        'popular_tags': popular_tags,
+        'total_posts': total_posts,
+        'total_categories': total_categories,
+        'total_authors': total_authors,
+        'sort': sort,
+    }
+    return render(request, 'blog/category_posts.html', context)
+
+
+def tag_posts(request, slug):
+    """View posts filtered by tag"""
+    tag = get_object_or_404(Tag, slug=slug)
+    search_query = request.GET.get('search', '')
+    sort = request.GET.get('sort', '-published_at')
+    
+    posts = BlogPost.objects.filter(status='published', tags=tag)
+    
+    # Search functionality
+    if search_query:
+        posts = posts.filter(
+            Q(title__icontains=search_query) |
+            Q(excerpt__icontains=search_query) |
+            Q(content__icontains=search_query)
+        )
+    
+    # Sorting
+    posts = posts.order_by(sort)
+    
+    # Pagination
+    paginator = Paginator(posts, 9)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    
+    # Get sidebar data
+    categories = Category.objects.annotate(post_count=Count('posts', filter=Q(posts__status='published')))
+    recent_posts = BlogPost.objects.filter(status='published').order_by('-published_at')[:5]
+    popular_tags = Tag.objects.annotate(post_count=Count('posts', filter=Q(posts__status='published'))).order_by('-post_count')[:10]
+    
+    # Blog stats
+    total_posts = BlogPost.objects.filter(status='published').count()
+    total_categories = categories.count()
+    total_authors = User.objects.filter(blog_posts__status='published').distinct().count()
+    
+    context = {
+        'page_obj': page_obj,
+        'tag': tag,
+        'search_query': search_query,
+        'categories': categories,
+        'recent_posts': recent_posts,
+        'popular_tags': popular_tags,
+        'total_posts': total_posts,
+        'total_categories': total_categories,
+        'total_authors': total_authors,
+        'sort': sort,
+    }
+    return render(request, 'blog/tag_posts.html', context)
 
 
 # Author Profile Views
 @login_required
 @user_passes_test(is_admin)
 def edit_profile(request):
+    """Edit user's author profile"""
     profile, created = AuthorProfile.objects.get_or_create(user=request.user)
     
     if request.method == 'POST':
@@ -257,22 +380,51 @@ def edit_profile(request):
 
 
 def author_profile(request, username):
-    """Public view of author profile"""
+    """Public view of author profile with their posts"""
     user = get_object_or_404(User, username=username)
     profile, created = AuthorProfile.objects.get_or_create(user=user)
     
     # Get published posts by this author
-    posts = BlogPost.objects.filter(author=user, status='published')
+    posts = BlogPost.objects.filter(author=user, status='published').order_by('-published_at')
     
     # Pagination
     paginator = Paginator(posts, 6)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     
+    # Get sidebar data
+    categories = Category.objects.annotate(post_count=Count('posts', filter=Q(posts__status='published')))
+    recent_posts = BlogPost.objects.filter(status='published').order_by('-published_at')[:5]
+    popular_tags = Tag.objects.annotate(post_count=Count('posts', filter=Q(posts__status='published'))).order_by('-post_count')[:10]
+    
+    # Blog stats
+    total_posts = BlogPost.objects.filter(status='published').count()
+    total_categories = categories.count()
+    total_authors = User.objects.filter(blog_posts__status='published').distinct().count()
+    
     context = {
         'author': user,
         'profile': profile,
         'page_obj': page_obj,
         'post_count': posts.count(),
+        'categories': categories,
+        'recent_posts': recent_posts,
+        'popular_tags': popular_tags,
+        'total_posts': total_posts,
+        'total_categories': total_categories,
+        'total_authors': total_authors,
     }
     return render(request, 'blog/author_profile.html', context)
+
+
+def newsletter_subscribe(request):
+    """Handle newsletter subscription"""
+    if request.method == 'POST':
+        email = request.POST.get('email', '')
+        if email:
+            # Here you would typically save to a newsletter model
+            # For now, we'll just add a message
+            messages.success(request, f'Thanks for subscribing! Check {email} for confirmation.')
+            return redirect('blog_list')
+    
+    return redirect('blog_list')
