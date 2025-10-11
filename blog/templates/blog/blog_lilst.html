@@ -953,7 +953,7 @@
                         </div>
 
                         <!-- Read More Button -->
-                        <a href="{% url 'post_detail' post.slug %}" class="read-more-btn">
+                        <a href="{% url 'blog_detail' post.slug %}" class="read-more-btn">
                             Read More <i class="fas fa-arrow-right" style="margin-left: 8px;"></i>
                         </a>
                     </div>
@@ -1031,7 +1031,7 @@
                 <h3><i class="fas fa-fire"></i> Recent Posts</h3>
                 {% for post in recent_posts|slice:":5" %}
                 <div class="recent-post">
-                    <a href="{% url 'post_detail' post.slug %}">{{ post.title }}</a>
+                    <a href="{% url 'blog_detail' post.slug %}">{{ post.title }}</a>
                     <div class="recent-post-date">{{ post.published_at|date:"M d, Y" }}</div>
                 </div>
                 {% empty %}
