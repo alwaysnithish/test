@@ -14,6 +14,7 @@
         --border: #e2e8f0;
         --success: #10b981;
         --warning: #f59e0b;
+        --bg-light: #f9fafb;
     }
 
     * {
@@ -28,16 +29,16 @@
 
     body {
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-        background-color: #ffffff;
+        background-color: var(--bg-light);
         color: var(--text-dark);
         line-height: 1.6;
     }
 
     /* ==================== HERO SECTION ==================== */
     .article-hero {
-        background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         color: white;
-        padding: 120px 20px 80px;
+        padding: 80px 20px 60px;
         position: relative;
         overflow: hidden;
     }
@@ -50,8 +51,8 @@
         right: 0;
         bottom: 0;
         background-image: 
-            radial-gradient(circle at 20% 50%, rgba(102, 126, 234, 0.1) 0%, transparent 50%),
-            radial-gradient(circle at 80% 80%, rgba(118, 75, 162, 0.1) 0%, transparent 50%);
+            radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+            radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
         pointer-events: none;
     }
 
@@ -65,7 +66,8 @@
 
     .hero-category {
         display: inline-block;
-        background: linear-gradient(135deg, #667eea, #764ba2);
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(10px);
         color: white;
         padding: 8px 16px;
         border-radius: 50px;
@@ -73,22 +75,22 @@
         font-weight: 700;
         text-transform: uppercase;
         letter-spacing: 0.5px;
-        margin-bottom: 25px;
-        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        margin-bottom: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.3);
     }
 
     .hero-title {
-        font-size: clamp(2.2rem, 4vw, 3.5rem);
+        font-size: clamp(1.8rem, 5vw, 2.8rem);
         font-weight: 900;
-        line-height: 1.1;
-        margin-bottom: 30px;
+        line-height: 1.2;
+        margin-bottom: 25px;
         letter-spacing: -0.5px;
     }
 
     .hero-meta {
         display: flex;
         align-items: center;
-        gap: 40px;
+        gap: 30px;
         flex-wrap: wrap;
         font-size: 0.95rem;
         opacity: 0.95;
@@ -97,38 +99,46 @@
     .meta-item {
         display: flex;
         align-items: center;
-        gap: 12px;
+        gap: 10px;
     }
 
     .author-avatar {
-        width: 48px;
-        height: 48px;
+        width: 40px;
+        height: 40px;
         border-radius: 50%;
         object-fit: cover;
-        border: 2px solid rgba(255, 255, 255, 0.2);
+        border: 2px solid rgba(255, 255, 255, 0.3);
     }
 
     .author-avatar-placeholder {
-        width: 48px;
-        height: 48px;
+        width: 40px;
+        height: 40px;
         border-radius: 50%;
-        background: linear-gradient(135deg, #667eea, #764ba2);
+        background: rgba(255, 255, 255, 0.2);
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 1.5rem;
-        border: 2px solid rgba(255, 255, 255, 0.2);
+        font-size: 1.2rem;
+        border: 2px solid rgba(255, 255, 255, 0.3);
     }
 
     .author-name {
         font-weight: 600;
     }
 
-    .publish-date, .read-time {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        opacity: 0.9;
+    .author-name a {
+        color: white;
+        text-decoration: none;
+        transition: opacity 0.3s;
+    }
+
+    .author-name a:hover {
+        opacity: 0.8;
+    }
+
+    .author-job {
+        font-size: 0.8rem;
+        opacity: 0.85;
     }
 
     /* ==================== SOCIAL SHARE BAR ==================== */
@@ -138,27 +148,27 @@
         top: 50%;
         transform: translateY(-50%);
         background: white;
-        border-radius: 60px;
-        padding: 15px;
+        border-radius: 20px;
+        padding: 20px 16px;
         display: flex;
         flex-direction: column;
-        gap: 12px;
-        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        gap: 16px;
+        box-shadow: 0 15px 50px rgba(0, 0, 0, 0.12);
         z-index: 100;
         backdrop-filter: blur(10px);
         animation: slideInLeft 0.6s ease-out;
     }
 
     .share-item {
-        width: 44px;
-        height: 44px;
-        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        border-radius: 12px;
         display: flex;
         align-items: center;
         justify-content: center;
         color: white;
         text-decoration: none;
-        font-size: 1rem;
+        font-size: 1.1rem;
         transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
         cursor: pointer;
     }
@@ -167,11 +177,10 @@
     .share-facebook { background: #1877F2; }
     .share-linkedin { background: #0A66C2; }
     .share-email { background: #EA4335; }
-    .share-copy { background: var(--primary); }
 
     .share-item:hover {
-        transform: scale(1.2) rotate(10deg);
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        transform: translateY(-4px);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
     }
 
     /* ==================== MOBILE SOCIAL SHARE ==================== */
@@ -182,11 +191,12 @@
         left: 0;
         right: 0;
         background: white;
-        padding: 15px;
-        box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.1);
+        padding: 12px 15px;
+        box-shadow: 0 -3px 20px rgba(0, 0, 0, 0.08);
         z-index: 100;
         justify-content: space-around;
         align-items: center;
+        border-top: 1px solid var(--border);
     }
 
     .mobile-share-item {
@@ -195,29 +205,29 @@
         align-items: center;
         text-decoration: none;
         color: var(--secondary);
-        font-size: 0.8rem;
-        gap: 5px;
+        font-size: 0.75rem;
+        gap: 4px;
     }
 
     .mobile-share-icon {
-        width: 40px;
-        height: 40px;
+        width: 36px;
+        height: 36px;
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
         color: white;
-        font-size: 1rem;
+        font-size: 0.9rem;
     }
 
     /* ==================== MAIN ARTICLE CONTAINER ==================== */
     .article-wrapper {
         max-width: 1200px;
-        margin: -50px auto 0;
-        padding: 0 20px;
+        margin: 0 auto;
+        padding: 40px 20px;
         display: grid;
-        grid-template-columns: 1fr 320px;
-        gap: 50px;
+        grid-template-columns: 1fr 300px;
+        gap: 40px;
         align-items: start;
         position: relative;
         z-index: 10;
@@ -225,21 +235,21 @@
 
     .article-content-area {
         background: white;
-        border-radius: 20px;
-        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+        border-radius: 16px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
         overflow: hidden;
     }
 
     .article-featured-image {
         width: 100%;
-        height: 500px;
+        height: 450px;
         object-fit: cover;
         display: block;
     }
 
     .article-featured-placeholder {
         width: 100%;
-        height: 500px;
+        height: 450px;
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         display: flex;
         align-items: center;
@@ -249,7 +259,7 @@
     }
 
     .article-body {
-        padding: 70px 60px;
+        padding: 60px 50px;
     }
 
     /* ==================== CONTENT TYPOGRAPHY ==================== */
@@ -259,33 +269,33 @@
     .article-body h4 {
         color: var(--text-dark);
         font-weight: 800;
-        margin-top: 40px;
-        margin-bottom: 20px;
+        margin-top: 35px;
+        margin-bottom: 18px;
         line-height: 1.3;
     }
 
     .article-body h1 {
-        font-size: clamp(1.8rem, 3vw, 2.5rem);
+        font-size: clamp(1.8rem, 2.5vw, 2.3rem);
     }
 
     .article-body h2 {
-        font-size: clamp(1.6rem, 2.5vw, 2rem);
-        padding-bottom: 15px;
+        font-size: clamp(1.5rem, 2vw, 1.8rem);
+        padding-bottom: 12px;
         border-bottom: 3px solid var(--primary-light);
     }
 
     .article-body h3 {
-        font-size: clamp(1.4rem, 2vw, 1.75rem);
+        font-size: clamp(1.3rem, 1.8vw, 1.6rem);
     }
 
     .article-body h4 {
-        font-size: clamp(1.2rem, 1.5vw, 1.3rem);
+        font-size: clamp(1.1rem, 1.3vw, 1.2rem);
     }
 
     .article-body p {
-        font-size: clamp(1rem, 1.1vw, 1.1rem);
-        line-height: 1.9;
-        margin-bottom: 25px;
+        font-size: clamp(0.95rem, 1vw, 1.05rem);
+        line-height: 1.8;
+        margin-bottom: 22px;
         color: var(--secondary);
     }
 
@@ -302,25 +312,25 @@
 
     .article-body ul,
     .article-body ol {
-        margin: 25px 0 25px 35px;
+        margin: 22px 0 22px 32px;
         color: var(--secondary);
     }
 
     .article-body li {
-        margin-bottom: 12px;
+        margin-bottom: 10px;
         line-height: 1.8;
-        font-size: clamp(1rem, 1.05vw, 1.05rem);
+        font-size: clamp(0.95rem, 1vw, 1.05rem);
     }
 
     .article-body blockquote {
         border-left: 5px solid var(--primary);
         background: var(--primary-light);
-        padding: 25px 30px;
-        margin: 35px 0;
+        padding: 22px 28px;
+        margin: 30px 0;
         border-radius: 8px;
         font-style: italic;
         color: var(--text-dark);
-        font-size: clamp(1rem, 1.15vw, 1.15rem);
+        font-size: clamp(0.95rem, 1vw, 1.1rem);
         line-height: 1.8;
     }
 
@@ -336,12 +346,12 @@
     .article-body pre {
         background: var(--text-dark);
         color: #e2e8f0;
-        padding: 25px;
+        padding: 22px;
         border-radius: 12px;
         overflow-x: auto;
-        margin: 30px 0;
+        margin: 28px 0;
         font-family: 'Monaco', 'Courier New', monospace;
-        font-size: 0.9rem;
+        font-size: 0.85rem;
         line-height: 1.6;
     }
 
@@ -355,28 +365,30 @@
         max-width: 100%;
         height: auto;
         border-radius: 12px;
-        margin: 40px 0;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        margin: 35px 0;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
     }
 
     .article-body table {
         width: 100%;
         border-collapse: collapse;
-        margin: 30px 0;
+        margin: 28px 0;
         overflow-x: auto;
         display: block;
+        border-radius: 8px;
+        overflow: hidden;
     }
 
     .article-body th {
         background: var(--primary-light);
-        padding: 15px;
+        padding: 14px;
         text-align: left;
         font-weight: 700;
         color: var(--text-dark);
     }
 
     .article-body td {
-        padding: 12px 15px;
+        padding: 12px 14px;
         border-bottom: 1px solid var(--border);
     }
 
@@ -385,37 +397,37 @@
         background: linear-gradient(135deg, rgba(102, 126, 234, 0.08), rgba(118, 75, 162, 0.08));
         border: 2px solid var(--primary-light);
         border-radius: 16px;
-        padding: 45px;
-        margin: 60px 0;
+        padding: 40px;
+        margin: 55px 0;
         display: grid;
-        grid-template-columns: 140px 1fr;
-        gap: 35px;
+        grid-template-columns: 120px 1fr;
+        gap: 30px;
         align-items: center;
     }
 
     .bio-avatar {
-        width: 140px;
-        height: 140px;
-        border-radius: 16px;
+        width: 120px;
+        height: 120px;
+        border-radius: 12px;
         object-fit: cover;
-        box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
     }
 
     .bio-avatar-placeholder {
-        width: 140px;
-        height: 140px;
-        border-radius: 16px;
+        width: 120px;
+        height: 120px;
+        border-radius: 12px;
         background: linear-gradient(135deg, #667eea, #764ba2);
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 3rem;
+        font-size: 2.5rem;
         color: white;
-        box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
     }
 
     .bio-content h3 {
-        font-size: clamp(1.3rem, 1.5vw, 1.5rem);
+        font-size: 1.3rem;
         margin-bottom: 5px;
         color: var(--text-dark);
     }
@@ -432,102 +444,102 @@
 
     .bio-title {
         color: var(--primary);
-        font-size: 0.95rem;
+        font-size: 0.9rem;
         font-weight: 700;
-        margin-bottom: 12px;
+        margin-bottom: 10px;
     }
 
     .bio-desc {
         color: var(--secondary);
-        font-size: clamp(0.95rem, 1vw, 1rem);
+        font-size: 0.95rem;
         line-height: 1.7;
-        margin-bottom: 20px;
+        margin-bottom: 18px;
     }
 
     .bio-cta {
         display: inline-block;
         background: linear-gradient(135deg, var(--primary), var(--primary-dark));
         color: white;
-        padding: 12px 28px;
+        padding: 11px 26px;
         border-radius: 30px;
         text-decoration: none;
         font-weight: 700;
-        font-size: 0.95rem;
+        font-size: 0.9rem;
         transition: all 0.3s ease;
     }
 
     .bio-cta:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 8px 25px rgba(37, 99, 235, 0.3);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(37, 99, 235, 0.3);
     }
 
     /* ==================== RELATED ARTICLES ==================== */
     .related-section {
-        margin-top: 70px;
-        padding-top: 50px;
-        border-top: 3px solid var(--border);
+        margin-top: 60px;
+        padding-top: 45px;
+        border-top: 2px solid var(--border);
     }
 
     .related-title {
-        font-size: clamp(1.6rem, 2vw, 2rem);
+        font-size: clamp(1.4rem, 1.8vw, 1.8rem);
         font-weight: 900;
-        margin-bottom: 40px;
+        margin-bottom: 35px;
         color: var(--text-dark);
     }
 
     .related-grid {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        gap: 30px;
+        gap: 28px;
     }
 
     .related-card {
         background: white;
         border: 1px solid var(--border);
-        border-radius: 16px;
+        border-radius: 12px;
         overflow: hidden;
         transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
     }
 
     .related-card:hover {
-        transform: translateY(-8px);
-        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        transform: translateY(-6px);
+        box-shadow: 0 12px 35px rgba(0, 0, 0, 0.08);
         border-color: var(--primary-light);
     }
 
     .related-image {
         width: 100%;
-        height: 200px;
+        height: 180px;
         object-fit: cover;
     }
 
     .related-image-placeholder {
         width: 100%;
-        height: 200px;
+        height: 180px;
         background: linear-gradient(135deg, #667eea, #764ba2);
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 2.5rem;
+        font-size: 2.2rem;
         color: rgba(255, 255, 255, 0.3);
     }
 
     .related-body {
-        padding: 25px;
+        padding: 22px;
     }
 
     .related-body h4 {
-        font-size: clamp(1rem, 1.1vw, 1.1rem);
+        font-size: 1rem;
         font-weight: 800;
-        margin-bottom: 12px;
+        margin-bottom: 10px;
         color: var(--text-dark);
         line-height: 1.4;
     }
 
     .related-meta {
-        font-size: 0.85rem;
+        font-size: 0.8rem;
         color: var(--secondary);
-        margin-bottom: 15px;
+        margin-bottom: 12px;
     }
 
     .related-link {
@@ -543,33 +555,34 @@
 
     /* ==================== COMMENTS SECTION ==================== */
     .comments-section {
-        margin-top: 70px;
-        padding-top: 50px;
-        border-top: 3px solid var(--border);
+        margin-top: 60px;
+        padding-top: 45px;
+        border-top: 2px solid var(--border);
     }
 
     .comments-title {
-        font-size: clamp(1.5rem, 1.8vw, 1.8rem);
+        font-size: clamp(1.3rem, 1.6vw, 1.6rem);
         font-weight: 900;
-        margin-bottom: 40px;
+        margin-bottom: 35px;
         color: var(--text-dark);
     }
 
     .comment-form {
-        background: var(--text-light);
-        padding: 35px;
-        border-radius: 16px;
-        margin-bottom: 50px;
+        background: var(--bg-light);
+        padding: 32px;
+        border-radius: 12px;
+        margin-bottom: 45px;
+        border: 1px solid var(--border);
     }
 
     .comment-form h4 {
-        font-size: 1.2rem;
-        margin-bottom: 20px;
+        font-size: 1.1rem;
+        margin-bottom: 18px;
         color: var(--text-dark);
     }
 
     .form-group {
-        margin-bottom: 20px;
+        margin-bottom: 18px;
     }
 
     .form-group label {
@@ -577,110 +590,121 @@
         font-weight: 600;
         margin-bottom: 8px;
         color: var(--text-dark);
+        font-size: 0.95rem;
     }
 
     .form-group input,
     .form-group textarea {
         width: 100%;
-        padding: 12px 16px;
-        border: 2px solid var(--border);
+        padding: 11px 14px;
+        border: 1px solid var(--border);
         border-radius: 8px;
         font-family: inherit;
         font-size: 1rem;
-        transition: border-color 0.3s;
+        transition: all 0.3s;
+        background: white;
     }
 
     .form-group textarea {
         resize: vertical;
-        min-height: 150px;
+        min-height: 130px;
     }
 
     .form-group input:focus,
     .form-group textarea:focus {
         outline: none;
         border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
     }
 
     .comment-btn {
         background: linear-gradient(135deg, var(--primary), var(--primary-dark));
         color: white;
-        padding: 14px 40px;
+        padding: 12px 36px;
         border: none;
         border-radius: 30px;
         font-weight: 700;
-        font-size: 1rem;
+        font-size: 0.95rem;
         cursor: pointer;
         transition: all 0.3s ease;
     }
 
     .comment-btn:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 8px 25px rgba(37, 99, 235, 0.3);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(37, 99, 235, 0.3);
     }
 
     .comments-list {
         display: flex;
         flex-direction: column;
-        gap: 35px;
+        gap: 30px;
     }
 
     .comment-item {
         display: grid;
-        grid-template-columns: 50px 1fr;
-        gap: 20px;
+        grid-template-columns: 45px 1fr;
+        gap: 16px;
     }
 
     .comment-avatar {
-        width: 50px;
-        height: 50px;
+        width: 45px;
+        height: 45px;
         border-radius: 50%;
         background: linear-gradient(135deg, #667eea, #764ba2);
         display: flex;
         align-items: center;
         justify-content: center;
         color: white;
-        font-size: 1.2rem;
+        font-size: 1rem;
     }
 
     .comment-body h5 {
-        font-size: 1rem;
+        font-size: 0.95rem;
         font-weight: 700;
         color: var(--text-dark);
         margin-bottom: 3px;
     }
 
     .comment-time {
-        font-size: 0.85rem;
+        font-size: 0.8rem;
         color: var(--secondary);
-        margin-bottom: 12px;
+        margin-bottom: 10px;
     }
 
     .comment-text {
         color: var(--secondary);
         line-height: 1.7;
-        font-size: 1rem;
+        font-size: 0.95rem;
+    }
+
+    .no-comments {
+        color: var(--secondary);
+        text-align: center;
+        padding: 28px;
+        background: var(--bg-light);
+        border-radius: 12px;
     }
 
     /* ==================== SIDEBAR ==================== */
     .article-sidebar {
         position: sticky;
-        top: 120px;
+        top: 100px;
         height: fit-content;
     }
 
     .sidebar-widget {
         background: white;
         border: 1px solid var(--border);
-        border-radius: 16px;
-        padding: 30px;
-        margin-bottom: 25px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        border-radius: 12px;
+        padding: 26px;
+        margin-bottom: 22px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
     }
 
     .sidebar-widget h4 {
-        font-size: 1.1rem;
+        font-size: 1rem;
         font-weight: 800;
-        margin-bottom: 20px;
+        margin-bottom: 18px;
         color: var(--text-dark);
         display: flex;
         align-items: center;
@@ -689,6 +713,7 @@
 
     .sidebar-widget h4 i {
         color: var(--primary);
+        font-size: 1.1rem;
     }
 
     .toc-list {
@@ -696,28 +721,28 @@
     }
 
     .toc-list li {
-        margin-bottom: 12px;
+        margin-bottom: 10px;
     }
 
     .toc-list a {
         color: var(--text-dark);
         text-decoration: none;
-        font-size: 0.95rem;
+        font-size: 0.9rem;
         transition: all 0.3s;
         display: block;
-        padding: 5px 0;
+        padding: 6px 12px;
         border-left: 3px solid transparent;
-        padding-left: 12px;
+        border-radius: 4px;
     }
 
     .toc-list a:hover {
         color: var(--primary);
         border-left-color: var(--primary);
-        padding-left: 15px;
+        background: var(--primary-light);
     }
 
     .recent-post-item {
-        padding: 15px 0;
+        padding: 12px 0;
         border-bottom: 1px solid var(--border);
     }
 
@@ -729,10 +754,10 @@
         color: var(--text-dark);
         text-decoration: none;
         font-weight: 600;
-        font-size: 0.95rem;
+        font-size: 0.9rem;
         transition: color 0.3s;
         display: block;
-        line-height: 1.5;
+        line-height: 1.4;
     }
 
     .recent-post-item a:hover {
@@ -740,41 +765,41 @@
     }
 
     .post-date {
-        font-size: 0.8rem;
+        font-size: 0.75rem;
         color: var(--secondary);
-        margin-top: 5px;
+        margin-top: 4px;
     }
 
     /* ==================== EXPLORE TOOLS SECTION ==================== */
     .explore-section {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         color: white;
-        padding: 100px 20px;
-        margin-top: 80px;
+        padding: 80px 20px;
+        margin: 80px 20px 0;
         border-radius: 20px;
         text-align: center;
     }
 
     .explore-title {
-        font-size: clamp(2rem, 2.5vw, 2.5rem);
+        font-size: clamp(1.8rem, 2.2vw, 2.3rem);
         font-weight: 900;
-        margin-bottom: 20px;
+        margin-bottom: 16px;
     }
 
     .explore-desc {
-        font-size: clamp(1rem, 1.1vw, 1.1rem);
-        opacity: 0.95;
-        max-width: 700px;
-        margin: 0 auto 50px;
-        line-height: 1.8;
+        font-size: clamp(0.95rem, 1vw, 1.05rem);
+        opacity: 0.93;
+        max-width: 650px;
+        margin: 0 auto 45px;
+        line-height: 1.7;
     }
 
     .tools-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 25px;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 22px;
         max-width: 1100px;
-        margin: 0 auto 40px;
+        margin: 0 auto 36px;
     }
 
     .tool-card {
@@ -782,57 +807,176 @@
         backdrop-filter: blur(10px);
         border: 1px solid rgba(255, 255, 255, 0.2);
         border-radius: 16px;
-        padding: 35px 25px;
+        padding: 32px 22px;
         text-decoration: none;
         color: white;
         transition: all 0.3s ease;
     }
 
     .tool-card:hover {
-        background: rgba(255, 255, 255, 0.2);
-        transform: translateY(-5px);
+        background: rgba(255, 255, 255, 0.18);
+        transform: translateY(-4px);
         border-color: rgba(255, 255, 255, 0.4);
     }
 
     .tool-icon {
-        font-size: 2.5rem;
-        margin-bottom: 15px;
+        font-size: 2.2rem;
+        margin-bottom: 14px;
         display: block;
     }
 
     .tool-card h5 {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
         font-weight: 800;
         margin-bottom: 10px;
     }
 
     .tool-desc {
-        font-size: 0.95rem;
-        opacity: 0.9;
+        font-size: 0.9rem;
+        opacity: 0.88;
     }
 
     .explore-cta {
         display: inline-block;
         background: white;
         color: #667eea;
-        padding: 14px 40px;
+        padding: 13px 36px;
         border-radius: 30px;
         text-decoration: none;
         font-weight: 800;
-        font-size: 1rem;
+        font-size: 0.95rem;
         transition: all 0.3s ease;
     }
 
     .explore-cta:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    /* ==================== TAGS & CATEGORIES ==================== */
+    .post-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 40px;
+        padding-top: 30px;
+        border-top: 2px solid var(--border);
+    }
+
+    .post-tags h4 {
+        width: 100%;
+        font-size: 1rem;
+        font-weight: 700;
+        margin-bottom: 15px;
+        color: var(--text-dark);
+    }
+
+    .tag {
+        display: inline-block;
+        background: var(--primary-light);
+        color: var(--primary-dark);
+        padding: 8px 16px;
+        border-radius: 30px;
+        text-decoration: none;
+        font-size: 0.9rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        border: 1px solid var(--primary);
+    }
+
+    .tag:hover {
+        background: var(--primary);
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(37, 99, 235, 0.2);
+    }
+
+    /* ==================== SHARE SECTION ==================== */
+    .article-footer {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 40px;
+        align-items: center;
+        padding: 30px 0;
+        margin-top: 40px;
+        border-top: 2px solid var(--border);
+    }
+
+    .article-footer-left h3 {
+        font-size: 1.1rem;
+        font-weight: 700;
+        margin-bottom: 12px;
+        color: var(--text-dark);
+    }
+
+    .article-footer-left p {
+        color: var(--secondary);
+        font-size: 0.95rem;
+        margin-bottom: 0;
+    }
+
+    .share-buttons-inline {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+    }
+
+    .share-btn-inline {
+        width: 45px;
+        height: 45px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        text-decoration: none;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .share-btn-twitter { background: #1DA1F2; }
+    .share-btn-facebook { background: #1877F2; }
+    .share-btn-linkedin { background: #0A66C2; }
+    .share-btn-email { background: #EA4335; }
+
+    .share-btn-inline:hover {
         transform: translateY(-3px);
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    /* ==================== BREADCRUMB ==================== */
+    .breadcrumb {
+        max-width: 1200px;
+        margin: 20px auto 0;
+        padding: 0 20px 20px;
+        font-size: 0.9rem;
+    }
+
+    .breadcrumb a {
+        color: var(--primary);
+        text-decoration: none;
+        transition: color 0.3s;
+    }
+
+    .breadcrumb a:hover {
+        color: var(--primary-dark);
+    }
+
+    .breadcrumb span {
+        color: var(--secondary);
+        margin: 0 8px;
+    }
+
+    .breadcrumb .current {
+        color: var(--secondary);
     }
 
     /* ==================== ANIMATIONS ==================== */
     @keyframes fadeInDown {
         from {
             opacity: 0;
-            transform: translateY(-30px);
+            transform: translateY(-25px);
         }
         to {
             opacity: 1;
@@ -843,7 +987,7 @@
     @keyframes slideInLeft {
         from {
             opacity: 0;
-            transform: translateX(-40px);
+            transform: translateX(-35px);
         }
         to {
             opacity: 1;
@@ -852,26 +996,28 @@
     }
 
     /* ==================== RESPONSIVE ==================== */
-    @media (max-width: 1200px) {
+    @media (max-width: 1024px) {
         .article-wrapper {
             grid-template-columns: 1fr;
-            gap: 40px;
+            gap: 30px;
+            padding: 30px 20px;
         }
 
         .article-sidebar {
             position: static;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 18px;
         }
 
         .related-grid {
             grid-template-columns: repeat(2, 1fr);
+            gap: 22px;
         }
 
         .author-bio-section {
             grid-template-columns: 100px 1fr;
-            gap: 25px;
+            gap: 22px;
             padding: 30px;
         }
 
@@ -879,42 +1025,55 @@
         .bio-avatar-placeholder {
             width: 100px;
             height: 100px;
-        }
-    }
-
-    @media (max-width: 992px) {
-        .article-body {
-            padding: 50px 40px;
-        }
-        
-        .share-bar {
-            display: none;
-        }
-        
-        .mobile-share-bar {
-            display: flex;
+            font-size: 2rem;
         }
     }
 
     @media (max-width: 768px) {
+        .share-bar {
+            display: none;
+        }
+
+        .mobile-share-bar {
+            display: flex;
+        }
+
+        .article-footer {
+            grid-template-columns: 1fr;
+            gap: 25px;
+        }
+
+        .article-footer-left {
+            text-align: center;
+        }
+
+        .share-buttons-inline {
+            justify-content: center;
+        }
+
+        .breadcrumb {
+            padding: 0 15px 15px;
+            font-size: 0.85rem;
+        }
+
+        .post-tags {
+            margin-top: 30px;
+            padding-top: 20px;
+        }
+
         .article-hero {
-            padding: 80px 20px 60px;
+            padding: 60px 20px 45px;
         }
 
         .hero-title {
-            font-size: 2.2rem;
+            font-size: 1.8rem;
         }
 
         .hero-meta {
             gap: 20px;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             flex-direction: column;
             align-items: flex-start;
-        }
-
-        .article-wrapper {
-            margin-top: 0;
-            padding: 0 15px;
         }
 
         .article-body {
@@ -928,80 +1087,135 @@
 
         .related-grid {
             grid-template-columns: 1fr;
+            gap: 20px;
         }
 
         .author-bio-section {
             grid-template-columns: 1fr;
             text-align: center;
             padding: 25px;
-            gap: 20px;
+            gap: 18px;
         }
 
         .bio-avatar,
         .bio-avatar-placeholder {
-            width: 100px;
-            height: 100px;
+            width: 90px;
+            height: 90px;
+            font-size: 1.8rem;
             margin: 0 auto;
         }
 
-        .article-sidebar {
-            display: none;
+        .comment-form {
+            padding: 25px;
         }
 
-        .explore-title {
-            font-size: 2rem;
-        }
-
-        .tools-grid {
-            grid-template-columns: 1fr;
-        }
-        
         .comment-item {
             grid-template-columns: 40px 1fr;
-            gap: 15px;
+            gap: 12px;
         }
-        
+
         .comment-avatar {
             width: 40px;
             height: 40px;
-            font-size: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .explore-section {
+            margin: 60px 15px 0;
+            padding: 60px 20px;
+        }
+
+        .sidebar-widget {
+            padding: 22px;
         }
     }
 
     @media (max-width: 576px) {
         .article-body {
-            padding: 30px 20px;
+            padding: 28px 18px;
         }
-        
+
         .article-hero {
-            padding: 60px 15px 40px;
+            padding: 50px 16px 35px;
         }
-        
+
         .hero-title {
-            font-size: 1.8rem;
+            font-size: 1.6rem;
+            margin-bottom: 18px;
         }
-        
+
+        .hero-meta {
+            gap: 15px;
+            font-size: 0.8rem;
+        }
+
         .author-bio-section {
             padding: 20px;
+            margin: 40px 0;
         }
-        
-        .comment-form {
-            padding: 25px;
+
+        .bio-avatar,
+        .bio-avatar-placeholder {
+            width: 80px;
+            height: 80px;
+            font-size: 1.6rem;
         }
-        
+
+        .sidebar-widget {
+            padding: 18px;
+        }
+
         .explore-section {
-            padding: 60px 15px;
-            margin-top: 60px;
+            margin: 50px 10px 0;
+            padding: 50px 16px;
         }
-        
+
+        .explore-title {
+            font-size: 1.6rem;
+        }
+
+        .tools-grid {
+            grid-template-columns: 1fr;
+            gap: 18px;
+            margin-bottom: 28px;
+        }
+
         .tool-card {
-            padding: 25px 20px;
+            padding: 26px 20px;
+        }
+
+        .mobile-share-bar {
+            padding: 10px 12px;
+            bottom: 0;
+        }
+
+        .mobile-share-item {
+            font-size: 0.7rem;
+            gap: 3px;
+        }
+
+        .mobile-share-icon {
+            width: 34px;
+            height: 34px;
+            font-size: 0.85rem;
         }
     }
 </style>
 {% endblock %}
 
 {% block content %}
+<!-- Breadcrumb Navigation -->
+<nav class="breadcrumb">
+    <a href="/">Home</a>
+    <span>/</span>
+    <a href="/blog/">Blog</a>
+    <span>/</span>
+    {% if post.category %}
+    <a href="{% url 'category_posts' post.category.slug %}">{{ post.category.name }}</a>
+    <span>/</span>
+    {% endif %}
+    <span class="current">{{ post.title|truncatewords:5 }}</span>
+</nav>
 <!-- Desktop Share Bar -->
 <div class="share-bar">
     <a href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri }}&text={{ post.title }}" class="share-item share-twitter" title="Share on Twitter" target="_blank">
@@ -1015,9 +1229,6 @@
     </a>
     <a href="mailto:?subject={{ post.title }}&body={{ request.build_absolute_uri }}" class="share-item share-email" title="Share via Email">
         <i class="fas fa-envelope"></i>
-    </a>
-    <a href="#" onclick="navigator.clipboard.writeText('{{ request.build_absolute_uri }}'); this.textContent='Copied!'; setTimeout(() => this.innerHTML='<i class=\"fas fa-copy\"></i>', 2000); return false;" class="share-item share-copy" title="Copy Link">
-        <i class="fas fa-copy"></i>
     </a>
 </div>
 
@@ -1047,12 +1258,6 @@
         </div>
         <span>Email</span>
     </a>
-    <a href="#" onclick="navigator.clipboard.writeText('{{ request.build_absolute_uri }}'); this.querySelector('span').textContent='Copied!'; setTimeout(() => this.querySelector('span').textContent='Copy', 2000); return false;" class="mobile-share-item" title="Copy Link">
-        <div class="mobile-share-icon share-copy">
-            <i class="fas fa-copy"></i>
-        </div>
-        <span>Copy</span>
-    </a>
 </div>
 
 <!-- Hero Section -->
@@ -1073,20 +1278,20 @@
                 {% endif %}
                 <div>
                     <div class="author-name">
-                        <a href="{% url 'author_profile' post.author.username %}" style="color: white; text-decoration: none;">
+                        <a href="{% url 'author_profile' post.author.username %}">
                             {{ post.author.get_full_name|default:post.author.username }}
                         </a>
                     </div>
                     {% if post.author.author_profile.job_title %}
-                    <div style="font-size: 0.85rem; opacity: 0.85;">{{ post.author.author_profile.job_title }}</div>
+                    <div class="author-job">{{ post.author.author_profile.job_title }}</div>
                     {% endif %}
                 </div>
             </div>
-            <div class="meta-item publish-date">
+            <div class="meta-item">
                 <i class="far fa-calendar"></i>
-                <span>{{ post.published_at|date:"F d, Y" }}</span>
+                <span>{{ post.published_at|date:"M d, Y" }}</span>
             </div>
-            <div class="meta-item read-time">
+            <div class="meta-item">
                 <i class="far fa-clock"></i>
                 <span>8 min read</span>
             </div>
@@ -1110,6 +1315,38 @@
         <div class="article-body">
             {{ post.content|safe }}
 
+            <!-- Tags Section -->
+            {% if post.tags.all %}
+            <div class="post-tags">
+                <h4><i class="fas fa-tags" style="margin-right: 8px;"></i>Tags</h4>
+                {% for tag in post.tags.all %}
+                <a href="{% url 'tag_posts' tag.slug %}" class="tag">{{ tag.name }}</a>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <!-- Article Footer with Share -->
+            <div class="article-footer">
+                <div class="article-footer-left">
+                    <h3>Share This Article</h3>
+                    <p>Help others discover this valuable content</p>
+                </div>
+                <div class="share-buttons-inline">
+                    <a href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri }}&text={{ post.title }}" class="share-btn-inline share-btn-twitter" title="Share on Twitter" target="_blank">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" class="share-btn-inline share-btn-facebook" title="Share on Facebook" target="_blank">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.build_absolute_uri }}" class="share-btn-inline share-btn-linkedin" title="Share on LinkedIn" target="_blank">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="mailto:?subject={{ post.title }}&body={{ request.build_absolute_uri }}" class="share-btn-inline share-btn-email" title="Share via Email">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                </div>
+            </div>
+
             <!-- Author Bio Card -->
             <section class="author-bio-section">
                 {% if post.author.author_profile.profile_picture %}
@@ -1132,7 +1369,7 @@
                     <p class="bio-desc">{{ post.author.author_profile.bio }}</p>
                     {% endif %}
                     <a href="{% url 'author_profile' post.author.username %}" class="bio-cta">
-                        View Profile <i class="fas fa-arrow-right" style="margin-left: 8px;"></i>
+                        View Profile <i class="fas fa-arrow-right" style="margin-left: 6px;"></i>
                     </a>
                 </div>
             </section>
@@ -1153,8 +1390,8 @@
                         {% endif %}
                         <div class="related-body">
                             <h4><a href="{% url 'post_detail' related.slug %}" class="related-link">{{ related.title }}</a></h4>
-                            <div class="related-meta">{{ related.published_at|date:"F d, Y" }}</div>
-                            <a href="{% url 'post_detail' related.slug %}" class="related-link">Read More</a>
+                            <div class="related-meta">{{ related.published_at|date:"M d, Y" }}</div>
+                            <a href="{% url 'post_detail' related.slug %}" class="related-link">Read More →</a>
                         </div>
                     </article>
                     {% endfor %}
@@ -1173,15 +1410,15 @@
                         {% csrf_token %}
                         <div class="form-group">
                             <label for="name">Name</label>
-                            <input type="text" id="name" name="name" required>
+                            <input type="text" id="name" name="name" required placeholder="Your name">
                         </div>
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <input type="email" id="email" name="email" required>
+                            <input type="email" id="email" name="email" required placeholder="your@email.com">
                         </div>
                         <div class="form-group">
                             <label for="comment">Comment</label>
-                            <textarea id="comment" name="comment" required></textarea>
+                            <textarea id="comment" name="comment" required placeholder="Share your thoughts..."></textarea>
                         </div>
                         <button type="submit" class="comment-btn">Post Comment</button>
                     </form>
@@ -1196,12 +1433,14 @@
                         </div>
                         <div class="comment-body">
                             <h5>{{ comment.name }}</h5>
-                            <div class="comment-time">{{ comment.created_at|date:"F d, Y" }}</div>
+                            <div class="comment-time">{{ comment.created_at|date:"M d, Y \a\t g:i A" }}</div>
                             <p class="comment-text">{{ comment.content }}</p>
                         </div>
                     </div>
                     {% empty %}
-                    <p style="color: var(--secondary); text-align: center; padding: 30px;">No comments yet. Be the first to comment!</p>
+                    <div class="no-comments">
+                        <p>No comments yet. Be the first to share your thoughts!</p>
+                    </div>
                     {% endfor %}
                 </div>
             </section>
@@ -1212,24 +1451,25 @@
     <aside class="article-sidebar">
         <!-- Table of Contents -->
         <div class="sidebar-widget">
-            <h4><i class="fas fa-list"></i> Table of Contents</h4>
-            <ul class="toc-list">
+            <h4><i class="fas fa-list"></i> Contents</h4>
+            <ul class="toc-list" id="toc-list">
                 <li><a href="#introduction">Introduction</a></li>
                 <li><a href="#getting-started">Getting Started</a></li>
-                <li><a href="#advanced-features">Advanced Features</a></li>
-                <li><a href="#best-practices">Best Practices</a></li>
+                <li><a href="#features">Features</a></li>
                 <li><a href="#conclusion">Conclusion</a></li>
             </ul>
         </div>
 
         <!-- Recent Posts -->
         <div class="sidebar-widget">
-            <h4><i class="fas fa-clock"></i> Recent Posts</h4>
+            <h4><i class="fas fa-clock"></i> Recent</h4>
             {% for recent in recent_posts %}
             <div class="recent-post-item">
                 <a href="{% url 'post_detail' recent.slug %}">{{ recent.title }}</a>
-                <div class="post-date">{{ recent.published_at|date:"F d, Y" }}</div>
+                <div class="post-date">{{ recent.published_at|date:"M d, Y" }}</div>
             </div>
+            {% empty %}
+            <p style="color: var(--secondary); font-size: 0.9rem;">No recent posts</p>
             {% endfor %}
         </div>
 
@@ -1239,6 +1479,8 @@
             <ul class="toc-list">
                 {% for category in categories %}
                 <li><a href="{% url 'category_posts' category.slug %}">{{ category.name }}</a></li>
+                {% empty %}
+                <li style="color: var(--secondary); font-size: 0.9rem;">No categories</li>
                 {% endfor %}
             </ul>
         </div>
@@ -1248,58 +1490,73 @@
 <!-- Explore Tools Section -->
 <section class="explore-section">
     <h2 class="explore-title">Explore Our Tools</h2>
-    <p class="explore-desc">Discover our collection of powerful tools designed to help you work smarter and achieve more in less time.</p>
+    <p class="explore-desc">Discover our collection of powerful tools to make your work easier. Visit 21k.tools for all available tools and resources.</p>
     
     <div class="tools-grid">
-        <a href="#" class="tool-card">
-            <i class="tool-icon fas fa-file-pdf"></i>
-            <h5>PDF Converter</h5>
-            <p class="tool-desc">Convert PDF files to various formats with high accuracy.</p>
+        <a href="https://21k.tools/urlshortener" class="tool-card" target="_blank">
+            <i class="tool-icon fas fa-link"></i>
+            <h5>URL Shortener</h5>
+            <p class="tool-desc">Create short, shareable links instantly.</p>
         </a>
-        <a href="#" class="tool-card">
+        <a href="https://21k.tools/pdftools" class="tool-card" target="_blank">
+            <i class="tool-icon fas fa-file-pdf"></i>
+            <h5>PDF Tools</h5>
+            <p class="tool-desc">Merge, split, and edit PDF files easily.</p>
+        </a>
+        <a href="https://file21k.tools/fileconverter" class="tool-card" target="_blank">
+            <i class="tool-icon fas fa-file"></i>
+            <h5>File Converter</h5>
+            <p class="tool-desc">Convert between multiple file formats.</p>
+        </a>
+        <a href="https://imageresizer.21k.tools" class="tool-card" target="_blank">
             <i class="tool-icon fas fa-image"></i>
             <h5>Image Resizer</h5>
-            <p class="tool-desc">Resize and optimize images for web and social media.</p>
+            <p class="tool-desc">Resize and optimize images for any use.</p>
         </a>
-        <a href="#" class="tool-card">
-            <i class="tool-icon fas fa-code"></i>
-            <h5>Code Formatter</h5>
-            <p class="tool-desc">Format and beautify your code in multiple languages.</p>
+        <a href="https://ai.21k.tools" class="tool-card" target="_blank">
+            <i class="tool-icon fas fa-robot"></i>
+            <h5>AI Generator</h5>
+            <p class="tool-desc">Generate content with AI technology.</p>
         </a>
-        <a href="#" class="tool-card">
-            <i class="tool-icon fas fa-chart-bar"></i>
-            <h5>Data Analyzer</h5>
-            <p class="tool-desc">Analyze and visualize your data with powerful charts.</p>
+        <a href="https://21k.tools/agecalculator/" class="tool-card" target="_blank">
+            <i class="tool-icon fas fa-birthday-cake"></i>
+            <h5>Age Calculator</h5>
+            <p class="tool-desc">Calculate age in years, months, and days.</p>
+        </a>
+        <a href="https://21k.tools/interestcalculator/" class="tool-card" target="_blank">
+            <i class="tool-icon fas fa-percentage"></i>
+            <h5>Interest Calculator</h5>
+            <p class="tool-desc">Calculate simple and compound interest.</p>
         </a>
     </div>
     
-    <a href="#" class="explore-cta">View All Tools</a>
+    <a href="https://21k.tools" class="explore-cta" target="_blank">View All Tools</a>
 </section>
 {% endblock %}
 
 {% block extra_js %}
 <script>
-    // Mobile menu toggle
     document.addEventListener('DOMContentLoaded', function() {
-        // Table of Contents functionality
+        // Dynamic Table of Contents
+        const tocList = document.getElementById('toc-list');
         const headings = document.querySelectorAll('.article-body h2, .article-body h3');
-        const tocList = document.querySelector('.toc-list');
         
         if (headings.length > 0 && tocList) {
             tocList.innerHTML = '';
             
-            headings.forEach(heading => {
-                const id = heading.textContent.toLowerCase().replace(/\s+/g, '-');
-                heading.id = id;
+            headings.forEach((heading, index) => {
+                const id = heading.textContent.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+                heading.id = id || `heading-${index}`;
                 
                 const listItem = document.createElement('li');
                 const link = document.createElement('a');
-                link.href = `#${id}`;
+                link.href = `#${heading.id}`;
                 link.textContent = heading.textContent;
                 
                 if (heading.tagName === 'H3') {
                     link.style.paddingLeft = '20px';
-                    link.style.fontSize = '0.9rem';
+                    link.style.fontSize = '0.85rem';
+                    link.style.opacity = '0.8';
                 }
                 
                 listItem.appendChild(link);
@@ -1307,9 +1564,8 @@
             });
         }
         
-        // Smooth scroll for TOC links
-        const tocLinks = document.querySelectorAll('.toc-list a');
-        tocLinks.forEach(link => {
+        // Smooth Scroll for TOC
+        document.querySelectorAll('.toc-list a').forEach(link => {
             link.addEventListener('click', function(e) {
                 e.preventDefault();
                 const targetId = this.getAttribute('href');
@@ -1324,46 +1580,22 @@
             });
         });
         
-        // Mobile sidebar toggle
-        const sidebarToggle = document.createElement('button');
-        sidebarToggle.innerHTML = '<i class="fas fa-bars"></i> Table of Contents';
-        sidebarToggle.style.cssText = `
-            display: none;
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 30px;
-            padding: 12px 20px;
-            font-weight: 600;
-            z-index: 1000;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-        `;
-        
-        document.body.appendChild(sidebarToggle);
-        
-        sidebarToggle.addEventListener('click', function() {
-            const sidebar = document.querySelector('.article-sidebar');
-            if (sidebar) {
-                sidebar.style.display = sidebar.style.display === 'grid' ? 'none' : 'grid';
-            }
+        // Highlight Active TOC Item
+        window.addEventListener('scroll', function() {
+            const headings = document.querySelectorAll('.article-body h2, .article-body h3');
+            const tocLinks = document.querySelectorAll('.toc-list a');
+            
+            headings.forEach((heading, index) => {
+                const rect = heading.getBoundingClientRect();
+                if (rect.top >= 0 && rect.top <= window.innerHeight / 2) {
+                    tocLinks.forEach(link => link.style.color = 'var(--text-dark)');
+                    if (tocLinks[index]) {
+                        tocLinks[index].style.color = 'var(--primary)';
+                        tocLinks[index].style.borderLeftColor = 'var(--primary)';
+                    }
+                }
+            });
         });
-        
-        // Show/hide mobile sidebar toggle based on screen size
-        function checkScreenSize() {
-            if (window.innerWidth <= 768) {
-                sidebarToggle.style.display = 'block';
-                document.querySelector('.article-sidebar').style.display = 'none';
-            } else {
-                sidebarToggle.style.display = 'none';
-                document.querySelector('.article-sidebar').style.display = 'grid';
-            }
-        }
-        
-        checkScreenSize();
-        window.addEventListener('resize', checkScreenSize);
     });
 </script>
 {% endblock %}
