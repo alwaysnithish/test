@@ -16,31 +16,64 @@
         --warning: #f59e0b;
         --bg-light: #f9fafb;
     }
+    /* ==================== LINK STYLING ==================== */
+/* Remove underlines from ALL links first */
+a {
+    text-decoration: none;
+}
 
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
+/* Add underline ONLY to article body links */
+.article-body a {
+    text-decoration: underline !important;
+}
 
-    html {
-        scroll-behavior: smooth;
-    }
+/* Remove underlines from specific elements that shouldn't have them */
+.article-hero a,
+.author-bio-section a,
+.related-section a,
+.article-sidebar a,
+.comments-section a,
+.breadcrumb a,
+.nav-link,
+.footer-links a,
+.social-link,
+.tool-card,
+.explore-cta,
+.bio-cta,
+.related-link,
+.tag,
+.share-item,
+.mobile-share-item,
+.share-btn-inline,
+.dropdown-content a,
+.mobile-dropdown-content a {
+    text-decoration: none !important;
+}
 
-    body {
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-        background-color: var(--bg-light);
-        color: var(--text-dark);
-        line-height: 1.6;
-    }
+/* Hover effects */
+.article-body a:hover {
+    text-decoration: none !important; /* Remove underline on hover for article links */
+    color: var(--primary-dark);
+}
 
-    /* ==================== HERO SECTION ==================== */
-    .article-hero {
+ .bg {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: ;
+        padding: 0px 20px 20px;
+        margin: 20px 14px 20px;
+        border-radius: 20px;
+        text-algn: center;
+    }
+    /* ==================== HERO SECTION ==================== */
+     .article-hero {
         color: white;
-        padding: 80px 20px 60px;
+        padding: 10px 15px 10px;
         position: relative;
         overflow: hidden;
+        align-items: center;
+        
+        margin: 5px 145px 5px;
+        bckground: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     }
 
     .article-hero::before {
@@ -222,15 +255,16 @@
 
     /* ==================== MAIN ARTICLE CONTAINER ==================== */
     .article-wrapper {
-        max-width: 1200px;
+        max-width: 1500px;
         margin: 0 auto;
-        padding: 40px 20px;
+        padding: 20px 10px;
         display: grid;
         grid-template-columns: 1fr 300px;
         gap: 40px;
-        align-items: start;
+        align-items: flex-start;
         position: relative;
         z-index: 10;
+        
     }
 
     .article-content-area {
@@ -259,7 +293,7 @@
     }
 
     .article-body {
-        padding: 60px 50px;
+        padding: 80px 50px;
     }
 
     /* ==================== CONTENT TYPOGRAPHY ==================== */
@@ -294,7 +328,7 @@
 
     .article-body p {
         font-size: clamp(0.95rem, 1vw, 1.05rem);
-        line-height: 1.8;
+        line-height: 2.8;
         margin-bottom: 22px;
         color: var(--secondary);
     }
@@ -688,7 +722,8 @@
     /* ==================== SIDEBAR ==================== */
     .article-sidebar {
         position: sticky;
-        top: 100px;
+        width: 300px;
+        top: 120px;
         height: fit-content;
     }
 
@@ -696,7 +731,7 @@
         background: white;
         border: 1px solid var(--border);
         border-radius: 12px;
-        padding: 26px;
+        padding: 15px;
         margin-bottom: 22px;
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
     }
@@ -784,6 +819,7 @@
         font-size: clamp(1.8rem, 2.2vw, 2.3rem);
         font-weight: 900;
         margin-bottom: 16px;
+        color:white;
     }
 
     .explore-desc {
@@ -792,6 +828,7 @@
         max-width: 650px;
         margin: 0 auto 45px;
         line-height: 1.7;
+        color:white;
     }
 
     .tools-grid {
@@ -834,6 +871,7 @@
     .tool-desc {
         font-size: 0.9rem;
         opacity: 0.88;
+        color:white;
     }
 
     .explore-cta {
@@ -945,32 +983,38 @@
         box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
     }
 
-    /* ==================== BREADCRUMB ==================== */
-    .breadcrumb {
-        max-width: 1200px;
-        margin: 20px auto 0;
-        padding: 0 20px 20px;
-        font-size: 0.9rem;
-    }
+ /* ==================== BREADCRUMB ==================== */
+.breadcrumb {
+    max-width: calc(100% - 20px);
+    margin:10px 20px 5px 20px;
+    padding: 15px 20px;
+    font-size: 1.3rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 10px;
+    font-weight: 800;
+      font-size: 19px;
+}
 
-    .breadcrumb a {
-        color: var(--primary);
-        text-decoration: none;
-        transition: color 0.3s;
-    }
+.breadcrumb a {
+    color: white;
+    text-decoration: none;
+    transition: color 0.3s;
+}
 
-    .breadcrumb a:hover {
-        color: var(--primary-dark);
-    }
+.breadcrumb a:hover {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: underline;
+}
 
-    .breadcrumb span {
-        color: var(--secondary);
-        margin: 0 8px;
-    }
+.breadcrumb span {
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0 8px;
+}
 
-    .breadcrumb .current {
-        color: var(--secondary);
-    }
+.breadcrumb .current {
+    color: pink;
+}
 
     /* ==================== ANIMATIONS ==================== */
     @keyframes fadeInDown {
@@ -1008,6 +1052,8 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             gap: 18px;
+            width: 100%;
+            top: auto;
         }
 
         .related-grid {
@@ -1027,7 +1073,14 @@
             height: 100px;
             font-size: 2rem;
         }
+          .breadcrumb {
+        max-width: calc(100% - 10px);
+        margin: 10px 20px 10px 20px;
+        padding: 12px 15px;
+        font-size: 0.85rem;
     }
+
+  }
 
     @media (max-width: 768px) {
         .share-bar {
@@ -1128,6 +1181,13 @@
         .sidebar-widget {
             padding: 22px;
         }
+            .breadcrumb {
+        max-width: calc(100% - 30px);
+        margin: 8px 15px 8px 15px;
+        padding: 10px 12px;
+        font-size: 0.8rem;
+        border-radius: 15px;
+    }
     }
 
     @media (max-width: 576px) {
@@ -1199,6 +1259,17 @@
             height: 34px;
             font-size: 0.85rem;
         }
+        breadcrumb {
+        max-width: calc(100% - 20px);
+        margin: 5px 10px 5px 10px;
+        padding: 8px 10px;
+        font-size: 0.75rem;
+        border-radius: 12px;
+    }
+
+    .breadcrumb span {
+        margin: 0 5px;
+    }
     }
 </style>
 {% endblock %}
@@ -1261,6 +1332,7 @@
 </div>
 
 <!-- Hero Section -->
+<div class="bg">
 <section class="article-hero">
     <div class="hero-content">
         {% if post.category %}
@@ -1481,7 +1553,7 @@
             <h4><i class="fas fa-clock"></i> Recent</h4>
             {% for recent in recent_posts %}
             <div class="recent-post-item">
-                <a href="{% url 'post_detail' recent.slug %}">{{ recent.title }}</a>
+                <a href="{% url 'blog_detail' recent.slug %}">{{ recent.title }}</a>
                 <div class="post-date">{{ recent.published_at|date:"M d, Y" }}</div>
             </div>
             {% empty %}
@@ -1502,7 +1574,7 @@
         </div>
     </aside>
 </div>
-
+</div>
 <!-- Explore Tools Section -->
 <section class="explore-section">
     <h2 class="explore-title">Explore Our Tools</h2>
