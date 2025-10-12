@@ -22,22 +22,49 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     
     <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --primary-light: #dbeafe;
+            --secondary: #64748b;
+            --text-dark: #0f172a;
+            --text-light: #f8fafc;
+            --border: #e2e8f0;
+            --bg-light: #f9fafb;
+        }
+
         * {
             margin: 0; 
             padding: 0; 
             box-sizing: border-box;
         }
         
+        html {
+            scroll-behavior: smooth;
+        }
+        /* Remove underlines from all links */
+a {
+    text-decoration: none;
+}
+
+/* Optional: Add underline on hover for better UX */
+a:hover {
+    text-decoration: none;
+}
+
+
+        
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            background-attachment: fixed;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: var(--bg-light);
             min-height: 100vh;
-            color: #1a1a1a;
+            color: var(--text-dark);
             display: flex;
             flex-direction: column;
+            line-height: 1.6;
         }
 
+        /* ==================== HEADER ==================== */
         .header {
             background: white;
             box-shadow: 0 4px 20px rgba(30, 64, 175, 0.3);
@@ -63,12 +90,11 @@
             align-items: center;
             font-size: 28px;
             font-weight: 800;
-            text-decoration: none;
+            text-decoration: none !important;
             color: #2563eb;
             gap: 8px;
             transition: transform 0.3s ease;
         }
-        
         .logo:hover {
             transform: scale(1.05);
         }
@@ -86,77 +112,87 @@
             box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
         }
 
-        .header-actions-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 0px 10px;
-            gap: 10px;
-        }
         
-        .search-box {
-            position: relative; 
-            flex-grow: 1;
-            max-width: 700px;
-            width: 100%;
-            margin: 0 auto;
-        }
-        
-        .search-input {
-            width: 100%;
-            background: rgba(255, 255, 255, 0.8);
-            border: 2px solid rgba(59, 130, 246, 0.2);
-            border-radius: 30px;
-            padding: 12px 50px 12px 20px;
-            font-size: 15px;
-            transition: all 0.3s ease;
-        }
-        
-        .search-input:focus {
-            outline: none;
-            background: rgba(255, 255, 255, 0.95);
-            border-color: #3b82f6;
-            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
-        }
-        
-        .search-btn {
-            position: absolute;
-            right: 8px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
-            border: none;
-            border-radius: 50%;
-            width: 36px;
-            height: 36px;
-            color: white;
-            cursor: pointer;
-            font-size: 16px;
-            transition: all 0.3s ease;
-        }
-        
-        .search-btn:hover {
-            transform: translateY(-50%) scale(1.1);
-            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4);
-        }
-        
+      .header-actions-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    gap: 10px;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.search-box {
+    position: relative; 
+    flex-grow: 1;
+    max-width: 700px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.search-input {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.8);
+    border: 2px solid rgba(59, 130, 246, 0.2);
+    border-radius: 30px;
+    padding: 12px 50px 12px 20px;
+    font-size: 15px;
+    transition: all 0.3s ease;
+}
+
+.search-input:focus {
+    outline: none;
+    background: rgba(255, 255, 255, 0.95);
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+}
+
+.search-btn {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+    border: none;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.search-btn:hover {
+    transform: translateY(-50%) scale(1.1);
+    box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4);
+}
+
         .mobileToggle {
             cursor: pointer;
             padding: 10px;
             display: none;
+            background: none;
+            border: none;
+            flex-direction: column;
+            gap: 6px;
         }
         
-        .bar1, .bar2, .bar3 {
+        .mobileToggle .bar {
             width: 23px; 
             height: 2px; 
             background-color: #1e3a8a;
-            margin: 6px 0; 
             transition: 0.4s;
         }
         
-        .change .bar1 { transform: translate(0, 8px) rotate(-45deg); }
-        .change .bar2 { opacity: 0; }
-        .change .bar3 { transform: translate(0, -8px) rotate(45deg); }
+        .mobileToggle.change .bar:nth-child(1) { transform: translate(0, 8px) rotate(-45deg); }
+        .mobileToggle.change .bar:nth-child(2) { opacity: 0; }
+        .mobileToggle.change .bar:nth-child(3) { transform: translate(0, -8px) rotate(45deg); }
+
+        .header-nav {
+            width: 100%;
+        }
 
         .nav-menu {
             display: flex; 
@@ -174,40 +210,27 @@
             transition: all 0.3s ease;
             text-decoration: none;
             font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
-        
+
         .nav-link:hover, .nav-link.active {
             background: rgba(59, 130, 246, 0.2);
             color: #1e40af;
-        }
-
-        .mobile-panel {
-            display: none; 
-            flex-direction: column; 
-            gap: 15px;
-            background: white; 
-            padding: 20px; 
-            position: absolute;
-            top: 100%; 
-            left: 0; 
-            width: 100%;
-            animation: slideDown 0.4s ease-in-out;
-            z-index: 999;
-            box-shadow: 0 10px 15px rgba(0,0,0,0.1);
-        }
-        
-        .mobile-panel.show { display: flex; }
-
-        @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
         }
 
         .dropdown {
             position: relative;
             display: inline-block;
         }
-        
+
+        .dropdown-toggle {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
         .dropdown-content {
             display: none;
             position: absolute;
@@ -238,7 +261,28 @@
         .dropdown-content a:hover {
             background: rgba(59, 130, 246, 0.1);
         }
+
+        .mobile-panel {
+            display: none; 
+            flex-direction: column; 
+            gap: 15px;
+            background: white; 
+            padding: 20px; 
+            position: absolute;
+            top: 100%; 
+            left: 0; 
+            width: 100%;
+            animation: slideDown 0.4s ease-in-out;
+            z-index: 999;
+            box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+        }
         
+        .mobile-panel.show { display: flex; }
+
+        .mobile-dropdown {
+            position: relative;
+        }
+
         .mobile-dropdown-content {
             display: none;
             padding-left: 20px;
@@ -265,20 +309,26 @@
         .mobile-dropdown-content a:hover {
             background: rgba(59, 130, 246, 0.1);
         }
-        
+
         .rotate-180 {
-            transform: rotate(180deg);
-            transition: transform 0.3s ease;
+            transform: rotate(540deg);
+            transition: transform 2s ease;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .content-wrapper {
-            flex: 1;
+            fx: 1;
         }
 
+        /* ==================== FOOTER ==================== */
         .footer {
             background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
             color: white; 
-            margin-top: 0;
+            margin-top: 80px;
         }
         
         .footer-container {
@@ -300,7 +350,7 @@
             font-weight: 600; 
             margin-bottom: 20px;
         }
-        
+
         .footer-links {
             list-style: none;
         }
@@ -313,10 +363,13 @@
             color: rgba(255, 255, 255, 0.8); 
             text-decoration: none; 
             transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
         
         .footer-links a:hover { 
-            color: #60a5fa; 
+            color: #60a5fa;
         }
 
         .footer-bottom {
@@ -334,7 +387,7 @@
             align-items: center; 
             gap: 10px;
         }
-        
+
         .footer-brand-icon {
             width: 38px; 
             height: 38px; 
@@ -344,6 +397,7 @@
             align-items: center;
             justify-content: center; 
             font-weight: bold;
+            font-size: 14px;
         }
         
         .social-links {
@@ -369,15 +423,101 @@
             transform: translateY(-2px);
         }
 
+        /* ==================== MESSAGES ==================== */
+        .messages-container {
+            max-width: 1400px;
+            margin: 20px auto;
+            padding: 0 20px;
+            z-index: 100;
+            position: relative;
+        }
+
+        .alert {
+            border-radius: 12px;
+            border: none;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        .alert-success {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(5, 150, 105, 0.1));
+            color: #065f46;
+            border-left: 4px solid #10b981;
+        }
+
+        .alert-error, .alert-danger {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(220, 38, 38, 0.1));
+            color: #7f1d1d;
+            border-left: 4px solid #ef4444;
+        }
+
+        .alert-info {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(37, 99, 235, 0.1));
+            color: #1e40af;
+            border-left: 4px solid #3b82f6;
+        }
+
+        .alert-warning {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(217, 119, 6, 0.1));
+            color: #78350f;
+            border-left: 4px solid #f59e0b;
+        }
+
+        .btn-close {
+            opacity: 0.6;
+            transition: opacity 0.3s ease;
+        }
+
+        .btn-close:hover {
+            opacity: 1;
+        }
+
+        /* ==================== RESPONSIVE ==================== */
+        @media (max-width: 1024px) {
+            .header-actions-container {
+                gap: 12px;
+            }
+
+            .controls-section {
+                max-width: 400px;
+            }
+
+            .nav-menu {
+                gap: 6px;
+            }
+
+            .nav-link {
+                padding: 8px 14px;
+                font-size: 0.9rem;
+            }
+        }
+
         @media (max-width: 768px) {
             .nav-menu { 
                 display: none; 
             }
             
             .mobileToggle {
-                display: block;
+                display: flex;
             }
-            
+
+            .header-actions-container {
+                gap: 10px;
+            }
+
+            .controls-section {
+                max-width: none;
+            }
+
+            .search-form input {
+                font-size: 14px;
+                padding: 10px 14px;
+            }
+
             .footer-bottom { 
                 flex-direction: column; 
                 text-align: center; 
@@ -387,16 +527,61 @@
                 grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
                 gap: 30px;
             }
+
+            .dropdown-content {
+                position: fixed;
+                bottom: auto;
+                top: auto;
+            }
         }
 
-        @media (max-width: 480px) {
-            .header-container, .footer-container {
-                padding-left: 15px; 
-                padding-right: 15px;
+        @media (max-width: 576px) {
+            .header-container {
+                padding-left: 12px; 
+                padding-right: 12px;
             }
-            
-            .search-input { 
-                min-width: 150px; 
+
+            .footer-container {
+                padding-left: 12px; 
+                padding-right: 12px;
+                padding-top: 40px;
+                padding-bottom: 20px;
+            }
+
+            .logo {
+                font-size: 22px;
+                gap: 8px;
+            }
+
+            .logo-icon {
+                width: 44px;
+                height: 44px;
+                font-size: 18px;
+            }
+
+            .controls-section {
+                max-width: 100%;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+
+            .footer-brand,
+            .social-links {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .messages-container {
+                padding: 0 12px;
+                margin: 15px auto;
+            }
+
+            .alert {
+                flex-wrap: wrap;
+                padding: 14px 16px;
             }
         }
 
@@ -405,6 +590,7 @@
 </head>
 <body>
 
+<!-- HEADER -->
 <header class="header">
     <div class="header-container">
         <div class="logo-container">
@@ -415,108 +601,166 @@
         </div>
         
         <div class="header-actions-container">
-            <div class="search-box">
-                <form method="get" action="{% url 'blog_list' %}" id="blogSearchForm">
-                    <input type="text" name="search" class="search-input" placeholder="Search blog posts..." value="{{ request.GET.search }}">
-                    <button type="submit" class="search-btn"><i class="fas fa-search"></i></button>
-                </form>
-            </div>
-            <div class="mobileToggle" id="mobileToggle">
-                <div class="bar1"></div>
-                <div class="bar2"></div>
-                <div class="bar3"></div>
-            </div>
-        </div>
+    <div class="search-box">
+        <input type="text" class="search-input" id="searchInput" placeholder="Search blogs..." autocomplete="off">
+        <button class="search-btn" id="searchBtn"><i class="fas fa-search"></i></button>
+    </div>
+    <button class="mobileToggle" id="mobileToggle" aria-label="Toggle menu">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+    </button>
+</div>
+           
         
-        <nav class="header-nav">
+        <!-- Desktop Navigation -->
+        <nav class="header-nav" role="navigation">
             <div class="nav-menu">
-                <a href="https://21k.tools" class="nav-link"><i class="fas fa-home"></i> Home</a>
+                <a href="https://21k.tools" class="nav-link">
+                    <i class="fas fa-home"></i>
+                    <span>Home</span>
+                </a>
                 
-                <div class="dropdown" id="desktopToolsDropdown">
-                    <a href="javascript:void(0);" class="nav-link" onclick="toggleDesktopDropdown(event)">
-                        <i class="fas fa-tools"></i> More Tools <i class="fas fa-caret-down" id="desktopCaret"></i>
+               <div class="dropdown" id="desktopToolsDropdown">
+                    <a href="javascript:void(0);" class="nav-link" onclick="toggleDesktopDropdown(event)" role="button" tabindex="0">
+                        <i class="fas fa-tools"></i>
+                       
+                            More Tools
+                            <i class="fas fa-caret-down" id="desktopCaret"></i>
+                        </span>
                     </a>
                     
                     <div class="dropdown-content">
                         <a href="https://21k.tools/pdftools"><i class="fas fa-file-pdf"></i> PDF Tools</a>
-                        <a href="https://file21k.tools/fileconverter"><i class="fas fa-file"></i> File Converter</a>
-                        <a href="https://imageresizer.21k.tools"><i class="fas fa-image"></i> Image Resizer</a>
+                        <a href="https://21k.tools/timecalculator"><i class="fas fa-clock"></i> Time Tools</a>
+                        <a href="https://21k.tools/fileconverter"><i class="fas fa-file"></i> File Converter</a>
+                        <a href="https://21k.tools/imageresizer"><i class="fas fa-image"></i> Image Resizer</a>
                         <a href="https://ai.21k.tools"><i class="fas fa-robot"></i> AI Generator</a>
-                        <a href="https://21k.tools/agecalculator/"><i class="fas fa-birthday-cake"></i> Age Calculator</a>
-                        <a href="https://21k.tools/interestcalculator/"><i class="fas fa-percentage"></i> Interest Calculator</a>
-                        <a href="https://21k.tools/unitconverter/"><i class="fas fa-balance-scale"></i> Unit Converter</a>
-                        <a href="https://21k.tools/timecalculator/"><i class="fas fa-stopwatch"></i> Time Calculator</a>
+                        <a href="https://21k.tools/agecalculator"><i class="fas fa-birthday-cake"></i> Age Calculator</a>
+                        <a href="https://21k.tools/interestcalculator"><i class="fas fa-percentage"></i> Interest Calculator</a>
+                        <a href="https://21k.tools/unitconverter"><i class="fas fa-balance-scale"></i> Unit Converter</a>
+                        <a href="https://21k.tools/timecalculator"><i class="fas fa-stopwatch"></i> Time Calculator</a>
                     </div>
                 </div>
                 
-                <a href="/blog" class="nav-link active"><i class="fas fa-blog"></i> Blog</a>
-                <a href="/help" class="nav-link"><i class="fas fa-question-circle"></i> Help Center</a>
-                <a href="mailto:contact@21k.tools" class="nav-link"><i class="fas fa-envelope"></i> Contact</a>
+                <a href="{% url 'blog_list' %}" class="nav-link">
+                    <i class="fas fa-blog"></i>
+                    <span>Blogs</span>
+                </a>
+                
+                <a href="/help" class="nav-link">
+                    <i class="fas fa-question-circle"></i>
+                    <span>Help Center</span>
+                </a>
+                
+                <a href="mailto:contact@21k.tools" class="nav-link">
+                    <i class="fas fa-envelope"></i>
+                    <span>Contact</span>
+                </a>
+
+                {% if user.is_authenticated and user.is_staff %}
+                <!--a href="{% url 'dashboard' %}" class="nav-link">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Dashboard</span>
+                </a-->
+                {% endif %}
             </div>
         </nav>
         
-        <div class="mobile-panel" id="mobilePanel">
-            <a href="https://21k.tools" class="nav-link"><i class="fas fa-home"></i> Home</a>
+        <!-- Mobile Navigation -->
+        <div class="mobile-panel" id="mobilePanel" role="navigation">
+            <a href="https://21k.tools" class="nav-link">
+                <i class="fas fa-home"></i>
+                <span>Home</span>
+            </a>
             
             <div class="mobile-dropdown" id="mobileToolsDropdown">
-                <a href="javascript:void(0);" class="nav-link" onclick="toggleMobileDropdown(event)">
-                    <i class="fas fa-tools"></i> More Tools <i class="fas fa-caret-down" id="mobileCaret"></i>
+                <a href="javascript:void(0);" class="nav-link" onclick="toggleMobileDropdown(event)" role="button" tabindex="0">
+                    <i class="fas fa-tools"></i>
+                    <span class="dropdown-toggle">
+                        More Tools
+                        <i class="fas fa-caret-down" id="mobileCaret"></i>
+                    </span>
                 </a>
                 <div class="mobile-dropdown-content">
                     <a href="https://21k.tools/pdftools"><i class="fas fa-file-pdf"></i> PDF Tools</a>
-                    <a href="https://file21k.tools/fileconverter"><i class="fas fa-file"></i> File Converter</a>
-                    <a href="https://imageresizer.21k.tools"><i class="fas fa-image"></i> Image Resizer</a>
+                    <a href="https://21k.tools/timecalculator"><i class="fas fa-clock"></i> Time Tools</a>
+                    <a href="https://21k.tools/fileconverter"><i class="fas fa-file"></i> File Converter</a>
+                    <a href="https://21k.tools/imageresizer"><i class="fas fa-image"></i> Image Resizer</a>
                     <a href="https://ai.21k.tools"><i class="fas fa-robot"></i> AI Generator</a>
-                    <a href="https://21k.tools/agecalculator/"><i class="fas fa-birthday-cake"></i> Age Calculator</a>
-                    <a href="https://21k.tools/interestcalculator/"><i class="fas fa-percentage"></i> Interest Calculator</a>
-                    <a href="https://21k.tools/unitconverter/"><i class="fas fa-balance-scale"></i> Unit Converter</a>
-                    <a href="https://21k.tools/timecalculator/"><i class="fas fa-stopwatch"></i> Time Calculator</a>
+                    <a href="https://21k.tools/agecalculator"><i class="fas fa-birthday-cake"></i> Age Calculator</a>
+                    <a href="https://21k.tools/interestcalculator"><i class="fas fa-percentage"></i> Interest Calculator</a>
+                    <a href="https://21k.tools/unitconverter"><i class="fas fa-balance-scale"></i> Unit Converter</a>
+                    <a href="https://21k.tools/timecalculator"><i class="fas fa-stopwatch"></i> Time Calculator</a>
                 </div>
             </div>
             
-            <a href="/blog" class="nav-link active"><i class="fas fa-blog"></i> Blog</a>
-            <a href="/help" class="nav-link"><i class="fas fa-question-circle"></i> Help Center</a>
-            <a href="mailto:contact@21k.tools" class="nav-link"><i class="fas fa-envelope"></i> Contact</a>
+            <a href="{% url 'blog_list' %}" class="nav-link">
+                <i class="fas fa-newspaper"></i>
+                <span>Blogs</span>
+            </a>
+            
+            <a href="/help" class="nav-link">
+                <i class="fas fa-question-circle"></i>
+                <span>Help Center</span>
+            </a>
+            
+            <a href="mailto:contact@21k.tools" class="nav-link">
+                <i class="fas fa-envelope"></i>
+                <span>Contact</span>
+            </a>
+
+            {% if user.is_authenticated and user.is_staff %}
+            <a href="{% url 'dashboard' %}" class="nav-link">
+                <i class="fas fa-chart-line"></i>
+                <span>Dashboard</span>
+            </a>
+            {% endif %}
         </div>
     </div>
 </header>
 
+<!-- CONTENT -->
 <div class="content-wrapper">
+    <!-- Messages -->
     {% if messages %}
-        <div class="container mt-3">
-            {% for message in messages %}
-                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-                    {{ message }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                </div>
-            {% endfor %}
+    <div class="messages-container">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            <i class="fas fa-{% if message.tags == 'success' %}check-circle{% elif message.tags == 'error' %}exclamation-circle{% elif message.tags == 'warning' %}exclamation-triangle{% else %}info-circle{% endif %}"></i>
+            <span>{{ message }}</span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
+        {% endfor %}
+    </div>
     {% endif %}
 
+    <!-- Page Content -->
     {% block content %}{% endblock %}
 </div>
 
+<!-- FOOTER -->
 <footer class="footer">
     <div class="footer-container">
         <div class="footer-content">
             <div class="footer-section">
                 <h3>Popular Tools</h3>
                 <ul class="footer-links">
-                    <li><a href="https://21k.tools/agecalculator/"><i class="fas fa-birthday-cake"></i> Age Calculator</a></li>
-                    <li><a href="https://21k.tools/interestcalculator/"><i class="fas fa-percentage"></i> Interest Calculator</a></li>
+                    <li><a href="https://21k.tools/agecalculator"><i class="fas fa-birthday-cake"></i> Age Calculator</a></li>
+                    <li><a href="https://21k.tools/interestcalculator"><i class="fas fa-percentage"></i> Interest Calculator</a></li>
                     <li><a href="https://21k.tools/pdftools"><i class="fas fa-file-pdf"></i> PDF Toolkit</a></li>
-                    <li><a href="https://21k.tools/unitcalculator/"><i class="fas fa-balance-scale"></i> Unit Converter</a></li>
+                    <li><a href="https://21k.tools/unitconverter"><i class="fas fa-balance-scale"></i> Unit Converter</a></li>
                     <li><a href="https://21k.tools/timecalculator"><i class="fas fa-stopwatch"></i> Time Calculator</a></li>
-                    <li><a href="https://21k.tools/financecalculator"><i class="fas fa-chart-line"></i> Financial Calculator</a></li>
+                    <li><a href="https://finance.21k.tools"><i class="fas fa-chart-line"></i> Financial Calculator</a></li>
                 </ul>
             </div>
             <div class="footer-section">
                 <h3>Categories</h3>
                 <ul class="footer-links">
-                    <li><a href="https://21k.tools/calculators"><i class="fas fa-calculator"></i> Calculators</a></li>
+                    <li><a href="https://calculators.21k.tools"><i class="fas fa-calculator"></i> Calculators</a></li>
                     <li><a href="https://21k.tools/pdftools"><i class="fas fa-file-pdf"></i> PDF Tools</a></li>
-                    <li><a href="https://21k.tools/fileconverter"><i class="fas fa-exchange-alt"></i> Converters</a></li>
-                    <li><a href="https://21k.tools/timecalculator/"><i class="fas fa-clock"></i> Time Tools</a></li>
+                    <li><a href="https://converter.21k.tools"><i class="fas fa-exchange-alt"></i> Converters</a></li>
+                    <li><a href="https://21k.tools/timecalculator"><i class="fas fa-clock"></i> Time Tools</a></li>
                 </ul>
             </div>
             <div class="footer-section">
@@ -529,10 +773,10 @@
             <div class="footer-section">
                 <h3>Company</h3>
                 <ul class="footer-links">
-                    <li><a href="/about"><i class="fas fa-info-circle"></i> About Us</a></li>
-                    <li><a href="/privacypolicy"><i class="fas fa-shield-alt"></i> Privacy Policy</a></li>
-                    <li><a href="/termsandconditions"><i class="fas fa-file-contract"></i> Terms</a></li>
-                    <li><a href="/blog"><i class="fas fa-blog"></i> Blog</a></li>
+                    <li><a href="https://21k.tools/about"><i class="fas fa-info-circle"></i> About Us</a></li>
+                    <li><a href="https://21k.tools/privacypolicy"><i class="fas fa-shield-alt"></i> Privacy Policy</a></li>
+                    <li><a href="https://21k.tools/termsandconditions"><i class="fas fa-file-contract"></i> Terms</a></li>
+                    <li><a href="https://21k.tools/blog"><i class="fas fa-blog"></i> Blogs</a></li>
                 </ul>
             </div>
         </div>
@@ -542,16 +786,29 @@
                 <span>&copy; 2025 21K Tools. All rights reserved.</span>
             </div>
             <div class="social-links">
-                <a href="https://x.com/@21ktools" class="social-link" title="Twitter"><i class="fab fa-twitter"></i></a>
-                <a href="https://instagram.com/21k.tools" class="social-link" title="Instagram"><i class="fab fa-instagram"></i></a>
-                <a href="https://youtube.com/@21ktools" class="social-link" title="YouTube"><i class="fab fa-youtube"></i></a>
-                <a href="#" class="social-link" title="Facebook"><i class="fab fa-facebook"></i></a>
+                <a href="https://x.com/@21ktools" class="social-link" title="Twitter" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a href="https://instagram.com/21k.tools" class="social-link" title="Instagram" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://youtube.com/@21ktools" class="social-link" title="YouTube" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-youtube"></i>
+                </a>
+                <a href="#" class="social-link" title="Facebook" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-facebook"></i>
+                </a>
             </div>
         </div>
     </div>
 </footer>
 
+<!-- SCRIPTS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 <script>
+    // ==================== DROPDOWN HANDLERS ====================
+    
     // Toggle desktop dropdown
     function toggleDesktopDropdown(event) {
         event.preventDefault();
@@ -560,8 +817,12 @@
         const dropdown = document.getElementById('desktopToolsDropdown');
         const caret = document.getElementById('desktopCaret');
         
-        dropdown.classList.toggle('active');
-        caret.classList.toggle('rotate-180');
+        if (dropdown) {
+            dropdown.classList.toggle('active');
+            if (caret) {
+                caret.classList.toggle('rotate-180');
+            }
+        }
     }
     
     // Toggle mobile dropdown
@@ -572,39 +833,38 @@
         const dropdown = document.getElementById('mobileToolsDropdown');
         const caret = document.getElementById('mobileCaret');
         
-        dropdown.classList.toggle('active');
-        caret.classList.toggle('rotate-180');
+        if (dropdown) {
+            dropdown.classList.toggle('active');
+            if (caret) {
+                caret.classList.toggle('rotate-180');
+            }
+        }
     }
     
     // Close dropdowns when clicking outside
     document.addEventListener('click', (e) => {
+        // Close desktop dropdown
         if (!e.target.closest('.dropdown')) {
             const desktopDropdown = document.getElementById('desktopToolsDropdown');
             const desktopCaret = document.getElementById('desktopCaret');
             
             if (desktopDropdown && desktopDropdown.classList.contains('active')) {
                 desktopDropdown.classList.remove('active');
-                desktopCaret.classList.remove('rotate-180');
-            }
-        }
-        
-        if (!e.target.closest('.mobile-dropdown')) {
-            const mobileDropdown = document.getElementById('mobileToolsDropdown');
-            const mobileCaret = document.getElementById('mobileCaret');
-            
-            if (mobileDropdown && mobileDropdown.classList.contains('active')) {
-                mobileDropdown.classList.remove('active');
-                mobileCaret.classList.remove('rotate-180');
+                if (desktopCaret) {
+                    desktopCaret.classList.remove('rotate-180');
+                }
             }
         }
     });
     
-    // Mobile toggle
+    // ==================== MOBILE MENU HANDLER ====================
+    
     document.addEventListener("DOMContentLoaded", () => {
         const mobileToggle = document.getElementById('mobileToggle');
         const mobilePanel = document.getElementById('mobilePanel');
         
         if (mobileToggle && mobilePanel) {
+            // Toggle mobile menu
             mobileToggle.addEventListener('click', (e) => {
                 e.stopPropagation();
                 mobileToggle.classList.toggle('change');
@@ -613,21 +873,104 @@
             
             // Close mobile menu when clicking outside
             document.addEventListener('click', (e) => {
-                if (!e.target.closest('.header-container')) {
+                const isClickInside = e.target.closest('.header-container') || 
+                                     e.target.closest('.mobileToggle') ||
+                                     e.target.closest('.mobile-panel');
+                
+                if (!isClickInside) {
                     mobileToggle.classList.remove('change');
                     mobilePanel.classList.remove('show');
                 }
             });
             
-            // Prevent closing when clicking inside panel
+            // Close mobile menu when clicking a link
+            const mobileLinks = mobilePanel.querySelectorAll('a:not(.mobile-dropdown > a)');
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileToggle.classList.remove('change');
+                    mobilePanel.classList.remove('show');
+                });
+            });
+            
+            // Prevent closing when clicking inside panel (except links)
             mobilePanel.addEventListener('click', (e) => {
+                if (e.target.closest('.mobile-dropdown-content') || 
+                    e.target.closest('a.nav-link')) {
+                    return;
+                }
                 e.stopPropagation();
             });
         }
     });
+
+    // ==================== KEYBOARD NAVIGATION ====================
+    
+    document.addEventListener('keydown', (e) => {
+        // Close menu on Escape key
+        if (e.key === 'Escape') {
+            const mobileToggle = document.getElementById('mobileToggle');
+            const mobilePanel = document.getElementById('mobilePanel');
+            const desktopDropdown = document.getElementById('desktopToolsDropdown');
+            const desktopCaret = document.getElementById('desktopCaret');
+            
+            if (mobileToggle && mobilePanel) {
+                mobileToggle.classList.remove('change');
+                mobilePanel.classList.remove('show');
+            }
+            
+            if (desktopDropdown && desktopDropdown.classList.contains('active')) {
+                desktopDropdown.classList.remove('active');
+                if (desktopCaret) {
+                    desktopCaret.classList.remove('rotate-180');
+                }
+            }
+        }
+    });
+
+    // ==================== AUTO-DISMISS MESSAGES ====================
+    
+// ==================== SEARCH FUNCTIONALITY ====================
+
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('searchInput');
+    const searchBtn = document.getElementById('searchBtn');
+
+    function performSearch() {
+        const query = searchInput.value.trim();
+        if (query) {
+            window.location.href = `?search=${encodeURIComponent(query)}`;
+        }
+    }
+
+    if (searchInput && searchBtn) {
+        searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                performSearch();
+            }
+        });
+        
+        searchBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            performSearch();
+        });
+    }
+});
+    // ==================== SMOOTH SCROLL ====================
+    
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
 </script>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 {% block extra_js %}{% endblock %}
 
 </body>
