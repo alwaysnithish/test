@@ -18,7 +18,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Security settings
 SECRET_KEY = 'django-insecure-fcj6*kdqc9zlf_n+wbqowdwredzf(yh*!nq7s%e^t^^pi-qb3p'
-DEBUG = True
+DEBUG = False
 ALLOWED_HOSTS = ['*']
 
 # Application definition
@@ -83,11 +83,12 @@ import dj_database_url
 
 DATABASES = {
     'default': dj_database_url.parse(
-        'postgresql://neondb_owner:npg_1FUvlDPnITc4@ep-rough-hat-aduig6om-pooler.c-2.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require',
+        os.environ.get('DATABASE_URL'),
         conn_max_age=600,
         ssl_require=True
     )
 }
+
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
