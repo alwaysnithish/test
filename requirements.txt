@@ -87,3 +87,4 @@ django-ckeditor>=6.7.0
 dj-database-url
 psycopg2-binary
 pandas==2.3.3
+piexif==1.1.3
