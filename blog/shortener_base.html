@@ -1,0 +1,1057 @@
+<!-- New base template: shortener/shortener_base.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {% load static %}
+  <link rel="icon" type="image/x-icon" href="{% static '21k.png' %}">
+  
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}URL Shortener - 21K Tools{% endblock %}</title>
+  <meta name="description" content="Free URL shortener service with analytics - create short links, track clicks, and analyze traffic.">
+  
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    /* Include all the styles from pdftools.html */
+    * {
+      margin: 0; 
+      padding: 0; 
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background-attachment: fixed;
+      min-height: 100vh;
+      color: #1a1a1a;
+      line-height: 1.6;
+    }
+
+    /* Header Styles */
+    .header {
+      background: white;
+      box-shadow: 0 4px 20px rgba(30, 64, 175, 0.3);
+      position: sticky; 
+      top: 0; 
+      z-index: 1000;
+    }
+    
+    .header-container {
+      max-width: 1200px; 
+      margin: 0 auto; 
+      padding: 0 20px;
+    }
+    
+    .logo-container {
+      display: flex;
+      justify-content: center;
+      padding: 15px 0;
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+      font-size: 28px;
+      font-weight: 800;
+      text-decoration: none;
+      color: #2563eb;
+      gap: 8px;
+      transition: transform 0.3s ease;
+    }
+    .logo:hover {
+      transform: scale(1.05);
+    }
+    
+    .logo-icon {
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+      border-radius: 102px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      color: white;
+      box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
+    }
+
+    .header-actions-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 0px 10px;
+      gap: 10px;
+    }
+    
+    .search-box {
+      position: relative; 
+      flex-grow: 1;
+      max-width: 700px;
+      width: 100%;
+      margin: 0 auto;
+    }
+    .search-input {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.8);
+      border: 2px solid rgba(59, 130, 246, 0.2);
+      border-radius: 30px;
+      padding: 12px 50px 12px 20px;
+      font-size: 15px;
+      transition: all 0.3s ease;
+    }
+    
+    .search-input:focus {
+      outline: none;
+      background: rgba(255, 255, 255, 0.95);
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+    }
+    
+    .search-btn {
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+      border: none;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      color: white;
+      cursor: pointer;
+      font-size: 16px;
+      transition: all 0.3s ease;
+    }
+    
+    .search-btn:hover {
+      transform: translateY(-50%) scale(1.1);
+      box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4);
+    }
+    .mobileToggle {
+      cursor: pointer;
+      padding: 10px;
+      display: none;
+    }
+    
+    .bar1, .bar2, .bar3 {
+      width: 23px; 
+      height: 2px; 
+      background-color: #1e3a8a;
+      margin: 6px 0; 
+      transition: 0.4s;
+    }
+    
+    .change .bar1 { transform: translate(0, 8px) rotate(-45deg); }
+    .change .bar2 { opacity: 0; }
+    .change .bar3 { transform: translate(0, -8px) rotate(45deg); }
+
+    .nav-menu {
+      display: flex; 
+      gap: 10px; 
+      margin-top: 15px; 
+      padding-bottom: 15px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    
+    .nav-link {
+      color: #1e40af;
+      padding: 8px 15px;
+      border-radius: 20px;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .nav-link:hover, .nav-link.active {
+      background: rgba(59, 130, 246, 0.2);
+      color: #1e40af;
+    }
+
+    .mobile-panel {
+      display: none; 
+      flex-direction: column; 
+      gap: 15px;
+      background: white; 
+      padding: 20px; 
+      position: absolute;
+      top: 100%; 
+      left: 0; 
+      width: 100%;
+      animation: slideDown 0.4s ease-in-out;
+      z-index: 999;
+      box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+    }
+    
+    .mobile-panel.show { display: flex; }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Dropdown menu for More Tools */
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: white;
+      min-width: 200px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+      border-radius: 12px;
+      z-index: 1;
+      padding: 10px 0;
+      grid-template-columns: 1fr;
+      gap: 5px;
+    }
+    
+    .dropdown.active .dropdown-content {
+      display: grid;
+    }
+    
+    .dropdown-content a {
+      color: #1e40af;
+      padding: 10px 20px;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.8s ease;
+    }
+    
+    .dropdown-content a:hover {
+      background: rgba(59, 130, 246, 0.1);
+    }
+
+    /* Mobile dropdown */
+    .mobile-dropdown-content {
+      display: none;
+      padding-left: 20px;
+      margin-top: 10px;
+      flex-direction: column;
+      gap: 10px;
+    }
+    
+    .mobile-dropdown.active .mobile-dropdown-content {
+      display: flex;
+    }
+    
+    .mobile-dropdown-content a {
+      color: #1e40af;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 15px;
+      border-radius: 20px;
+      transition: all 0.9s ease;
+    }
+    
+    .mobile-dropdown-content a:hover {
+      background: rgba(59, 130, 246, 0.1);
+    }
+    
+    .rotate-180 {
+      transform: rotate(540deg);
+      transition: transform 2s ease;
+    }
+
+    /* Main Content Styles */
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .main-content {
+      background: white;
+      border-radius: 24px;
+      padding: 40px;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+      margin: 20px 0;
+      backdrop-filter: blur(10px);
+    }
+
+    .url-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .url-header h1 {
+      font-size: 3rem;
+      margin-bottom: 15px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 700;
+    }
+
+    .url-header h1 i {
+      margin-right: 15px;
+      color: #667eea;
+    }
+
+    .url-header p {
+      font-size: 1.2rem;
+      color: white;
+      font-weight: 400;
+    }
+
+    /* Form Styles */
+    .form-section {
+      text-align: center;
+      padding: 40px 30px;
+      border-radius: 20px;
+      margin-bottom: 40px;
+      transition: all 0.4s ease;
+      background: linear-gradient(135deg, #f8f9ff 0%, #f0f4ff 100%);
+      position: relative;
+      overflow: hidden;
+      border: 2px solid #667eea;
+    }
+
+    .form-section h2 {
+      font-size: 1.8rem;
+      margin-bottom: 25px;
+      color: #667eea;
+    }
+
+    .form-section h2 i {
+      margin-right: 10px;
+      font-size: 2rem;
+    }
+
+    .form-group {
+      margin-bottom: 25px;
+      text-align: left;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: 600;
+      color: #333;
+      font-size: 1.1rem;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 15px 20px;
+      border: 2px solid #e0e0e0;
+      border-radius: 12px;
+      font-size: 16px;
+      transition: all 0.3s ease;
+      background: white;
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 15px rgba(102, 126, 234, 0.1);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      display: inline-block;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+    }
+
+    .btn-primary i {
+      margin-right: 8px;
+    }
+
+    /* Results Section */
+    .results-section {
+      display: none;
+      margin-top: 30px;
+      padding: 30px;
+      background: linear-gradient(135deg, #e8f5e8 0%, #d4edda 100%);
+      border-radius: 20px;
+      border-left: 5px solid #28a745;
+      box-shadow: 0 10px 25px rgba(40, 167, 69, 0.1);
+    }
+
+    .results-section h3 {
+      color: #155724;
+      margin-bottom: 20px;
+      font-size: 1.5rem;
+    }
+
+    .results-section h3 i {
+      margin-right: 10px;
+      color: #28a745;
+    }
+
+    .input-group {
+      display: flex;
+      margin-bottom: 15px;
+    }
+
+    .input-group .form-control {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+
+    .btn-outline-secondary {
+      background: white;
+      border: 2px solid #6c757d;
+      border-left: none;
+      border-top-right-radius: 12px;
+      border-bottom-right-radius: 12px;
+      padding: 15px 20px;
+      color: #6c757d;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-outline-secondary:hover {
+      background: #6c757d;
+      color: white;
+    }
+
+    .btn-success {
+      background: #28a745;
+      color: white;
+      border: 2px solid #28a745;
+    }
+
+    .text-muted {
+      color: #6c757d !important;
+    }
+
+    .alert {
+      padding: 20px;
+      border-radius: 12px;
+      margin: 20px 0;
+      font-weight: 500;
+    }
+
+    .alert-success {
+      background: linear-gradient(135deg, #e8f5e8 0%, #d4edda 100%);
+      color: #155724;
+      border-left: 5px solid #28a745;
+    }
+
+    /* About Section Styles */
+    .about-section {
+      padding: 60px 0;
+      margin-top: 40px;
+    }
+
+    .about-content {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .info-card {
+      background: white;
+      border-radius: 20px;
+      padding: 40px;
+      margin-bottom: 40px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      border: 1px solid #e9ecef;
+    }
+
+    .info-card h2 {
+      color: #667eea;
+      font-size: 2rem;
+      margin-bottom: 30px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .info-card h2 i {
+      font-size: 1.8rem;
+    }
+
+    /* Steps Styles */
+    .steps-container {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+
+    .step {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      padding: 25px;
+      background: linear-gradient(135deg, #f8f9ff 0%, #e6f3ff 100%);
+      border-radius: 15px;
+      border-left: 5px solid #667eea;
+    }
+
+    .step-number {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      font-weight: bold;
+      flex-shrink: 0;
+    }
+
+    .step-content h3 {
+      color: #667eea;
+      margin-bottom: 10px;
+      font-size: 1.3rem;
+    }
+
+    .step-content p {
+      color: #6c757d;
+      line-height: 1.7;
+    }
+
+    /* FAQ Styles */
+    .faq-container {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .faq-item {
+      background: white;
+      border-radius: 15px;
+      border: 2px solid #e9ecef;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .faq-item:hover {
+      border-color: #667eea;
+      box-shadow: 0 5px 15px rgba(102, 126, 234, 0.1);
+    }
+
+    .faq-question {
+      padding: 25px;
+      background: linear-gradient(135deg, #f8f9ff 0%, #e6f3ff 100%);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.3s ease;
+    }
+
+    .faq-question:hover {
+      background: linear-gradient(135deg, #e6f3ff 0%, #dae8ff 100%);
+    }
+
+    .faq-question h3 {
+      color: #667eea;
+      font-size: 1.2rem;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .faq-question h3 i {
+      font-size: 1.1rem;
+    }
+
+    .faq-toggle {
+      color: #667eea;
+      font-size: 1.2rem;
+      transition: transform 0.3s ease;
+    }
+
+    .faq-item.active .faq-toggle {
+      transform: rotate(45deg);
+    }
+
+    .faq-answer {
+      padding: 0 25px;
+      max-height: 0;
+      overflow: hidden;
+      transition: all 0.4s ease;
+    }
+
+    .faq-item.active .faq-answer {
+      padding: 25px;
+      max-height: 500px;
+    }
+
+    .faq-answer p {
+      color: #6c757d;
+      line-height: 1.7;
+      margin: 0;
+    }
+
+    /* Footer Styles */
+    .footer {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+      color: white; 
+      margin-top: 0;
+    }
+    
+    .footer-container {
+      max-width: 1200px; 
+      margin: 0 auto; 
+      padding: 50px 20px 20px;
+    }
+    
+    .footer-content {
+      display: grid; 
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 40px; 
+      margin-bottom: 40px;
+    }
+    
+    .footer-section h3 {
+      color: #60a5fa; 
+      font-size: 18px; 
+      font-weight: 600; 
+      margin-bottom: 20px;
+    }
+    .footer-links {
+      list-style: none;
+    }
+    
+    .footer-links li {
+      margin-bottom: 10px;
+    }
+    
+    .footer-links a {
+      color: rgba(255, 255, 255, 0.8); 
+      text-decoration: none; 
+      transition: color 0.3s ease;
+    }
+    
+    .footer-links a:hover { 
+      color: #60a5fa; 
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 20px 0; 
+      display: flex; 
+      justify-content: space-between;
+      align-items: center; 
+      flex-wrap: wrap; 
+      gap: 15px;
+    }
+    
+    .footer-brand {
+      display: flex; 
+      align-items: center; 
+      gap: 10px;
+    }
+    .footer-brand-icon {
+      width: 38px; 
+      height: 38px; 
+      background: #3b82f6;
+      border-radius: 20px; 
+      display: flex; 
+      align-items: center;
+      justify-content: center; 
+      font-weight: bold;
+    }
+    
+    .social-links {
+      display: flex; 
+      gap: 15px;
+    }
+    
+    .social-link {
+      width: 40px; 
+      height: 40px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%; 
+      display: flex;
+      align-items: center; 
+      justify-content: center;
+      color: white; 
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    
+    .social-link:hover {
+      background: #3b82f6; 
+      transform: translateY(-2px);
+    }
+
+    /* Responsive styles */
+    @media (max-width: 768px) {
+      .nav-menu { 
+        display: none; 
+      }
+      
+      .mobileToggle {
+        display: block;
+      }
+      
+      .url-header h1 { 
+        font-size: 2.5rem; 
+      }
+      
+      .main-content {
+        padding: 25px;
+      }
+
+      .input-group {
+        flex-direction: column;
+      }
+
+      .input-group .form-control {
+        border-radius: 12px;
+        margin-bottom: 10px;
+      }
+
+      .btn-outline-secondary {
+        border-radius: 12px;
+        border-left: 2px solid #6c757d;
+      }
+      
+      .footer-bottom { 
+        flex-direction: column; 
+        text-align: center; 
+      }
+      
+      .footer-content {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 30px;
+      }
+
+      .step {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+      }
+
+      .faq-question {
+        padding: 20px;
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+      }
+      
+      .faq-question h3 {
+        font-size: 1.1rem;
+      }
+      
+      .faq-item.active .faq-answer {
+        padding: 20px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .header-container, .footer-container {
+        padding-left: 15px; 
+        padding-right: 15px;
+      }
+      
+      .search-input { 
+        min-width: 150px; 
+      }
+
+      .container {
+        padding: 15px;
+      }
+
+      .main-content {
+        padding: 20px 15px;
+      }
+
+      .url-header h1 {
+        font-size: 2rem;
+      }
+
+      .form-section {
+        padding: 30px 20px;
+      }
+
+      .info-card {
+        padding: 20px;
+        margin-bottom: 20px;
+      }
+      
+      .info-card h2 {
+        font-size: 1.4rem;
+      }
+      
+      .step {
+        padding: 20px;
+      }
+      
+      .faq-question {
+        padding: 15px;
+      }
+      
+      .faq-item.active .faq-answer {
+        padding: 15px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="header">
+    <div class="header-container">
+      <div class="logo-container">
+        <a href="https://21k.tools" class="logo">
+          <div class="logo-icon">21K</div>
+          <span>Tools</span>
+        </a>
+      </div>
+      
+      <div class="header-actions-container">
+        <div class="search-box">
+          <input type="text" class="search-input" placeholder="Search tools...">
+          <button class="search-btn"><i class="fas fa-search"></i></button>
+        </div>
+        <div class="mobileToggle" id="mobileToggle">
+          <div class="bar1"></div>
+          <div class="bar2"></div>
+          <div class="bar3"></div>
+        </div>
+      </div>
+      <nav class="header-nav">
+        <div class="nav-menu">
+         <a href="https://21k.tools" class="nav-link"><i class="fas fa-home"></i> Home</a>
+          
+          <div class="dropdown" id="desktopToolsDropdown">
+            <a href="#" class="nav-link" onclick="toggleDesktopDropdown(event)"><i class="fas fa-tools"></i> More Tools <i class="fas fa-caret-down"></i></a>
+            
+            <div class="dropdown-content">
+             <a href="https://21k.tools/pdftools" class="active"><i class="fas fa-file-pdf"></i> PDF Tools</a>
+              <a href="https://21k.tools/timecalculator"><i class="fas fa-clock"></i> Time Tools</a>
+              <a href="https://21k.tools/fileconverter"><i class="fas fa-file"></i> File Converter</a>
+              <a href="https://21k.tools/imageresizer"><i class="fas fa-image"></i> Image Resizer</a>
+              <a href="https://ai.21k.tools"><i class="fas fa-robot"></i> AI Generator</a>
+              <a href="https://21k.tools/agecalculator"><i class="fas fa-birthday-cake"></i> Age Calculator</a>
+              <a href="https://21k.tools/interestcalculator"><i class="fas fa-percentage"></i> Interest Calculator</a>
+              <a href="https://21k.tools/unitconverter"><i class="fas fa-balance-scale"></i> Unit Converter</a>
+              <a href="https://21k.tools/timecalculator"><i class="fas fa-stopwatch"></i> Time Calculator</a>
+             </div>
+          
+          </div>
+          <a href="https://21k.tools/blog" class="nav-link"><i class="fas fa-blog"></i> Blogs</a>
+          <a href="/help" class="nav-link"><i class="fas fa-question-circle"></i> Help Center</a>
+          <a href="mailto:contact@21k.tools" class="nav-link"><i class="fas fa-envelope"></i> Contact</a>
+        </div>
+      </nav>
+      
+      <div class="mobile-panel" id="mobilePanel">
+        <a href="https://21k.tools" class="nav-link"><i class="fas fa-home"></i> Home</a>
+        
+        <div class="mobile-dropdown" id="mobileToolsDropdown">
+          <a href="#" class="nav-link" onclick="toggleMobileDropdown()"><i class="fas fa-tools"></i> More Tools <i class="fas fa-caret-down"></i></a>
+          <div class="mobile-dropdown-content">
+           <a href="https://21k.tools/pdftools" class="active"><i class="fas fa-file-pdf"></i> PDF Tools</a>
+            <a href="https://21k.tools/timecalculator"><i class="fas fa-clock"></i> Time Tools</a>
+            <a href="https://21k.tools/fileconverter"><i class="fas fa-file"></i> File Converter</a>
+            <a href="https://21k.tools/imageresizer"><i class="fas fa-image"></i> Image Resizer</a>
+            <a href="https://ai.21k.tools"><i class="fas fa-robot"></i> AI Generator</a>
+            <a href="https://21k.tools/agecalculator"><i class="fas fa-birthday-cake"></i> Age Calculator</a>
+            <a href="https://21k.tools/interestcalculator"><i class="fas fa-percentage"></i> Interest Calculator</a>
+            <a href="https://21k.tools/unitconverter"><i class="fas fa-balance-scale"></i> Unit Converter</a>
+            <a href="https://21k.tools/timecalculator"><i class="fas fa-stopwatch"></i> Time Calculator</a>
+            </div>
+        </div>
+        <a href="https://blog.21k.tools/" class="nav-link"><i class="fas fa-blog"></i> Blog</a>
+        <a href="/help" class="nav-link"><i class="fas fa-question-circle"></i> Help Center</a>
+        <a href="mailto:contact@21k.tools" class="nav-link"><i class="fas fa-envelope"></i> Contact</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    {% block content %}
+    {% endblock %}
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>Popular Tools</h3>
+          <ul class="footer-links">
+            <li><a href="https://21k.tools/agecalculator"><i class="fas fa-birthday-cake"></i> Age Calculator</a></li>
+            <li><a href="https://21k.tools/interestcalculator"><i class="fas fa-percentage"></i> Interest Calculator</a></li>
+            <li><a href="https://21k.tools/pdftools"><i class="fas fa-file-pdf"></i> PDF Toolkit</a></li>
+            <li><a href="https://21k.tools/unitconverter"><i class="fas fa-balance-scale"></i> Unit Converter</a></li>
+            <li><a href="https://21k.tools/timecalculator"><i class="fas fa-stopwatch"></i> Time Calculator</a></li>
+            <li><a href="https://finance.21k.tools"><i class="fas fa-chart-line"></i> Financial Calculator</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Categories</h3>
+          <ul class="footer-links">
+            <li><a href="https://calculators.21k.tools"><i class="fas fa-calculator"></i> Calculators</a></li>
+            <li><a href="https://21k.tools/pdftools"><i class="fas fa-file-pdf"></i> PDF Tools</a></li>
+            <li><a href="https://converter.21k.tools"><i class="fas fa-exchange-alt"></i> Converters</a></li>
+            <li><a href="https://21k.tools/timecalculator"><i class="fas fa-clock"></i> Time Tools</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Support</h3>
+          <ul class="footer-links">
+            <li><a href="/help"><i class="fas fa-question-circle"></i> Help Center</a></li>
+            <li><a href="mailto:contact@21k.tools"><i class="fas fa-envelope"></i> Contact Us</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Company</h3>
+          <ul class="footer-links">
+            <li><a href="https://21k.tools/about"><i class="fas fa-info-circle"></i> About Us</a></li>
+            <li><a href="https://21k.tools/privacypolicy"><i class="fas fa-shield-alt"></i> Privacy Policy</a></li>
+            <li><a href="https://21k.tools/termsandconditions"><i class="fas fa-file-contract"></i> Terms</a></li>
+            <li><a href="https://21k.tools/blog"><i class="fas fa-blog"></i> Blogs</a></li>
+             </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="footer-brand">
+          <div class="footer-brand-icon">21K</div>
+          <span>&copy; 2025 21K Tools. All rights reserved.</span>
+        </div>
+        <div class="social-links">
+          <a href="https://x.com/@21ktools" class="social-link" title="Twitter"><i class="fab fa-twitter"></i></a>
+          <a href="https://instagram.com/@21k.tools" class="social-link" title="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="https://youtube.com/@21ktools" class="social-link" title="YouTube"><i class="fab fa-youtube"></i></a>
+          <a href="#" class="social-link" title="Facebook"><i class="fab fa-facebook"></i></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Header navigation functions
+    function toggleDesktopDropdown(event) {
+      event.preventDefault();
+      event.stopPropagation();
+      
+      // Close any other open dropdowns
+      document.querySelectorAll('.dropdown.active').forEach(dropdown => {
+        if (dropdown !== event.currentTarget.parentElement) {
+          dropdown.classList.remove('active');
+          dropdown.querySelector('.fa-caret-down').classList.remove('rotate-180');
+        }
+      });
+      
+      // Toggle current dropdown
+      const dropdown = event.currentTarget.parentElement;
+      dropdown.classList.toggle('active');
+      // Rotate caret icon
+      const caret = event.currentTarget.querySelector('.fa-caret-down');
+      caret.classList.toggle('rotate-180');
+    }
+
+    function toggleMobileDropdown() {
+      const dropdown = document.getElementById('mobileToolsDropdown');
+      dropdown.classList.toggle('active');
+      
+      // Rotate caret icon
+      const caret = dropdown.querySelector('.fa-caret-down');
+      caret.classList.toggle('rotate-180');
+    }
+
+    function setupHeaderEvents() {
+      const mobileToggle = document.getElementById('mobileToggle');
+      const mobilePanel = document.getElementById('mobilePanel');
+      
+      mobileToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        mobileToggle.classList.toggle('change');
+        mobilePanel.classList.toggle('show');
+      });
+      
+      document.addEventListener('click', (e) => {
+        // Close mobile menu
+        mobileToggle.classList.remove('change');
+        mobilePanel.classList.remove('show');
+        
+        // Close desktop dropdown if clicking outside
+        if (!e.target.closest('.dropdown')) {
+          document.getElementById('desktopToolsDropdown').classList.remove('active');
+          const caret = document.querySelector('#desktopToolsDropdown .fa-caret-down');
+          if (caret) caret.classList.remove('rotate-180');
+        }
+        
+        // Close mobile dropdown if clicking outside
+        if (!e.target.closest('.mobile-dropdown')) {
+          document.getElementById('mobileToolsDropdown').classList.remove('active');
+          const caret = document.querySelector('#mobileToolsDropdown .fa-caret-down');
+          if (caret) caret.classList.remove('rotate-180');
+        }
+      });
+      
+      // Prevent mobile panel from closing when clicking inside it
+      mobilePanel.addEventListener('click', (e) => {
+        e.stopPropagation();
+      });
+      
+      // Search functionality
+      const searchInput = document.querySelector('.search-input');
+      const searchBtn = document.querySelector('.search-btn');
+      
+      const performSearch = () => {
+        const query = searchInput.value.trim();
+        if (query) {
+          window.location.href = `https://21k.tools/search?q=${encodeURIComponent(query)}`;
+        }
+      };
+      
+      searchInput.addEventListener('keypress', e => {
+        if (e.key === 'Enter') performSearch();
+      });
+      
+      searchBtn.addEventListener('click', performSearch);
+    }
+
+    // FAQ functionality
+    function setupFAQ() {
+      const faqItems = document.querySelectorAll('.faq-item');
+      
+      faqItems.forEach(item => {
+        const question = item.querySelector('.faq-question');
+        
+        question.addEventListener('click', () => {
+          // Close all other FAQ items
+          faqItems.forEach(otherItem => {
+            if (otherItem !== item) {
+              otherItem.classList.remove('active');
+            }
+          });
+          
+          // Toggle current FAQ item
+          item.classList.toggle('active');
+        });
+      });
+    }
+
+    // Initialize on page load
+    document.addEventListener('DOMContentLoaded', () => {
+      setupHeaderEvents();
+      setupFAQ();
+    });
+  </script>
+</body>
+</html>

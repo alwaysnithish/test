@@ -1,0 +1,326 @@
+{% extends 'base1.html' %}
+{% load static %}
+
+{% block title %}Privacy Policy – 21K Tools{% endblock %}
+
+{% block extra_css %}
+<style>
+  .main-content {
+    flex: 1; 
+    padding: 40px 20px; 
+    max-width: 1200px;
+    margin: 0 auto; 
+  }
+  
+  .demo-section {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 60px 20px; 
+    border-radius: 20px; 
+    margin: 20px 0;
+    backdrop-filter: blur(10px);
+    text-align: center;
+  }
+  
+  .demo-title {
+    font-size: 2.5rem; 
+    color: white; 
+    margin-bottom: 20px; 
+    font-weight: 700;
+  }
+  
+  .demo-subtitle {
+    font-size: 1.2rem; 
+    color: rgba(255, 255, 255, 0.9); 
+    margin-bottom: 30px;
+  }
+
+  .privacy-content {
+    background: white;
+    border-radius: 20px;
+    padding: 40px;
+    margin: 40px 0;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  }
+
+  .privacy-content h2 {
+    color: #1e3a8a;
+    font-size: 2rem;
+    margin-bottom: 20px;
+    font-weight: 800;
+  }
+
+  .privacy-content h3 {
+    color: #2563eb;
+    font-size: 1.5rem;
+    margin: 30px 0 15px;
+    font-weight: 700;
+  }
+
+  .privacy-content h4 {
+    color: #1e40af;
+    font-size: 1.2rem;
+    margin: 20px 0 10px;
+    font-weight: 600;
+  }
+
+  .privacy-content p {
+    color: #333;
+    line-height: 1.8;
+    margin-bottom: 20px;
+    font-size: 1.05rem;
+  }
+
+  .privacy-content ul {
+    margin-left: 20px;
+    margin-bottom: 25px;
+  }
+
+  .privacy-content li {
+    margin-bottom: 10px;
+    color: #333;
+    line-height: 1.6;
+  }
+
+  .privacy-content li:before {
+    content: "•";
+    color: #3b82f6;
+    font-weight: bold;
+    display: inline-block;
+    width: 1em;
+    margin-left: -1em;
+  }
+
+  .privacy-summary {
+    background: #f8fafc;
+    border-radius: 15px;
+    padding: 25px;
+    margin: 30px 0;
+    border-left: 4px solid #3b82f6;
+  }
+
+  .privacy-summary h4 {
+    color: #1e3a8a;
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+  }
+
+  .privacy-summary ul {
+    margin-left: 15px;
+  }
+
+  .privacy-summary li {
+    margin-bottom: 8px;
+  }
+
+  .page-nav-link {
+    font-weight: 600;
+    font-size: 16px;
+    color: #2563eb;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    background: rgba(37, 99, 235, 0.1);
+    border-radius: 8px;
+    transition: background 0.3s ease;
+  }
+  
+  .page-nav-link:hover {
+    background: rgba(37, 99, 235, 0.15);
+    color: #1d4ed8;
+  }
+
+  .page-nav-link p {
+    color: white;
+    margin: 0;
+  }
+
+  @media (max-width: 768px) {
+    .demo-title { 
+      font-size: 2rem; 
+    }
+    
+    .privacy-content {
+      padding: 30px 20px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .privacy-content {
+      padding: 25px 15px;
+    }
+
+    .privacy-content h2 {
+      font-size: 1.6rem;
+    }
+
+    .privacy-content h3 {
+      font-size: 1.3rem;
+    }
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<main class="main-content">
+  <section class="demo-section">
+    <h1 class="demo-title">Privacy Policy</h1>
+    <p class="demo-subtitle">Your privacy is our priority at 21K Tools</p>
+    <a href="https://21k.tools" class="page-nav-link">
+      <i class="fas fa-home"></i> Home<p>/Privacy Policy</p>
+    </a>
+  </section>
+  
+  <div class="privacy-content">
+    <h2>Welcome to 21K Tools Privacy Policy</h2>
+    <p>Your privacy is critically important to us. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website (https://21k.tools) and its associated subdomains.</p>
+    
+    <p>We are committed to protecting your privacy and ensuring transparency in how your data is handled. By using 21K Tools, you agree to the terms of this Privacy Policy. If you do not agree, please do not use our services.</p>
+    
+    <div class="privacy-summary">
+      <h4>Key Privacy Points:</h4>
+      <ul>
+        <li>We do not collect personal identifiers like name, email, or IP address for tool usage</li>
+        <li>Files uploaded to 21K Tools are used solely for the requested operation and deleted after processing</li>
+        <li>We use minimal cookies, with no invasive tracking or profiling</li>
+        <li>Your privacy is our priority, and we adhere to best practices for data security</li>
+      </ul>
+    </div>
+
+    <h3>1. Information We Collect</h3>
+    <p>At 21K Tools, we minimize data collection and only gather information essential to providing and improving our services. We DO NOT require user registration or personal details for accessing tools.</p>
+    
+    <h4>a) Information You Provide Voluntarily</h4>
+    <p>You may provide information when:</p>
+    <ul>
+      <li>Contacting us via email or help forms</li>
+      <li>Submitting feedback or suggestions</li>
+      <li>Uploading files for conversion or processing</li>
+    </ul>
+    <p>We only use this information for responding to your queries and enhancing user experience.</p>
+    
+    <h4>b) Automatically Collected Information</h4>
+    <p>When you use our services, certain information may be collected automatically, including:</p>
+    <ul>
+      <li><strong>Device Information:</strong> Browser type, operating system, device type</li>
+      <li><strong>Usage Data:</strong> Pages visited, time spent on pages, referring URLs</li>
+      <li><strong>Cookies & Similar Technologies:</strong> Essential cookies for session management and analytics (see section 6)</li>
+    </ul>
+    <p><em>Note:</em> We DO NOT track personal identifiers such as names, emails, or IP addresses for user profiling.</p>
+    
+    <h3>2. Use of Information</h3>
+    <p>We use collected information solely for:</p>
+    <ul>
+      <li>Delivering and operating our online tools</li>
+      <li>Improving website performance and usability</li>
+      <li>Monitoring service security and preventing misuse</li>
+      <li>Analyzing website traffic and usage trends (via anonymized analytics)</li>
+      <li>Responding to user queries or support requests</li>
+    </ul>
+    <p>We DO NOT sell, rent, or share personal data with third parties for advertising purposes.</p>
+    
+    <h3>3. File Handling and User Data Privacy</h3>
+    
+    <h4>a) File Uploads (Converters, Resizers, PDF Tools)</h4>
+    <ul>
+      <li>Files uploaded to 21K Tools for conversion or processing are used only for the purpose of delivering the requested service</li>
+      <li>Uploaded files are processed in-browser (locally) whenever possible</li>
+      <li>For server-side processing (if applicable), files are automatically deleted immediately after processing</li>
+      <li>We do not store, view, share, or analyze user files beyond task execution</li>
+    </ul>
+    
+    <h4>b) AI Content Inputs</h4>
+    <p>Content entered in AI generation tools is processed in real-time and not stored or reused. We do not retain queries, prompts, or generated outputs.</p>
+    
+    <h3>4. Data Sharing and Disclosure</h3>
+    <p>We do not share, sell, or disclose personal data to third parties, except in the following cases:</p>
+    <ul>
+      <li><strong>Service Providers:</strong> We may use trusted third-party services for analytics (e.g., Google Analytics) under strict privacy agreements</li>
+      <li><strong>Legal Obligations:</strong> If required by law, we may disclose information in response to lawful requests by public authorities</li>
+      <li><strong>Protection of Rights:</strong> To protect the security and integrity of our platform, we may share information to prevent fraudulent activities or misuse</li>
+    </ul>
+    <p>We DO NOT use or share user content for marketing, profiling, or third-party advertising purposes.</p>
+    
+    <h3>5. Data Security</h3>
+    <p>We implement robust security measures to protect your data, including:</p>
+    <ul>
+      <li>SSL/TLS encryption for secure data transmission</li>
+      <li>File processing algorithms designed to avoid unnecessary data storage</li>
+      <li>Regular security reviews and infrastructure updates</li>
+    </ul>
+    <p>However, no method of transmission or storage over the internet is 100% secure. While we strive to use commercially acceptable means to protect your data, we cannot guarantee absolute security.</p>
+    
+    <h3>6. Cookies and Tracking Technologies</h3>
+    <p>21K Tools uses cookies and similar tracking technologies to enhance user experience. These cookies may include:</p>
+    
+    <h4>a) Essential Cookies</h4>
+    <ul>
+      <li>Necessary for website functionality, such as session management and tool operations</li>
+      <li>Cannot be disabled without affecting site performance</li>
+    </ul>
+    
+    <h4>b) Analytics Cookies</h4>
+    <ul>
+      <li>Used to collect anonymized data on website traffic, usage patterns, and interactions</li>
+      <li>We utilize Google Analytics to understand how users engage with our services</li>
+      <li>IP anonymization is enabled to protect your identity</li>
+    </ul>
+    
+    <h4>c) Cookie Preferences</h4>
+    <p>You can control or disable cookies through your browser settings. However, disabling essential cookies may limit website functionality.</p>
+    
+    <h3>7. Third-Party Services and Links</h3>
+    <p>Our website may contain links to third-party websites or services not operated by us. We are not responsible for the privacy practices or content of these external sites. We recommend reviewing the privacy policies of any third-party websites you visit.</p>
+    <p>Examples include:</p>
+    <ul>
+      <li>External links for downloading resources</li>
+      <li>Embedded social media buttons (Twitter, Instagram, YouTube)</li>
+    </ul>
+    
+    <h3>8. Children's Privacy</h3>
+    <p>21K Tools does not knowingly collect any personal information from children under the age of 13. If you are a parent or guardian and believe your child has provided us with personal information, please contact us, and we will take steps to delete such information.</p>
+    
+    <h3>9. International Users and Data Transfer</h3>
+    <p>Our services are accessible globally. By using 21K Tools, you consent to the transfer and processing of your information in jurisdictions where privacy laws may differ from those in your location.</p>
+    <p>We ensure that any data handling complies with privacy regulations, including GDPR and other applicable laws.</p>
+    
+    <h3>10. Data Retention Policy</h3>
+    <ul>
+      <li><strong>Uploaded Files:</strong> Automatically deleted after task completion; we do not retain any user files</li>
+      <li><strong>Usage Data (Anonymous):</strong> Retained for analytical purposes in aggregate form only</li>
+      <li><strong>Contact Queries:</strong> Retained as long as needed to address the query, then securely deleted</li>
+    </ul>
+    <p>We practice data minimization, ensuring that no personally identifiable information is unnecessarily stored.</p>
+    
+    <h3>11. Your Data Rights</h3>
+    <p>Depending on your jurisdiction (e.g., EU, California), you may have specific rights regarding your personal data, including:</p>
+    <ul>
+      <li>The right to access, correct, or delete your data</li>
+      <li>The right to object to certain processing activities</li>
+      <li>The right to data portability</li>
+      <li>The right to withdraw consent (where applicable)</li>
+    </ul>
+    <p>Given the minimal data we collect, most of these rights can be exercised by simply ceasing to use our services. For any data-related concerns, you can contact us at contact@21k.tools.</p>
+    
+    <h3>12. Google Analytics & Advertising</h3>
+    <p>We use Google Analytics for aggregated, anonymized website traffic analysis. This data helps us understand user behavior to improve website functionality.</p>
+    <p>We may display contextual ads through Google AdSense or similar platforms. These ads are based on general website content, not personal user profiles. You can manage Google's data usage preferences at Google's Ad Settings.</p>
+    
+    <h3>13. Changes to This Privacy Policy</h3>
+    <p>We reserve the right to update or modify this Privacy Policy at any time. Changes will be effective upon posting to this page. We encourage users to review this policy periodically for updates.</p>
+    <p>If material changes are made, we will notify you via prominent notices on our website.</p>
+    
+    <h3>14. Contact Us</h3>
+    <p>If you have any questions, suggestions, or concerns regarding this Privacy Policy or your data, please reach out to us:</p>
+    <ul>
+      <li><strong>Email:</strong> contact@21k.tools</li>
+      <li><strong>Help Center:</strong> https://21k.tools/help</li>
+    </ul>
+    <p>We are committed to addressing privacy concerns promptly and transparently.</p>
+    
+    <p><strong>Last Updated:</strong> July 28, 2025</p>
+  </div>
+</main>
+{% endblock %}

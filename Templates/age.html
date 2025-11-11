@@ -1,0 +1,1263 @@
+{% extends 'base1.html' %}
+
+{% block title %}{{ page_title }} - 21K Tools{% endblock %}
+
+{% block extra_css %}
+<style>
+    :root {
+        --age-primary: #667eea;
+        --age-secondary: #764ba2;
+        --age-accent: #f72585;
+        --age-light: #f8f9fa;
+        --age-dark: #212529;
+        --age-gray: #6c757d;
+    }
+    
+    .age-calc-container {
+        max-width: 950px;
+        margin: 30px auto;
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+        overflow: hidden;
+        color: var(--age-dark);
+    }
+    
+    .age-calc-header {
+        background: linear-gradient(135deg, var(--age-primary) 0%, var(--age-secondary) 100%);
+        color: white;
+        padding: 2rem;
+        text-align: center;
+    }
+    
+    .age-calc-header h1 {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+        font-weight: 700;
+        color: white !important;
+    }
+    
+    .age-calc-subtitle {
+        font-weight: 300;
+        opacity: 0.9;
+        font-size: 1rem;
+        margin: 0;
+        color: white !important;
+    }
+    
+    .age-calc-body {
+        padding: 2rem;
+    }
+    
+    .age-calc-form-group {
+        margin-bottom: 1.5rem;
+    }
+    
+    .age-calc-label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+        color: var(--age-dark) !important;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    
+    .age-calc-input, .age-calc-select {
+        width: 100%;
+        padding: 12px 16px;
+        border: 2px solid #dee2e6;
+        border-radius: 10px;
+        font-size: 16px;
+        transition: all 0.3s ease;
+    }
+    
+    .age-calc-input:focus, .age-calc-select:focus {
+        outline: none;
+        border-color: var(--age-primary);
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+    
+    .age-calc-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.5rem;
+    }
+    
+    .age-calc-btn {
+        background: linear-gradient(135deg, var(--age-primary) 0%, var(--age-secondary) 100%);
+        color: white;
+        border: none;
+        padding: 14px 24px;
+        font-size: 16px;
+        font-weight: 600;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        width: 100%;
+        margin-top: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+    }
+    
+    .age-calc-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+    }
+    
+    .age-calc-results {
+        margin-top: 2rem;
+        animation: fadeIn 0.5s ease-out;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .age-result-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5rem;
+        margin-top: 1.5rem;
+    }
+    
+    .age-result-card {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 15px;
+        border-left: 5px solid var(--age-primary);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        transition: all 0.3s ease;
+    }
+    
+    .age-result-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    }
+    
+    .age-result-card h3 {
+        color: var(--age-primary) !important;
+        font-size: 1.2rem;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .age-stat-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 0;
+        border-bottom: 1px solid #f0f0f0;
+    }
+    
+    .age-stat-item:last-child {
+        border-bottom: none;
+    }
+    
+    .age-stat-label {
+        font-weight: 500;
+        color: var(--age-gray) !important;
+        font-size: 14px;
+    }
+    
+    .age-stat-value {
+        font-weight: 700;
+        color: var(--age-dark) !important;
+        font-size: 14px;
+    }
+    
+    .age-main-result {
+        text-align: center;
+        padding: 2rem;
+        background: linear-gradient(135deg, var(--age-primary), var(--age-secondary));
+        color: white;
+        border-radius: 15px;
+        margin-bottom: 2rem;
+    }
+    
+    .age-main-result h2 {
+        color: white !important;
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .age-main-result p {
+        color: rgba(255, 255, 255, 0.9) !important;
+        font-size: 1.1rem;
+    }
+    
+    .age-action-buttons {
+        display: flex;
+        gap: 12px;
+        margin-top: 1.5rem;
+        flex-wrap: wrap;
+    }
+
+    .age-action-btn {
+        padding: 10px 20px;
+        border-radius: 8px;
+        border: 2px solid;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 14px;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: white;
+        flex: 1;
+        min-width: 120px;
+        justify-content: center;
+    }
+
+    .age-action-btn.copy-btn {
+        color: var(--age-primary);
+        border-color: var(--age-primary);
+    }
+
+    .age-action-btn.copy-btn:hover {
+        background: var(--age-primary);
+        color: white;
+    }
+
+    .age-action-btn.share-btn {
+        color: #28a745;
+        border-color: #28a745;
+    }
+
+    .age-action-btn.share-btn:hover {
+        background: #28a745;
+        color: white;
+    }
+
+    .age-action-btn.reset-btn {
+        color: #dc3545;
+        border-color: #dc3545;
+    }
+
+    .age-action-btn.reset-btn:hover {
+        background: #dc3545;
+        color: white;
+    }
+
+    /* Share Modal */
+    .age-share-modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        z-index: 10000;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+    }
+
+    .age-share-modal.active {
+        display: flex;
+    }
+
+    .age-modal-content {
+        background: white;
+        border-radius: 20px;
+        padding: 30px;
+        max-width: 500px;
+        width: 100%;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+
+    .age-modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .age-modal-header h3 {
+        color: var(--age-primary) !important;
+        font-size: 1.5rem;
+        margin: 0;
+    }
+
+    .age-close-modal {
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: #6c757d;
+        transition: color 0.3s ease;
+    }
+
+    .age-close-modal:hover {
+        color: #dc3545;
+    }
+
+    .age-share-card {
+        background: linear-gradient(135deg, var(--age-primary), var(--age-secondary));
+        color: white;
+        padding: 30px;
+        border-radius: 15px;
+        margin: 20px 0;
+        text-align: center;
+    }
+
+    .age-share-card h4 {
+        font-size: 1.3rem;
+        margin-bottom: 15px;
+        color: white !important;
+    }
+
+    .age-share-value {
+        font-size: 2rem;
+        font-weight: 700;
+        margin: 20px 0;
+        color: white !important;
+    }
+
+    .age-modal-actions {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+
+    .age-modal-actions button {
+        flex: 1;
+        min-width: 120px;
+        padding: 12px 20px;
+        border-radius: 10px;
+        border: none;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .age-download-btn {
+        background: var(--age-primary);
+        color: white;
+    }
+
+    .age-download-btn:hover {
+        background: var(--age-secondary);
+        transform: translateY(-2px);
+    }
+    
+    /* Guide Section */
+    .age-guide {
+        max-width: 1200px;
+        margin: 40px auto;
+        background: white;
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+    }
+    
+    .age-guide h2 {
+        font-size: 2rem;
+        color: var(--age-primary) !important;
+        margin-bottom: 20px;
+        font-weight: 700;
+    }
+    
+    .age-guide h3 {
+        font-size: 1.5rem;
+        color: var(--age-secondary) !important;
+        margin: 30px 0 15px;
+        font-weight: 600;
+    }
+    
+    .age-guide h4 {
+        font-size: 1.2rem;
+        color: var(--age-accent) !important;
+        margin: 20px 0 10px;
+        font-weight: 600;
+    }
+    
+    .age-guide p {
+        line-height: 1.8;
+        color: #495057 !important;
+        margin-bottom: 15px;
+        font-size: 1.05rem;
+    }
+    
+    .age-guide ul,
+    .age-guide ol {
+        margin: 15px 0;
+        padding-left: 30px;
+        line-height: 1.8;
+        color: #495057 !important;
+    }
+    
+    .age-guide li {
+        margin-bottom: 10px;
+        color: #495057 !important;
+    }
+    
+    .age-feature-card {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        padding: 25px;
+        border-radius: 15px;
+        border-left: 5px solid var(--age-primary);
+        margin: 25px 0;
+    }
+    
+    .age-feature-card h4 {
+        color: var(--age-primary) !important;
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 1.2rem;
+    }
+
+    .age-faq-section {
+        margin: 30px 0;
+    }
+
+    .age-faq-item {
+        background: white;
+        border: 2px solid #e9ecef;
+        border-radius: 12px;
+        margin-bottom: 15px;
+        overflow: hidden;
+    }
+
+    .age-faq-question {
+        padding: 20px;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: 600;
+        color: var(--age-primary) !important;
+        transition: background 0.3s ease;
+    }
+
+    .age-faq-question:hover {
+        background: #f8f9fa;
+    }
+
+    .age-faq-question i {
+        transition: transform 0.3s ease;
+    }
+
+    .age-faq-item.active .age-faq-question i {
+        transform: rotate(180deg);
+    }
+
+    .age-faq-answer {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+    }
+
+    .age-faq-item.active .age-faq-answer {
+        max-height: 1000px;
+    }
+
+    .age-faq-answer-content {
+        padding: 0 20px 20px 20px;
+        color: #495057 !important;
+        line-height: 1.8;
+    }
+
+    .age-faq-answer-content ul {
+        margin: 10px 0;
+        padding-left: 25px;
+    }
+
+    .age-faq-answer-content li {
+        margin-bottom: 8px;
+    }
+
+    .error-alert {
+        background: #fee;
+        color: #c33;
+        padding: 15px;
+        border-radius: 10px;
+        margin: 20px 0;
+        border-left: 4px solid #c33;
+        display: none;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .error-alert.show {
+        display: flex;
+    }
+    
+    @media (max-width: 768px) {
+        .age-calc-container {
+            margin: 20px 15px;
+        }
+
+        .age-calc-body {
+            padding: 1.5rem;
+        }
+
+        .age-calc-header h1 {
+            font-size: 1.6rem;
+        }
+        
+        .age-calc-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .age-result-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .age-action-buttons {
+            flex-direction: column;
+        }
+
+        .age-action-btn {
+            width: 100%;
+        }
+
+        .age-modal-actions {
+            flex-direction: column;
+        }
+
+        .age-modal-actions button {
+            width: 100%;
+        }
+
+        .age-guide {
+            padding: 25px 20px;
+            margin: 20px 15px;
+        }
+
+        .age-guide h2 {
+            font-size: 1.6rem;
+        }
+
+        .age-main-result h2 {
+            font-size: 2rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .age-calc-header h1 {
+            font-size: 1.4rem;
+        }
+
+        .age-calc-subtitle {
+            font-size: 0.9rem;
+        }
+
+        .age-calc-body {
+            padding: 1rem;
+        }
+
+        .age-modal-content {
+            padding: 20px;
+        }
+
+        .age-share-value {
+            font-size: 1.5rem;
+        }
+
+        .age-guide {
+            padding: 20px 15px;
+        }
+
+        .age-main-result h2 {
+            font-size: 1.8rem;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="age-calc-container">
+    <div class="age-calc-header">
+        <h1><i class="fas fa-birthday-cake"></i> Age Calculator</h1>
+        <p class="age-calc-subtitle">Calculate your exact age with detailed life statistics and cosmic perspective</p>
+    </div>
+    
+    <div class="age-calc-body">
+        <div class="error-alert" id="ageErrorAlert">
+            <i class="fas fa-exclamation-circle"></i>
+            <span id="ageErrorMessage"></span>
+        </div>
+
+        <form id="ageCalculatorForm">
+            <div class="age-calc-grid">
+                <div class="age-calc-form-group">
+                    <label for="age-birth-date" class="age-calc-label">
+                        <i class="fas fa-calendar-alt"></i> Birth Date
+                    </label>
+                    <input type="date" id="age-birth-date" class="age-calc-input" required>
+                </div>
+                <div class="age-calc-form-group">
+                    <label for="age-birth-time" class="age-calc-label">
+                        <i class="fas fa-clock"></i> Birth Time
+                    </label>
+                    <input type="time" id="age-birth-time" class="age-calc-input" value="00:00">
+                </div>
+            </div>
+
+            <div class="age-calc-grid">
+                <div class="age-calc-form-group">
+                    <label for="age-target-date" class="age-calc-label">
+                        <i class="fas fa-calendar-check"></i> Target Date (Optional)
+                    </label>
+                    <input type="date" id="age-target-date" class="age-calc-input">
+                    <small style="color: #6c757d; margin-top: 5px; display: block;">Leave empty to calculate current age</small>
+                </div>
+                <div class="age-calc-form-group">
+                    <label for="age-target-time" class="age-calc-label">
+                        <i class="fas fa-clock"></i> Target Time
+                    </label>
+                    <input type="time" id="age-target-time" class="age-calc-input" value="23:59">
+                </div>
+            </div>
+
+            <button type="submit" class="age-calc-btn">
+                <i class="fas fa-calculator"></i> Calculate My Age
+            </button>
+        </form>
+
+        <div id="ageResults" class="age-calc-results" style="display: none;">
+            <div class="age-main-result">
+                <h2 id="ageMainDisplay">-</h2>
+                <p id="agePreciseDisplay">-</p>
+            </div>
+
+            <div class="age-result-grid">
+                <!-- Basic Time Units -->
+                <div class="age-result-card">
+                    <h3><i class="fas fa-hourglass-half"></i> Time Lived</h3>
+                    <div class="age-stat-item">
+                        <span class="age-stat-label">Total Days:</span>
+                        <span class="age-stat-value" id="ageTotalDays">-</span>
+                    </div>
+                    <div class="age-stat-item">
+                        <span class="age-stat-label">Total Hours:</span>
+                        <span class="age-stat-value" id="ageTotalHours">-</span>
+                    </div>
+                    <div class="age-stat-item">
+                        <span class="age-stat-label">Total Minutes:</span>
+                        <span class="age-stat-value" id="ageTotalMinutes">-</span>
+                    </div>
+                    <div class="age-stat-item">
+                        <span class="age-stat-label">Total Seconds:</span>
+                        <span class="age-stat-value" id="ageTotalSeconds">-</span>
+                    </div>
+                </div>
+
+                <!-- Biological Stats -->
+                <div class="age-result-card">
+                    <h3><i class="fas fa-heartbeat"></i> Biological Stats</h3>
+                    <div class="age-stat-item">
+                        <span class="age-stat-label">Heartbeats (est.):</span>
+                        <span class="age-stat-value" id="ageHeartbeats">-</span>
+                    </div>
+                    <div class="age-stat-item">
+                        <span class="age-stat-label">Breaths Taken:</span>
+                        <span class="age-stat-value" id="ageBreaths">-</span>
+                    </div>
+                    <div class="age-stat-item">
+                        <span class="age-stat-label">Times Blinked:</span>
+                        <span class="age-stat-value" id="ageBlinks">-</span>
+                    </div>
+                    <div class="age-stat-item">
+                        <span class="age-stat-label">Hair Growth (inches):</span>
+                        <span class="age-stat-value" id="ageHairGrowth">-</span>
+                    </div>
+                    <div class="age-stat-item">
+                        <span class="age-stat-label">Sleep Hours:</span>
+                        <span class="age-stat-value" id="ageSleepHours">-</span>
+                    </div>
+                </div>
+
+                <!-- Life Statistics -->
+                <div class="age-result-card">
+                    <h3><i class="fas fa-chart-line"></i> Life Statistics</h3>
+                    <div class="age-stat-item">
+                        <span class="age-stat-label">Weekends Lived:</span>
+                        <span class="age-stat-value" id="ageWeekends">-</span>
+                    </div>
+                    <div class="age-stat-item">
+                        <span class="age-stat-label">Meals Eaten (est.):</span>
+                        <span class="age-stat-value" id="ageMeals">-</span>
+                    </div>
+                    <div class="age-stat-item">
+                        <span class="age-stat-label">Steps Walked (est.):</span>
+                        <span class="age-stat-value" id="ageSteps">-</span>
+                    </div>
+                    <div class="age-stat-item">
+                        <span class="age-stat-label">Words Spoken (est.):</span>
+                        <span class="age-stat-value" id="ageWords">-</span>
+                    </div>
+                    <div class="age-stat-item">
+                        <span class="age-stat-label">Times Laughed (est.):</span>
+                        <span class="age-stat-value" id="ageLaughs">-</span>
+                    </div>
+                </div>
+
+                <!-- Birth Information -->
+                <div class="age-result-card">
+                    <h3><i class="fas fa-star"></i> Birth Information</h3>
+                    <div class="age-stat-item">
+                        <span class="age-stat-label">Zodiac Sign:</span>
+                        <span class="age-stat-value" id="ageZodiac">-</span>
+                    </div>
+                    <div class="age-stat-item">
+                        <span class="age-stat-label">Birthstone:</span>
+                        <span class="age-stat-value" id="ageBirthstone">-</span>
+                    </div>
+                    <div class="age-stat-item">
+                        <span class="age-stat-label">Birth Flower:</span>
+                        <span class="age-stat-value" id="ageBirthFlower">-</span>
+                    </div>
+                    <div class="age-stat-item">
+                        <span class="age-stat-label">Day of Week:</span>
+                        <span class="age-stat-value" id="ageDayOfWeek">-</span>
+                    </div>
+                    <div class="age-stat-item">
+                        <span class="age-stat-label">Generation:</span>
+                        <span class="age-stat-value" id="ageGeneration">-</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Planetary Ages -->
+            <div class="age-result-card" style="margin-top: 1.5rem;">
+                <h3><i class="fas fa-globe-americas"></i> Your Age on Other Planets</h3>
+                <div class="age-calc-grid" id="agePlanetaryAges">
+                    <!-- Will be populated dynamically -->
+                </div>
+            </div>
+
+            <div class="age-action-buttons">
+                <button class="age-action-btn copy-btn" onclick="copyAgeResult()">
+                    <i class="fas fa-copy"></i> Copy Results
+                </button>
+                <button class="age-action-btn share-btn" onclick="openAgeShareModal()">
+                    <i class="fas fa-share-alt"></i> Share Results
+                </button>
+                <button class="age-action-btn reset-btn" onclick="resetAgeCalculator()">
+                    <i class="fas fa-redo"></i> Reset
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Share Modal -->
+<div class="age-share-modal" id="ageShareModal">
+    <div class="age-modal-content">
+        <div class="age-modal-header">
+            <h3><i class="fas fa-share-alt"></i> Share Your Age</h3>
+            <button class="age-close-modal" onclick="closeAgeShareModal()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <div id="ageShareCardContainer">
+            <div class="age-share-card">
+                <h4><i class="fas fa-birthday-cake"></i> My Age Journey</h4>
+                <div class="age-share-value" id="ageShareValue">-</div>
+                <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.3);">
+                    <div style="font-size: 0.9rem; opacity: 0.9; color: white;" id="ageShareDetails">-</div>
+                </div>
+                <div style="margin-top: 20px; font-size: 0.85rem; opacity: 0.8; color: white;">
+                    Calculated on <span id="ageShareTimestamp">-</span>
+                    <div style="margin-top: 10px; font-weight: 600;">© 21K Tools</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="age-modal-actions">
+            <button class="age-download-btn" onclick="downloadAgeShareCard()">
+                <i class="fas fa-download"></i> Download Image
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Guide Section -->
+<div class="age-guide">
+    <h2><i class="fas fa-book"></i> Complete Guide to Age Calculation</h2>
+    
+    <p>Understanding your age goes far beyond simply counting years. Our comprehensive age calculator provides deep insights into your life journey, from precise time measurements to fascinating biological statistics and even your age on other planets!</p>
+    
+    <h3>What Makes Our Age Calculator Special?</h3>
+    
+    <div class="age-feature-card">
+        <h4><i class="fas fa-clock"></i> Precision Time Measurement</h4>
+        <p>Calculate your age down to the exact second. Our calculator accounts for leap years, varying month lengths, and provides results in multiple time units including days, hours, minutes, and seconds.</p>
+    </div>
+
+    <div class="age-feature-card">
+        <h4><i class="fas fa-heartbeat"></i> Biological Insights</h4>
+        <p>Discover fascinating estimates about your life:</p>
+        <ul>
+            <li><strong>Heartbeats:</strong> Average of 100,000 per day</li>
+            <li><strong>Breaths:</strong> Approximately 20,000 per day</li>
+            <li><strong>Blinks:</strong> Around 28,800 times per day</li>
+            <li><strong>Hair Growth:</strong> About 6 inches per year</li>
+            <li><strong>Sleep:</strong> Based on 8 hours per day average</li>
+        </ul>
+    </div>
+
+    <div class="age-feature-card">
+        <h4><i class="fas fa-globe-americas"></i> Cosmic Perspective</h4>
+        <p>Ever wondered how old you'd be on Mars or Jupiter? Our calculator shows your age on all planets in our solar system, helping you understand the relativity of time across the cosmos.</p>
+    </div>
+
+    <h3>How to Use the Age Calculator</h3>
+
+    <ol>
+        <li><strong>Enter Your Birth Date:</strong> Select your date of birth from the calendar picker</li>
+        <li><strong>Set Birth Time (Optional):</strong> For more precise calculations, enter your exact birth time</li>
+        <li><strong>Choose Target Date:</strong> Leave empty for current age, or select a future/past date</li>
+        <li><strong>Calculate:</strong> Click the "Calculate My Age" button to see your results</li>
+        <li><strong>Explore Results:</strong> Review all the fascinating statistics about your life</li>
+        <li><strong>Share:</strong> Create a beautiful image to share with friends and family</li>
+    </ol>
+
+    <h3>Understanding Your Results</h3>
+
+    <h4>Basic Age Information</h4>
+    <p>The main display shows your age in years, months, and days. This is the most common way people measure age, providing a clear snapshot of your life journey.</p>
+
+    <h4>Time Units Breakdown</h4>
+    <p>See your age expressed in various time units - from the smallest seconds to the largest days. This helps you appreciate the magnitude of time you've experienced.</p>
+
+    <h4>Biological Statistics</h4>
+    <p>These estimates are based on average human physiology. While individual variations exist based on health, activity, and genetics, they provide fascinating perspective on your body's continuous work throughout your life.</p>
+
+    <h4>Planetary Ages</h4>
+    <p>Each planet has a different orbital period around the sun. Your age on other planets is calculated by dividing your Earth age by that planet's year length. For example, on Mercury (88 Earth days per year), you'd be much older!</p>
+
+    <h3>Practical Applications</h3>
+
+    <div class="age-feature-card">
+        <h4><i class="fas fa-gift"></i> Birthday Planning</h4>
+        <p>Calculate upcoming milestone birthdays, plan celebrations in advance, and count down to special ages.</p>
+    </div>
+
+    <div class="age-feature-card">
+        <h4><i class="fas fa-file-alt"></i> Legal & Documentation</h4>
+        <p>Verify age for legal purposes, calculate exact age for official documents, and determine eligibility for age-restricted activities.</p>
+    </div>
+
+    <div class="age-feature-card">
+        <h4><i class="fas fa-baby"></i> Parenting & Child Development</h4>
+        <p>Track your child's age in months and weeks, monitor developmental milestones, and plan age-appropriate activities.</p>
+    </div>
+
+    <div class="age-feature-card">
+        <h4><i class="fas fa-chart-line"></i> Life Reflection</h4>
+        <p>Gain perspective on your life journey, appreciate the time you've lived, and set goals for the future.</p>
+    </div>
+
+    <h3>Frequently Asked Questions</h3>
+
+    <div class="age-faq-section">
+        <div class="age-faq-item" onclick="toggleAgeFAQ(this)">
+            <div class="age-faq-question">
+                How accurate is the age calculator?
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="age-faq-answer">
+                <div class="age-faq-answer-content">
+                    <p>Our calculator is extremely accurate for date-based calculations. It properly accounts for:</p>
+                    <ul>
+                        <li>Leap years and their extra day</li>
+                        <li>Varying month lengths (28-31 days)</li>
+                        <li>Exact time differences down to the second</li>
+                        <li>Historical calendar accuracy for dates after 1582</li>
+                    </ul>
+                    <p>The biological estimates are based on medical research averages and provide reasonable approximations, though individual experiences will vary.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="age-faq-item" onclick="toggleAgeFAQ(this)">
+            <div class="age-faq-question">
+                Why do I need to enter birth time?
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="age-faq-answer">
+                <div class="age-faq-answer-content">
+                    <p>Birth time is optional but provides more precise calculations, especially when:</p>
+                    <ul>
+                        <li>Calculating age down to hours, minutes, and seconds</li>
+                        <li>Born near midnight when the date changes</li>
+                        <li>Determining exact age for legal or official purposes</li>
+                        <li>Getting the most accurate biological statistics</li>
+                    </ul>
+                    <p>If you don't know your exact birth time, the calculator defaults to midnight (00:00), which still provides accurate day-based calculations.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="age-faq-item" onclick="toggleAgeFAQ(this)">
+            <div class="age-faq-question">
+                What are planetary ages and how are they calculated?
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="age-faq-answer">
+                <div class="age-faq-answer-content">
+                    <p>Planetary ages show how old you'd be if you lived on other planets. Each planet takes a different amount of time to orbit the Sun:</p>
+                    <ul>
+                        <li><strong>Mercury:</strong> 88 Earth days = 1 Mercury year</li>
+                        <li><strong>Venus:</strong> 225 Earth days = 1 Venus year</li>
+                        <li><strong>Mars:</strong> 687 Earth days = 1 Mars year</li>
+                        <li><strong>Jupiter:</strong> 4,333 Earth days = 1 Jupiter year</li>
+                        <li><strong>Saturn:</strong> 10,759 Earth days = 1 Saturn year</li>
+                        <li><strong>Uranus:</strong> 30,687 Earth days = 1 Uranus year</li>
+                        <li><strong>Neptune:</strong> 60,190 Earth days = 1 Neptune year</li>
+                        <li><strong>Pluto:</strong> 90,560 Earth days = 1 Pluto year</li>
+                    </ul>
+                    <p>Your planetary age is calculated by dividing your total days lived by each planet's orbital period.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="age-faq-item" onclick="toggleAgeFAQ(this)">
+            <div class="age-faq-question">
+                Can I calculate someone else's age?
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="age-faq-answer">
+                <div class="age-faq-answer-content">
+                    <p>Yes! Simply enter any birth date to calculate age for:</p>
+                    <ul>
+                        <li>Family members and friends</li>
+                        <li>Historical figures</li>
+                        <li>Celebrities and public figures</li>
+                        <li>Pets (though the statistics are human-based)</li>
+                    </ul>
+                    <p>This is useful for birthday planning, genealogy research, or satisfying curiosity about how long someone has lived.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="age-faq-item" onclick="toggleAgeFAQ(this)">
+            <div class="age-faq-question">
+                How are the biological statistics calculated?
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="age-faq-answer">
+                <div class="age-faq-answer-content">
+                    <p>The biological statistics are based on medical research and represent average values:</p>
+                    <ul>
+                        <li><strong>Heartbeats:</strong> Average resting heart rate of 70 beats/minute × total time lived</li>
+                        <li><strong>Breaths:</strong> Average breathing rate of 12-20 breaths/minute × total time</li>
+                        <li><strong>Blinks:</strong> Average of 15-20 blinks/minute while awake</li>
+                        <li><strong>Hair Growth:</strong> Average of 6 inches per year (0.5 inches/month)</li>
+                        <li><strong>Sleep:</strong> Based on recommended 8 hours per day</li>
+                    </ul>
+                    <p>Individual variations are normal based on age, health, activity level, and lifestyle factors.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="age-faq-item" onclick="toggleAgeFAQ(this)">
+            <div class="age-faq-question">
+                Is my data stored or shared?
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="age-faq-answer">
+                <div class="age-faq-answer-content">
+                    <p>No, we prioritize your privacy:</p>
+                    <ul>
+                        <li>All calculations are performed on our server only for providing results</li>
+                        <li>We don't store your birth date or personal information</li>
+                        <li>No data is tracked, logged, or shared with third parties</li>
+                        <li>Your information is never sold or used for marketing</li>
+                    </ul>
+                    <p>You can use the calculator with complete confidence in your privacy.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="age-faq-item" onclick="toggleAgeFAQ(this)">
+            <div class="age-faq-question">
+                Can I calculate future ages?
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="age-faq-answer">
+                <div class="age-faq-answer-content">
+                    <p>Yes! Use the target date field to calculate how old you'll be on any future date:</p>
+                    <ul>
+                        <li>Upcoming milestone birthdays (30, 40, 50, etc.)</li>
+                        <li>Retirement age</li>
+                        <li>Graduation dates</li>
+                        <li>Wedding anniversaries</li>
+                        <li>Any significant future date</li>
+                    </ul>
+                    <p>This helps with planning and gives perspective on future milestones.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h3>Why Choose 21K Tools Age Calculator?</h3>
+
+    <div class="age-feature-card">
+        <h4><i class="fas fa-check-circle"></i> Comprehensive Results</h4>
+        <p>Get more than just your age - explore biological statistics, life metrics, planetary ages, and birth information all in one place.</p>
+    </div>
+
+    <div class="age-feature-card">
+        <h4><i class="fas fa-mobile-alt"></i> Works Everywhere</h4>
+        <p>Fully responsive design works perfectly on desktop computers, tablets, and smartphones. Calculate on any device, anywhere.</p>
+    </div>
+
+    <div class="age-feature-card">
+        <h4><i class="fas fa-bolt"></i> Instant & Accurate</h4>
+        <p>Get results immediately with precision calculations. No waiting, no complicated steps - just accurate age information in seconds.</p>
+    </div>
+
+    <div class="age-feature-card">
+        <h4><i class="fas fa-share-alt"></i> Easy Sharing</h4>
+        <p>Create beautiful shareable images of your age calculation to post on social media or share with friends and family.</p>
+    </div>
+
+    <div class="age-feature-card">
+        <h4><i class="fas fa-lock"></i> Privacy Focused</h4>
+        <p>Your personal information stays private. We don't store, track, or share any data you enter into the calculator.</p>
+    </div>
+
+    <p style="margin-top: 30px; font-size: 1.1rem; color: var(--age-primary); font-weight: 600;">
+        Start exploring your age journey now! Enter your birth date above and discover the fascinating details of your life's timeline.
+    </p>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script>
+    const csrftoken = '{{ csrf_token }}';
+    let currentAgeData = null;
+
+    // Form submission
+    document.getElementById('ageCalculatorForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        await calculateAge();
+    });
+
+    async function calculateAge() {
+        const birthDate = document.getElementById('age-birth-date').value;
+        const birthTime = document.getElementById('age-birth-time').value;
+        const targetDate = document.getElementById('age-target-date').value;
+        const targetTime = document.getElementById('age-target-time').value;
+
+        if (!birthDate) {
+            showError("Please enter your birth date");
+            return;
+        }
+
+        hideError();
+
+        try {
+            const response = await fetch('{% url "age_calculate_api" %}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrftoken
+                },
+                body: JSON.stringify({
+                    birth_date: birthDate,
+                    birth_time: birthTime,
+                    target_date: targetDate,
+                    target_time: targetTime
+                })
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                currentAgeData = data.age_data;
+                displayResults(data.age_data);
+            } else {
+                showError(data.error);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            showError('Calculation failed. Please try again.');
+        }
+    }
+
+    function displayResults(data) {
+        // Main display
+        document.getElementById('ageMainDisplay').textContent = 
+            `${data.basic_age.years} Years ${data.basic_age.months} Months ${data.basic_age.days} Days`;
+        document.getElementById('agePreciseDisplay').textContent = 
+            `You have lived for ${data.basic_age.years} years, ${data.basic_age.months} months, and ${data.basic_age.days} days`;
+
+        // Time units
+        document.getElementById('ageTotalDays').textContent = data.basic_age.total_days.toLocaleString();
+        document.getElementById('ageTotalHours').textContent = data.basic_age.total_hours.toLocaleString();
+        document.getElementById('ageTotalMinutes').textContent = data.basic_age.total_minutes.toLocaleString();
+        document.getElementById('ageTotalSeconds').textContent = data.basic_age.total_seconds.toLocaleString();
+
+        // Biological stats
+        document.getElementById('ageHeartbeats').textContent = data.biological.heartbeats;
+        document.getElementById('ageBreaths').textContent = data.biological.breaths;
+        document.getElementById('ageBlinks').textContent = data.biological.blinks;
+        document.getElementById('ageHairGrowth').textContent = data.biological.hair_growth;
+        document.getElementById('ageSleepHours').textContent = data.biological.sleep_hours;
+
+        // Life statistics
+        document.getElementById('ageWeekends').textContent = data.life_stats.weekends;
+        document.getElementById('ageMeals').textContent = data.life_stats.meals;
+        document.getElementById('ageSteps').textContent = data.life_stats.steps;
+        document.getElementById('ageWords').textContent = data.life_stats.words;
+        document.getElementById('ageLaughs').textContent = data.life_stats.laughs;
+
+        // Birth information
+        document.getElementById('ageZodiac').textContent = data.birth_info.zodiac_sign;
+        document.getElementById('ageBirthstone').textContent = data.birth_info.birthstone;
+        document.getElementById('ageBirthFlower').textContent = data.birth_info.birth_flower;
+        document.getElementById('ageDayOfWeek').textContent = data.birth_info.day_of_week;
+        document.getElementById('ageGeneration').textContent = data.birth_info.generation;
+
+        // Planetary ages
+        const planetaryContainer = document.getElementById('agePlanetaryAges');
+        planetaryContainer.innerHTML = '';
+        
+        for (const [planet, age] of Object.entries(data.planetary_ages)) {
+            planetaryContainer.innerHTML += `
+                <div class="age-stat-item">
+                    <span class="age-stat-label">${planet}:</span>
+                    <span class="age-stat-value">${age} years</span>
+                </div>
+            `;
+        }
+
+        // Show results
+        document.getElementById('ageResults').style.display = 'block';
+        document.getElementById('ageResults').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function showError(message) {
+        const errorAlert = document.getElementById('ageErrorAlert');
+        document.getElementById('ageErrorMessage').textContent = message;
+        errorAlert.classList.add('show');
+        errorAlert.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    function hideError() {
+        document.getElementById('ageErrorAlert').classList.remove('show');
+    }
+
+    function copyAgeResult() {
+        if (!currentAgeData) return;
+
+        const text = `My Age: ${currentAgeData.basic_age.years} years, ${currentAgeData.basic_age.months} months, ${currentAgeData.basic_age.days} days
+Total Days: ${currentAgeData.basic_age.total_days.toLocaleString()}
+Zodiac: ${currentAgeData.birth_info.zodiac_sign}
+Generation: ${currentAgeData.birth_info.generation}
+
+Calculated at 21K Tools - https://21k.tools/agecalculator`;
+
+        navigator.clipboard.writeText(text).then(() => {
+            const button = event.target.closest('button');
+            const originalHTML = button.innerHTML;
+            button.innerHTML = '<i class="fas fa-check"></i> Copied!';
+            button.style.background = '#28a745';
+            button.style.color = 'white';
+            
+            setTimeout(() => {
+                button.innerHTML = originalHTML;
+                button.style.background = '';
+                button.style.color = '';
+            }, 2000);
+        }).catch(err => {
+            console.error('Failed to copy:', err);
+            alert('Failed to copy to clipboard');
+        });
+    }
+
+    function openAgeShareModal() {
+        if (!currentAgeData) return;
+
+        const data = currentAgeData;
+        document.getElementById('ageShareValue').textContent = 
+            `${data.basic_age.years} Years ${data.basic_age.months} Months ${data.basic_age.days} Days`;
+        
+        document.getElementById('ageShareDetails').innerHTML = `
+            <div style="margin: 10px 0;">⏱️ ${data.basic_age.total_days.toLocaleString()} days lived</div>
+            <div style="margin: 10px 0;">❤️ ${data.biological.heartbeats} heartbeats</div>
+            <div style="margin: 10px 0;">⭐ ${data.birth_info.zodiac_sign} | ${data.birth_info.generation}</div>
+        `;
+        
+        document.getElementById('ageShareTimestamp').textContent = new Date().toLocaleDateString();
+        document.getElementById('ageShareModal').classList.add('active');
+    }
+
+    function closeAgeShareModal() {
+        document.getElementById('ageShareModal').classList.remove('active');
+    }
+
+    function downloadAgeShareCard() {
+        const shareCard = document.getElementById('ageShareCardContainer');
+        
+        html2canvas(shareCard, {
+            backgroundColor: '#ffffff',
+            scale: 2,
+            logging: false
+        }).then(canvas => {
+            const link = document.createElement('a');
+            link.download = `my-age-${Date.now()}.png`;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }).catch(err => {
+            console.error('Failed to generate image:', err);
+            alert('Failed to generate image. Please try again.');
+        });
+    }
+
+    function resetAgeCalculator() {
+        document.getElementById('ageCalculatorForm').reset();
+        document.getElementById('age-birth-time').value = '00:00';
+        document.getElementById('age-target-time').value = '23:59';
+        document.getElementById('ageResults').style.display = 'none';
+        currentAgeData = null;
+        hideError();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function toggleAgeFAQ(element) {
+        const wasActive = element.classList.contains('active');
+        
+        document.querySelectorAll('.age-faq-item').forEach(item => {
+            item.classList.remove('active');
+        });
+        
+        if (!wasActive) {
+            element.classList.add('active');
+        }
+    }
+
+    // Close modal on outside click
+    document.getElementById('ageShareModal').addEventListener('click', function(e) {
+        if (e.target === this) {
+            closeAgeShareModal();
+        }
+    });
+
+    // Close modal with Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeAgeShareModal();
+        }
+    });
+</script>
+{% endblock %}

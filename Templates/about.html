@@ -1,0 +1,283 @@
+{% extends 'base1.html' %}
+
+{% block title %}About - 21K Tools{% endblock %}
+
+{% block extra_css %}
+<style>
+    .main-content {
+        flex: 1; 
+        padding: 40px 20px; 
+        max-width: 1200px;
+        margin: 0 auto; 
+    }
+    
+    .demo-section {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        padding: 60px 20px; 
+        border-radius: 20px; 
+        margin: 20px 0;
+        backdrop-filter: blur(10px);
+        text-align: center;
+    }
+    
+    .demo-title {
+        font-size: 2.5rem; 
+        color: white; 
+        margin-bottom: 20px; 
+        font-weight: 700;
+    }
+    
+    .demo-subtitle {
+        font-size: 1.2rem; 
+        color: rgba(255, 255, 255, 0.9); 
+        margin-bottom: 30px;
+    }
+
+    .about-content {
+        background: white;
+        border-radius: 20px;
+        padding: 40px;
+        margin: 40px 0;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+
+    .about-content h2 {
+        color: #1e3a8a;
+        font-size: 2rem;
+        margin-bottom: 20px;
+        font-weight: 800;
+    }
+
+    .about-content h3 {
+        color: #2563eb;
+        font-size: 1.5rem;
+        margin: 30px 0 15px;
+        font-weight: 700;
+    }
+
+    .about-content p {
+        color: #333;
+        line-height: 1.8;
+        margin-bottom: 20px;
+        font-size: 1.05rem;
+    }
+     .note {font-family: 'Courier New', Courier, monospace;
+    background:#202020;
+    border-left: 4px solid #2563eb;
+    color: #0d1117;
+    border: 1px solid rgba(29,155,240,0.4);
+    padding: 18px 22px;
+    border-radius: 10px;
+    font-size: 1.05rem;
+}
+    .note h2 {
+        color: blue;
+        font-size: 2rem;
+        margin-bottom: 20px;
+        font-weight: 800;
+        font-family: 'Courier New', Courier, monospace;
+        text-align:center;
+    }
+
+    .note h3 {
+        color: #2563eb;
+        font-size: 1.5rem;
+        margin: 30px 0 15px;
+        font-weight: 700;
+    }
+
+    .note p {
+        color: green;
+        line-height: 1.8;
+        margin-bottom: 20px;
+        font-size: 1.09rem;
+        font-family: 'Courier New', Courier, monospace;
+    }
+
+    .about-content ul {
+        margin-left: 20px;
+        margin-bottom: 25px;
+    }
+
+    .about-content li {
+        margin-bottom: 10px;
+        color: #333;
+        line-height: 1.6;
+    }
+
+    .about-content li:before {
+        content: "•";
+        color: #3b82f6;
+        font-weight: bold;
+        display: inline-block;
+        width: 1em;
+        margin-left: -1em;
+    }
+
+    .feature-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 25px;
+        margin: 30px 0;
+    }
+
+    .feature-card {
+        background: #f8fafc;
+        border-radius: 15px;
+        padding: 25px;
+        transition: transform 0.3s ease;
+    }
+
+    .feature-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .feature-card i {
+        font-size: 2.5rem;
+        color: #3b82f6;
+        margin-bottom: 15px;
+        display: inline-block;
+    }
+
+    .feature-card h4 {
+        font-size: 1.3rem;
+        color: #1e40af;
+        margin-bottom: 10px;
+    }
+
+    .page-nav-link {
+        font-weight: 600;
+    font-size: 16px;
+    color: #2563eb;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    background: rgba(37, 99, 235, 0.1);
+    border-radius: 8px;
+    transition: background 0.3s ease;
+    }
+    
+    .page-nav-link:hover {
+        background: rgba(37, 99, 235, 0.15);
+        color: #1d4ed8;
+    }
+    .page-nav-link p {
+    color: white;
+    margin: 0;
+  }
+
+    @media (max-width: 768px) {
+        .demo-title { 
+            font-size: 2rem; 
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<main class="main-content">
+    <section class="demo-section">
+        <h1 class="demo-title">About 21K Tools</h1>
+        <p class="demo-subtitle">Your trusted source for free online utilities</p>
+        <a href="https://21k.tools" class="page-nav-link">
+            <i class="fas fa-home"></i> Home<p style="color:white;">/About</p>
+        </a>
+    </section>
+    
+    <div class="about-content">
+        <h2>Welcome to 21K Tools</h2>
+        <p>Your all-in-one hub for free, powerful, and easy-to-use online tools that simplify everyday digital tasks. Whether you need to convert files, resize images, calculate interest, manage PDFs, or generate AI content, 21K Tools brings everything together in a seamless platform designed for speed, precision, and convenience.</p>
+        
+        <p>At 21K Tools, we believe technology should make life easier, not more complicated. In a world where productivity is key, people waste hours switching between different websites and apps for simple tasks. That's why we built 21K Tools — a centralized platform offering a variety of online utility tools accessible with a single click. No sign-ups. No downloads. No hidden fees. Just instant solutions.</p>
+        
+        <h3>Our Story</h3>
+        <p>The idea of 21K Tools was born from a simple frustration: why should users struggle to find reliable, ad-free tools for basic tasks like converting a PDF or calculating an age? With so many fragmented services online, we envisioned a unified platform where anyone — from students and freelancers to business professionals — could get their work done faster and smarter.</p>
+        
+        <p>What started as a small collection of utility tools has now evolved into a growing ecosystem of calculators, converters, and smart assistants. Today, 21K Tools serves thousands of users daily, simplifying tasks that would otherwise consume valuable time and energy.</p>
+        
+        <h3>Our Mission</h3>
+        <p>Our mission is to democratize access to essential digital tools by making them:</p>
+        <ul>
+            <li><strong>Completely Free:</strong> No subscriptions, no paywalls, no intrusive ads.</li>
+            <li><strong>Simple to Use:</strong> Clean, intuitive interfaces designed for everyone.</li>
+            <li><strong>Reliable & Fast:</strong> High-performance tools that deliver results instantly.</li>
+            <li><strong>Privacy-Focused:</strong> We don't track personal data or force sign-ups. Your tasks are processed securely in your browser.</li>
+        </ul>
+        
+        <p>We aim to empower individuals, students, businesses, and content creators with a one-stop solution that saves time, enhances productivity, and eliminates the hassle of searching for dependable online utilities.</p>
+        
+        <h3>What Makes 21K Tools Unique?</h3>
+        
+        <div class="feature-grid">
+            <div class="feature-card">
+                <i class="fas fa-layer-group"></i>
+                <h4>Unified Platform</h4>
+                <p>Unlike websites that focus on just one category, 21K Tools offers a diverse range of utilities under one roof.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-bolt"></i>
+                <h4>Instant Access</h4>
+                <p>All tools are accessible without registration or login. Just visit, use, and get instant results.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-mobile-alt"></i>
+                <h4>Optimized for All Devices</h4>
+                <p>Our tools are designed to provide a smooth experience across all devices.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-lock"></i>
+                <h4>Privacy First</h4>
+                <p>Your files and data stay private. Most tasks are processed directly in your browser.</p>
+            </div>
+        </div>
+        
+        <h3>Our Featured Tools</h3>
+        <p>At 21K Tools, we are continuously expanding our toolset. Some of our most popular utilities include:</p>
+        <ul>
+            <li><strong>URL Shortener:</strong>Create short, memorable links with advanced analytics, tracking and a QR code</li>
+            <li><strong>File Converter:</strong> Convert between 100+ formats, including documents, images, audio, and videos.</li>
+            <li><strong>Image Resizer:</strong> Resize, compress, and optimize images while preserving quality.</li>
+            <li><strong>PDF Toolkit:</strong> Merge, split, compress, and convert PDFs with ease.</li>
+            <li><strong>AI Content Generator:</strong> Create high-quality articles, product descriptions, and marketing content.</li>
+            <li><strong>Age Calculator:</strong> Accurately calculate age in years, months, and days.</li>
+            <li><strong>Interest Calculator:</strong> Compute simple and compound interest for loans and investments.</li>
+            <li><strong>Unit Converter:</strong> Convert between measurement units, including real-time currency conversion.</li>
+            <li><strong>Time Calculator:</strong> Calculate date differences, add/subtract time, and manage time zones.</li>
+        </ul>
+        
+        <h3>Our Vision for the Future</h3>
+        <p>We envision 21K Tools becoming the largest free online utility platform globally, where millions of users can find the tools they need without the hassle of subscriptions, advertisements, or complex user flows.</p>
+        
+        <p>Our future roadmap includes:</p>
+        <ul>
+            <li>Introducing more advanced AI-driven tools</li>
+            <li>Expanding into niche calculators and industry-specific utilities</li>
+            <li>Launching browser extensions for even quicker access</li>
+            <li>Providing offline versions of popular tools</li>
+            <li>Maintaining a strict focus on privacy and ethical data usage</li>
+        </ul>
+        
+        <h3>Community-Driven Growth</h3>
+        <p>At 21K Tools, we consider our users as our biggest asset. Your feedback shapes the development of our tools. We invite our community to suggest new tool ideas, report bugs, and share their experiences. This collaborative approach ensures we always align with real-world needs.</p>
+        
+        <p>You can connect with us via:</p>
+        <ul>
+            <li>Email: contact@21k.tools</li>
+            <li>Twitter/X: @21KTools</li>
+            <li>Instagram: @21K.Tools</li>
+            <li>YouTube: @21KTools</li>
+        </ul>
+        
+        <h3>Why 21K?</h3>
+        <p>The name 21K represents simplicity, scalability, and modernity — a platform that keeps growing with user needs while maintaining the speed and clarity that today's fast-paced world demands. We want to become your go-to destination for useful tools, all under one unified brand.</p>
+      
+    </div>
+    <div class='note'>
+    <h2>Important Disclaimer</h2>
+<p><strong>21K Tools is an independent individual platform and is not associated, affiliated, or connected with any organization, company, network, or group of any kind.</strong> It is solely created and managed by a team of 21K Tools. All tools, services, and content available on this website are independently built and maintained. Any similarities in name or reference to other entities are purely coincidental.</p>
+</div>
+</main>
+{% endblock %}

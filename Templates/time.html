@@ -1,0 +1,1482 @@
+{% extends 'base1.html' %}
+
+{% block title %}{{ page_title }} - 21K Tools{% endblock %}
+
+{% block extra_css %}
+<style>
+    :root {
+        --time-primary: #4361ee;
+        --time-secondary: #3a0ca3;
+        --time-accent: #f72585;
+        --time-light: #f8f9fa;
+        --time-dark: #212529;
+        --time-gray: #6c757d;
+    }
+    
+    .time-calc-container {
+        max-width: 950px;
+        margin: 30px auto;
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+        overflow: hidden;
+        color: var(--time-dark);
+    }
+    
+    .time-calc-header {
+        background: linear-gradient(135deg, var(--time-primary) 0%, var(--time-secondary) 100%);
+        color: blue;
+        padding: 2rem;
+        text-align: center;
+    }
+    
+    .time-calc-header h1 {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+        font-weight: 700;
+        color: white !important;
+    }
+    
+    .time-calc-subtitle {
+        font-weight: 300;
+        opacity: 0.9;
+        font-size: 1rem;
+        margin: 0;
+        color: white !important;
+    }
+    
+    .time-calc-body {
+        padding: 2rem;
+    }
+    
+    .time-calc-tabs {
+        display: flex;
+        border-bottom: 2px solid #dee2e6;
+        margin-bottom: 2rem;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+    }
+    
+    .time-calc-tabs::-webkit-scrollbar {
+        display: none;
+    }
+    
+    .time-calc-tab {
+        padding: 1rem 1.5rem;
+        cursor: pointer;
+        font-weight: 600;
+        border-bottom: 3px solid transparent;
+        transition: all 0.3s ease;
+        white-space: nowrap;
+        flex-shrink: 0;
+        color: var(--time-gray);
+        font-size: 15px;
+        background: transparent;
+    }
+    
+    .time-calc-tab.active {
+        border-bottom: 3px solid var(--time-accent);
+        color: var(--time-accent) !important;
+    }
+    
+    .time-calc-tab:hover {
+        background: #f8f9fa;
+    }
+    
+    .time-calc-tab-content {
+        display: none;
+    }
+    
+    .time-calc-tab-content.active {
+        display: block;
+        animation: timeCalcFadeIn 0.4s ease;
+    }
+    
+    @keyframes timeCalcFadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .time-calc-form-group {
+        margin-bottom: 1.5rem;
+    }
+    
+    .time-calc-label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+        color: var(--time-dark) !important;
+        font-size: 14px;
+    }
+    
+    .time-calc-input, .time-calc-select {
+        width: 100%;
+        padding: 12px 16px;
+        border: 2px solid #dee2e6;
+        border-radius: 10px;
+        font-size: 16px;
+        transition: all 0.3s ease;
+    }
+    
+    .time-calc-input:focus, .time-calc-select:focus {
+        outline: none;
+        border-color: var(--time-primary);
+        box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+    }
+    
+    .time-calc-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.5rem;
+    }
+    
+    .time-calc-btn {
+        background: linear-gradient(135deg, var(--time-primary) 0%, var(--time-secondary) 100%);
+        color: white;
+        border: none;
+        padding: 14px 24px;
+        font-size: 16px;
+        font-weight: 600;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        width: 100%;
+        margin-top: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+    }
+    
+    .time-calc-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(67, 97, 238, 0.4);
+    }
+    
+    .time-calc-results {
+        margin-top: 2rem;
+        padding: 1.5rem;
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        border-radius: 15px;
+        border-left: 5px solid var(--time-primary);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    }
+    
+    .time-calc-results h3 {
+        color: var(--time-primary) !important;
+        margin-bottom: 1rem;
+        font-size: 1.3rem;
+        font-weight: 700;
+    }
+    
+    .time-calc-result-item {
+        margin-bottom: 1rem;
+        padding: 12px 16px;
+        background: white;
+        border-radius: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    
+    .time-calc-result-label {
+        font-weight: 600;
+        color: var(--time-gray) !important;
+        font-size: 14px;
+    }
+    
+    .time-calc-result-value {
+        font-weight: 700;
+        color: var(--time-dark) !important;
+        font-size: 16px;
+        background: rgba(67, 97, 238, 0.1);
+        padding: 8px 12px;
+        border-radius: 8px;
+        border-left: 3px solid var(--time-primary);
+        word-break: break-word;
+    }
+
+    .time-calc-action-buttons {
+        display: flex;
+        gap: 12px;
+        margin-top: 1.5rem;
+        flex-wrap: wrap;
+    }
+
+    .time-calc-action-btn {
+        padding: 10px 20px;
+        border-radius: 8px;
+        border: 2px solid;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 14px;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: white;
+        flex: 1;
+        min-width: 120px;
+        justify-content: center;
+    }
+
+    .time-calc-action-btn.copy-btn {
+        color: var(--time-primary);
+        border-color: var(--time-primary);
+    }
+
+    .time-calc-action-btn.copy-btn:hover {
+        background: var(--time-primary);
+        color: white;
+    }
+
+    .time-calc-action-btn.share-btn {
+        color: #28a745;
+        border-color: #28a745;
+    }
+
+    .time-calc-action-btn.share-btn:hover {
+        background: #28a745;
+        color: white;
+    }
+
+    .time-calc-action-btn.reset-btn {
+        color: #dc3545;
+        border-color: #dc3545;
+    }
+
+    .time-calc-action-btn.reset-btn:hover {
+        background: #dc3545;
+        color: white;
+    }
+
+    /* Share Modal */
+    .time-calc-share-modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        z-index: 10000;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+    }
+
+    .time-calc-share-modal.active {
+        display: flex;
+    }
+
+    .time-calc-modal-content {
+        background: white;
+        border-radius: 20px;
+        padding: 30px;
+        max-width: 500px;
+        width: 100%;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+
+    .time-calc-modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .time-calc-modal-header h3 {
+        color: var(--time-primary) !important;
+        font-size: 1.5rem;
+        margin: 0;
+    }
+
+    .time-calc-close-modal {
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: #6c757d;
+        transition: color 0.3s ease;
+    }
+
+    .time-calc-close-modal:hover {
+        color: #dc3545;
+    }
+
+    .time-calc-share-card {
+        background: linear-gradient(135deg, var(--time-primary), var(--time-secondary));
+        color: white;
+        padding: 30px;
+        border-radius: 15px;
+        margin: 20px 0;
+        text-align: center;
+    }
+
+    .time-calc-share-card h4 {
+        font-size: 1.3rem;
+        margin-bottom: 15px;
+        color: white !important;
+    }
+
+    .time-calc-share-value {
+        font-size: 2rem;
+        font-weight: 700;
+        margin: 20px 0;
+        word-break: break-word;
+        color: white !important;
+    }
+
+    .time-calc-share-footer {
+        font-size: 0.9rem;
+        opacity: 0.8;
+        margin-top: 20px;
+        padding-top: 15px;
+        border-top: 1px solid rgba(255,255,255,0.3);
+        color: white !important;
+    }
+
+    .time-calc-modal-actions {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+
+    .time-calc-modal-actions button {
+        flex: 1;
+        min-width: 120px;
+        padding: 12px 20px;
+        border-radius: 10px;
+        border: none;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .time-calc-download-btn {
+        background: var(--time-primary);
+        color: white;
+    }
+
+    .time-calc-download-btn:hover {
+        background: var(--time-secondary);
+        transform: translateY(-2px);
+    }
+    
+    /* Guide Section */
+    .time-calc-guide {
+        max-width: 1700px;
+        margin: 40px auto;
+        background: white;
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+    }
+    
+    .time-calc-guide h2 {
+        font-size: 2rem;
+        color: var(--time-primary) !important;
+        margin-bottom: 20px;
+        font-weight: 700;
+    }
+    
+    .time-calc-guide h3 {
+        font-size: 1.5rem;
+        color: var(--time-secondary) !important;
+        margin: 30px 0 15px;
+        font-weight: 600;
+    }
+    
+    .time-calc-guide h4 {
+        font-size: 1.2rem;
+        color: var(--time-accent) !important;
+        margin: 20px 0 10px;
+        font-weight: 600;
+    }
+    
+    .time-calc-guide p {
+        line-height: 1.8;
+        color: #495057 !important;
+        margin-bottom: 15px;
+        font-size: 1.05rem;
+    }
+    
+    .time-calc-guide ul,
+    .time-calc-guide ol {
+        margin: 15px 0;
+        padding-left: 30px;
+        line-height: 1.8;
+        color: #495057 !important;
+    }
+    
+    .time-calc-guide li {
+        margin-bottom: 10px;
+        color: #495057 !important;
+    }
+    
+    .time-calc-feature-card {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        padding: 25px;
+        border-radius: 15px;
+        border-left: 5px solid var(--time-primary);
+        margin: 25px 0;
+    }
+    
+    .time-calc-feature-card h4 {
+        color: var(--time-primary) !important;
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 1.2rem;
+    }
+
+    .time-calc-feature-card p,
+    .time-calc-feature-card ul,
+    .time-calc-feature-card li {
+        color: #495057 !important;
+    }
+
+    .time-calc-faq-section {
+        margin: 30px 0;
+    }
+
+    .time-calc-faq-item {
+        background: white;
+        border: 2px solid #e9ecef;
+        border-radius: 12px;
+        margin-bottom: 15px;
+        overflow: hidden;
+    }
+
+    .time-calc-faq-question {
+        padding: 20px;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: 600;
+        color: var(--time-primary) !important;
+        transition: background 0.3s ease;
+    }
+
+    .time-calc-faq-question:hover {
+        background: #f8f9fa;
+    }
+
+    .time-calc-faq-question i {
+        transition: transform 0.3s ease;
+    }
+
+    .time-calc-faq-item.active .time-calc-faq-question i {
+        transform: rotate(180deg);
+    }
+
+    .time-calc-faq-answer {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+    }
+
+    .time-calc-faq-item.active .time-calc-faq-answer {
+        max-height: 500px;
+    }
+
+    .time-calc-faq-answer-content {
+        padding: 0 20px 20px 20px;
+        color: #495057 !important;
+        line-height: 1.8;
+    }
+    
+
+// Add these CSS styles to your existing time.html CSS block:
+
+.share-input-section {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 15px;
+    border-radius: 10px;
+    margin: 15px 0;
+}
+
+.share-input-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    gap: 10px;
+}
+
+.share-label {
+    font-weight: 600;
+    opacity: 0.9;
+    font-size: 0.9rem;
+    color: white !important;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.share-label i {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.85rem;
+}
+
+.share-value {
+    font-weight: 700;
+    text-align: right;
+    font-size: 0.95rem;
+    color: white !important;
+}
+
+.share-divider {
+    height: 2px;
+    background: rgba(255, 255, 255, 0.3);
+    margin: 15px 0;
+}
+
+.share-result-label {
+    font-size: 1rem;
+    opacity: 0.8;
+    margin-bottom: 10px;
+    color: white !important;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.share-result-label i {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.share-additional-info {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    font-size: 0.9rem;
+    color: white !important;
+}
+
+.share-additional-info div {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.share-additional-info i {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.time-calc-share-card h4 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.time-calc-share-card h4 i {
+    color: white;
+    font-size: 1.2rem;
+}
+
+.time-calc-share-footer div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.time-calc-share-footer i {
+    color: rgba(255, 255, 255, 0.7);
+}
+    @media (max-width: 768px) {
+        .time-calc-container {
+            margin: 20px 15px ;
+            
+        }
+
+        .time-calc-body {
+            padding: 1.5rem;
+        }
+
+        .time-calc-header h1 {
+            font-size: 1.6rem;
+        }
+
+        .time-calc-tab {
+            padding: 0.8rem 1.2rem;
+            font-size: 14px;
+        }
+        
+        .time-calc-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .time-calc-results {
+            padding: 1.2rem;
+        }
+
+        .time-calc-action-buttons {
+            flex-direction: column;
+        }
+
+        .time-calc-action-btn {
+            width: 100%;
+        }
+
+        .time-calc-modal-actions {
+            flex-direction: column;
+        }
+
+        .time-calc-modal-actions button {
+            width: 100%;
+        }
+
+        .time-calc-guide {
+            padding: 25px 20px;
+             margin: 20px 15px ;
+        }
+
+        .time-calc-guide h2 {
+            font-size: 1.6rem;
+        }
+
+        .time-calc-result-item {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .time-calc-result-value {
+            width: 100%;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .time-calc-header h1 {
+            font-size: 1.4rem;
+        }
+.time-calc-container {
+            margin: 20px 15px ;}
+        .time-calc-subtitle {
+            font-size: 0.9rem;
+        }
+
+        .time-calc-body {
+            padding: 1rem;
+        }
+
+        .time-calc-modal-content {
+            padding: 20px;
+        }
+
+        .time-calc-share-value {
+            font-size: 1.5rem;
+        }
+
+        .time-calc-guide {
+            padding: 20px 15px;
+        }
+        .share-input-row {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .share-value {
+        text-align: left;
+        margin-top: 5px;
+    }
+    
+    .share-additional-info {
+        flex-direction: column;
+        gap: 10px;
+    }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="time-calc-container">
+    <div class="time-calc-header">
+        <h1><i class="fas fa-clock"></i> Time Calculator</h1>
+        <p class="time-calc-subtitle">Calculate durations, add/subtract time, and convert between time units</p>
+    </div>
+    
+    <div class="time-calc-body">
+        <div class="time-calc-tabs">
+            <div class="time-calc-tab active" onclick="switchTimeTab('difference')">
+                <i class="fas fa-calendar-minus"></i> Time Difference
+            </div>
+            <div class="time-calc-tab" onclick="switchTimeTab('add-subtract')">
+                <i class="fas fa-plus-circle"></i> Add/Subtract
+            </div>
+            <div class="time-calc-tab" onclick="switchTimeTab('convert')">
+                <i class="fas fa-exchange-alt"></i> Converter
+            </div>
+        </div>
+        
+        <!-- Time Difference Calculator -->
+        <div id="time-difference" class="time-calc-tab-content active">
+            <div class="time-calc-grid">
+                <div class="time-calc-form-group">
+                    <label for="time-start-time" class="time-calc-label">
+                        <i class="fas fa-calendar-day"></i> Start Time
+                    </label>
+                    <input type="datetime-local" id="time-start-time" class="time-calc-input">
+                </div>
+                <div class="time-calc-form-group">
+                    <label for="time-end-time" class="time-calc-label">
+                        <i class="fas fa-calendar-check"></i> End Time
+                    </label>
+                    <input type="datetime-local" id="time-end-time" class="time-calc-input">
+                </div>
+            </div>
+            <button class="time-calc-btn" onclick="calculateTimeDiff()">
+                <i class="fas fa-calculator"></i> Calculate Difference
+            </button>
+            
+            <div id="time-difference-results" class="time-calc-results" style="display: none;">
+                <h3>Time Duration</h3>
+                <div class="time-calc-result-item">
+                    <span class="time-calc-result-label">Total Difference:</span>
+                    <span id="time-total-diff" class="time-calc-result-value"></span>
+                </div>
+                <div class="time-calc-result-item">
+                    <span class="time-calc-result-label">In Days:</span>
+                    <span id="time-days-diff" class="time-calc-result-value"></span>
+                </div>
+                <div class="time-calc-result-item">
+                    <span class="time-calc-result-label">In Hours:</span>
+                    <span id="time-hours-diff" class="time-calc-result-value"></span>
+                </div>
+                <div class="time-calc-result-item">
+                    <span class="time-calc-result-label">In Minutes:</span>
+                    <span id="time-minutes-diff" class="time-calc-result-value"></span>
+                </div>
+                <div class="time-calc-result-item">
+                    <span class="time-calc-result-label">In Seconds:</span>
+                    <span id="time-seconds-diff" class="time-calc-result-value"></span>
+                </div>
+                <div class="time-calc-action-buttons">
+                    <button class="time-calc-action-btn copy-btn" onclick="copyTimeResult('difference')">
+                        <i class="fas fa-copy"></i> Copy
+                    </button>
+                    <button class="time-calc-action-btn share-btn" onclick="openTimeShareModal('difference')">
+                        <i class="fas fa-share-alt"></i> Share
+                    </button>
+                    <button class="time-calc-action-btn reset-btn" onclick="resetTimeCalculator('difference')">
+                        <i class="fas fa-redo"></i> Reset
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Add/Subtract Time Calculator -->
+        <div id="time-add-subtract" class="time-calc-tab-content">
+            <div class="time-calc-grid">
+                <div class="time-calc-form-group">
+                    <label for="time-base-time" class="time-calc-label">
+                        <i class="fas fa-calendar-alt"></i> Base Time
+                    </label>
+                    <input type="datetime-local" id="time-base-time" class="time-calc-input">
+                </div>
+                <div class="time-calc-form-group">
+                    <label for="time-operation" class="time-calc-label">
+                        <i class="fas fa-cog"></i> Operation
+                    </label>
+                    <select id="time-operation" class="time-calc-select">
+                        <option value="add">Add Time</option>
+                        <option value="subtract">Subtract Time</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="time-calc-grid">
+                <div class="time-calc-form-group">
+                    <label for="time-add-days" class="time-calc-label">Days</label>
+                    <input type="number" id="time-add-days" min="0" value="0" class="time-calc-input">
+                </div>
+                <div class="time-calc-form-group">
+                    <label for="time-add-hours" class="time-calc-label">Hours</label>
+                    <input type="number" id="time-add-hours" min="0" value="0" class="time-calc-input">
+                </div>
+                <div class="time-calc-form-group">
+                    <label for="time-add-minutes" class="time-calc-label">Minutes</label>
+                    <input type="number" id="time-add-minutes" min="0" value="0" class="time-calc-input">
+                </div>
+                <div class="time-calc-form-group">
+                    <label for="time-add-seconds" class="time-calc-label">Seconds</label>
+                    <input type="number" id="time-add-seconds" min="0" value="0" class="time-calc-input">
+                </div>
+            </div>
+            <button class="time-calc-btn" onclick="calculateTimeAddSubtract()">
+                <i class="fas fa-calculator"></i> Calculate
+            </button>
+            
+            <div id="time-add-subtract-results" class="time-calc-results" style="display: none;">
+                <h3>Resulting Time</h3>
+                <div class="time-calc-result-item">
+                    <span class="time-calc-result-label">New Date/Time:</span>
+                    <span id="time-result-time" class="time-calc-result-value"></span>
+                </div>
+                <div class="time-calc-action-buttons">
+                    <button class="time-calc-action-btn copy-btn" onclick="copyTimeResult('add-subtract')">
+                        <i class="fas fa-copy"></i> Copy
+                    </button>
+                    <button class="time-calc-action-btn share-btn" onclick="openTimeShareModal('add-subtract')">
+                        <i class="fas fa-share-alt"></i> Share
+                    </button>
+                    <button class="time-calc-action-btn reset-btn" onclick="resetTimeCalculator('add-subtract')">
+                        <i class="fas fa-redo"></i> Reset
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Time Conversion Calculator -->
+        <div id="time-convert" class="time-calc-tab-content">
+            <div class="time-calc-grid">
+                <div class="time-calc-form-group">
+                    <label for="time-convert-value" class="time-calc-label">
+                        <i class="fas fa-hashtag"></i> Value
+                    </label>
+                    <input type="number" id="time-convert-value" min="0" value="1" step="any" class="time-calc-input">
+                </div>
+                <div class="time-calc-form-group">
+                    <label for="time-convert-from" class="time-calc-label">
+                        <i class="fas fa-arrow-right"></i> From
+                    </label>
+                    <select id="time-convert-from" class="time-calc-select" onchange="convertTimeUnits()">
+                        <option value="seconds">Seconds</option>
+                        <option value="minutes">Minutes</option>
+                        <option value="hours">Hours</option>
+                        <option value="days">Days</option>
+                        <option value="weeks">Weeks</option>
+                        <option value="months">Months (30 days)</option>
+                        <option value="years">Years (365 days)</option>
+                    </select>
+                </div>
+                <div class="time-calc-form-group">
+                    <label for="time-convert-to" class="time-calc-label">
+                        <i class="fas fa-bullseye"></i> To
+                    </label>
+                    <select id="time-convert-to" class="time-calc-select" onchange="convertTimeUnits()">
+                        <option value="seconds">Seconds</option>
+                        <option value="minutes">Minutes</option>
+                        <option value="hours">Hours</option>
+                        <option value="days">Days</option>
+                        <option value="weeks">Weeks</option>
+                        <option value="months">Months (30 days)</option>
+                        <option value="years">Years (365 days)</option>
+                    </select>
+                </div>
+            </div>
+            <button class="time-calc-btn" onclick="convertTimeUnits()">
+                <i class="fas fa-sync-alt"></i> Convert
+            </button>
+            
+            <div id="time-convert-results" class="time-calc-results" style="display: none;">
+                <h3>Conversion Result</h3>
+                <div class="time-calc-result-item">
+                    <span class="time-calc-result-label">Result:</span>
+                    <span id="time-conversion-result" class="time-calc-result-value"></span>
+                </div>
+                <div class="time-calc-action-buttons">
+                    <button class="time-calc-action-btn copy-btn" onclick="copyTimeResult('convert')">
+                        <i class="fas fa-copy"></i> Copy
+                    </button>
+                    <button class="time-calc-action-btn share-btn" onclick="openTimeShareModal('convert')">
+                        <i class="fas fa-share-alt"></i> Share
+                    </button>
+                    <button class="time-calc-action-btn reset-btn" onclick="resetTimeCalculator('convert')">
+                        <i class="fas fa-redo"></i> Reset
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Share Modal -->
+<div class="time-calc-share-modal" id="timeCalcShareModal">
+    <div class="time-calc-modal-content">
+        <div class="time-calc-modal-header">
+            <h3><i class="fas fa-share-alt"></i> Share Result</h3>
+            <button class="time-calc-close-modal" onclick="closeTimeShareModal()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <div id="timeCalcShareCardContainer">
+            <div class="time-calc-share-card">
+                <h4>Time Calculation Result</h4>
+                <div class="time-calc-share-value" id="timeCalcShareValue">-</div>
+                <div class="time-calc-share-footer">
+                    <div id="timeCalcShareTimestamp">-</div>
+                    <div style="margin-top: 10px; font-weight: 600;">© 21K Tools</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="time-calc-modal-actions">
+            <button class="time-calc-download-btn" onclick="downloadTimeShareCard()">
+                <i class="fas fa-download"></i>
+                Download Image
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Guide Section -->
+<div class="time-calc-guide">
+    <h2><i class="fas fa-book"></i> Complete Guide to Time Calculations</h2>
+    
+    <p>Time is one of the most valuable resources we have. Whether you're planning events, calculating work hours, managing schedules, or simply figuring out how much time has passed between two dates, accurate time calculations can make life much easier. Our Time Calculator from 21K Tools is a smart, user-friendly, and completely free online utility designed to handle all kinds of time-related calculations in just a few clicks.</p>
+    
+    <h3>Key Features</h3>
+    
+    <div class="time-calc-feature-card">
+        <h4><i class="fas fa-calendar-minus"></i> Time Difference Calculator</h4>
+        <p>Find the exact duration between two points in time. Get results in days, hours, minutes, and seconds with precision up to 6 decimal places.</p>
+        <p><strong>Perfect for:</strong> Calculating project durations, measuring event lengths, tracking time intervals, finding age or time since an event.</p>
+    </div>
+
+    <div class="time-calc-feature-card">
+        <h4><i class="fas fa-plus-circle"></i> Add or Subtract Time</h4>
+        <p>Take a base date and time and add or subtract any duration from it. Adjust by days, hours, minutes, and seconds to find future or past dates instantly.</p>
+        <p><strong>Perfect for:</strong> Setting deadlines, planning schedules, calculating end times, adjusting for time zones, project milestone planning.</p>
+    </div>
+
+    <div class="time-calc-feature-card">
+        <h4><i class="fas fa-exchange-alt"></i> Time Unit Converter</h4>
+        <p>Convert between different time units including seconds, minutes, hours, days, weeks, months, and years. Instant, accurate conversions for any value.</p>
+        <p><strong>Perfect for:</strong> Scientific calculations, programming tasks, data entry, educational purposes, understanding time relationships.</p>
+    </div>
+
+    <h3>How to Use Each Feature</h3>
+
+    <h4>Time Difference Calculator</h4>
+    <ol>
+        <li>Select your <strong>Start Time</strong> using the date and time picker</li>
+        <li>Select your <strong>End Time</strong> using the date and time picker</li>
+        <li>Click <strong>"Calculate Difference"</strong></li>
+        <li>View the results in multiple formats</li>
+    </ol>
+
+    <h4>Add/Subtract Time Calculator</h4>
+    <ol>
+        <li>Select your <strong>Base Time</strong> - the starting date and time</li>
+        <li>Choose the <strong>Operation</strong> - Add or Subtract</li>
+        <li>Enter the amount of time to add or subtract</li>
+        <li>Click <strong>"Calculate"</strong></li>
+    </ol>
+
+    <h4>Time Converter</h4>
+    <ol>
+        <li>Enter the <strong>Value</strong> you want to convert</li>
+        <li>Select the <strong>From</strong> unit</li>
+        <li>Select the <strong>To</strong> unit</li>
+        <li>Click <strong>"Convert"</strong></li>
+    </ol>
+
+    <h3>Practical Applications</h3>
+
+    <div class="time-calc-feature-card">
+        <h4><i class="fas fa-briefcase"></i> For Professionals</h4>
+        <ul>
+            <li><strong>Project Management:</strong> Calculate task durations and set accurate deadlines</li>
+            <li><strong>HR & Payroll:</strong> Compute work hours and shift durations</li>
+            <li><strong>Event Planning:</strong> Determine event lengths and schedule coordination</li>
+            <li><strong>Healthcare:</strong> Track medication intervals and patient care timing</li>
+        </ul>
+    </div>
+
+    <div class="time-calc-feature-card">
+        <h4><i class="fas fa-graduation-cap"></i> For Students & Educators</h4>
+        <ul>
+            <li><strong>Assignment Planning:</strong> Calculate time until deadlines</li>
+            <li><strong>Study Schedules:</strong> Break down study time into manageable chunks</li>
+            <li><strong>Science Projects:</strong> Measure experiment durations accurately</li>
+            <li><strong>Mathematics:</strong> Understand time unit conversions</li>
+        </ul>
+    </div>
+
+    <h3>Frequently Asked Questions</h3>
+
+    <div class="time-calc-faq-section">
+        <div class="time-calc-faq-item" onclick="toggleTimeFAQ(this)">
+            <div class="time-calc-faq-question">
+                How accurate are the time calculations?
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="time-calc-faq-answer">
+                <div class="time-calc-faq-answer-content">
+                    Our calculator provides precision up to 6 decimal places for all calculations. The backend server performs all calculations to ensure accuracy across all devices and browsers.
+                </div>
+            </div>
+        </div>
+
+        <div class="time-calc-faq-item" onclick="toggleTimeFAQ(this)">
+            <div class="time-calc-faq-question">
+                Does the calculator account for leap years?
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="time-calc-faq-answer">
+                <div class="time-calc-faq-answer-content">
+                    Yes! When calculating time differences that span multiple years, the calculator automatically accounts for leap years.
+                </div>
+            </div>
+        </div>
+
+        <div class="time-calc-faq-item" onclick="toggleTimeFAQ(this)">
+            <div class="time-calc-faq-question">
+                Can I calculate time differences across different time zones?
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="time-calc-faq-answer">
+                <div class="time-calc-faq-answer-content">
+                    The calculator uses the datetime format from your device. For cross-timezone calculations, convert both times to the same timezone first.
+                </div>
+            </div>
+        </div>
+
+        <div class="time-calc-faq-item" onclick="toggleTimeFAQ(this)">
+            <div class="time-calc-faq-question">
+                Is my data stored or tracked?
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="time-calc-faq-answer">
+                <div class="time-calc-faq-answer-content">
+                    No. All calculations are performed on our server only for providing results. We don't store your input data or track your calculations.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h3>Why Choose 21K Tools Time Calculator?</h3>
+
+    <div class="time-calc-feature-card">
+        <h4><i class="fas fa-check-circle"></i> Three Tools in One</h4>
+        <p>No need to switch between different calculators. Get time differences, add/subtract time, and convert units all in one place.</p>
+    </div>
+
+    <div class="time-calc-feature-card">
+        <h4><i class="fas fa-mobile-alt"></i> Works Everywhere</h4>
+        <p>Fully responsive design works perfectly on desktop computers, tablets, and smartphones.</p>
+    </div>
+
+    <div class="time-calc-feature-card">
+        <h4><i class="fas fa-bolt"></i> Instant Results</h4>
+        <p>All calculations happen in real-time. No waiting, no loading screens - just immediate, accurate results.</p>
+    </div>
+
+    <p style="margin-top: 30px; font-size: 1.1rem; color: var(--time-primary); font-weight: 600;">
+        Start calculating now! Select a tab above and experience the easiest way to work with time calculations.
+    </p>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script>
+    // Get CSRF token from Django template
+    const csrftoken = '{{ csrf_token }}';
+
+    // Set default datetime values to now
+    const now = new Date();
+    const nowStr = now.toISOString().slice(0, 16);
+    document.getElementById('time-start-time').value = nowStr;
+    document.getElementById('time-end-time').value = nowStr;
+    document.getElementById('time-base-time').value = nowStr;
+
+    // Tab switching functionality
+    function switchTimeTab(tabId) {
+        document.querySelectorAll('.time-calc-tab-content').forEach(content => {
+            content.classList.remove('active');
+        });
+        
+        document.querySelectorAll('.time-calc-tab').forEach(tab => {
+            tab.classList.remove('active');
+        });
+        
+        document.getElementById('time-' + tabId).classList.add('active');
+        event.currentTarget.classList.add('active');
+    }
+
+    // Time Difference Calculator
+    async function calculateTimeDiff() {
+        const startTime = document.getElementById('time-start-time').value;
+        const endTime = document.getElementById('time-end-time').value;
+        
+        if (!startTime || !endTime) {
+            alert("Please enter both start and end times");
+            return;
+        }
+
+        try {
+            const response = await fetch('{% url "time_difference_api" %}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrftoken
+                },
+                body: JSON.stringify({
+                    start_time: startTime,
+                    end_time: endTime
+                })
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                if (data.is_negative) {
+                    alert("End time is before start time. Showing absolute difference.");
+                }
+                
+                document.getElementById('time-total-diff').textContent = data.formatted_difference;
+                document.getElementById('time-days-diff').textContent = data.total_days;
+                document.getElementById('time-hours-diff').textContent = data.total_hours;
+                document.getElementById('time-minutes-diff').textContent = data.total_minutes;
+                document.getElementById('time-seconds-diff').textContent = data.total_seconds;
+                
+                document.getElementById('time-difference-results').style.display = 'block';
+            } else {
+                alert('Error: ' + data.error);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Calculation failed. Please try again.');
+        }
+    }
+
+    // Add/Subtract Time Calculator
+    async function calculateTimeAddSubtract() {
+        const baseTime = document.getElementById('time-base-time').value;
+        const operation = document.getElementById('time-operation').value;
+        const days = document.getElementById('time-add-days').value || 0;
+        const hours = document.getElementById('time-add-hours').value || 0;
+        const minutes = document.getElementById('time-add-minutes').value || 0;
+        const seconds = document.getElementById('time-add-seconds').value || 0;
+        
+        if (!baseTime) {
+            alert("Please enter a base time");
+            return;
+        }
+
+        try {
+            const response = await fetch('{% url "time_add_subtract_api" %}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrftoken
+                },
+                body: JSON.stringify({
+                    base_time: baseTime,
+                    operation: operation,
+                    days: days,
+                    hours: hours,
+                    minutes: minutes,
+                    seconds: seconds
+                })
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                document.getElementById('time-result-time').textContent = data.result_time;
+                document.getElementById('time-add-subtract-results').style.display = 'block';
+            } else {
+                alert('Error: ' + data.error);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Calculation failed. Please try again.');
+        }
+    }
+
+    // Time Conversion Calculator
+    async function convertTimeUnits() {
+        const value = document.getElementById('time-convert-value').value;
+        const fromUnit = document.getElementById('time-convert-from').value;
+        const toUnit = document.getElementById('time-convert-to').value;
+        
+        if (!value || value < 0) {
+            alert("Please enter a valid positive number");
+            return;
+        }
+
+        try {
+            const response = await fetch('{% url "time_convert_api" %}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrftoken
+                },
+                body: JSON.stringify({
+                    value: value,
+                    from_unit: fromUnit,
+                    to_unit: toUnit
+                })
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                document.getElementById('time-conversion-result').textContent = data.conversion_string;
+                document.getElementById('time-convert-results').style.display = 'block';
+            } else {
+                alert('Error: ' + data.error);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Conversion failed. Please try again.');
+        }
+    }
+
+    // Auto-convert on input change
+    document.getElementById('time-convert-value').addEventListener('input', convertTimeUnits);
+
+    // Copy result function
+    function copyTimeResult(type) {
+        let textToCopy = '';
+        
+        if (type === 'difference') {
+            textToCopy = document.getElementById('time-total-diff').textContent;
+        } else if (type === 'add-subtract') {
+            textToCopy = document.getElementById('time-result-time').textContent;
+        } else if (type === 'convert') {
+            textToCopy = document.getElementById('time-conversion-result').textContent;
+        }
+        
+        if (textToCopy) {
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                const button = event.target.closest('button');
+                const originalHTML = button.innerHTML;
+                button.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                button.style.background = '#28a745';
+                button.style.color = 'white';
+                
+                setTimeout(() => {
+                    button.innerHTML = originalHTML;
+                    button.style.background = '';
+                    button.style.color = '';
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy:', err);
+                alert('Failed to copy to clipboard');
+            });
+        }
+    }
+
+    // Open share modal
+   function openTimeShareModal(type) {
+    let shareHTML = '';
+    
+    if (type === 'difference') {
+        const startTime = document.getElementById('time-start-time').value;
+        const endTime = document.getElementById('time-end-time').value;
+        const totalDiff = document.getElementById('time-total-diff').textContent;
+        const days = document.getElementById('time-days-diff').textContent;
+        const hours = document.getElementById('time-hours-diff').textContent;
+        const minutes = document.getElementById('time-minutes-diff').textContent;
+        
+        if (!totalDiff || totalDiff === '') return;
+        
+        shareHTML = `
+            <div class="time-calc-share-card">
+                <h4><i class="fas fa-calendar-minus"></i> Time Difference Calculation</h4>
+                <div class="share-input-section">
+                    <div class="share-input-row">
+                        <span class="share-label"><i class="fas fa-play-circle"></i> Start Time:</span>
+                        <span class="share-value">${formatDateTime(startTime)}</span>
+                    </div>
+                    <div class="share-input-row">
+                        <span class="share-label"><i class="fas fa-stop-circle"></i> End Time:</span>
+                        <span class="share-value">${formatDateTime(endTime)}</span>
+                    </div>
+                </div>
+                <div class="share-divider"></div>
+                <div class="share-result-label"><i class="fas fa-clock"></i> Total Duration:</div>
+                <div class="time-calc-share-value">${totalDiff}</div>
+                <div class="share-additional-info">
+                    <div><i class="fas fa-calendar-day"></i> ${days}</div>
+                    <div><i class="fas fa-hourglass-half"></i> ${hours}</div>
+                </div>
+                <div class="share-additional-info" style="border-top: none; padding-top: 5px;">
+                    <div><i class="fas fa-clock"></i> ${minutes}</div>
+                </div>
+                <div class="time-calc-share-footer">
+                    <div><i class="far fa-calendar-alt"></i> ${new Date().toLocaleString()}</div>
+                    <div style="margin-top: 10px; font-weight: 600;"></i> ©21K Tools</div>
+                </div>
+            </div>
+        `;
+        
+    } else if (type === 'add-subtract') {
+        const baseTime = document.getElementById('time-base-time').value;
+        const operation = document.getElementById('time-operation').value;
+        const days = document.getElementById('time-add-days').value || 0;
+        const hours = document.getElementById('time-add-hours').value || 0;
+        const minutes = document.getElementById('time-add-minutes').value || 0;
+        const seconds = document.getElementById('time-add-seconds').value || 0;
+        const resultTime = document.getElementById('time-result-time').textContent;
+        
+        if (!resultTime || resultTime === '') return;
+        
+        const operationIcon = operation === 'add' ? 'fa-plus-circle' : 'fa-minus-circle';
+        const operationText = operation === 'add' ? 'Adding Time' : 'Subtracting Time';
+        const operationSymbol = operation === 'add' ? '+' : '-';
+        
+        shareHTML = `
+            <div class="time-calc-share-card">
+                <h4><i class="fas ${operationIcon}"></i> ${operationText}</h4>
+                <div class="share-input-section">
+                    <div class="share-input-row">
+                        <span class="share-label"><i class="fas fa-calendar-alt"></i> Base Time:</span>
+                        <span class="share-value">${formatDateTime(baseTime)}</span>
+                    </div>
+                    <div class="share-input-row">
+                        <span class="share-label"><i class="fas fa-cog"></i> Operation:</span>
+                        <span class="share-value">${operationSymbol} ${days}d ${hours}h ${minutes}m ${seconds}s</span>
+                    </div>
+                </div>
+                <div class="share-divider"></div>
+                <div class="share-result-label"><i class="fas fa-check-circle"></i> Result:</div>
+                <div class="time-calc-share-value">${resultTime}</div>
+                <div class="time-calc-share-footer">
+                    <div><i class="far fa-calendar-alt"></i> ${new Date().toLocaleString()}</div>
+                    <div style="margin-top: 10px; font-weight: 600;"><i class="fas fa-tools"></i> 21K Tools</div>
+                </div>
+            </div>
+        `;
+        
+    } else if (type === 'convert') {
+        const value = document.getElementById('time-convert-value').value;
+        const fromUnit = document.getElementById('time-convert-from').value;
+        const toUnit = document.getElementById('time-convert-to').value;
+        const result = document.getElementById('time-conversion-result').textContent;
+        
+        if (!result || result === '') return;
+        
+        shareHTML = `
+            <div class="time-calc-share-card">
+                <h4><i class="fas fa-exchange-alt"></i> Time Unit Conversion</h4>
+                <div class="share-input-section">
+                    <div class="share-input-row">
+                        <span class="share-label"><i class="fas fa-arrow-right"></i> From:</span>
+                        <span class="share-value">${value} ${fromUnit}</span>
+                    </div>
+                    <div class="share-input-row">
+                        <span class="share-label"><i class="fas fa-bullseye"></i> To:</span>
+                        <span class="share-value">${toUnit}</span>
+                    </div>
+                </div>
+                <div class="share-divider"></div>
+                <div class="share-result-label"><i class="fas fa-equals"></i> Result:</div>
+                <div class="time-calc-share-value">${result}</div>
+                <div class="time-calc-share-footer">
+                    <div><i class="far fa-calendar-alt"></i> ${new Date().toLocaleString()}</div>
+                    <div style="margin-top: 10px; font-weight: 600;">©21K Tools</div>
+                </div>
+            </div>
+        `;
+    }
+    
+    if (shareHTML) {
+        document.getElementById('timeCalcShareCardContainer').innerHTML = shareHTML;
+        document.getElementById('timeCalcShareModal').classList.add('active');
+    }
+}
+
+// Helper function to format datetime
+function formatDateTime(datetimeStr) {
+    if (!datetimeStr) return 'N/A';
+    const date = new Date(datetimeStr);
+    return date.toLocaleString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+    });
+}
+
+    // Close share modal
+    function closeTimeShareModal() {
+        document.getElementById('timeCalcShareModal').classList.remove('active');
+    }
+
+    // Download share card as image
+    function downloadTimeShareCard() {
+        const shareCard = document.getElementById('timeCalcShareCardContainer');
+        
+        html2canvas(shareCard, {
+            backgroundColor: '#ffffff',
+            scale: 2,
+            logging: false
+        }).then(canvas => {
+            const link = document.createElement('a');
+            link.download = `time-calculation-${Date.now()}.png`;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }).catch(err => {
+            console.error('Failed to generate image:', err);
+            alert('Failed to generate image. Please try again.');
+        });
+    }
+
+    // Reset calculator
+    function resetTimeCalculator(type) {
+        if (type === 'difference') {
+            const now = new Date().toISOString().slice(0, 16);
+            document.getElementById('time-start-time').value = now;
+            document.getElementById('time-end-time').value = now;
+            document.getElementById('time-difference-results').style.display = 'none';
+        } else if (type === 'add-subtract') {
+            const now = new Date().toISOString().slice(0, 16);
+            document.getElementById('time-base-time').value = now;
+            document.getElementById('time-add-days').value = 0;
+            document.getElementById('time-add-hours').value = 0;
+            document.getElementById('time-add-minutes').value = 0;
+            document.getElementById('time-add-seconds').value = 0;
+            document.getElementById('time-add-subtract-results').style.display = 'none';
+        } else if (type === 'convert') {
+            document.getElementById('time-convert-value').value = 1;
+            document.getElementById('time-convert-results').style.display = 'none';
+        }
+    }
+
+    // Close modal on outside click
+    document.getElementById('timeCalcShareModal').addEventListener('click', function(e) {
+        if (e.target === this) {
+            closeTimeShareModal();
+        }
+    });
+
+    // Toggle FAQ items
+    function toggleTimeFAQ(element) {
+        const wasActive = element.classList.contains('active');
+        
+        document.querySelectorAll('.time-calc-faq-item').forEach(item => {
+            item.classList.remove('active');
+        });
+        
+        if (!wasActive) {
+            element.classList.add('active');
+        }
+    }
+
+    // Close modal with Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeTimeShareModal();
+        }
+    });
+</script>
+{% endblock %}

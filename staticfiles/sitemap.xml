@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+                            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+
+  <!-- Homepage -->
+  <url>
+    <loc>https://21k.tools/</loc>
+    <lastmod>2025-08-12T06:49:54+00:00</lastmod>
+    <priority>1.00</priority>
+    <changefreq>daily</changefreq>
+  </url>
+
+  <!-- Main Navigation Pages -->
+  <url>
+    <loc>https://21k.tools/help/</loc>
+    <lastmod>2025-08-03T06:49:54+00:00</lastmod>
+    <priority>0.80</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+
+  <url>
+    <loc>https://21k.tools/about/</loc>
+    <lastmod>2025-08-03T06:49:54+00:00</lastmod>
+    <priority>0.80</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+
+  <!-- Legal Pages -->
+  <url>
+    <loc>https://21k.tools/privacypolicy/</loc>
+    <lastmod>2025-08-03T06:49:54+00:00</lastmod>
+    <priority>0.60</priority>
+    <changefreq>yearly</changefreq>
+  </url>
+
+  <url>
+    <loc>https://21k.tools/termsandconditions/</loc>
+    <lastmod>2025-08-03T06:49:54+00:00</lastmod>
+    <priority>0.60</priority>
+    <changefreq>yearly</changefreq>
+  </url>
+
+  <!-- Calculator Tools -->
+  <url>
+    <loc>https://21k.tools/agecalculator/</loc>
+    <lastmod>2025-08-03T06:49:54+00:00</lastmod>
+    <priority>0.90</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+
+  <url>
+    <loc>https://21k.tools/timecalculator/</loc>
+    <lastmod>2025-08-12T06:49:54+00:00</lastmod>
+    <priority>0.90</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+
+  <url>
+    <loc>https://21k.tools/interestcalculator/</loc>
+    <lastmod>2025-08-19T03:50:44+00:00</lastmod>
+    <priority>0.90</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+
+  <url>
+    <loc>https://21k.tools/unitconverter/</loc>
+    <lastmod>2025-08-22T00:30:44+00:00</lastmod>
+    <priority>0.90</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+
+  <url>
+    <loc>https://21k.tools/pdftools/</loc>
+    <lastmod>2025-09-17T00:30:44+00:00</lastmod>
+    <priority>0.90</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+
+</urlset>

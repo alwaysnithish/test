@@ -1,0 +1,106 @@
+{% extends 'shortener/base.html' %}
+
+{% block title %}Analytics - {{ short_url.short_code }}{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title mb-0">Analytics for {{ short_url.short_code }}</h2>
+            </div>
+            <div class="card-body">
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <div class="card bg-primary text-white">
+                            <div class="card-body text-center">
+                                <h3 class="card-title">{{ short_url.clicks }}</h3>
+                                <p class="card-text">Total Clicks</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card bg-info text-white">
+                            <div class="card-body text-center">
+                                <h3 class="card-title">{{ short_url.created_at|date:"M d, Y" }}</h3>
+                                <p class="card-text">Created On</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mb-3">
+                    <strong>Original URL:</strong> 
+                    <a href="{{ short_url.original_url }}" target="_blank" class="text-break">
+                        {{ short_url.original_url }}
+                    </a>
+                </div>
+                
+                <div class="mb-3">
+                    <strong>Short URL:</strong> 
+                    <a href="{% url 'shortener:redirect' short_url.short_code %}" target="_blank">
+                        {{ request.get_host }}{% url 'shortener:redirect' short_url.short_code %}
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        {% if click_events %}
+        <div class="card mt-4">
+            <div class="card-header">
+                <h4 class="card-title mb-0">Recent Clicks</h4>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Timestamp</th>
+                                <th>IP Address</th>
+                                <th>Referrer</th>
+                                <th>User Agent</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for click in click_events %}
+                            <tr>
+                                <td>{{ click.timestamp|date:"M d, Y H:i:s" }}</td>
+                                <td>{{ click.ip_address }}</td>
+                                <td>
+                                    {% if click.referrer %}
+                                        <a href="{{ click.referrer }}" target="_blank" class="text-truncate d-inline-block" style="max-width: 200px;">
+                                            {{ click.referrer }}
+                                        </a>
+                                    {% else %}
+                                        <em class="text-muted">Direct</em>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <span class="text-truncate d-inline-block" style="max-width: 300px;" title="{{ click.user_agent }}">
+                                        {{ click.user_agent|truncatechars:50 }}
+                                    </span>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                
+                {% if click_events|length >= 100 %}
+                <div class="text-muted text-center mt-3">
+                    <small>Showing the most recent 100 clicks</small>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% else %}
+        <div class="card mt-4">
+            <div class="card-body text-center text-muted">
+                <h5>No clicks yet</h5>
+                <p>Share your short URL to start seeing analytics data here.</p>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

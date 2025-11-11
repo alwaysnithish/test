@@ -1,0 +1,947 @@
+{% extends 'blog/base1.html' %}
+
+{% block title %}Image Resizer - Free Online Image Resizing Tool | 21K Tools{% endblock %}
+
+{% block extra_css %}
+<style>
+    :root {
+        --primary: #2563eb;
+        --primary-dark: #1d4ed8;
+        --primary-light: #dbeafe;
+        --secondary: #64748b;
+        --success: #10b981;
+        --warning: #f59e0b;
+        --danger: #ef4444;
+        --text-dark: #0f172a;
+        --border: #e2e8f0;
+        --bg-light: #f9fafb;
+    }
+
+    body {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+    }
+
+    /* Hero Section */
+    .resizer-hero {
+        color: white;
+        padding: 80px 20px 60px;
+        text-align: center;
+    }
+
+    .resizer-hero h1 {
+        font-size: clamp(2rem, 4vw, 2.8rem);
+        font-weight: 900;
+        margin-bottom: 12px;
+        letter-spacing: -0.5px;
+    }
+
+    .resizer-hero p {
+        font-size: clamp(1rem, 1.2vw, 1.2rem);
+        opacity: 0.95;
+        max-width: 700px;
+        margin: 0 auto;
+    }
+
+    /* Main Container */
+    .resizer-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 40px 20px 80px;
+    }
+
+    /* Card Styles */
+    .resizer-card {
+        background: white;
+        border-radius: 20px;
+        padding: 40px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        margin-bottom: 30px;
+    }
+
+    /* Upload Area */
+    .upload-area {
+        border: 3px dashed var(--border);
+        border-radius: 16px;
+        padding: 60px 20px;
+        text-align: center;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        background: var(--bg-light);
+        position: relative;
+    }
+
+    .upload-area:hover {
+        border-color: var(--primary);
+        background: var(--primary-light);
+    }
+
+    .upload-area.dragover {
+        border-color: var(--primary);
+        background: var(--primary-light);
+        transform: scale(1.02);
+    }
+
+    .upload-icon {
+        font-size: 4rem;
+        color: var(--primary);
+        margin-bottom: 20px;
+    }
+
+    .upload-text h3 {
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: var(--text-dark);
+        margin-bottom: 10px;
+    }
+
+    .upload-text p {
+        color: var(--secondary);
+        font-size: 0.95rem;
+    }
+
+    .file-input {
+        display: none;
+    }
+
+    /* Options Grid */
+    .options-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 24px;
+        margin: 30px 0;
+    }
+
+    .option-group {
+        background: var(--bg-light);
+        padding: 24px;
+        border-radius: 12px;
+        border: 2px solid var(--border);
+    }
+
+    .option-group h4 {
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--text-dark);
+        margin-bottom: 16px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .option-group h4 i {
+        color: var(--primary);
+    }
+
+    .input-field {
+        width: 100%;
+        padding: 12px 16px;
+        border: 2px solid var(--border);
+        border-radius: 10px;
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
+        margin-bottom: 12px;
+    }
+
+    .input-field:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+
+    .checkbox-group {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin: 10px 0;
+    }
+
+    .checkbox-group input[type="checkbox"] {
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+    }
+
+    .checkbox-group label {
+        font-size: 0.9rem;
+        color: var(--secondary);
+        cursor: pointer;
+    }
+
+    /* Preview Area */
+    .preview-area {
+        display: none;
+        margin: 30px 0;
+        padding: 30px;
+        background: var(--bg-light);
+        border-radius: 12px;
+        border: 2px solid var(--border);
+    }
+
+    .preview-area.active {
+        display: block;
+    }
+
+    .preview-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+        margin-bottom: 20px;
+    }
+
+    .preview-box {
+        text-align: center;
+    }
+
+    .preview-box h5 {
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: var(--secondary);
+        margin-bottom: 16px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .preview-image {
+        max-width: 100%;
+        max-height: 400px;
+        border-radius: 12px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+        border: 2px solid var(--border);
+    }
+
+    .preview-info {
+        margin-top: 16px;
+        padding: 16px;
+        background: white;
+        border-radius: 8px;
+        font-size: 0.85rem;
+        color: var(--secondary);
+        text-align: left;
+    }
+
+    .preview-info div {
+        margin: 6px 0;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .preview-info strong {
+        color: var(--text-dark);
+    }
+
+    /* Buttons */
+    .btn-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        justify-content: center;
+        margin-top: 30px;
+    }
+
+    .btn {
+        padding: 14px 30px;
+        border: none;
+        border-radius: 12px;
+        font-weight: 700;
+        font-size: 0.95rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        text-decoration: none;
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        color: white;
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(37, 99, 235, 0.3);
+    }
+
+    .btn-success {
+        bckground: linear-gradient(135deg, var(--success), #059669);
+        coor: white;
+    }
+
+    .btn-success:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
+    }
+
+    .btn-secondary {
+        background: var(--secondary);
+        color: white;
+    }
+
+    .btn-secondary:hover {
+        background: #475569;
+        transform: translateY(-2px);
+    }
+
+    .btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        transform: none !important;
+    }
+
+    /* Loading Spinner */
+    .spinner {
+        display: none;
+        border: 4px solid var(--border);
+        border-top: 4px solid var(--primary);
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        animation: spin 1s linear infinite;
+        margin: 20px auto;
+    }
+
+    .spinner.active {
+        display: block;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    /* Alert Messages */
+    .alert {
+        padding: 16px 20px;
+        border-radius: 12px;
+        margin-bottom: 20px;
+        display: none;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .alert.active {
+        display: flex;
+    }
+
+    .alert-success {
+        background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(5, 150, 105, 0.1));
+        color: #065f46;
+        border: 2px solid #10b981;
+    }
+
+    .alert-error {
+        background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(220, 38, 38, 0.1));
+        color: #7f1d1d;
+        border: 2px solid #ef4444;
+    }
+
+    /* Features Grid */
+    .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 24px;
+        margin: 50px 0;
+    }
+
+    .feature-card {
+        background: white;
+        padding: 30px;
+        border-radius: 16px;
+        text-align: center;
+        border: 2px solid var(--border);
+        transition: all 0.3s ease;
+    }
+
+    .feature-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+        border-color: var(--primary);
+    }
+
+    .feature-icon {
+        font-size: 2.5rem;
+        color: var(--primary);
+        margin-bottom: 16px;
+    }
+
+    .feature-card h3 {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--text-dark);
+        margin-bottom: 10px;
+    }
+
+    .feature-card p {
+        color: var(--secondary);
+        font-size: 0.9rem;
+        line-height: 1.6;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .resizer-card {
+            padding: 24px;
+        }
+
+        .upload-area {
+            padding: 40px 20px;
+        }
+
+        .upload-icon {
+            font-size: 3rem;
+        }
+
+        .options-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .preview-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .btn-container {
+            flex-direction: column;
+        }
+
+        .btn {
+            width: 100%;
+            justify-content: center;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .resizer-hero {
+            padding: 60px 20px 40px;
+        }
+
+        .resizer-hero h1 {
+            font-size: 1.8rem;
+        }
+
+        .resizer-card {
+            padding: 20px;
+        }
+
+        .features-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="resizer-hero">
+    <h1><i class="fas fa-image"></i> Image Resizer</h1>
+    <p>Resize, enhance, and convert images with professional quality. No signup required, 100% private.</p>
+</section>
+
+<!-- Main Container -->
+<div class="resizer-container">
+    <!-- Alert Messages -->
+    <div id="alertSuccess" class="alert alert-success">
+        <i class="fas fa-check-circle"></i>
+        <span id="alertSuccessText"></span>
+    </div>
+    <div id="alertError" class="alert alert-error">
+        <i class="fas fa-exclamation-circle"></i>
+        <span id="alertErrorText"></span>
+    </div>
+
+    <!-- Main Card -->
+    <div class="resizer-card">
+        <!-- Upload Area -->
+        <div id="uploadArea" class="upload-area">
+            <div class="upload-icon">
+                <i class="fas fa-cloud-upload-alt"></i>
+            </div>
+            <div class="upload-text">
+                <h3>Drop your image here or click to browse</h3>
+                <p>Supports: JPG, PNG, GIF, BMP, TIFF, WEBP, HEIC (Max 10MB)</p>
+            </div>
+            <input type="file" id="fileInput" class="file-input" accept="image/*" />
+        </div>
+
+        <!-- Options Grid -->
+        <div id="optionsSection" style="display: none;">
+            <div class="options-grid">
+                <!-- Resize Options -->
+                <div class="option-group">
+                    <h4><i class="fas fa-expand-arrows-alt"></i> Resize By</h4>
+                    <select id="resizeMethod" class="input-field">
+                        <option value="percentage">Percentage</option>
+                        <option value="dimensions">Custom Dimensions</option>
+                    </select>
+                    
+                    <div id="percentageOption">
+                        <input type="number" id="percentage" class="input-field" placeholder="e.g., 50 for 50%" min="1" max="500" />
+                    </div>
+                    
+                    <div id="dimensionsOption" style="display: none;">
+                        <input type="number" id="width" class="input-field" placeholder="Width (px)" min="1" />
+                        <input type="number" id="height" class="input-field" placeholder="Height (px)" min="1" />
+                    </div>
+                    
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="maintainAspect" checked />
+                        <label for="maintainAspect">Maintain aspect ratio</label>
+                    </div>
+                </div>
+
+                <!-- Output Format -->
+                <div class="option-group">
+                    <h4><i class="fas fa-file-image"></i> Output Format</h4>
+                    <select id="outputFormat" class="input-field">
+                        <option value="PNG">PNG (Best Quality)</option>
+                        <option value="JPG">JPG (Smaller Size)</option>
+                        <option value="WEBP">WEBP (Modern)</option>
+                        <option value="GIF">GIF</option>
+                        <option value="BMP">BMP</option>
+                        <option value="TIFF">TIFF</option>
+                    </select>
+                </div>
+
+                <!-- Advanced Options -->
+                <div class="option-group">
+                    <h4><i class="fas fa-magic"></i> Enhancements</h4>
+                    
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="enhance" />
+                        <label for="enhance">AI Enhancement</label>
+                    </div>
+                    
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="removeBg" />
+                        <label for="removeBg">Remove Background</label>
+                    </div>
+                    
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="compress" />
+                        <label for="compress">Optimize for Web</label>
+                    </div>
+                    
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="preserveExif" checked />
+                        <label for="preserveExif">Preserve EXIF Data</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="btn-container">
+                <button id="previewBtn" class="btn btn-primary">
+                    <i class="fas fa-eye"></i> Preview
+                </button>
+                <button id="processBtn" class="btn btn-success">
+                    <i class="fas fa-download"></i> Process & Download
+                </button>
+                <button id="resetBtn" class="btn btn-secondary">
+                    <i class="fas fa-redo"></i> Reset
+                </button>
+            </div>
+
+            <!-- Loading Spinner -->
+            <div id="spinner" class="spinner"></div>
+        </div>
+
+        <!-- Preview Area -->
+        <div id="previewArea" class="preview-area">
+            <h3 style="text-align: center; margin-bottom: 30px; color: var(--text-dark); font-weight: 700;">
+                <i class="fas fa-eye"></i> Image Preview
+            </h3>
+            <div class="preview-grid">
+                <div class="preview-box">
+                    <h5>Original</h5>
+                    <img id="originalPreview" class="preview-image" alt="Original" />
+                    <div class="preview-info">
+                        <div><strong>Dimensions:</strong> <span id="originalDimensions"></span></div>
+                        <div><strong>File Size:</strong> <span id="originalSize"></span></div>
+                    </div>
+                </div>
+                <div class="preview-box">
+                    <h5>Resized</h5>
+                    <img id="resizedPreview" class="preview-image" alt="Resized" />
+                    <div class="preview-info">
+                        <div><strong>Dimensions:</strong> <span id="resizedDimensions"></span></div>
+                        <div><strong>Estimated Size:</strong> <span id="resizedSize"></span></div>
+                        <div><strong>Size Change:</strong> <span id="sizeChange"></span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <div class="features-grid">
+        <div class="feature-card">
+            <div class="feature-icon">
+                <i class="fas fa-shield-alt"></i>
+            </div>
+            <h3>100% Private</h3>
+            <p>All processing happens securely. No images are stored on our servers.</p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">
+                <i class="fas fa-bolt"></i>
+            </div>
+            <h3>Lightning Fast</h3>
+            <p>Advanced algorithms ensure quick processing without compromising quality.</p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">
+                <i class="fas fa-star"></i>
+            </div>
+            <h3>Professional Quality</h3>
+            <p>Uses Lanczos resampling for the highest quality results.</p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">
+                <i class="fas fa-paint-brush"></i>
+            </div>
+            <h3>AI Enhancement</h3>
+            <p>Optional AI-powered enhancement for sharper, clearer images.</p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">
+                <i class="fas fa-cut"></i>
+            </div>
+            <h3>Background Removal</h3>
+            <p>Automatically remove backgrounds with one click.</p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h3>Accurate Sizing</h3>
+            <p>Get exact dimensions you specify with pixel-perfect accuracy.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Global variables
+    let uploadedFile = null;
+    const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
+
+    // DOM Elements
+    const uploadArea = document.getElementById('uploadArea');
+    const fileInput = document.getElementById('fileInput');
+    const optionsSection = document.getElementById('optionsSection');
+    const previewArea = document.getElementById('previewArea');
+    const resizeMethod = document.getElementById('resizeMethod');
+    const percentageOption = document.getElementById('percentageOption');
+    const dimensionsOption = document.getElementById('dimensionsOption');
+    const previewBtn = document.getElementById('previewBtn');
+    const processBtn = document.getElementById('processBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const spinner = document.getElementById('spinner');
+
+    // Alert functions
+    function showSuccess(message) {
+        const alert = document.getElementById('alertSuccess');
+        document.getElementById('alertSuccessText').textContent = message;
+        alert.classList.add('active');
+        setTimeout(() => alert.classList.remove('active'), 5000);
+    }
+
+    function showError(message) {
+        const alert = document.getElementById('alertError');
+        document.getElementById('alertErrorText').textContent = message;
+        alert.classList.add('active');
+        setTimeout(() => alert.classList.remove('active'), 5000);
+    }
+
+    // File validation
+    function validateFile(file) {
+        const validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 
+                           'image/bmp', 'image/tiff', 'image/webp', 'image/heic'];
+        
+        if (!validTypes.includes(file.type)) {
+            showError('Invalid file type. Please upload an image file.');
+            return false;
+        }
+        
+        if (file.size > MAX_FILE_SIZE) {
+            showError('File size exceeds 10MB limit.');
+            return false;
+        }
+        
+        return true;
+    }
+
+    // Format file size
+    function formatFileSize(bytes) {
+        if (bytes === 0) return '0 Bytes';
+        const k = 1024;
+        const sizes = ['Bytes', 'KB', 'MB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i];
+    }
+
+    // Upload area click
+    uploadArea.addEventListener('click', () => fileInput.click());
+
+    // Drag and drop
+    uploadArea.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        uploadArea.classList.add('dragover');
+    });
+
+    uploadArea.addEventListener('dragleave', () => {
+        uploadArea.classList.remove('dragover');
+    });
+
+    uploadArea.addEventListener('drop', (e) => {
+        e.preventDefault();
+        uploadArea.classList.remove('dragover');
+        
+        const files = e.dataTransfer.files;
+        if (files.length > 0) {
+            handleFileUpload(files[0]);
+        }
+    });
+
+    // Single file upload
+    fileInput.addEventListener('change', (e) => {
+        if (e.target.files.length > 0) {
+            handleFileUpload(e.target.files[0]);
+        }
+    });
+
+    // Handle file upload
+    function handleFileUpload(file) {
+        if (!validateFile(file)) return;
+        
+        uploadedFile = file;
+        
+        // Show preview of original
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            document.getElementById('originalPreview').src = e.target.result;
+            
+            // Get image dimensions
+            const img = new Image();
+            img.onload = () => {
+                document.getElementById('originalDimensions').textContent = `${img.width} × ${img.height} px`;
+                document.getElementById('originalSize').textContent = formatFileSize(file.size);
+            };
+            img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+        
+        optionsSection.style.display = 'block';
+        showSuccess('Image uploaded successfully!');
+    }
+
+    // Resize method change
+    resizeMethod.addEventListener('change', function() {
+        if (this.value === 'percentage') {
+            percentageOption.style.display = 'block';
+            dimensionsOption.style.display = 'none';
+        } else {
+            percentageOption.style.display = 'none';
+            dimensionsOption.style.display = 'block';
+        }
+    });
+
+    // Preview button
+    previewBtn.addEventListener('click', async () => {
+        if (!uploadedFile) {
+            showError('Please upload an image first.');
+            return;
+        }
+        
+        const formData = new FormData();
+        formData.append('image', uploadedFile);
+        
+        // Get resize parameters
+        if (resizeMethod.value === 'percentage') {
+            const pct = document.getElementById('percentage').value;
+            if (!pct) {
+                showError('Please enter a percentage value.');
+                return;
+            }
+            formData.append('percentage', pct);
+        } else {
+            const width = document.getElementById('width').value;
+            const height = document.getElementById('height').value;
+            if (!width && !height) {
+                showError('Please enter at least width or height.');
+                return;
+            }
+            if (width) formData.append('width', width);
+            if (height) formData.append('height', height);
+        }
+        
+        formData.append('maintain_aspect', document.getElementById('maintainAspect').checked);
+        
+        spinner.classList.add('active');
+        previewBtn.disabled = true;
+        
+        try {
+            const response = await fetch('/imageresizer/preview/', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-CSRFToken': getCookie('csrftoken')
+                }
+            });
+            
+            if (!response.ok) {
+                const error = await response.json();
+                throw new Error(error.error || 'Preview failed');
+            }
+            
+            const data = await response.json();
+            
+            // Update preview
+            document.getElementById('resizedPreview').src = data.preview;
+            document.getElementById('resizedDimensions').textContent = 
+                `${data.new_dimensions.width} × ${data.new_dimensions.height} px`;
+            document.getElementById('resizedSize').textContent = formatFileSize(data.file_size);
+            
+            // Calculate size change
+            const sizeChange = ((data.file_size - data.original_size) / data.original_size * 100).toFixed(1);
+            const sizeChangeEl = document.getElementById('sizeChange');
+            if (sizeChange > 0) {
+                sizeChangeEl.textContent = `+${sizeChange}% (larger)`;
+                sizeChangeEl.style.color = '#ef4444';
+            } else {
+                sizeChangeEl.textContent = `${sizeChange}% (smaller)`;
+                sizeChangeEl.style.color = '#10b981';
+            }
+            
+            previewArea.classList.add('active');
+            showSuccess('Preview generated successfully!');
+            
+        } catch (error) {
+            showError(error.message);
+        } finally {
+            spinner.classList.remove('active');
+            previewBtn.disabled = false;
+        }
+    });
+
+    // Process button
+    processBtn.addEventListener('click', async () => {
+        if (!uploadedFile) {
+            showError('Please upload an image first.');
+            return;
+        }
+        
+        const formData = new FormData();
+        formData.append('image', uploadedFile);
+        formData.append('operation', 'resize');
+        
+        // Get resize parameters
+        if (resizeMethod.value === 'percentage') {
+            const pct = document.getElementById('percentage').value;
+            if (!pct) {
+                showError('Please enter a percentage value.');
+                return;
+            }
+            formData.append('percentage', pct);
+        } else {
+            const width = document.getElementById('width').value;
+            const height = document.getElementById('height').value;
+            if (!width && !height) {
+                showError('Please enter at least width or height.');
+                return;
+            }
+            if (width) formData.append('width', width);
+            if (height) formData.append('height', height);
+        }
+        
+        formData.append('maintain_aspect', document.getElementById('maintainAspect').checked);
+        formData.append('output_format', document.getElementById('outputFormat').value);
+        formData.append('enhance', document.getElementById('enhance').checked);
+        formData.append('remove_bg', document.getElementById('removeBg').checked);
+        formData.append('compress', document.getElementById('compress').checked);
+        formData.append('preserve_exif', document.getElementById('preserveExif').checked);
+        
+        spinner.classList.add('active');
+        processBtn.disabled = true;
+        
+        try {
+            const response = await fetch('/imageresizer/process/', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-CSRFToken': getCookie('csrftoken')
+                }
+            });
+            
+            if (!response.ok) {
+                const error = await response.json();
+                throw new Error(error.error || 'Processing failed');
+            }
+            
+            // Download file
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `resized_image_${Date.now()}.${document.getElementById('outputFormat').value.toLowerCase()}`;
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+            document.body.removeChild(a);
+            
+            showSuccess('Image processed and downloaded successfully!');
+            
+        } catch (error) {
+            showError(error.message);
+        } finally {
+            spinner.classList.remove('active');
+            processBtn.disabled = false;
+        }
+    });
+
+    // Reset button
+    resetBtn.addEventListener('click', () => {
+        uploadedFile = null;
+        fileInput.value = '';
+        optionsSection.style.display = 'none';
+        previewArea.classList.remove('active');
+        
+        // Reset form values
+        document.getElementById('percentage').value = '';
+        document.getElementById('width').value = '';
+        document.getElementById('height').value = '';
+        document.getElementById('maintainAspect').checked = true;
+        document.getElementById('enhance').checked = false;
+        document.getElementById('removeBg').checked = false;
+        document.getElementById('compress').checked = false;
+        document.getElementById('preserveExif').checked = true;
+        resizeMethod.value = 'percentage';
+        percentageOption.style.display = 'block';
+        dimensionsOption.style.display = 'none';
+        
+        showSuccess('Form reset successfully!');
+    });
+
+    // Get CSRF token
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+</script>
+{% endblock %}
