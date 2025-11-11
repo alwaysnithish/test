@@ -10,7 +10,8 @@ from django.views.decorators.csrf import csrf_exempt
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.views.decorators.http import require_http_methods
 import piexif
-from rembg import remove
+from rembg import remove, new_session
+session = new_session("u2netp")
 from datetime import datetime, timedelta
 import threading
 import time
@@ -141,16 +142,15 @@ def compress_for_web(img, quality=85):
 
 def remove_background(img):
     """Remove background from image"""
-    # Convert PIL Image to bytes
     img_byte_arr = io.BytesIO()
     img.save(img_byte_arr, format='PNG')
     img_byte_arr = img_byte_arr.getvalue()
     
-    # Remove background
-    output = remove(img_byte_arr)
+    # ✅ Just add `session=session` below (everything else stays same)
+    output = remove(img_byte_arr, session=session)
     
-    # Convert back to PIL Image
     return Image.open(io.BytesIO(output))
+    
 
 @require_http_methods(["GET"])
 def image_resizer_view(request):
