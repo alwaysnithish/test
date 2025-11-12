@@ -650,6 +650,7 @@ a:hover {
                         <a href="https://21k.tools/unitconverter"><i class="fas fa-balance-scale"></i> Unit Converter</a>
                         <a href="https://21k.tools/timecalculator"><i class="fas fa-stopwatch"></i> Time Calculator</a>
                 </div>
+               </div>
                 
                 <a href="{% url 'blog_list' %}" class="nav-link">
                     <i class="fas fa-blog"></i>
@@ -667,10 +668,10 @@ a:hover {
                 </a>
 
                 {% if user.is_authenticated and user.is_staff %}
-                <!--a href="{% url 'dashboard' %}" class="nav-link">
+                <a href="{% url 'dashboard' %}" class="nav-link">
                     <i class="fas fa-chart-line"></i>
                     <span>Dashboard</span>
-                </a-->
+                </a>
                 {% endif %}
             </div>
         </nav>
