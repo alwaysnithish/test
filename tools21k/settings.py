@@ -164,8 +164,17 @@ CKEDITOR_CONFIGS = {
         'removePlugins': 'image',
         'image2_alignClasses': ['image-left', 'image-center', 'image-right'],
         'image2_captionedClass': 'image-captioned',
+        
+        # CRITICAL: Disable content filtering to preserve custom HTML/CSS
+        'allowedContent': True,
+        'extraAllowedContent': '*(*){*}[*]',  # Allow all tags, classes, styles, and attributes
+        'fillEmptyBlocks': False,
+        'forcePasteAsPlainText': False,
+        'enterMode': 2,  # CKEDITOR.ENTER_BR
+        'fullPage': True,  # Allow full HTML page editing
     },
 }
+
 
 # Authentication Configuration
 LOGIN_URL = 'login'
