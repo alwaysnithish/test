@@ -392,7 +392,7 @@ def blog_list(request):
     selected_categories = request.GET.getlist('category')
     sort = request.GET.get('sort', '-published_at')
     
-    posts = BlogPost.objects.filter(status='published')
+    posts = BlogPost.objects.filter(status='published').select_related('author', 'category').prefetch_related('tags')
     
     # Search functionality
     if search_query:
@@ -416,11 +416,16 @@ def blog_list(request):
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     
-    # Get data for sidebar
-    categories = Category.objects.annotate(post_count=Count('posts', filter=Q(posts__status='published')))
-    all_categories = categories
-    recent_posts = BlogPost.objects.filter(status='published').order_by('-published_at')[:5]
-    popular_tags = Tag.objects.annotate(post_count=Count('posts', filter=Q(posts__status='published'))).order_by('-post_count')[:10]
+    # Get data for sidebar - FIXED: Ensure we're getting categories with posts
+    categories = Category.objects.annotate(
+        post_count=Count('posts', filter=Q(posts__status='published'))
+    ).filter(post_count__gt=0).order_by('name')
+    
+    recent_posts = BlogPost.objects.filter(status='published').select_related('author', 'category').order_by('-published_at')[:5]
+    
+    popular_tags = Tag.objects.annotate(
+        post_count=Count('posts', filter=Q(posts__status='published'))
+    ).filter(post_count__gt=0).order_by('-post_count')[:10]
     
     # Blog stats
     total_posts = BlogPost.objects.filter(status='published').count()
@@ -432,7 +437,7 @@ def blog_list(request):
         'search_query': search_query,
         'selected_categories': selected_categories,
         'categories': categories,
-        'all_categories': all_categories,
+        'all_categories': categories,  # Same as categories for consistency
         'recent_posts': recent_posts,
         'popular_tags': popular_tags,
         'total_posts': total_posts,
@@ -442,10 +447,20 @@ def blog_list(request):
     }
     return render(request, 'blog/blog_list.html', context)
 
+# Add this to your blog_detail view in views.py to debug tags
 
 def blog_detail(request, slug):
     """Individual blog post detail view"""
-    post = get_object_or_404(BlogPost, slug=slug, status='published')
+    post = get_object_or_404(
+        BlogPost.objects.select_related('author', 'category').prefetch_related('tags'), 
+        slug=slug, 
+        status='published'
+    )
+    
+    # DEBUG: Print tags to console
+    print(f"Post: {post.title}")
+    print(f"Tags count: {post.tags.count()}")
+    print(f"Tags: {[tag.name for tag in post.tags.all()]}")
     
     # Calculate reading time (average reading speed: 200 words per minute)
     text = re.sub('<[^<]+?>', '', post.content)
@@ -456,15 +471,17 @@ def blog_detail(request, slug):
     related_posts = BlogPost.objects.filter(
         status='published',
         category=post.category
-    ).exclude(id=post.id).order_by('-published_at')[:3]
+    ).exclude(id=post.id).select_related('author', 'category').prefetch_related('tags').order_by('-published_at')[:3]
     
     # Get recent posts for sidebar
-    recent_posts = BlogPost.objects.filter(status='published').order_by('-published_at')[:5]
+    recent_posts = BlogPost.objects.filter(status='published').select_related('author', 'category').order_by('-published_at')[:5]
     
     # Get categories for sidebar
-    categories = Category.objects.annotate(post_count=Count('posts', filter=Q(posts__status='published')))
+    categories = Category.objects.annotate(
+        post_count=Count('posts', filter=Q(posts__status='published'))
+    ).filter(post_count__gt=0)
     
-    # Dummy comment form and data (for now)
+    # Handle comment form
     from django import forms
     
     class DummyCommentForm(forms.Form):
@@ -472,7 +489,6 @@ def blog_detail(request, slug):
         email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'your@email.com'}))
         content = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'placeholder': 'Share your thoughts...'}))
     
-    # Handle comment form submission
     if request.method == 'POST':
         form = DummyCommentForm(request.POST)
         if form.is_valid():
@@ -481,7 +497,7 @@ def blog_detail(request, slug):
     else:
         form = DummyCommentForm()
     
-    # Dummy comments list
+    # Dummy comments
     comments = []
     comment_count = 0
     
