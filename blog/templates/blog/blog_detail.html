@@ -284,10 +284,12 @@ a {
     }
 
     .article-featured-image {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        display: block;
+   width: 100%;
+    height: auto;
+    max-height: 500px;
+    object-fit: cover;
+    object-position: center;
+    display: block;
     }
 
     .article-featured-placeholder {
@@ -1161,10 +1163,10 @@ a {
         padding: 40px 25px;
     }
 
-    .article-featured-image,
-    .article-featured-placeholder {
-        height:100%;
-        width:100%
+    
+          .article-featured-image {
+        max-height: 350px;
+    
     }
 
     .related-grid {
@@ -1294,6 +1296,9 @@ a {
 
     .post-date {
         font-size: 0.7rem;
+    }
+      .article-featured-image {
+        max-height: 250px;
     }
 
     .explore-section {
@@ -1506,11 +1511,10 @@ a {
         font-size: 0.75rem;
     }
 
-    .article-featured-image,
-    .article-featured-placeholder {
-        height: 250px;
-        width:100%;
+     .article-featured-image {
+        max-height: 200px;
     }
+    
 
     .explore-section {
         margin: 40px 10px 0;
