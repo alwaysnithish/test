@@ -27,7 +27,7 @@ class Command(BaseCommand):
         try:
             site = Site.objects.get_current()
             self.stdout.write(f'\nSitemap will be available at:')
-            self.stdout.write(self.style.SUCCESS(f'https://{site.domain}/blog/sitemap.xml'))
+            self.stdout.write(self.style.SUCCESS(f'https://21k.tools/blog/sitemap.xml'))
         except:
             self.stdout.write(self.style.WARNING('\nWarning: Site not configured. Using default domain.'))
             self.stdout.write('Sitemap will be available at: /blog/sitemap.xml')
