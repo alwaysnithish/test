@@ -1211,6 +1211,14 @@
         return cookieValue;
     }
 
- 
+ downloadBtn.addEventListener('click', function(e) {
+    e.preventDefault(); // Prevent any accidental blocking
+    if (downloadBtn.href && downloadBtn.href !== '#') {
+        window.location.href = downloadBtn.href; // force browser to download
+    } else {
+        showError("Download link is not ready yet!");
+    }
+});
+    
 </script>
 {% endblock %}
