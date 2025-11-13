@@ -5,55 +5,66 @@
   <url>
     <loc>https://21k.tools/</loc>
     <lastmod>2025-11-13T04:32:52+00:00</lastmod>
+     <changefreq>daily</changefreq>
     <priority>1.00</priority>
+   
+
   </url>
 
   <!-- Tools -->
   <url>
     <loc>https://21k.tools/urlshortener/</loc>
     <lastmod>2025-11-13T04:32:52+00:00</lastmod>
+     <changefreq>daily</changefreq>
     <priority>0.80</priority>
   </url>
 
   <url>
     <loc>https://21k.tools/pdftools/</loc>
     <lastmod>2025-11-13T04:32:52+00:00</lastmod>
+     <changefreq>daily</changefreq>
     <priority>0.80</priority>
   </url>
 
   <url>
     <loc>https://21k.tools/timecalculator/</loc>
     <lastmod>2025-11-13T04:32:52+00:00</lastmod>
+     <changefreq>daily</changefreq>
     <priority>0.80</priority>
   </url>
 
   <url>
     <loc>https://21k.tools/fileconverter/</loc>
     <lastmod>2025-11-13T04:32:52+00:00</lastmod>
+     <changefreq>daily</changefreq>
     <priority>0.80</priority>
   </url>
 
   <url>
     <loc>https://21k.tools/imageresizer/</loc>
     <lastmod>2025-11-13T04:32:52+00:00</lastmod>
+     <changefreq>daily</changefreq>
     <priority>0.80</priority>
   </url>
 
   <url>
     <loc>https://21k.tools/agecalculator/</loc>
     <lastmod>2025-11-13T04:32:52+00:00</lastmod>
+     <changefreq>daily</changefreq>
     <priority>0.80</priority>
   </url>
 
   <url>
     <loc>https://21k.tools/interestcalculator/</loc>
     <lastmod>2025-11-13T04:32:52+00:00</lastmod>
+     <changefreq>daily</changefreq>
     <priority>0.80</priority>
   </url>
 
   <url>
     <loc>https://21k.tools/unitconverter/</loc>
     <lastmod>2025-11-13T04:32:52+00:00</lastmod>
+     <changefreq>daily</changefreq>
     <priority>0.80</priority>
   </url>
 
@@ -61,6 +72,7 @@
   <url>
     <loc>https://21k.tools/blog/</loc>
     <lastmod>2025-11-13T04:32:52+00:00</lastmod>
+     <changefreq>daily</changefreq>
     <priority>0.80</priority>
   </url>
 
@@ -90,3 +102,4 @@
   </url>
 
 </urlset>
+
