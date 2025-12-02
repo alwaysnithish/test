@@ -77,7 +77,7 @@ urlpatterns = [
         'path': 'sitemap.xml'
     }),
     re_path(r'^ads\.txt$', serve, {
-        'document_root': settings.STATIC_ROOT, 
+        'document_root': settings.BASE_DIR, 
         'path': 'ads.txt'
     }),
 ]
