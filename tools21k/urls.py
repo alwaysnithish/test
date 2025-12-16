@@ -47,7 +47,7 @@ urlpatterns = [
     path('privacypolicy/', views.privacypolicy, name='privacypolicy'),
     path('termsandconditions/', views.termsandconditions, name='termsandconditions'),
     path('', views.home, name='home'),
-    
+    path('contact/',views.contact,name='contact'),
     path('timecalculator/', views.time_calculator, name='time_calculator'),
     path('time-difference-api/', views.time_difference_api, name='time_difference_api'),
     path('time-add-subtract-api/', views.time_add_subtract_api, name='time_add_subtract_api'),
