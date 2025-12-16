@@ -1,0 +1,376 @@
+{% extends "base1.html" %}
+{% load static %}
+
+{% block title %}Contact Us - 21K Tools | Get in Touch{% endblock %}
+
+{% block extra_css %}
+<style>
+    body {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+        background-attachment: fixed !important;
+    }
+
+    .contact-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 60px 20px;
+    }
+
+    .contact-hero {
+        text-align: center;
+        margin-bottom: 60px;
+        color: white;
+    }
+
+    .contact-hero h1 {
+        font-size: clamp(2rem, 4vw, 3rem);
+        font-weight: 800;
+        margin-bottom: 20px;
+        text-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .contact-hero p {
+        font-size: clamp(1rem, 2vw, 1.2rem);
+        opacity: 0.95;
+        max-width: 700px;
+        margin: 0 auto;
+    }
+
+    .contact-content {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+        margin-bottom: 60px;
+    }
+
+    .contact-card {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(20px);
+        border-radius: 24px;
+        padding: 40px 30px;
+        text-align: center;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .contact-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg, rgba(59, 130, 246, 0.05), rgba(147, 51, 234, 0.05));
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .contact-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    }
+
+    .contact-card:hover::before {
+        opacity: 1;
+    }
+
+    .contact-icon {
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 36px;
+        color: white;
+        margin: 0 auto 25px;
+        box-shadow: 0 8px 30px rgba(59, 130, 246, 0.3);
+        transition: all 0.3s ease;
+        position: relative;
+        z-index: 1;
+    }
+
+    .contact-card:hover .contact-icon {
+        transform: scale(1.1) rotate(5deg);
+        box-shadow: 0 15px 50px rgba(59, 130, 246, 0.4);
+    }
+
+    .contact-card h3 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #1a1a1a;
+        margin-bottom: 15px;
+        position: relative;
+        z-index: 1;
+    }
+
+    .contact-card p {
+        color: #64748b;
+        font-size: 1rem;
+        margin-bottom: 20px;
+        line-height: 1.6;
+        position: relative;
+        z-index: 1;
+    }
+
+    .contact-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+        color: white;
+        padding: 12px 28px;
+        border-radius: 30px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        position: relative;
+        z-index: 1;
+        font-size: 14px;
+    }
+
+    .contact-link:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 30px rgba(59, 130, 246, 0.4);
+        color: white;
+    }
+
+    .social-section {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(20px);
+        border-radius: 24px;
+        padding: 50px 30px;
+        text-align: center;
+        margin-bottom: 60px;
+    }
+
+    .social-section h2 {
+        font-size: 2rem;
+        font-weight: 800;
+        color: #1a1a1a;
+        margin-bottom: 15px;
+    }
+
+    .social-section p {
+        color: #64748b;
+        font-size: 1.1rem;
+        margin-bottom: 40px;
+    }
+
+    .social-links-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 20px;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .social-link-card {
+        background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(147, 51, 234, 0.1));
+        border-radius: 16px;
+        padding: 25px 20px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
+    }
+
+    .social-link-card:hover {
+        transform: translateY(-5px);
+        border-color: #3b82f6;
+        background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(147, 51, 234, 0.15));
+    }
+
+    .social-link-card i {
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+        display: block;
+    }
+
+    .social-link-card.instagram i { color: #E4405F; }
+    .social-link-card.twitter i { color: #1DA1F2; }
+    .social-link-card.youtube i { color: #FF0000; }
+    .social-link-card.linkedin i { color: #0A66C2; }
+
+    .social-link-card span {
+        display: block;
+        color: #1a1a1a;
+        font-weight: 600;
+        font-size: 0.95rem;
+    }
+
+    .help-cta {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(20px);
+        border-radius: 24px;
+        padding: 50px 30px;
+        text-align: center;
+    }
+
+    .help-cta h2 {
+        font-size: 2rem;
+        font-weight: 800;
+        color: #1a1a1a;
+        margin-bottom: 15px;
+    }
+
+    .help-cta p {
+        color: #64748b;
+        font-size: 1.1rem;
+        margin-bottom: 30px;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .help-button {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+        color: white;
+        padding: 16px 40px;
+        border-radius: 30px;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+    }
+
+    .help-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 40px rgba(59, 130, 246, 0.4);
+        color: white;
+    }
+
+    @media (max-width: 768px) {
+        .contact-container {
+            padding: 40px 15px;
+        }
+
+        .contact-content {
+            grid-template-columns: 1fr;
+        }
+
+        .social-links-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (max-width: 480px) {
+        .contact-card {
+            padding: 30px 20px;
+        }
+
+        .social-section,
+        .help-cta {
+            padding: 35px 20px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="contact-container">
+    <div class="contact-hero">
+        <h1>Get in Touch</h1>
+        <p>Have questions, feedback, or need assistance? We're here to help! Reach out through any of our channels.</p>
+    </div>
+
+    <div class="contact-content">
+        <div class="contact-card">
+            <div class="contact-icon">
+                <i class="fas fa-envelope"></i>
+            </div>
+            <h3>Email Us</h3>
+            <p>Send us an email and we'll respond within 24 hours</p>
+            <a href="mailto:contact@21k.tools" class="contact-link">
+                <i class="fas fa-paper-plane"></i>
+                contact@21k.tools
+            </a>
+        </div>
+
+        <div class="contact-card">
+            <div class="contact-icon">
+                <i class="fas fa-question-circle"></i>
+            </div>
+            <h3>Help Center</h3>
+            <p>Browse our guides, FAQs, and documentation</p>
+            <a href="https://21k.tools/help" class="contact-link">
+                <i class="fas fa-book"></i>
+                Visit Help Center
+            </a>
+        </div>
+
+        <div class="contact-card">
+            <div class="contact-icon">
+                <i class="fas fa-headset"></i>
+            </div>
+            <h3>Customer Support</h3>
+            <p>Need personalized assistance? Our team is ready to help</p>
+            <a href="mailto:contact@21k.tools?subject=Support Request" class="contact-link">
+                <i class="fas fa-user-headset"></i>
+                Contact Support
+            </a>
+        </div>
+    </div>
+
+    <div class="social-section">
+        <h2>Connect With Us</h2>
+        <p>Follow us on social media for updates, tips, and the latest news from 21K Tools</p>
+        <div class="social-links-grid">
+            <a href="https://instagram.com/21k.tools" target="_blank" rel="noopener noreferrer" class="social-link-card instagram">
+                <i class="fab fa-instagram"></i>
+                <span>Instagram</span>
+            </a>
+            <a href="https://twitter.com/21ktools" target="_blank" rel="noopener noreferrer" class="social-link-card twitter">
+                <i class="fab fa-twitter"></i>
+                <span>Twitter</span>
+            </a>
+            <a href="https://youtube.com/@21ktools" target="_blank" rel="noopener noreferrer" class="social-link-card youtube">
+                <i class="fab fa-youtube"></i>
+                <span>YouTube</span>
+            </a>
+            <a href="https://linkedin.com/company/21ktools" target="_blank" rel="noopener noreferrer" class="social-link-card linkedin">
+                <i class="fab fa-linkedin"></i>
+                <span>LinkedIn</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="help-cta">
+        <h2>Need Quick Help?</h2>
+        <p>Check out our comprehensive Help Center for instant answers to common questions and detailed guides on using our tools.</p>
+        <a href="https://21k.tools/help" class="help-button">
+            <i class="fas fa-life-ring"></i>
+            Browse Help Center
+        </a>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ContactPage",
+  "name": "Contact 21K Tools",
+  "description": "Get in touch with 21K Tools for support, inquiries, or feedback",
+  "url": "https://21k.tools/contact",
+  "mainEntity": {
+    "@type": "Organization",
+    "name": "21K Tools",
+    "email": "contact@21k.tools",
+    "url": "https://21k.tools",
+    "sameAs": [
+      "https://instagram.com/21k.tools",
+      "https://twitter.com/21ktools",
+      "https://youtube.com/@21ktools",
+      "https://linkedin.com/company/21ktools"
+    ]
+  }
+}
+</script>
+{% endblock %}
