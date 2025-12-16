@@ -19,6 +19,8 @@ def termsandconditions(request):
 
 def about(request):
     return render(request, 'about.html')
+def contact(request):
+    return render(request, 'contact.html')
 
 def age(request):
     return render(request, 'age.html')
