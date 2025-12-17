@@ -12,6 +12,50 @@
     </script>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5194922909756658"
      crossorigin="anonymous"></script>
+    {% block meta_tags %}
+    <!-- Default Description -->
+    <meta name="description" content="{% block meta_description %}21K Tools - Free online tools for URL shortening, PDF editing, file conversion, image resizing, calculators and more. Make your work easier with our powerful tool collection.{% endblock %}">
+    
+    <!-- Default Keywords -->
+    <meta name="keywords" content="{% block meta_keywords %}online tools, free tools, URL shortener, PDF tools, file converter, image resizer, calculators, 21k tools{% endblock %}">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://{{ request.get_host }}{{ request.path }}">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="{% block og_type %}website{% endblock %}">
+    <meta property="og:url" content="https://{{ request.get_host }}{{ request.path }}">
+    <meta property="og:title" content="{% block og_title %}{{ self.title }}{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}21K Tools - Free online tools for URL shortening, PDF editing, file conversion, image resizing, calculators and more.{% endblock %}">
+    <meta property="og:site_name" content="21K Tools">
+    
+    <!-- Default OG Image - ICON FOR ALL PAGES -->
+    {% block og_image %}
+    <meta property="og:image" content="https://{{ request.get_host }}{% static '21k.png' %}">
+    <meta property="og:image:secure_url" content="https://{{ request.get_host }}{% static '21k.png' %}">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <meta property="og:image:alt" content="21K Tools Logo">
+    {% endblock %}
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@21ktools">
+    <meta name="twitter:creator" content="@21ktools">
+    <meta name="twitter:title" content="{% block twitter_title %}{{ self.title }}{% endblock %}">
+    <meta name="twitter:description" content="{% block twitter_description %}21K Tools - Free online tools for URL shortening, PDF editing, file conversion, image resizing, calculators and more.{% endblock %}">
+    
+    <!-- Default Twitter Image - ICON FOR ALL PAGES -->
+    {% block twitter_image %}
+    <meta name="twitter:image" content="https://{{ request.get_host }}{% static '21k.png' %}">
+    <meta name="twitter:image:alt" content="21K Tools Logo">
+    {% endblock %}
+    
+    <!-- Additional Meta -->
+    <meta property="og:locale" content="en_US">
+    <meta name="twitter:domain" content="{{ request.get_host }}">
+    {% endblock meta_tags %}
     
     <link rel="icon" type="image/x-icon" href="{% static '21k.png' %}">
     
