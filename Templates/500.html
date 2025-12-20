@@ -1,0 +1,144 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>21K Tools - We'll Be Right Back</title>
+    <link rel="icon" type="image/x-icon" href="{% static '21k.png' %}">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 60px 40px;
+            text-align: center;
+            max-width: 600px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+        
+        .logo {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            color: white;
+            font-weight: 800;
+            margin: 0 auto 30px;
+            box-shadow: 0 8px 30px rgba(59, 130, 246, 0.3);
+        }
+        
+        h1 {
+            font-size: 2rem;
+            color: #1e3a8a;
+            margin-bottom: 20px;
+            font-weight: 800;
+        }
+        
+        .message {
+            font-size: 1.1rem;
+            color: #64748b;
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+        
+        .status {
+            background: rgba(59, 130, 246, 0.1);
+            border: 2px solid #3b82f6;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .status-text {
+            color: #2563eb;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: white;
+            padding: 16px 40px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.4);
+        }
+        
+        .tools-link {
+            margin-top: 20px;
+            color: #64748b;
+            font-size: 0.95rem;
+        }
+        
+        .tools-link a {
+            color: #3b82f6;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .tools-link a:hover {
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 40px 30px;
+            }
+            
+            h1 {
+                font-size: 1.6rem;
+            }
+            
+            .message {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">21K</div>
+        <h1>We'll Be Right Back!</h1>
+        <p class="message">
+            We're currently recovering our data to serve you better. 
+            Our team is working to restore full blog functionality as quickly as possible.
+        </p>
+        <div class="status">
+            <p class="status-text">⏱️ Expected restoration: Within 24-48 hours</p>
+        </div>
+        <a href="https://21k.tools" class="cta-button">Explore Our Tools</a>
+        <p class="tools-link">
+            Meanwhile, all our tools are fully operational at <a href="https://21k.tools">21k.tools</a>
+        </p>
+    </div>
+</body>
+</html>
