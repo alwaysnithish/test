@@ -3,6 +3,41 @@
 {% block title %}Blog - Articles & Insights | 21K Tools{% endblock %}
 
 {% block extra_css %}
+<!-- SEO Meta Tags -->
+<meta name="description" content="{{ post.excerpt|striptags|truncatewords:30 }}">
+<meta name="keywords" content="{% for tag in post.tags.all %}{{ tag.name }}{% if not forloop.last %}, {% endif %}{% endfor %}">
+<meta name="author" content="{{ post.author.get_full_name|default:post.author.username }}">
+
+<!-- Open Graph / Facebook / LinkedIn / WhatsApp -->
+<meta property="og:type" content="article">
+<meta property="og:url" content="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}">
+<meta property="og:title" content="{{ post.title }}">
+<meta property="og:description" content="{{ post.excerpt|striptags|truncatewords:30 }}">
+<meta property="og:site_name" content="21K Tools">
+
+{% if post.has_thumbnail %}
+<meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% url 'serve_blog_thumbnail' post.slug %}">
+{% else %}
+<meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}/static/21k.png">
+{% endif %}
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@21ktools">
+<meta name="twitter:title" content="{{ post.title }}">
+<meta name="twitter:description" content="{{ post.excerpt|striptags|truncatewords:30 }}">
+
+{% if post.has_thumbnail %}
+<meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{% url 'serve_blog_thumbnail' post.slug %}">
+{% else %}
+<meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}/static/21k.png">
+{% endif %}
+
+<!-- Article Meta -->
+<meta property="article:published_time" content="{{ post.published_at|date:'c' }}">
+{% if post.category %}
+<meta property="article:section" content="{{ post.category.name }}">
+{% endif %}
 <style>
     :root {
         --primary: #2563eb;
