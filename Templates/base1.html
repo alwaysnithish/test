@@ -725,6 +725,47 @@ a:hover {
 
         {% block extra_css %}{% endblock %}
     </style>
+    {% block schema_markup %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "21K Tools",
+  "alternateName": "21K Tools - Free Online Utility Tools",
+  "url": "https://21k.tools/",
+  "description": "Free online tools for URL shortening, PDF editing, file conversion, image resizing, calculators and more.",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": "https://21k.tools/?search={search_term_string}"
+    },
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "21K Tools",
+  "url": "https://21k.tools/",
+  "logo": "https://21k.tools{% static '21k.png' %}",
+  "description": "21K Tools provides free online utility tools including URL shortener, PDF tools, file converter, image resizer, and various calculators.",
+  "sameAs": [
+    "https://x.com/21ktools",
+    "https://instagram.com/21k.tools",
+    "https://youtube.com/21ktools"
+  ],
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "contactType": "Customer Service",
+    "url": "https://21k.tools/contact"
+  }
+}
+</script>
+{% endblock %}
 </head>
 <body>
 
