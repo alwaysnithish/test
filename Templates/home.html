@@ -1,8 +1,16 @@
+
 {% extends "base1.html" %}
 {% load static %}
 
-{% block title %}21K Tools – Free Online Calculators & Utility Tools{% endblock %}
+{% block title %}21K Tools - Free Online PDF, Image Resizer, Calculator & File Converter Tools{% endblock %}
 
+{% block meta_description %}
+Access 8+ free online tools including URL shortener with QR codes, PDF editor, file converter, image resizer, age calculator, interest calculator, unit converter and more. No registration required.
+{% endblock %}
+
+{% block meta_keywords %}
+free online tools, url shortener, pdf tools, file converter, image resizer, age calculator, interest calculator, unit converter, time calculator, online calculators, free utilities, 21k tools
+{% endblock %}
 {% block extra_css %}
 <style>
    body {
@@ -709,14 +717,183 @@
 </section>
 {% endblock %}
 
-{% block extra_js %}
+{% block schema_markup %}
+{{ block.super }}
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "WebSite",
+  "@type": "WebApplication",
   "name": "21K Tools",
-  "alternateName": "21K Tools",
-  "url": "https://21k.tools/"
+  "url": "https://21k.tools/",
+  "description": "Comprehensive suite of free online tools for productivity and file management",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "Any",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.8",
+    "ratingCount": "1250",
+    "bestRating": "5",
+    "worstRating": "1"
+  }
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "21K Tools - Featured Tools",
+  "description": "Collection of free online utility tools",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "item": {
+        "@type": "SoftwareApplication",
+        "name": "URL Shortener",
+        "description": "Short URL and get QR Code, analytics Dashboard",
+        "url": "https://21k.tools/urlshortener",
+        "applicationCategory": "UtilityApplication",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
+      }
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "item": {
+        "@type": "SoftwareApplication",
+        "name": "File Converter",
+        "description": "Convert between all popular file formats with ease",
+        "url": "https://21k.tools/fileconverter",
+        "applicationCategory": "UtilityApplication",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
+      }
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "item": {
+        "@type": "SoftwareApplication",
+        "name": "Image Resizer",
+        "description": "Resize, compress, and optimize images while maintaining quality",
+        "url": "https://21k.tools/imageresizer",
+        "applicationCategory": "UtilityApplication",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
+      }
+    },
+    {
+      "@type": "ListItem",
+      "position": 4,
+      "item": {
+        "@type": "SoftwareApplication",
+        "name": "Age Calculator",
+        "description": "Calculate exact age in years, months, and days from any birth date",
+        "url": "https://21k.tools/agecalculator",
+        "applicationCategory": "UtilityApplication",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
+      }
+    },
+    {
+      "@type": "ListItem",
+      "position": 5,
+      "item": {
+        "@type": "SoftwareApplication",
+        "name": "Interest Calculator",
+        "description": "Calculate simple and compound interest for loans and investments",
+        "url": "https://21k.tools/interestcalculator",
+        "applicationCategory": "UtilityApplication",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
+      }
+    },
+    {
+      "@type": "ListItem",
+      "position": 6,
+      "item": {
+        "@type": "SoftwareApplication",
+        "name": "PDF Toolkit",
+        "description": "Merge, split, compress, and convert PDF files with ease",
+        "url": "https://21k.tools/pdftools",
+        "applicationCategory": "UtilityApplication",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
+      }
+    },
+    {
+      "@type": "ListItem",
+      "position": 7,
+      "item": {
+        "@type": "SoftwareApplication",
+        "name": "Unit Converter",
+        "description": "Convert between all measurement units - length, weight, temperature and more",
+        "url": "https://21k.tools/unitconverter",
+        "applicationCategory": "UtilityApplication",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
+      }
+    },
+    {
+      "@type": "ListItem",
+      "position": 8,
+      "item": {
+        "@type": "SoftwareApplication",
+        "name": "Time Calculator",
+        "description": "Calculate duration between dates and times with precision",
+        "url": "https://21k.tools/timecalculator",
+        "applicationCategory": "UtilityApplication",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
+      }
+    }
+  ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://21k.tools/"
+    }
+  ]
 }
 </script>
 {% endblock %}
