@@ -8,13 +8,7 @@ from django.db import OperationalError, DatabaseError
 
 
 # If you have blog views in this file, wrap them like this:
-def some_blog_view(request):
-    try:
-        # Your database queries here
-        posts = BlogPost.objects.all()
-        return render(request, 'template.html', {'posts': posts})
-    except (OperationalError, DatabaseError):
-        return render(request, '500.html', status=503)
+
 def home(request):
     return render(request, 'home.html')
 
