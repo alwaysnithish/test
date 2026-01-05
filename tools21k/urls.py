@@ -107,7 +107,7 @@ def custom_page_not_found(request, exception):
 
 # Set the custom handler
 handler404 = custom_page_not_found
-# Custom 500 handler
+"""Custom 500 handler
 def custom_server_error(request):
     """Custom 500 handler for database/server errors"""
     from django.shortcuts import render
@@ -115,4 +115,5 @@ def custom_server_error(request):
 
 # Set the custom handlers
 
-handler500 = custom_server_error  # Add this line
+handler500 = custom_server_error """
+# Add this line
