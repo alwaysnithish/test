@@ -2,14 +2,14 @@
 {% extends "base1.html" %}
 {% load static %}
 
-{% block title %}21K Tools - Free Online PDF, Image Resizer, Calculator & File Converter Tools{% endblock %}
+{% block title %}21K Tools - Free Online PDF, Image Resizer, QR code Generator & Scanner, Calculator & File Converter Tools{% endblock %}
 
 {% block meta_description %}
-Access 8+ free online tools including URL shortener with QR codes, PDF editor, file converter, image resizer, age calculator, interest calculator, unit converter and more. No registration required.
+Access 9+ free online tools including URL shortener with QR codes, QR code generator & scanner, PDF editor, file converter, image resizer, age calculator, interest calculator, unit converter and more. No registration required.
 {% endblock %}
 
 {% block meta_keywords %}
-free online tools, url shortener, pdf tools, file converter, image resizer, age calculator, interest calculator, unit converter, time calculator, online calculators, free utilities, 21k tools
+free online tools, url shortener, qr code generator, qr scanner, pdf tools, file converter, image resizer, age calculator, interest calculator, unit converter, time calculator, online calculators, free utilities, 21k tools
 {% endblock %}
 {% block extra_css %}
 <style>
@@ -368,6 +368,17 @@ free online tools, url shortener, pdf tools, file converter, image resizer, age 
         </div>
         <button class="app-button">Launch Tool</button>
       </div>
+       <div class="tool-app" onclick="window.open('https://21k.tools/qrcodeandscanner', '_blank')">
+        <div class="app-icon"><i class="fas fa-qrcode"></i></div>
+        <h3 class="app-title">QR Code Generator & Scanner</h3>
+        <p class="app-description">Create QR codes from text, URLs, or files. Scan QR codes instantly.</p>
+        <div class="app-features">
+          <span class="feature-badge">Generate</span>
+          <span class="feature-badge">Scan</span>
+          <span class="feature-badge">File Upload</span>
+        </div>
+        <button class="app-button">Launch Tool</button>
+      </div>
       <div class="tool-app" onclick="window.open('https://21k.tools/fileconverter', '_blank')">
         <div class="app-icon"><i class="fas fa-file"></i></div>
         <h3 class="app-title">File Converter</h3>
@@ -488,6 +499,40 @@ free online tools, url shortener, pdf tools, file converter, image resizer, age 
     </div>
     <div class="tool-detail-cta">
       <button class="app-button" onclick="window.open('https://21k.tools/fileconverter', '_blank')">Try File Converter Now</button>
+    </div>
+  </div>
+   <div class="tool-detail">
+    <div class="tool-detail-header">
+      <div class="tool-detail-icon"><i class="fas fa-qrcode"></i></div>
+      <div>
+        <h2 class="tool-detail-title">QR Code Generator & Scanner</h2>
+        <p class="tool-detail-subtitle">Create and scan QR codes with advanced features</p>
+      </div>
+    </div>
+    <div class="tool-detail-content">
+      <div class="tool-detail-description">
+        <p>The QR Code Generator & Scanner from 21K Tools is a comprehensive solution for creating professional QR codes and scanning them instantly. Whether you need to generate QR codes for business cards, marketing materials, or file sharing, our tool handles it all.</p>
+        <p>Upload files to Cloudinary and get shareable QR codes that link directly to your content. Our advanced scanner works with your device camera or uploaded images, providing instant decoding of any QR code.</p>
+        <p>With customizable size options, error correction levels, and support for multiple data types, this is the most versatile QR code tool available. Perfect for businesses, marketers, educators, and personal use.</p>
+      </div>
+      <div class="tool-detail-features">
+        <h3>Key Features</h3>
+        <ul>
+          <li>Generate QR codes from text, URLs, or files</li>
+          <li>Upload files to Cloudinary with QR code links</li>
+          <li>Camera-based QR code scanning</li>
+          <li>Upload QR images for instant scanning</li>
+          <li>Customizable size and error correction</li>
+          <li>High-resolution output for printing</li>
+          <li>Professional blue color scheme</li>
+          <li>Download QR codes as PNG images</li>
+          <li>No data storage - complete privacy</li>
+          <li>Works on all devices</li>
+        </ul>
+      </div>
+    </div>
+    <div class="tool-detail-cta">
+      <button class="app-button" onclick="window.open('https://21k.tools/qrcodeandscanner', '_blank')">Try QR Code Tool Now</button>
     </div>
   </div>
   
@@ -870,6 +915,22 @@ free online tools, url shortener, pdf tools, file converter, image resizer, age 
         "name": "Time Calculator",
         "description": "Calculate duration between dates and times with precision",
         "url": "https://21k.tools/timecalculator",
+        "applicationCategory": "UtilityApplication",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
+      }
+    },
+    {
+      "@type": "ListItem",
+      "position": 9,
+      "item": {
+        "@type": "SoftwareApplication",
+        "name": "QR Code Generator & Scanner",
+        "description": "Create QR codes from text, URLs, or files. Scan QR codes using camera or image upload.",
+        "url": "https://21k.tools/qrcodeandscanner",
         "applicationCategory": "UtilityApplication",
         "offers": {
           "@type": "Offer",
