@@ -63,6 +63,8 @@ urlpatterns = [
     #path('convert/', include('fileconverter.urls')),
     path('pdftools/', include('pdftools.urls')),
     path('imageresizer/', include('image_resizer.urls')),
+    path('qrcodeandscanner/', include('qrtools.urls')),
+
     #path('qrscanner/', include('qrscanner.urls')),
     #path('ckeditor/', include('ckeditor_uploader.urls')),
   #  path('fileconverter',include('fileconverter.urls')),
