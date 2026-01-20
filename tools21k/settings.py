@@ -57,10 +57,12 @@ import os
 load_dotenv()
 
 # CLOUDINARY CONFIGURATION - HARDCODED FOR TESTING
+
+
 cloudinary.config(
-    cloud_name='dknrvzf7i',
-    api_key='644493262717686',
-    api_secret='DntsCMw1SglDAwGAguX8iKhZzJ0',  # Copy full secret from your screenshot
+    cloud_name=os.environ.get("CLOUDINARY_CLOUD_NAME"),
+    api_key=os.environ.get("CLOUDINARY_API_KEY"),
+    api_secret=os.environ.get("CLOUDINARY_API_SECRET"),
     secure=True
 )
 SITE_ID = 1
@@ -101,14 +103,14 @@ WSGI_APPLICATION = 'tools21k.wsgi.application'
 import dj_database_url
 
 #DATABASES = {
-   # 'default': dj_database_url.parse(
-      #  'postgresql://neondb_owner:npg_1FUvlDPnITc4@ep-rough-hat-aduig6om-pooler.c-2.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require',
+   # 'default': dj_database_url.config(
+       # default=os.environ.get("DATABASE_URL"),
      #   conn_max_age=600,
   #      ssl_require=True
  #   )
 #}
 # ============================================
-# DATABASE CONFIGURATION - SQLite (Temporary)
+# DATABASE CONFIGUR
 # ============================================
 
 # Try Neon PostgreSQL first, fallback to SQLite
@@ -119,7 +121,7 @@ def get_database_config():
     """
     
     # Neon Database URL
-    NEON_DATABASE_URL = 'postgresql://neondb_owner:npg_1FUvlDPnITc4@ep-rough-hat-aduig6om-pooler.c-2.us-east-1.aws.neon.tech/neondb?sslmode=require'
+    NEON_DATABASE_URL = os.environ.get("NEON_DATABASE_URL")
     
     # Check if we should use SQLite (via environment variable)
     USE_SQLITE = os.environ.get('USE_SQLITE', 'False').lower() == 'true'
