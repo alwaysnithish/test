@@ -1084,6 +1084,10 @@ def qr_main_view(request):
     return render(request, 'qrtools/qr_main.html', context)
 
 
+# This is ONLY the generate_qr_api function - replace it in your views.py
+# Search for: @require_http_methods(["POST"])\ndef generate_qr_api
+# Replace up to the end of that function (the closing return JsonResponse for success)
+
 @require_http_methods(["POST"])
 def generate_qr_api(request):
     """
@@ -1097,11 +1101,33 @@ def generate_qr_api(request):
         content_data = data.get('content_data', {})
         design_config = data.get('design_config', {})
         
+        # ============================================
+        # FIX: If a file was uploaded, wire file_url
+        # into content_data so build_qr_data can use it.
+        # upload_file_to_cloudinary returns file_url at
+        # the top level — frontend may not copy it into
+        # content_data.url before calling this endpoint.
+        # ============================================
+        file_url = data.get('file_url', '')
+        if file_url:
+            # A file upload URL exists — treat as url type
+            # and inject it into content_data
+            qr_type = 'url'
+            content_data['url'] = file_url
+        
+        # Also handle: logo was uploaded as base64 data URL
+        # Pass it through to design_config so create_styled_qr picks it up
+        logo_base64 = data.get('logo_base64', '') or design_config.get('logo_base64', '')
+        if logo_base64:
+            design_config['has_logo'] = True
+            design_config['logo_url'] = logo_base64
+            design_config['logo_is_base64'] = True
+        
         # Build QR data based on type
         qr_data = build_qr_data(qr_type, content_data)
         
         if not qr_data:
-            return JsonResponse({'error': 'Invalid QR data'}, status=400)
+            return JsonResponse({'error': 'Invalid QR data. No content provided for the selected QR type.'}, status=400)
         
         # Add box_size and border parameters
         size = design_config.get('size', 300)
@@ -1112,7 +1138,7 @@ def generate_qr_api(request):
         qr_code = QRCode.objects.create(
             qr_type=qr_type,
             content_data=content_data,
-            final_url=qr_data,
+            final_url=qr_data if qr_type == 'url' else '',
             is_dynamic=design_config.get('is_dynamic', True),
             primary_color=design_config.get('primary_color', '#000000'),
             background_color=design_config.get('background_color', '#FFFFFF'),
@@ -1123,9 +1149,11 @@ def generate_qr_api(request):
             pattern_style=design_config.get('pattern_style', 'square'),
             eye_style='square',
             has_logo=design_config.get('has_logo', False),
-            logo_url=design_config.get('logo_url', ''),
+            logo_url=design_config.get('logo_url', '') if not design_config.get('logo_is_base64') else '',
             logo_shape=design_config.get('logo_shape', 'square'),
             logo_size=design_config.get('logo_size', 20),
+            logo_padding=design_config.get('logo_padding', 30),
+            logo_border=design_config.get('logo_border', True),
             size=size,
             error_correction=design_config.get('error_correction', 'M'),
             title=design_config.get('title', ''),
@@ -1135,11 +1163,12 @@ def generate_qr_api(request):
         )
         
         # Generate QR image
-        if qr_code.is_dynamic:
+        if qr_code.is_dynamic and qr_type == 'url':
             # Use redirect URL for tracking
             actual_data = request.build_absolute_uri(qr_code.get_redirect_url())
             qr_code.redirect_url = qr_data
         else:
+            # Non-URL types (vcard, wifi, sms, etc.) encode data directly
             actual_data = qr_data
         
         # Create styled QR code
@@ -1159,10 +1188,10 @@ def generate_qr_api(request):
                 upload_result = cloudinary.uploader.upload(
                     buffer,
                     folder='21k_qr_codes',
-                    public_id=str(qr_code.unique_id),
+                    public_id=f'{qr_code.analytics_code}',
                     format='png'
                 )
-                qr_code.qr_image_url = upload_result.get('secure_url')
+                qr_code.qr_image_url = upload_result.get('secure_url', '')
             except Exception as e:
                 logger.warning(f"Cloudinary upload failed: {e}")
         
@@ -1182,7 +1211,6 @@ def generate_qr_api(request):
     except Exception as e:
         logger.error(f"QR generation error: {e}", exc_info=True)
         return JsonResponse({'error': str(e)}, status=500)
-
 
 def build_qr_data(qr_type, content_data):
     """Build QR data string based on type"""
