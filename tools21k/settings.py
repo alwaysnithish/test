@@ -102,103 +102,14 @@ WSGI_APPLICATION = 'tools21k.wsgi.application'
 
 import dj_database_url
 
-#DATABASES = {
-   # 'default': dj_database_url.config(
-       # default=os.environ.get("DATABASE_URL"),
-     #   conn_max_age=600,
-  #      ssl_require=True
- #   )
-#}
+DATABASES = {
+    'default': dj_database_url.config(
+        default=os.environ.get("DATABASE_URL"),
+        conn_max_age=600,
+        ssl_require=True
+   )
+}
 # ============================================
-# DATABASE CONFIGUR
-# ============================================
-
-# Try Neon PostgreSQL first, fallback to SQLite
-def get_database_config():
-    """
-    Attempts to connect to Neon PostgreSQL.
-    Falls back to SQLite if connection fails or times out.
-    """
-    
-    # Neon Database URL
-    NEON_DATABASE_URL = os.environ.get("NEON_DATABASE_URL")
-    
-    # Check if we should use SQLite (via environment variable)
-    USE_SQLITE = os.environ.get('USE_SQLITE', 'False').lower() == 'true'
-    
-    if USE_SQLITE:
-        print("⚠️  Using SQLite (forced by USE_SQLITE environment variable)")
-        return {
-            'default': {
-                'ENGINE': 'django.db.backends.sqlite3',
-                'NAME': BASE_DIR / 'db.sqlite3',
-            }
-        }
-    
-    try:
-        # Test Neon connection with short timeout
-        import psycopg2
-        
-        print("🔍 Testing Neon PostgreSQL connection...")
-        
-        # Quick connection test (5 second timeout)
-        conn = psycopg2.connect(
-            NEON_DATABASE_URL,
-            connect_timeout=5
-        )
-        conn.close()
-        
-        print("✅ Neon PostgreSQL connected successfully!")
-        
-        # Return Neon configuration with optimized settings
-        return {
-            'default': dj_database_url.parse(
-                NEON_DATABASE_URL,
-                conn_max_age=300,  # Reduced from 600 to 5 minutes
-                conn_health_checks=True,  # Enable connection health checks
-                ssl_require=True
-            )
-        }
-        
-    except ImportError:
-        print("⚠️  psycopg2 not installed. Installing: pip install psycopg2-binary")
-        print("⚠️  Falling back to SQLite...")
-        return {
-            'default': {
-                'ENGINE': 'django.db.backends.sqlite3',
-                'NAME': BASE_DIR / 'db.sqlite3',
-            }
-        }
-        
-    except Exception as e:
-        print(f"❌ Neon PostgreSQL connection failed: {str(e)}")
-        print("⚠️  Automatically falling back to SQLite...")
-        return {
-            'default': {
-                'ENGINE': 'django.db.backends.sqlite3',
-                'NAME': BASE_DIR / 'db.sqlite3',
-            }
-        }
-
-# Set database configuration
-DATABASES = get_database_config()
-
-# Additional database optimization for Neon
-if DATABASES['default']['ENGINE'] == 'django.db.backends.postgresql':
-    # Add these options to handle Neon's connection limits
-    DATABASES['default']['OPTIONS'] = {
-        'connect_timeout': 10,
-        'options': '-c statement_timeout=30000',  # 30 second query timeout
-        'keepalives': 1,
-        'keepalives_idle': 30,
-        'keepalives_interval': 10,
-        'keepalives_count': 5,
-    }
-    
-    # Disable persistent connections in development to avoid timeout issues
-    if DEBUG:
-        DATABASES['default']['CONN_MAX_AGE'] = 0
-        print("🔧 Development mode: Disabled persistent connections")
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
