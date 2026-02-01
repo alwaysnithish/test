@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ profile.full_name }} - Digital Profile Card</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, {{ profile.theme_color }}15 0%, {{ profile.theme_color }}30 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .profile-container {
+            max-width: 600px;
+            width: 100%;
+            background: white;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            overflow: hidden;
+            animation: fadeIn 0.6s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .profile-header {
+            background: linear-gradient(135deg, {{ profile.theme_color }}, {{ profile.theme_color }}dd);
+            padding: 50px 30px 30px;
+            text-align: center;
+            position: relative;
+            color: white;
+        }
+
+        .profile-photo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 6px solid white;
+            margin: 0 auto 20px;
+            object-fit: cover;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .profile-name {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .profile-title {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+
+        .profile-company {
+            font-size: 1rem;
+            opacity: 0.85;
+        }
+
+        .profile-tagline {
+            font-size: 1.05rem;
+            opacity: 0.9;
+            margin-top: 15px;
+            font-style: italic;
+        }
+
+        .profile-body {
+            padding: 30px;
+        }
+
+        .profile-bio {
+            text-align: center;
+            color: #4a5568;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            font-size: 1.05rem;
+        }
+
+        .contact-grid {
+            display: grid;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .contact-item {
+            background: #f7fafc;
+            padding: 18px 20px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+            color: #2d3748;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .contact-item:hover {
+            background: {{ profile.theme_color }}15;
+            border-color: {{ profile.theme_color }};
+            transform: translateX(5px);
+        }
+
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, {{ profile.theme_color }}, {{ profile.theme_color }}dd);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+
+        .contact-info {
+            flex: 1;
+        }
+
+        .contact-label {
+            font-size: 0.85rem;
+            color: #718096;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .contact-value {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: #2d3748;
+            margin-top: 3px;
+        }
+
+        .social-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+            gap: 12px;
+            margin-top: 30px;
+        }
+
+        .social-link {
+            background: #f7fafc;
+            padding: 18px;
+            border-radius: 15px;
+            text-align: center;
+            text-decoration: none;
+            color: #2d3748;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .social-link:hover {
+            background: {{ profile.theme_color }}15;
+            border-color: {{ profile.theme_color }};
+            transform: translateY(-5px);
+        }
+
+        .social-link i {
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+            display: block;
+            color: {{ profile.theme_color }};
+        }
+
+        .social-link span {
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .save-contact-btn {
+            width: 100%;
+            background: linear-gradient(135deg, {{ profile.theme_color }}, {{ profile.theme_color }}dd);
+            color: white;
+            border: none;
+            padding: 18px;
+            border-radius: 15px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .save-contact-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px {{ profile.theme_color }}40;
+        }
+
+        .custom-fields {
+            margin-top: 20px;
+        }
+
+        .custom-field {
+            background: #f7fafc;
+            padding: 15px 20px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .custom-field i {
+            color: {{ profile.theme_color }};
+            font-size: 1.2rem;
+        }
+
+        .custom-field-label {
+            font-weight: 600;
+            color: #718096;
+            font-size: 0.9rem;
+        }
+
+        .custom-field-value {
+            font-weight: 600;
+            color: #2d3748;
+        }
+
+        .profile-footer {
+            text-align: center;
+            padding: 20px;
+            background: #f7fafc;
+            color: #718096;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .profile-name {
+                font-size: 1.6rem;
+            }
+
+            .profile-photo {
+                width: 120px;
+                height: 120px;
+            }
+
+            .social-links {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-container">
+        <!-- Header with Photo -->
+        <div class="profile-header">
+            {% if profile.profile_photo %}
+            <img src="{{ profile.profile_photo }}" alt="{{ profile.full_name }}" class="profile-photo">
+            {% else %}
+            <div class="profile-photo" style="background: white; display: flex; align-items: center; justify-content: center; font-size: 3rem; color: {{ profile.theme_color }};">
+                {{ profile.full_name.0|upper }}
+            </div>
+            {% endif %}
+            
+            <h1 class="profile-name">{{ profile.full_name }}</h1>
+            
+            {% if profile.title %}
+            <div class="profile-title">{{ profile.title }}</div>
+            {% endif %}
+            
+            {% if profile.company %}
+            <div class="profile-company">{{ profile.company }}</div>
+            {% endif %}
+            
+            {% if profile.tagline %}
+            <div class="profile-tagline">"{{ profile.tagline }}"</div>
+            {% endif %}
+        </div>
+
+        <!-- Body Content -->
+        <div class="profile-body">
+            {% if profile.bio %}
+            <div class="profile-bio">{{ profile.bio }}</div>
+            {% endif %}
+
+            <!-- Contact Information -->
+            <div class="contact-grid">
+                {% if profile.email %}
+                <a href="mailto:{{ profile.email }}" class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="contact-info">
+                        <div class="contact-label">Email</div>
+                        <div class="contact-value">{{ profile.email }}</div>
+                    </div>
+                </a>
+                {% endif %}
+
+                {% if profile.phone %}
+                <a href="tel:{{ profile.phone }}" class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <div class="contact-info">
+                        <div class="contact-label">Phone</div>
+                        <div class="contact-value">{{ profile.phone }}</div>
+                    </div>
+                </a>
+                {% endif %}
+
+                {% if profile.whatsapp %}
+                <a href="https://wa.me/{{ profile.whatsapp|cut:'+' }}" target="_blank" class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fab fa-whatsapp"></i>
+                    </div>
+                    <div class="contact-info">
+                        <div class="contact-label">WhatsApp</div>
+                        <div class="contact-value">{{ profile.whatsapp }}</div>
+                    </div>
+                </a>
+                {% endif %}
+
+                {% if profile.website %}
+                <a href="{{ profile.website }}" target="_blank" class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <div class="contact-info">
+                        <div class="contact-label">Website</div>
+                        <div class="contact-value">{{ profile.website|truncatechars:40 }}</div>
+                    </div>
+                </a>
+                {% endif %}
+
+                {% if profile.address %}
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="contact-info">
+                        <div class="contact-label">Address</div>
+                        <div class="contact-value">{{ profile.address }}</div>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Social Links -->
+            {% if profile.linkedin or profile.twitter or profile.instagram or profile.facebook or profile.github or profile.youtube %}
+            <div class="social-links">
+                {% if profile.linkedin %}
+                <a href="{{ profile.linkedin }}" target="_blank" class="social-link">
+                    <i class="fab fa-linkedin"></i>
+                    <span>LinkedIn</span>
+                </a>
+                {% endif %}
+
+                {% if profile.twitter %}
+                <a href="{{ profile.twitter }}" target="_blank" class="social-link">
+                    <i class="fab fa-twitter"></i>
+                    <span>Twitter</span>
+                </a>
+                {% endif %}
+
+                {% if profile.instagram %}
+                <a href="{{ profile.instagram }}" target="_blank" class="social-link">
+                    <i class="fab fa-instagram"></i>
+                    <span>Instagram</span>
+                </a>
+                {% endif %}
+
+                {% if profile.facebook %}
+                <a href="{{ profile.facebook }}" target="_blank" class="social-link">
+                    <i class="fab fa-facebook"></i>
+                    <span>Facebook</span>
+                </a>
+                {% endif %}
+
+                {% if profile.github %}
+                <a href="{{ profile.github }}" target="_blank" class="social-link">
+                    <i class="fab fa-github"></i>
+                    <span>GitHub</span>
+                </a>
+                {% endif %}
+
+                {% if profile.youtube %}
+                <a href="{{ profile.youtube }}" target="_blank" class="social-link">
+                    <i class="fab fa-youtube"></i>
+                    <span>YouTube</span>
+                </a>
+                {% endif %}
+            </div>
+            {% endif %}
+
+            <!-- Custom Fields -->
+            {% if profile.custom_fields %}
+            <div class="custom-fields">
+                {% for field in profile.custom_fields %}
+                <div class="custom-field">
+                    <i class="{{ field.icon|default:'fas fa-info-circle' }}"></i>
+                    <div>
+                        <div class="custom-field-label">{{ field.label }}</div>
+                        <div class="custom-field-value">{{ field.value }}</div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <!-- Save Contact Button -->
+            <button class="save-contact-btn" onclick="saveContact()">
+                <i class="fas fa-download"></i>
+                Save to Contacts
+            </button>
+        </div>
+
+        <!-- Footer -->
+        <div class="profile-footer">
+            Powered by 21K Tools | Views: {{ profile.page_views }}
+        </div>
+    </div>
+
+    <script>
+        function saveContact() {
+            // Generate vCard
+            const vcard = `BEGIN:VCARD
+VERSION:3.0
+FN:{{ profile.full_name }}
+{% if profile.title %}TITLE:{{ profile.title }}{% endif %}
+{% if profile.company %}ORG:{{ profile.company }}{% endif %}
+{% if profile.email %}EMAIL:{{ profile.email }}{% endif %}
+{% if profile.phone %}TEL:{{ profile.phone }}{% endif %}
+{% if profile.website %}URL:{{ profile.website }}{% endif %}
+{% if profile.address %}ADR:{{ profile.address }}{% endif %}
+END:VCARD`;
+
+            const blob = new Blob([vcard], { type: 'text/vcard' });
+            const url = window.URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = '{{ profile.full_name|slugify }}.vcf';
+            link.click();
+        }
+    </script>
+</body>
+</html>
