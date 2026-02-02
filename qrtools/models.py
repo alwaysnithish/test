@@ -237,7 +237,7 @@ class ProfileCard(models.Model):
     
     def get_absolute_url(self):
         """Get profile card landing page URL"""
-        return reverse('profile_card', kwargs={'code': self.qr_code.analytics_code})
+        return reverse('qrtools:profile_card', kwargs={'code': self.qr_code.analytics_code})
     
     def increment_view(self):
         """Increment page view count"""
