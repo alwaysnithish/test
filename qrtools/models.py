@@ -137,11 +137,11 @@ class QRCode(models.Model):
     class Meta:
         ordering = ['-created_at']
         indexes = [
-            models.Index(fields=['analytics_code']),
-            models.Index(fields=['analytics_key']),
-            models.Index(fields=['folder_name']),
-            models.Index(fields=['qr_type']),
-            models.Index(fields=['-created_at']),
+            models.Index(fields=['analytics_code'], name='qrtools_qrc_analyti_351be0_idx'),
+            models.Index(fields=['analytics_key'], name='qrtools_qrc_analyti_9dfb1c_idx'),
+            models.Index(fields=['folder_name'], name='qrtools_qrc_folder__c9bb2a_idx'),
+            models.Index(fields=['qr_type'], name='qrtools_qrc_qr_type_4c83fe_idx'),
+            models.Index(fields=['-created_at'], name='qrtools_qrc_created_851a42_idx'),
         ]
     
     def save(self, *args, **kwargs):
@@ -237,7 +237,7 @@ class ProfileCard(models.Model):
     
     def get_absolute_url(self):
         """Get profile card landing page URL"""
-        return reverse('qrtools:profile_card', kwargs={'code': self.qr_code.analytics_code})
+        return reverse('profile_card', kwargs={'code': self.qr_code.analytics_code})
     
     def increment_view(self):
         """Increment page view count"""
