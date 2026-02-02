@@ -28,7 +28,7 @@ urlpatterns = [
     path('analytics/<str:key>/', views.analytics_dashboard, name='analytics'),
     path('api/update/<str:code>/', views.update_dynamic_qr_api, name='update_dynamic_qr'),
     # Profile Card Landing Page
-    path('profile/<str:code>/', views.profile_card_view, name='profile_card'),
+    #path('profile/<str:code>/', views.profile_card_view, name='profile_card'),
     path('api/bulk-download/', views.bulk_download_api, name='bulk_download'),
     path('api/bulk-download/folder/', views.bulk_download_by_folder_api, name='bulk_download_folder'),
     path('api/bulk-download/batch/<uuid:batch_id>/', views.bulk_download_batch_api, name='bulk_download_batch'),
