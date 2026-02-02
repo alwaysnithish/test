@@ -1,4 +1,3 @@
-
 {% extends "base1.html" %}
 {% load static %}
 
@@ -386,29 +385,196 @@
         </div>
         
         <div class="form-group">
-            <label for="new-url">New Destination URL:</label>
-            <input type="url" id="new-url" class="form-control" 
-                   placeholder="https://new-website.com" required>
-        </div>
-        
-        <div class="form-group">
-            <label for="url-type">QR Type:</label>
+            <label for="url-type">Select QR Type:</label>
             <select id="url-type" class="form-control">
                 <option value="url">Website URL</option>
-                <option value="location">Location (geo:)</option>
-                <option value="phone">Phone (tel:)</option>
-                <option value="email">Email (mailto:)</option>
-                <option value="whatsapp">WhatsApp</option>
+                <option value="vcard">Contact Card (vCard)</option>
+                <option value="email">Email</option>
+                <option value="phone">Phone</option>
                 <option value="sms">SMS</option>
-                <option value="upi">UPI Payment</option>
                 <option value="wifi">WiFi</option>
-                <option value="vcard">Contact Card</option>
+                <option value="upi">UPI Payment</option>
+                <option value="location">Location</option>
                 <option value="text">Plain Text</option>
+                <option value="whatsapp">WhatsApp</option>
             </select>
         </div>
         
-        <div id="url-options">
-            <!-- Dynamic form fields based on type -->
+        <!-- Dynamic Forms Container -->
+        <div id="content-forms-update">
+            <!-- URL Form -->
+            <div id="form-url-update" class="content-form active">
+                <div class="form-group">
+                    <label class="form-label">
+                        <i class="fas fa-link"></i> Website URL
+                    </label>
+                    <input type="url" class="form-control" id="url-input" placeholder="https://example.com" required>
+                    <small style="color: #718096; margin-top: 5px; display: block;">Enter the complete URL including https://</small>
+                </div>
+            </div>
+
+            <!-- vCard Form -->
+            <div id="form-vcard-update" class="content-form">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label"><i class="fas fa-user"></i> Full Name *</label>
+                        <input type="text" class="form-control" id="vcard-name" placeholder="John Doe" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label"><i class="fas fa-phone"></i> Phone</label>
+                        <input type="tel" class="form-control" id="vcard-phone" placeholder="+1234567890">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label"><i class="fas fa-envelope"></i> Email</label>
+                        <input type="email" class="form-control" id="vcard-email" placeholder="john@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label"><i class="fas fa-building"></i> Company</label>
+                        <input type="text" class="form-control" id="vcard-company" placeholder="Company Name">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label"><i class="fas fa-briefcase"></i> Job Title</label>
+                        <input type="text" class="form-control" id="vcard-title" placeholder="CEO">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label"><i class="fas fa-globe"></i> Website</label>
+                        <input type="url" class="form-control" id="vcard-website" placeholder="https://website.com">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label"><i class="fas fa-map-marker-alt"></i> Address</label>
+                    <textarea class="form-control" id="vcard-address" placeholder="123 Main St, City, State, ZIP, Country"></textarea>
+                </div>
+            </div>
+
+            <!-- Email Form -->
+            <div id="form-email-update" class="content-form">
+                <div class="form-group">
+                    <label class="form-label"><i class="fas fa-envelope"></i> Email Address *</label>
+                    <input type="email" class="form-control" id="email-address" placeholder="contact@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label"><i class="fas fa-heading"></i> Subject (Optional)</label>
+                    <input type="text" class="form-control" id="email-subject" placeholder="Inquiry from QR Code">
+                </div>
+                <div class="form-group">
+                    <label class="form-label"><i class="fas fa-comment"></i> Message Body (Optional)</label>
+                    <textarea class="form-control" id="email-body" placeholder="Pre-filled message..."></textarea>
+                </div>
+            </div>
+
+            <!-- Phone Form -->
+            <div id="form-phone-update" class="content-form">
+                <div class="form-group">
+                    <label class="form-label"><i class="fas fa-phone"></i> Phone Number *</label>
+                    <input type="tel" class="form-control" id="phone-number" placeholder="+1234567890" required>
+                    <small style="color: #718096; margin-top: 5px; display: block;">Include country code (e.g., +1 for US)</small>
+                </div>
+            </div>
+
+            <!-- SMS Form -->
+            <div id="form-sms-update" class="content-form">
+                <div class="form-group">
+                    <label class="form-label"><i class="fas fa-phone"></i> Phone Number *</label>
+                    <input type="tel" class="form-control" id="sms-phone" placeholder="+1234567890" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label"><i class="fas fa-comment"></i> Message</label>
+                    <textarea class="form-control" id="sms-message" placeholder="Your pre-filled message here..."></textarea>
+                </div>
+            </div>
+
+            <!-- WiFi Form -->
+            <div id="form-wifi-update" class="content-form">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label"><i class="fas fa-wifi"></i> Network Name (SSID) *</label>
+                        <input type="text" class="form-control" id="wifi-ssid" placeholder="MyWiFiNetwork" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label"><i class="fas fa-key"></i> Password</label>
+                        <input type="text" class="form-control" id="wifi-password" placeholder="password123">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label"><i class="fas fa-shield-alt"></i> Encryption Type</label>
+                        <select class="form-control" id="wifi-encryption">
+                            <option value="WPA">WPA/WPA2/WPA3</option>
+                            <option value="WEP">WEP</option>
+                            <option value="nopass">None (Open)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label"><i class="fas fa-eye-slash"></i> Hidden Network</label>
+                        <select class="form-control" id="wifi-hidden">
+                            <option value="false">No</option>
+                            <option value="true">Yes</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- UPI Form -->
+            <div id="form-upi-update" class="content-form">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label"><i class="fas fa-user"></i> UPI ID *</label>
+                        <input type="text" class="form-control" id="upi-id" placeholder="username@upi" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label"><i class="fas fa-user-circle"></i> Payee Name *</label>
+                        <input type="text" class="form-control" id="upi-name" placeholder="John Doe" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label"><i class="fas fa-rupee-sign"></i> Amount (Optional)</label>
+                        <input type="number" class="form-control" id="upi-amount" placeholder="100.00" step="0.01" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label"><i class="fas fa-sticky-note"></i> Note (Optional)</label>
+                        <input type="text" class="form-control" id="upi-note" placeholder="Payment for services">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Location Form -->
+            <div id="form-location-update" class="content-form">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label"><i class="fas fa-map-pin"></i> Latitude *</label>
+                        <input type="text" class="form-control" id="location-lat" placeholder="40.7128" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label"><i class="fas fa-map-pin"></i> Longitude *</label>
+                        <input type="text" class="form-control" id="location-lng" placeholder="-74.0060" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label"><i class="fas fa-info-circle"></i> Location Name (Optional)</label>
+                    <input type="text" class="form-control" id="location-name" placeholder="Central Park, New York">
+                </div>
+                <small style="color: #718096;">Tip: You can get coordinates from Google Maps by right-clicking on a location</small>
+            </div>
+
+            <!-- Plain Text Form -->
+            <div id="form-text-update" class="content-form">
+                <div class="form-group">
+                    <label class="form-label"><i class="fas fa-font"></i> Text Content *</label>
+                    <textarea class="form-control" id="text-content" placeholder="Enter any text you want to encode in the QR code..." style="min-height: 150px;" required></textarea>
+                    <small style="color: #718096; margin-top: 5px; display: block;">Maximum 4,296 characters</small>
+                </div>
+            </div>
+
+            <!-- WhatsApp Form -->
+            <div id="form-whatsapp-update" class="content-form">
+                <div class="form-group">
+                    <label class="form-label"><i class="fab fa-whatsapp"></i> WhatsApp Number *</label>
+                    <input type="tel" class="form-control" id="whatsapp-phone" placeholder="+1234567890" required>
+                    <small style="color: #718096; margin-top: 5px; display: block;">Include country code without + or spaces</small>
+                </div>
+                <div class="form-group">
+                    <label class="form-label"><i class="fas fa-comment"></i> Pre-filled Message (Optional)</label>
+                    <textarea class="form-control" id="whatsapp-message" placeholder="Hi! I scanned your QR code..."></textarea>
+                </div>
+            </div>
         </div>
         
         <button class="btn btn-primary" onclick="updateQRDestination()">
@@ -581,10 +747,13 @@ new Chart(document.getElementById('browserChart'), {
 async function updateQRDestination() {
     const analyticsCode = '{{ qr_code.analytics_code }}';
     const urlType = document.getElementById('url-type').value;
-    let newUrl = document.getElementById('new-url').value;
+    let newUrl = '';
+    
+    // Get URL from dynamic form fields based on type
+    newUrl = getUrlFromDynamicFields(urlType);
     
     if (!newUrl) {
-        showUpdateResult('error', 'Please enter a URL');
+        showUpdateResult('error', 'Please fill in all required fields');
         return;
     }
     
@@ -625,44 +794,131 @@ async function updateQRDestination() {
 }
 
 function formatUrlForType(url, type) {
+    // URL formatting is now handled in getUrlFromDynamicFields
+    // This function just returns the URL as-is
+    return url;
+}
+
+// Get URL from dynamic form fields based on type
+function getUrlFromDynamicFields(type) {
     switch(type) {
-        case 'location':
-            // Format: geo:lat,lng
-            if (!url.includes(',')) return url;
-            const [lat, lng] = url.split(',').map(c => c.trim());
-            return `geo:${lat},${lng}`;
+        case 'url':
+            const urlInput = document.getElementById('url-input');
+            return urlInput ? urlInput.value.trim() : '';
             
-        case 'phone':
-            // Format: tel:+1234567890
-            if (!url.startsWith('tel:')) return `tel:${url}`;
-            return url;
+        case 'vcard':
+            const name = document.getElementById('vcard-name');
+            const phone = document.getElementById('vcard-phone');
+            const email = document.getElementById('vcard-email');
+            const company = document.getElementById('vcard-company');
+            const title = document.getElementById('vcard-title');
+            const website = document.getElementById('vcard-website');
+            const address = document.getElementById('vcard-address');
+            
+            if (!name || !name.value.trim()) return '';
+            
+            // Build vCard format
+            let vcard = 'BEGIN:VCARD\nVERSION:3.0\n';
+            vcard += `FN:${name.value.trim()}\n`;
+            if (phone && phone.value) vcard += `TEL:${phone.value.trim()}\n`;
+            if (email && email.value) vcard += `EMAIL:${email.value.trim()}\n`;
+            if (company && company.value) vcard += `ORG:${company.value.trim()}\n`;
+            if (title && title.value) vcard += `TITLE:${title.value.trim()}\n`;
+            if (website && website.value) vcard += `URL:${website.value.trim()}\n`;
+            if (address && address.value) vcard += `ADR:;;${address.value.trim()}\n`;
+            vcard += 'END:VCARD';
+            return vcard;
             
         case 'email':
-            // Format: mailto:email@example.com
-            if (!url.startsWith('mailto:')) return `mailto:${url}`;
-            return url;
+            const emailAddr = document.getElementById('email-address');
+            const emailSubj = document.getElementById('email-subject');
+            const emailBody = document.getElementById('email-body');
             
-        case 'whatsapp':
-            // Format: https://wa.me/1234567890
-            if (url.startsWith('http')) return url;
-            return `https://wa.me/${url.replace(/[^\d]/g, '')}`;
+            if (!emailAddr || !emailAddr.value.trim()) return '';
+            
+            let mailto = `mailto:${emailAddr.value.trim()}`;
+            const params = [];
+            if (emailSubj && emailSubj.value) params.push(`subject=${encodeURIComponent(emailSubj.value.trim())}`);
+            if (emailBody && emailBody.value) params.push(`body=${encodeURIComponent(emailBody.value.trim())}`);
+            if (params.length > 0) mailto += '?' + params.join('&');
+            return mailto;
+            
+        case 'phone':
+            const phoneNum = document.getElementById('phone-number');
+            if (!phoneNum || !phoneNum.value.trim()) return '';
+            return `tel:${phoneNum.value.trim()}`;
             
         case 'sms':
-            // Format: sms:+1234567890
-            if (!url.startsWith('sms:')) return `sms:${url}`;
-            return url;
+            const smsPhone = document.getElementById('sms-phone');
+            const smsMsg = document.getElementById('sms-message');
             
-        case 'upi':
-            // Format: upi://pay?pa=upi@id
-            if (!url.startsWith('upi:')) return `upi://pay?pa=${url}`;
-            return url;
+            if (!smsPhone || !smsPhone.value.trim()) return '';
+            
+            let smsUrl = `sms:${smsPhone.value.trim()}`;
+            if (smsMsg && smsMsg.value) {
+                smsUrl += `?body=${encodeURIComponent(smsMsg.value.trim())}`;
+            }
+            return smsUrl;
             
         case 'wifi':
-            // Format: WIFI:T:WPA;S:SSID;P:Password;;
-            return url; // Assume already formatted
+            const ssid = document.getElementById('wifi-ssid');
+            const pass = document.getElementById('wifi-password');
+            const encryption = document.getElementById('wifi-encryption');
+            const hidden = document.getElementById('wifi-hidden');
+            
+            if (!ssid || !ssid.value.trim()) return '';
+            
+            const wifiPass = pass && pass.value ? pass.value.trim() : '';
+            const wifiEnc = encryption ? encryption.value : 'WPA';
+            const wifiHidden = hidden && hidden.value === 'true' ? 'true' : 'false';
+            
+            return `WIFI:T:${wifiEnc};S:${ssid.value.trim()};P:${wifiPass};H:${wifiHidden};;`;
+            
+        case 'upi':
+            const upiId = document.getElementById('upi-id');
+            const upiName = document.getElementById('upi-name');
+            const upiAmount = document.getElementById('upi-amount');
+            const upiNote = document.getElementById('upi-note');
+            
+            if (!upiId || !upiId.value.trim() || !upiName || !upiName.value.trim()) return '';
+            
+            let upiUrl = `upi://pay?pa=${upiId.value.trim()}&pn=${encodeURIComponent(upiName.value.trim())}`;
+            if (upiAmount && upiAmount.value) upiUrl += `&am=${upiAmount.value}`;
+            if (upiNote && upiNote.value) upiUrl += `&tn=${encodeURIComponent(upiNote.value.trim())}`;
+            return upiUrl;
+            
+        case 'location':
+            const lat = document.getElementById('location-lat');
+            const lng = document.getElementById('location-lng');
+            const locName = document.getElementById('location-name');
+            
+            if (!lat || !lat.value.trim() || !lng || !lng.value.trim()) return '';
+            
+            let geoUrl = `geo:${lat.value.trim()},${lng.value.trim()}`;
+            if (locName && locName.value) {
+                geoUrl += `?q=${lat.value.trim()},${lng.value.trim()}(${encodeURIComponent(locName.value.trim())})`;
+            }
+            return geoUrl;
+            
+        case 'text':
+            const textContent = document.getElementById('text-content');
+            return textContent ? textContent.value.trim() : '';
+            
+        case 'whatsapp':
+            const waPhone = document.getElementById('whatsapp-phone');
+            const waMsg = document.getElementById('whatsapp-message');
+            
+            if (!waPhone || !waPhone.value.trim()) return '';
+            
+            const cleanPhone = waPhone.value.trim().replace(/[^\d]/g, '');
+            let waUrl = `https://wa.me/${cleanPhone}`;
+            if (waMsg && waMsg.value) {
+                waUrl += `?text=${encodeURIComponent(waMsg.value.trim())}`;
+            }
+            return waUrl;
             
         default:
-            return url;
+            return '';
     }
 }
 
@@ -696,68 +952,29 @@ function getCSRFToken() {
 
 // Dynamic form fields based on QR type
 document.getElementById('url-type').addEventListener('change', function() {
-    const urlOptions = document.getElementById('url-options');
     const type = this.value;
     
-    let html = '';
+    // Hide all forms
+    document.querySelectorAll('#content-forms-update .content-form').forEach(form => {
+        form.classList.remove('active');
+        form.style.display = 'none';
+    });
     
-    switch(type) {
-        case 'location':
-            html = `
-                <div class="form-group">
-                    <label for="latitude">Latitude:</label>
-                    <input type="text" id="latitude" class="form-control" placeholder="40.7128">
-                </div>
-                <div class="form-group">
-                    <label for="longitude">Longitude:</label>
-                    <input type="text" id="longitude" class="form-control" placeholder="-74.0060">
-                </div>
-            `;
-            break;
-        case 'phone':
-            html = `
-                <div class="form-group">
-                    <label for="phone-number">Phone Number (with country code):</label>
-                    <input type="tel" id="phone-number" class="form-control" placeholder="+1234567890">
-                </div>
-            `;
-            break;
-        case 'email':
-            html = `
-                <div class="form-group">
-                    <label for="email-address">Email Address:</label>
-                    <input type="email" id="email-address" class="form-control" placeholder="email@example.com">
-                </div>
-                <div class="form-group">
-                    <label for="email-subject">Subject (optional):</label>
-                    <input type="text" id="email-subject" class="form-control" placeholder="Email Subject">
-                </div>
-            `;
-            break;
-        case 'wifi':
-            html = `
-                <div class="form-group">
-                    <label for="wifi-ssid">WiFi SSID:</label>
-                    <input type="text" id="wifi-ssid" class="form-control" placeholder="MyWiFi">
-                </div>
-                <div class="form-group">
-                    <label for="wifi-password">Password:</label>
-                    <input type="text" id="wifi-password" class="form-control" placeholder="password123">
-                </div>
-                <div class="form-group">
-                    <label for="wifi-type">Encryption Type:</label>
-                    <select id="wifi-type" class="form-control">
-                        <option value="WPA">WPA/WPA2</option>
-                        <option value="WEP">WEP</option>
-                        <option value="nopass">No Password</option>
-                    </select>
-                </div>
-            `;
-            break;
+    // Show selected form
+    const formId = `form-${type}-update`;
+    const selectedForm = document.getElementById(formId);
+    if (selectedForm) {
+        selectedForm.classList.add('active');
+        selectedForm.style.display = 'block';
     }
-    
-    urlOptions.innerHTML = html;
+});
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('#content-forms-update .content-form').forEach(f => f.style.display = 'none');
+    const sel = document.getElementById('url-type');
+    if (sel?.value) {
+        const form = document.getElementById(`form-${sel.value}-update`);
+        if (form) form.style.display = 'block';
+    }
 });
 </script>
 {% endblock %}
-[file content end]
