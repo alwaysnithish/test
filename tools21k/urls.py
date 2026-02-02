@@ -30,15 +30,12 @@ blog_sitemaps = {
     'static': BlogStaticSitemap,
 }
 
+# Import profile card view
+from qrtools.views import profile_card_view  # ADD THIS LINE
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('blog-sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='blog_sitemap'),
-    path('blog/sitemap.xml', sitemap, 
-         {'sitemaps': blog_sitemaps},
-         name='blog_sitemap'),path('blog/sitemap.xml', sitemap, 
-         {'sitemaps': blog_sitemaps},
-         name='blog_sitemap'),
+    path('blog/sitemap.xml', sitemap, {'sitemaps': blog_sitemaps}, name='blog_sitemap'),
     path('fileconverter/', include('fileconverter.urls')),    
     path('agecalculator/', views.age_calculator, name='age_calculator'),
     path('api/age-calculate/', views.age_calculate_api, name='age_calculate_api'),
@@ -60,19 +57,19 @@ urlpatterns = [
     path('api/compound-interest/', views.compound_interest_api, name='compound_interest_api'),
     path('api/loan-calculator/', views.loan_calculator_api, name='loan_calculator_api'),
     path('api/compare-plans/', views.compare_plans_api, name='compare_plans_api'),
-    #path('convert/', include('fileconverter.urls')),
+    
     path('pdftools/', include('pdftools.urls')),
     path('imageresizer/', include('image_resizer.urls')),
     path('qrcodeandscanner/', include('qrtools.urls')),
-
-    #path('qrscanner/', include('qrscanner.urls')),
-    #path('ckeditor/', include('ckeditor_uploader.urls')),
-  #  path('fileconverter',include('fileconverter.urls')),
+    
+    # ADD THIS LINE - Profile cards at root level
+    path('profile/<str:code>/', profile_card_view, name='profile_card'),
     
     path('blog/', include('blog.urls')),
     
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('', include('shortener.urls')),
+    
     # Serve sitemap and ads.txt files
     re_path(r'^sitemap\.xml$', serve, {
         'document_root': settings.STATIC_ROOT, 
@@ -86,12 +83,9 @@ urlpatterns = [
 
 # Static and Media files serving
 if settings.DEBUG:
-    # During development, serve static and media files
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 else:
-    # In production, you might need to serve static files through Django
-    # Only use this if your web server (nginx/apache) isn't handling static files
     urlpatterns += [
         re_path(r'^static/(?P<path>.*)$', serve, {
             'document_root': settings.STATIC_ROOT,
@@ -109,4 +103,3 @@ def custom_page_not_found(request, exception):
 
 # Set the custom handler
 handler404 = custom_page_not_found
-
