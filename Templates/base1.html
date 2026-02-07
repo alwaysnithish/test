@@ -20,20 +20,21 @@
     <meta name="keywords" content="{% block meta_keywords %}online tools, free tools, URL shortener, PDF tools, file converter, image resizer, calculators, 21k tools{% endblock %}">
     
     <!-- Canonical URL -->
-    <link rel="canonical" href="https://{{ request.get_host }}{{ request.path }}">
+    <link rel="canonical" href="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}">
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="{% block og_type %}website{% endblock %}">
-    <meta property="og:url" content="https://{{ request.get_host }}{{ request.path }}">
+
+    <meta property="og:url" content="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}">
     <meta property="og:title" content="{% block og_title %}{{ self.title }}{% endblock %}">
     <meta property="og:description" content="{% block og_description %}21K Tools - Free online tools for URL shortening, PDF editing, file conversion, image resizing, calculators and more.{% endblock %}">
     <meta property="og:site_name" content="21K Tools">
     
     <!-- Default OG Image - ICON FOR ALL PAGES -->
     {% block og_image %}
-    <meta property="og:image" content="https://{{ request.get_host }}{% static '21k.png' %}">
-    <meta property="og:image:secure_url" content="https://{{ request.get_host }}{% static '21k.png' %}">
-    <meta property="og:image:type" content="image/png">
+   <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static '21k.png' %}">
+    <meta property="og:image:secure_url" content="{{ request.scheme }}://{{ request.get_host }}{% static '21k.png' %}">
+  <meta property="og:image:type" content="image/png">
     <meta property="og:image:width" content="512">
     <meta property="og:image:height" content="512">
     <meta property="og:image:alt" content="21K Tools Logo">
@@ -48,7 +49,9 @@
     
     <!-- Default Twitter Image - ICON FOR ALL PAGES -->
     {% block twitter_image %}
-    <meta name="twitter:image" content="https://{{ request.get_host }}{% static '21k.png' %}">
+ 
+     <meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{% static '21k.png' %}">
+  
     <meta name="twitter:image:alt" content="21K Tools Logo">
     {% endblock %}
     
