@@ -1,7 +1,7 @@
-{% extends 'base1.html' %}
+ {% extends 'base1.html' %}
 {% load static %}
 
-{% block title %}Privacy Policy – 21K Tools{% endblock %}
+{% block title %}Terms and Conditions – 21K Tools {% endblock %}
 
 {% block extra_css %}
 <style>
@@ -35,7 +35,7 @@
     margin-bottom: 30px;
   }
 
-  .privacy-content {
+  .terms-content {
     background: white;
     border-radius: 20px;
     padding: 40px;
@@ -43,46 +43,46 @@
     box-shadow: 0 10px 30px rgba(0,0,0,0.1);
   }
 
-  .privacy-content h2 {
+  .terms-content h2 {
     color: #1e3a8a;
     font-size: 2rem;
     margin-bottom: 20px;
     font-weight: 800;
   }
 
-  .privacy-content h3 {
+  .terms-content h3 {
     color: #2563eb;
     font-size: 1.5rem;
     margin: 30px 0 15px;
     font-weight: 700;
   }
 
-  .privacy-content h4 {
+  .terms-content h4 {
     color: #1e40af;
     font-size: 1.2rem;
     margin: 20px 0 10px;
     font-weight: 600;
   }
 
-  .privacy-content p {
+  .terms-content p {
     color: #333;
     line-height: 1.8;
     margin-bottom: 20px;
     font-size: 1.05rem;
   }
 
-  .privacy-content ul {
+  .terms-content ul {
     margin-left: 20px;
     margin-bottom: 25px;
   }
 
-  .privacy-content li {
+  .terms-content li {
     margin-bottom: 10px;
     color: #333;
     line-height: 1.6;
   }
 
-  .privacy-content li:before {
+  .terms-content li:before {
     content: "•";
     color: #3b82f6;
     font-weight: bold;
@@ -91,7 +91,16 @@
     margin-left: -1em;
   }
 
-  .privacy-summary {
+  .terms-content a {
+    color: #2563eb;
+    text-decoration: underline;
+  }
+
+  .terms-content a:hover {
+    color: #1d4ed8;
+  }
+
+  .terms-summary {
     background: #f8fafc;
     border-radius: 15px;
     padding: 25px;
@@ -99,17 +108,17 @@
     border-left: 4px solid #3b82f6;
   }
 
-  .privacy-summary h4 {
+  .terms-summary h4 {
     color: #1e3a8a;
     font-size: 1.3rem;
     margin-bottom: 15px;
   }
 
-  .privacy-summary ul {
+  .terms-summary ul {
     margin-left: 15px;
   }
 
-  .privacy-summary li {
+  .terms-summary li {
     margin-bottom: 8px;
   }
 
@@ -142,21 +151,21 @@
       font-size: 2rem; 
     }
     
-    .privacy-content {
+    .terms-content {
       padding: 30px 20px;
     }
   }
 
   @media (max-width: 480px) {
-    .privacy-content {
+    .terms-content {
       padding: 25px 15px;
     }
 
-    .privacy-content h2 {
+    .terms-content h2 {
       font-size: 1.6rem;
     }
 
-    .privacy-content h3 {
+    .terms-content h3 {
       font-size: 1.3rem;
     }
   }
@@ -166,161 +175,188 @@
 {% block content %}
 <main class="main-content">
   <section class="demo-section">
-    <h1 class="demo-title">Privacy Policy</h1>
-    <p class="demo-subtitle">Your privacy is our priority at 21K Tools</p>
+    <h1 class="demo-title">Terms and Conditions</h1>
+    <p class="demo-subtitle">Please read these terms carefully before using 21K Tools</p>
     <a href="https://21k.tools" class="page-nav-link">
-      <i class="fas fa-home"></i> Home<p>/Privacy Policy</p>
+      <i class="fas fa-home"></i> Home<p>/Terms and Conditions</p>
     </a>
   </section>
   
-  <div class="privacy-content">
-    <h2>Welcome to 21K Tools Privacy Policy</h2>
-    <p>Your privacy is critically important to us. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website (https://21k.tools) and its associated subdomains.</p>
+  <div class="terms-content">
+    <h2>Terms and Conditions of Use</h2>
+    <p>Welcome to 21K Tools. These Terms and Conditions ("Terms") govern your access to and use of our website (https://21k.tools) and all associated subdomains, services, tools, and features (collectively, the "Services").</p>
     
-    <p>We are committed to protecting your privacy and ensuring transparency in how your data is handled. By using 21K Tools, you agree to the terms of this Privacy Policy. If you do not agree, please do not use our services.</p>
+    <p>By accessing or using our Services, you agree to be bound by these Terms and our Privacy Policy. If you do not agree with any part of these Terms, you must not use our Services.</p>
     
-    <div class="privacy-summary">
-      <h4>Key Privacy Points:</h4>
+    <div class="terms-summary">
+      <h4>Key Terms Summary:</h4>
       <ul>
-        <li>We do not collect personal identifiers like name, email, or IP address for tool usage</li>
-        <li>Files uploaded to 21K Tools are used solely for the requested operation and deleted after processing</li>
-        <li>We use minimal cookies, with no invasive tracking or profiling</li>
-        <li>Your privacy is our priority, and we adhere to best practices for data security</li>
+        <li>All tools and services are provided free of charge on an "as-is" basis</li>
+        <li>You are responsible for the files you upload and the content you create</li>
+        <li>We do not guarantee uninterrupted service or error-free operation</li>
+        <li>You must not use our services for illegal or harmful purposes</li>
+        <li>We reserve the right to modify or discontinue services at any time</li>
       </ul>
     </div>
 
-    <h3>1. Information We Collect</h3>
-    <p>At 21K Tools, we minimize data collection and only gather information essential to providing and improving our services. We DO NOT require user registration or personal details for accessing tools.</p>
+    <h3>1. Acceptance of Terms</h3>
+    <p>By accessing 21K Tools, you acknowledge that you have read, understood, and agree to be bound by these Terms and Conditions, as well as our Privacy Policy. These Terms apply to all visitors, users, and others who access or use our Services.</p>
     
-    <h4>a) Information You Provide Voluntarily</h4>
-    <p>You may provide information when:</p>
+    <p>If you are using our Services on behalf of an organization, you represent and warrant that you have the authority to bind that organization to these Terms.</p>
+    
+    <h3>2. Description of Services</h3>
+    <p>21K Tools provides a comprehensive suite of free online tools and utilities, including but not limited to:</p>
     <ul>
-      <li>Contacting us via email or help forms</li>
-      <li>Submitting feedback or suggestions</li>
-      <li>Uploading files for conversion or processing</li>
+      <li>File conversion tools (PDF, image, document formats)</li>
+      <li>Image editing and resizing tools</li>
+      <li>PDF manipulation tools (merge, split, compress, OCR)</li>
+      <li>QR code generator and scanner</li>
+      <li>Text and calculation utilities</li>
+      <li>AI-powered content generation tools</li>
+      <li>Educational blog and resources</li>
     </ul>
-    <p>We only use this information for responding to your queries and enhancing user experience.</p>
+    <p>We reserve the right to modify, suspend, or discontinue any part of our Services at any time without prior notice.</p>
     
-    <h4>b) Automatically Collected Information</h4>
-    <p>When you use our services, certain information may be collected automatically, including:</p>
+    <h3>3. User Responsibilities</h3>
+    
+    <h4>a) Acceptable Use</h4>
+    <p>You agree to use our Services only for lawful purposes and in accordance with these Terms. You agree NOT to use our Services:</p>
     <ul>
-      <li><strong>Device Information:</strong> Browser type, operating system, device type</li>
-      <li><strong>Usage Data:</strong> Pages visited, time spent on pages, referring URLs</li>
-      <li><strong>Cookies & Similar Technologies:</strong> Essential cookies for session management and analytics (see section 6)</li>
-    </ul>
-    <p><em>Note:</em> We DO NOT track personal identifiers such as names, emails, or IP addresses for user profiling.</p>
-    
-    <h3>2. Use of Information</h3>
-    <p>We use collected information solely for:</p>
-    <ul>
-      <li>Delivering and operating our online tools</li>
-      <li>Improving website performance and usability</li>
-      <li>Monitoring service security and preventing misuse</li>
-      <li>Analyzing website traffic and usage trends (via anonymized analytics)</li>
-      <li>Responding to user queries or support requests</li>
-    </ul>
-    <p>We DO NOT sell, rent, or share personal data with third parties for advertising purposes.</p>
-    
-    <h3>3. File Handling and User Data Privacy</h3>
-    
-    <h4>a) File Uploads (Converters, Resizers, PDF Tools)</h4>
-    <ul>
-      <li>Files uploaded to 21K Tools for conversion or processing are used only for the purpose of delivering the requested service</li>
-      <li>Uploaded files are processed in-browser (locally) whenever possible</li>
-      <li>For server-side processing (if applicable), files are automatically deleted immediately after processing</li>
-      <li>We do not store, view, share, or analyze user files beyond task execution</li>
+      <li>To upload, process, or distribute any content that is illegal, harmful, threatening, abusive, defamatory, or otherwise objectionable</li>
+      <li>To violate any local, state, national, or international law or regulation</li>
+      <li>To infringe upon the intellectual property rights of others</li>
+      <li>To transmit or distribute viruses, malware, or any other malicious code</li>
+      <li>To impersonate any person or entity or falsely state or misrepresent your affiliation with a person or entity</li>
+      <li>To interfere with or disrupt the Services or servers or networks connected to the Services</li>
+      <li>To attempt to gain unauthorized access to any portion of the Services or any other systems or networks</li>
+      <li>To use automated scripts, bots, or scraping tools to access or use the Services excessively</li>
     </ul>
     
-    <h4>b) AI Content Inputs</h4>
-    <p>Content entered in AI generation tools is processed in real-time and not stored or reused. We do not retain queries, prompts, or generated outputs.</p>
-    
-    <h3>4. Data Sharing and Disclosure</h3>
-    <p>We do not share, sell, or disclose personal data to third parties, except in the following cases:</p>
+    <h4>b) File Uploads and Content</h4>
+    <p>When you upload files or input content into our tools, you represent and warrant that:</p>
     <ul>
-      <li><strong>Service Providers:</strong> We may use trusted third-party services for analytics (e.g., Google Analytics) under strict privacy agreements</li>
-      <li><strong>Legal Obligations:</strong> If required by law, we may disclose information in response to lawful requests by public authorities</li>
-      <li><strong>Protection of Rights:</strong> To protect the security and integrity of our platform, we may share information to prevent fraudulent activities or misuse</li>
-    </ul>
-    <p>We DO NOT use or share user content for marketing, profiling, or third-party advertising purposes.</p>
-    
-    <h3>5. Data Security</h3>
-    <p>We implement robust security measures to protect your data, including:</p>
-    <ul>
-      <li>SSL/TLS encryption for secure data transmission</li>
-      <li>File processing algorithms designed to avoid unnecessary data storage</li>
-      <li>Regular security reviews and infrastructure updates</li>
-    </ul>
-    <p>However, no method of transmission or storage over the internet is 100% secure. While we strive to use commercially acceptable means to protect your data, we cannot guarantee absolute security.</p>
-    
-    <h3>6. Cookies and Tracking Technologies</h3>
-    <p>21K Tools uses cookies and similar tracking technologies to enhance user experience. These cookies may include:</p>
-    
-    <h4>a) Essential Cookies</h4>
-    <ul>
-      <li>Necessary for website functionality, such as session management and tool operations</li>
-      <li>Cannot be disabled without affecting site performance</li>
+      <li>You own the content or have all necessary rights, licenses, and permissions to use and upload it</li>
+      <li>The content does not violate any third-party rights, including copyright, trademark, privacy, or other personal or proprietary rights</li>
+      <li>The content does not contain any illegal material or material that could harm minors</li>
+      <li>You understand that uploaded files are processed solely to deliver the requested service and are automatically deleted after processing</li>
     </ul>
     
-    <h4>b) Analytics Cookies</h4>
+    <h4>c) Account Security</h4>
+    <p>While 21K Tools does not currently require user registration for most services, if we introduce account features in the future, you will be responsible for maintaining the confidentiality of your account credentials and for all activities that occur under your account.</p>
+    
+    <h3>4. Intellectual Property Rights</h3>
+    
+    <h4>a) Our Intellectual Property</h4>
+    <p>All content, features, and functionality of the Services, including but not limited to text, graphics, logos, button icons, images, audio clips, digital downloads, data compilations, and software, are the exclusive property of 21K Tools or its licensors and are protected by international copyright, trademark, patent, trade secret, and other intellectual property laws.</p>
+    
+    <h4>b) Your Content</h4>
+    <p>You retain all ownership rights to the content you upload or create using our Services. By using our Services, you grant 21K Tools a limited, non-exclusive, royalty-free license to process, store, and display your content solely for the purpose of providing the requested service.</p>
+    <p>We do not claim ownership of your files or generated outputs. Once your file is processed and delivered, we delete it from our servers (unless otherwise specified in our Privacy Policy).</p>
+    
+    <h4>c) Third-Party Content</h4>
+    <p>Our Services may display or link to third-party content, including advertisements, which are not owned or controlled by 21K Tools. We do not endorse or assume responsibility for any third-party content.</p>
+    
+    <h3>5. Disclaimers and Limitations of Liability</h3>
+    
+    <h4>a) "As-Is" Services</h4>
+    <p>Our Services are provided on an "AS IS" and "AS AVAILABLE" basis without warranties of any kind, either express or implied, including but not limited to:</p>
     <ul>
-      <li>Used to collect anonymized data on website traffic, usage patterns, and interactions</li>
-      <li>We utilize Google Analytics to understand how users engage with our services</li>
-      <li>IP anonymization is enabled to protect your identity</li>
+      <li>Warranties of merchantability, fitness for a particular purpose, or non-infringement</li>
+      <li>Guarantees that the Services will be uninterrupted, timely, secure, or error-free</li>
+      <li>Guarantees regarding the accuracy, reliability, or completeness of any content or results obtained through the Services</li>
     </ul>
     
-    <h4>c) Cookie Preferences</h4>
-    <p>You can control or disable cookies through your browser settings. However, disabling essential cookies may limit website functionality.</p>
-    
-    <h3>7. Third-Party Services and Links</h3>
-    <p>Our website may contain links to third-party websites or services not operated by us. We are not responsible for the privacy practices or content of these external sites. We recommend reviewing the privacy policies of any third-party websites you visit.</p>
-    <p>Examples include:</p>
+    <h4>b) Limitation of Liability</h4>
+    <p>To the fullest extent permitted by applicable law, 21K Tools and its affiliates, officers, employees, agents, partners, and licensors shall not be liable for any indirect, incidental, special, consequential, or punitive damages, including but not limited to:</p>
     <ul>
-      <li>External links for downloading resources</li>
-      <li>Embedded social media buttons (Twitter, Instagram, YouTube)</li>
+      <li>Loss of profits, data, use, goodwill, or other intangible losses</li>
+      <li>Damages resulting from your access to or inability to access the Services</li>
+      <li>Damages resulting from any content obtained from the Services</li>
+      <li>Unauthorized access to or alteration of your transmissions or content</li>
+    </ul>
+    <p>Our total liability to you for all claims arising from or related to the Services shall not exceed the amount you paid us to use the Services in the twelve (12) months prior to the event giving rise to the liability (which, for our free services, would be zero).</p>
+    
+    <h4>c) No Professional Advice</h4>
+    <p>The information, tools, and services provided on 21K Tools are for general informational and utility purposes only. They should not be construed as professional advice (legal, financial, medical, or otherwise). Always seek the advice of qualified professionals for specific concerns.</p>
+    
+    <h3>6. Third-Party Services and Links</h3>
+    <p>Our Services may contain links to third-party websites, services, or resources that are not owned or controlled by 21K Tools. We have no control over and assume no responsibility for the content, privacy policies, or practices of any third-party websites or services.</p>
+    <p>You acknowledge and agree that 21K Tools shall not be responsible or liable, directly or indirectly, for any damage or loss caused or alleged to be caused by or in connection with the use of or reliance on any such third-party content, goods, or services.</p>
+    
+    <h3>7. Advertising</h3>
+    <p>21K Tools displays advertisements through Google AdSense and potentially other third-party advertising networks to support our free services. By using our Services, you acknowledge and agree that:</p>
+    <ul>
+      <li>Advertisements may be displayed alongside or within our tools and content</li>
+      <li>We do not control the content of advertisements displayed by third-party networks</li>
+      <li>Third-party advertisers may use cookies and tracking technologies in accordance with their own privacy policies</li>
+      <li>Clicking on advertisements will redirect you to third-party websites not controlled by 21K Tools</li>
+    </ul>
+    <p>For more information about how advertising works on our site, please see our Privacy Policy.</p>
+    
+    <h3>8. Indemnification</h3>
+    <p>You agree to defend, indemnify, and hold harmless 21K Tools and its affiliates, officers, employees, agents, partners, and licensors from and against any claims, liabilities, damages, losses, and expenses, including reasonable attorney's fees, arising out of or in any way connected with:</p>
+    <ul>
+      <li>Your access to or use of the Services</li>
+      <li>Your violation of these Terms</li>
+      <li>Your violation of any third-party rights, including intellectual property, privacy, or other personal rights</li>
+      <li>Any content you upload, transmit, or make available through the Services</li>
     </ul>
     
-    <h3>8. Children's Privacy</h3>
-    <p>21K Tools does not knowingly collect any personal information from children under the age of 13. If you are a parent or guardian and believe your child has provided us with personal information, please contact us, and we will take steps to delete such information.</p>
-    
-    <h3>9. International Users and Data Transfer</h3>
-    <p>Our services are accessible globally. By using 21K Tools, you consent to the transfer and processing of your information in jurisdictions where privacy laws may differ from those in your location.</p>
-    <p>We ensure that any data handling complies with privacy regulations, including GDPR and other applicable laws.</p>
-    
-    <h3>10. Data Retention Policy</h3>
+    <h3>9. Modification of Terms</h3>
+    <p>We reserve the right to modify or replace these Terms at any time at our sole discretion. If we make material changes, we will notify you by:</p>
     <ul>
-      <li><strong>Uploaded Files:</strong> Automatically deleted after task completion; we do not retain any user files</li>
-      <li><strong>Usage Data (Anonymous):</strong> Retained for analytical purposes in aggregate form only</li>
-      <li><strong>Contact Queries:</strong> Retained as long as needed to address the query, then securely deleted</li>
+      <li>Posting a prominent notice on our website</li>
+      <li>Updating the "Last Updated" date at the bottom of this page</li>
+      <li>Sending an email notification (if you have provided your email address)</li>
     </ul>
-    <p>We practice data minimization, ensuring that no personally identifiable information is unnecessarily stored.</p>
+    <p>Your continued use of the Services after any changes to these Terms constitutes your acceptance of the new Terms. If you do not agree to the modified Terms, you must stop using our Services.</p>
     
-    <h3>11. Your Data Rights</h3>
-    <p>Depending on your jurisdiction (e.g., EU, California), you may have specific rights regarding your personal data, including:</p>
+    <h3>10. Termination</h3>
+    <p>We reserve the right to terminate or suspend your access to all or part of the Services immediately, without prior notice or liability, for any reason, including but not limited to:</p>
     <ul>
-      <li>The right to access, correct, or delete your data</li>
-      <li>The right to object to certain processing activities</li>
-      <li>The right to data portability</li>
-      <li>The right to withdraw consent (where applicable)</li>
+      <li>Violation of these Terms</li>
+      <li>Fraudulent, abusive, or illegal activity</li>
+      <li>Prolonged inactivity</li>
+      <li>Technical or security reasons</li>
     </ul>
-    <p>Given the minimal data we collect, most of these rights can be exercised by simply ceasing to use our services. For any data-related concerns, you can contact us at contact@21k.tools.</p>
+    <p>Upon termination, your right to use the Services will immediately cease. All provisions of these Terms that by their nature should survive termination shall survive, including but not limited to ownership provisions, warranty disclaimers, indemnity, and limitations of liability.</p>
     
-    <h3>12. Google Analytics & Advertising</h3>
-    <p>We use Google Analytics for aggregated, anonymized website traffic analysis. This data helps us understand user behavior to improve website functionality.</p>
-    <p>We may display contextual ads through Google AdSense or similar platforms. These ads are based on general website content, not personal user profiles. You can manage Google's data usage preferences at Google's Ad Settings.</p>
+    <h3>11. Geographic Restrictions</h3>
+    <p>21K Tools is operated from and intended for users worldwide. However, we make no representation that the Services are appropriate or available for use in all locations. Those who access the Services from locations where the content is illegal or prohibited are responsible for compliance with local laws.</p>
     
-    <h3>13. Changes to This Privacy Policy</h3>
-    <p>We reserve the right to update or modify this Privacy Policy at any time. Changes will be effective upon posting to this page. We encourage users to review this policy periodically for updates.</p>
-    <p>If material changes are made, we will notify you via prominent notices on our website.</p>
+    <h3>12. Dispute Resolution and Governing Law</h3>
     
-    <h3>14. Contact Us</h3>
-    <p>If you have any questions, suggestions, or concerns regarding this Privacy Policy or your data, please reach out to us:</p>
+    <h4>a) Governing Law</h4>
+    <p>These Terms shall be governed by and construed in accordance with the laws of the jurisdiction in which 21K Tools operates, without regard to its conflict of law provisions.</p>
+    
+    <h4>b) Dispute Resolution</h4>
+    <p>Any disputes arising from or relating to these Terms or the Services shall first be attempted to be resolved through good-faith negotiation. If the dispute cannot be resolved through negotiation, it may be submitted to mediation or arbitration as agreed upon by both parties.</p>
+    
+    <h4>c) Class Action Waiver</h4>
+    <p>To the extent permitted by applicable law, you agree that any dispute resolution proceedings will be conducted only on an individual basis and not in a class, consolidated, or representative action.</p>
+    
+    <h3>13. Severability</h3>
+    <p>If any provision of these Terms is found to be invalid, illegal, or unenforceable by a court of competent jurisdiction, the remaining provisions shall continue in full force and effect. The invalid or unenforceable provision shall be modified to the minimum extent necessary to make it valid and enforceable while preserving its intent.</p>
+    
+    <h3>14. Entire Agreement</h3>
+    <p>These Terms, together with our Privacy Policy and any other legal notices or agreements published by us on the Services, constitute the entire agreement between you and 21K Tools regarding the use of our Services and supersede all prior agreements and understandings, whether written or oral.</p>
+    
+    <h3>15. No Waiver</h3>
+    <p>Our failure to enforce any right or provision of these Terms will not be considered a waiver of those rights. Any waiver of any provision of these Terms will be effective only if in writing and signed by an authorized representative of 21K Tools.</p>
+    
+    <h3>16. Contact Information</h3>
+    <p>If you have any questions, concerns, or feedback regarding these Terms and Conditions, please contact us:</p>
     <ul>
       <li><strong>Email:</strong> contact@21k.tools</li>
       <li><strong>Help Center:</strong> https://21k.tools/help</li>
+      <li><strong>Website:</strong> https://21k.tools</li>
     </ul>
-    <p>We are committed to addressing privacy concerns promptly and transparently.</p>
+    <p>We will make every effort to respond to your inquiries in a timely manner.</p>
     
-    <p><strong>Last Updated:</strong> July 28, 2025</p>
+    <h3>17. Acknowledgment</h3>
+    <p>By using 21K Tools, you acknowledge that you have read, understood, and agree to be bound by these Terms and Conditions. You also acknowledge that you have read and understood our Privacy Policy.</p>
+    
+    <p><strong>Last Updated:</strong> February 10, 2026</p>
   </div>
 </main>
 {% endblock %}
