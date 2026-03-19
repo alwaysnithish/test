@@ -57,6 +57,349 @@ free online tools, url shortener, qr code generator, qr scanner, pdf tools, file
       margin-bottom: 30px;
     }
 
+   /* ==================== RECENT BLOGS SECTION ==================== */
+.recent-blogs-section {
+  max-width: 1200px;
+  margin: 0 auto 30px;
+  padding: 0;
+}
+ 
+.blogs-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 22px;
+  padding: 0 4px;
+}
+ 
+.blogs-section-heading {
+  font-size: 1.9rem;
+  font-weight: 800;
+  color: white;
+  letter-spacing: -0.3px;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.2);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+ 
+.blogs-section-heading .heading-icon {
+  width: 42px;
+  height: 42px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+  border: 1px solid rgba(255,255,255,0.3);
+}
+ 
+.blogs-view-all-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,0.15);
+  color: white;
+  border: 1.5px solid rgba(255,255,255,0.35);
+  padding: 9px 20px;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.88rem;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  backdrop-filter: blur(10px);
+}
+ 
+.blogs-view-all-btn:hover {
+  background: rgba(255,255,255,0.28);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+ 
+/* Horizontal scroll track */
+.blogs-scroll-outer {
+  position: relative;
+}
+ 
+.blogs-scroll-outer::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 16px;
+  width: 80px;
+  background: linear-gradient(to right, transparent, rgba(102,126,234,0.6));
+  pointer-events: none;
+  border-radius: 0 20px 20px 0;
+  z-index: 2;
+}
+ 
+.blogs-h-scroll {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  padding-bottom: 16px;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.3) transparent;
+  cursor: grab;
+}
+ 
+.blogs-h-scroll:active {
+  cursor: grabbing;
+}
+ 
+.blogs-h-scroll::-webkit-scrollbar {
+  height: 4px;
+}
+ 
+.blogs-h-scroll::-webkit-scrollbar-track {
+  background: rgba(255,255,255,0.08);
+  border-radius: 10px;
+}
+ 
+.blogs-h-scroll::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.3);
+  border-radius: 10px;
+}
+ 
+/* Blog card */
+.blog-hcard {
+  background: rgba(255,255,255,0.97);
+  border-radius: 20px;
+  overflow: hidden;
+  flex: 0 0 300px;
+  scroll-snap-align: start;
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 6px 28px rgba(0,0,0,0.1);
+  border: 1px solid rgba(255,255,255,0.4);
+}
+ 
+.blog-hcard:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.18);
+}
+ 
+.blog-hcard-img {
+  width: 100%;
+  height: 170px;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+ 
+.blog-hcard:hover .blog-hcard-img {
+  transform: scale(1.04);
+}
+ 
+.blog-hcard-img-wrap {
+  overflow: hidden;
+  height: 170px;
+  flex-shrink: 0;
+}
+ 
+.blog-hcard-placeholder {
+  width: 100%;
+  height: 170px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.2rem;
+  color: rgba(255,255,255,0.3);
+  flex-shrink: 0;
+}
+ 
+.blog-hcard-body {
+  padding: 20px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+ 
+.blog-hcard-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+ 
+.blog-hcard-cat {
+  background: linear-gradient(135deg, #2563eb, #4f46e5);
+  color: white;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 110px;
+}
+ 
+.blog-hcard-date {
+  font-size: 0.75rem;
+  color: #94a3b8;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+ 
+.blog-hcard-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #0f172a;
+  line-height: 1.45;
+  flex: 1;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+ 
+.blog-hcard-excerpt {
+  font-size: 0.82rem;
+  color: #64748b;
+  line-height: 1.55;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+ 
+.blog-hcard-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 10px;
+  border-top: 1px solid #f1f5f9;
+  margin-top: auto;
+}
+ 
+.blog-hcard-author {
+  font-size: 0.75rem;
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  overflow: hidden;
+}
+ 
+.blog-hcard-author span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 110px;
+}
+ 
+.blog-hcard-arrow {
+  width: 30px;
+  height: 30px;
+  background: linear-gradient(135deg, #3b82f6, #6366f1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 0.75rem;
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+ 
+.blog-hcard:hover .blog-hcard-arrow {
+  transform: translateX(3px);
+}
+ 
+/* Scroll hint dots */
+.blogs-scroll-dots {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 16px;
+}
+ 
+.scroll-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.3);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+ 
+.scroll-dot.active {
+  background: white;
+  width: 20px;
+  border-radius: 3px;
+}
+ 
+/* Bottom CTA */
+.blogs-bottom-cta {
+  text-align: center;
+  margin-top: 24px;
+}
+ 
+.blogs-explore-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: white;
+  color: #2563eb;
+  padding: 13px 34px;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+}
+ 
+.blogs-explore-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 35px rgba(0,0,0,0.2);
+  color: #1d4ed8;
+}
+ 
+/* Responsive */
+@media (max-width: 768px) {
+  .blogs-section-heading {
+    font-size: 1.5rem;
+  }
+  .blog-hcard {
+    flex: 0 0 265px;
+  }
+}
+ 
+@media (max-width: 480px) {
+  .blogs-section-heading {
+    font-size: 1.3rem;
+  }
+  .blogs-section-heading .heading-icon {
+    width: 36px;
+    height: 36px;
+    font-size: 1rem;
+  }
+  .blog-hcard {
+    flex: 0 0 240px;
+  }
+  .blog-hcard-img-wrap,
+  .blog-hcard-placeholder {
+    height: 145px;
+  }
+  .blogs-view-all-btn span {
+    display: none;
+  }
+}
     .tools-section {
       max-width: 1400px;
       margin: 60px auto;
@@ -350,6 +693,89 @@ free online tools, url shortener, qr code generator, qr scanner, pdf tools, file
     <p class="demo-subtitle">Your one-stop destination for powerful utility tools</p>
     <p style="color:rgba(255,255,255,0.9)">Calculate, convert, and manage your documents with our powerful online tools</p>
   </div>
+   {% if recent_blog_posts %}
+<section class="recent-blogs-section">
+ 
+  <div class="blogs-section-header">
+    <h2 class="blogs-section-heading">
+      <span class="heading-icon"><i class="fas fa-newspaper"></i></span>
+      Latest Articles
+    </h2>
+    <a href="{% url 'blog_list' %}" class="blogs-view-all-btn">
+      <span>View All</span>
+      <i class="fas fa-arrow-right" style="font-size:0.8rem;"></i>
+    </a>
+  </div>
+ 
+  <div class="blogs-scroll-outer">
+    <div class="blogs-h-scroll" id="blogsScroll">
+ 
+      {% for post in recent_blog_posts %}
+      <a href="{% url 'blog_detail' post.slug %}" class="blog-hcard">
+ 
+        {% if post.has_thumbnail %}
+        <div class="blog-hcard-img-wrap">
+          <img src="{% url 'serve_blog_thumbnail' post.slug %}"
+               alt="{{ post.title }}"
+               class="blog-hcard-img"
+               loading="lazy">
+        </div>
+        {% else %}
+        <div class="blog-hcard-placeholder">
+          <i class="fas fa-image"></i>
+        </div>
+        {% endif %}
+ 
+        <div class="blog-hcard-body">
+          <div class="blog-hcard-top">
+            {% if post.category %}
+            <span class="blog-hcard-cat">{{ post.category.name }}</span>
+            {% else %}
+            <span class="blog-hcard-cat">Blog</span>
+            {% endif %}
+            <span class="blog-hcard-date">
+              {{ post.published_at|date:"M d" }}
+            </span>
+          </div>
+ 
+          <div class="blog-hcard-title">{{ post.title }}</div>
+ 
+          {% if post.excerpt %}
+          <div class="blog-hcard-excerpt">{{ post.excerpt|truncatewords:12 }}</div>
+          {% endif %}
+ 
+          <div class="blog-hcard-footer">
+            <div class="blog-hcard-author">
+              <i class="fas fa-user-circle" style="font-size:0.85rem; color:#cbd5e1;"></i>
+              <span>{{ post.author.get_full_name|default:post.author.username }}</span>
+            </div>
+            <div class="blog-hcard-arrow">
+              <i class="fas fa-arrow-right"></i>
+            </div>
+          </div>
+        </div>
+ 
+      </a>
+      {% endfor %}
+ 
+      <!-- "See More" card at the end -->
+      <a href="{% url 'blog_list' %}" class="blog-hcard" style="justify-content:center; align-items:center; min-height:300px; background: rgba(255,255,255,0.15); border: 2px dashed rgba(255,255,255,0.4); text-decoration:none; gap:16px; padding:30px;">
+        <div style="text-align:center; color:white;">
+          <div style="width:60px;height:60px;background:rgba(255,255,255,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:1.5rem;">
+            <i class="fas fa-book-open"></i>
+          </div>
+          <div style="font-size:1.1rem;font-weight:700;margin-bottom:8px;">More Articles</div>
+          <div style="font-size:0.85rem;opacity:0.8;">Explore all posts on our blog</div>
+        </div>
+      </a>
+ 
+    </div>
+  </div>
+ 
+  <div class="blogs-scroll-dots" id="blogsDots"></div>
+ 
+</section>
+{% endif %}
   
   <section class="tools-section">
     <div class="section-header">
@@ -787,7 +1213,55 @@ free online tools, url shortener, qr code generator, qr scanner, pdf tools, file
   }
 }
 </script>
-
+<script>
+(function() {
+  var track = document.getElementById('blogsScroll');
+  var dotsEl = document.getElementById('blogsDots');
+  if (!track) return;
+ 
+  var cards = track.querySelectorAll('.blog-hcard');
+  var total = cards.length;
+ 
+  // Build dots
+  if (dotsEl && total > 1) {
+    for (var i = 0; i < total; i++) {
+      var d = document.createElement('div');
+      d.className = 'scroll-dot' + (i === 0 ? ' active' : '');
+      d.setAttribute('data-i', i);
+      d.addEventListener('click', function() {
+        var idx = parseInt(this.getAttribute('data-i'));
+        cards[idx].scrollIntoView({behavior: 'smooth', block: 'nearest', inline: 'start'});
+      });
+      dotsEl.appendChild(d);
+    }
+  }
+ 
+  // Update active dot on scroll
+  track.addEventListener('scroll', function() {
+    if (!dotsEl) return;
+    var cardW = cards[0] ? cards[0].offsetWidth + 20 : 320;
+    var active = Math.round(track.scrollLeft / cardW);
+    dotsEl.querySelectorAll('.scroll-dot').forEach(function(d, i) {
+      d.classList.toggle('active', i === active);
+    });
+  });
+ 
+  // Drag to scroll (desktop)
+  var isDown = false, startX, scrollLeft;
+  track.addEventListener('mousedown', function(e) {
+    isDown = true;
+    startX = e.pageX - track.offsetLeft;
+    scrollLeft = track.scrollLeft;
+  });
+  track.addEventListener('mouseleave', function() { isDown = false; });
+  track.addEventListener('mouseup', function() { isDown = false; });
+  track.addEventListener('mousemove', function(e) {
+    if (!isDown) return;
+    e.preventDefault();
+    var x = e.pageX - track.offsetLeft;
+    track.scrollLeft = scrollLeft - (x - startX) * 1.5;
+  });
+})();</script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
