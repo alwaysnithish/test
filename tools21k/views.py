@@ -8,12 +8,19 @@ from django.db import OperationalError, DatabaseError
 
 
 # If you have blog views in this file, wrap them like this:
+
 def home(request):
-    from blog.models import BlogPost
-    recent_blog_posts = BlogPost.objects.filter(
-        status='published'
-    ).select_related('author', 'category').order_by('-published_at')[:6]
-    
+    recent_blog_posts = []
+    try:
+        from blog.models import BlogPost
+        recent_blog_posts = list(
+            BlogPost.objects.filter(status='published')
+            .select_related('author', 'category')
+            .order_by('-published_at')[:6]
+        )
+    except Exception:
+        pass  # Blog unavailable — page still loads fine
+ 
     return render(request, 'home.html', {
         'recent_blog_posts': recent_blog_posts,
     })
