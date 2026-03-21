@@ -972,6 +972,240 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    var searchInput = document.getElementById('searchInput');
+    var searchBtn = document.getElementById('searchBtn');
+    if (!searchInput) return;
+ 
+    // ── Tool index ─────────────────────────────────────────────
+    var TOOLS = [
+        {
+            name: 'URL Shortener',
+            desc: 'Shorten links, get QR codes and analytics',
+            url: '/urlshortener',
+            icon: 'fas fa-link',
+            tags: ['url', 'link', 'short', 'qr', 'analytics', 'redirect']
+        },
+        {
+            name: 'QR Code Generator & Scanner',
+            desc: 'Generate and scan QR codes instantly',
+            url: '/qrcodeandscanner',
+            icon: 'fas fa-qrcode',
+            tags: ['qr', 'qrcode', 'scan', 'generate', 'barcode']
+        },
+        {
+            name: 'PDF Tools',
+            desc: 'Merge, split, compress and convert PDFs',
+            url: '/pdftools',
+            icon: 'fas fa-file-pdf',
+            tags: ['pdf', 'merge', 'split', 'compress', 'convert', 'document']
+        },
+        {
+            name: 'File Converter',
+            desc: 'Convert between 100+ file formats',
+            url: '/fileconverter',
+            icon: 'fas fa-file',
+            tags: ['file', 'convert', 'format', 'mp4', 'mp3', 'jpg', 'png', 'docx', 'xlsx']
+        },
+        {
+            name: 'Image Resizer',
+            desc: 'Resize, compress and optimize images',
+            url: '/imageresizer',
+            icon: 'fas fa-image',
+            tags: ['image', 'resize', 'compress', 'photo', 'jpg', 'png', 'webp', 'optimize']
+        },
+        {
+            name: 'Age Calculator',
+            desc: 'Calculate exact age in years, months and days',
+            url: '/agecalculator',
+            icon: 'fas fa-birthday-cake',
+            tags: ['age', 'birthday', 'birth', 'calculate', 'years', 'date', 'born']
+        },
+        {
+            name: 'Interest Calculator',
+            desc: 'Simple interest, compound interest and loan EMI',
+            url: '/interestcalculator',
+            icon: 'fas fa-percentage',
+            tags: ['interest', 'loan', 'emi', 'compound', 'simple', 'finance', 'money', 'bank']
+        },
+        {
+            name: 'Unit Converter',
+            desc: 'Convert length, weight, temperature and more',
+            url: '/unitconverter',
+            icon: 'fas fa-balance-scale',
+            tags: ['unit', 'convert', 'length', 'weight', 'temperature', 'speed', 'area', 'volume', 'kg', 'km', 'celsius', 'fahrenheit']
+        },
+        {
+            name: 'Time Calculator',
+            desc: 'Calculate time differences and convert units',
+            url: '/timecalculator',
+            icon: 'fas fa-clock',
+            tags: ['time', 'date', 'duration', 'hours', 'minutes', 'seconds', 'difference', 'countdown']
+        }
+    ];
+ 
+    // ── Build dropdown ──────────────────────────────────────────
+    var dropdown = document.createElement('div');
+    dropdown.id = 'searchDropdown';
+    dropdown.style.cssText = [
+        'position:absolute',
+        'top:calc(100% + 6px)',
+        'left:0',
+        'right:0',
+        'background:white',
+        'border-radius:14px',
+        'box-shadow:0 8px 40px rgba(0,0,0,0.15)',
+        'z-index:9999',
+        'display:none',
+        'overflow:hidden',
+        'border:1px solid rgba(59,130,246,0.15)',
+        'max-height:420px',
+        'overflow-y:auto'
+    ].join(';');
+ 
+    var searchBox = searchInput.closest('.search-box');
+    if (searchBox) {
+        searchBox.style.position = 'relative';
+        searchBox.appendChild(dropdown);
+    }
+ 
+    // ── Search logic ────────────────────────────────────────────
+    function search(q) {
+        q = q.trim().toLowerCase();
+        if (!q) return [];
+        return TOOLS.filter(function(t) {
+            return (
+                t.name.toLowerCase().includes(q) ||
+                t.desc.toLowerCase().includes(q) ||
+                t.tags.some(function(tag) { return tag.includes(q); })
+            );
+        });
+    }
+ 
+    function renderDropdown(q) {
+        var results = search(q);
+        dropdown.innerHTML = '';
+ 
+        if (!q.trim()) {
+            dropdown.style.display = 'none';
+            return;
+        }
+ 
+        // Tool results
+        if (results.length > 0) {
+            var header = document.createElement('div');
+            header.style.cssText = 'padding:10px 16px 6px;font-size:0.72rem;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:0.5px';
+            header.textContent = 'Tools';
+            dropdown.appendChild(header);
+ 
+            results.forEach(function(tool) {
+                var item = document.createElement('a');
+                item.href = tool.url;
+                item.style.cssText = [
+                    'display:flex',
+                    'align-items:center',
+                    'gap:12px',
+                    'padding:11px 16px',
+                    'text-decoration:none',
+                    'transition:background 0.15s',
+                    'border-bottom:1px solid #f1f5f9'
+                ].join(';');
+ 
+                item.innerHTML = [
+                    '<div style="width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#3b82f6,#6366f1);display:flex;align-items:center;justify-content:center;flex-shrink:0">',
+                        '<i class="' + tool.icon + '" style="color:white;font-size:0.85rem"></i>',
+                    '</div>',
+                    '<div style="min-width:0">',
+                        '<div style="font-weight:600;color:#0f172a;font-size:0.9rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' + tool.name + '</div>',
+                        '<div style="font-size:0.75rem;color:#64748b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' + tool.desc + '</div>',
+                    '</div>',
+                    '<div style="margin-left:auto;flex-shrink:0"><i class="fas fa-arrow-right" style="color:#cbd5e1;font-size:0.75rem"></i></div>'
+                ].join('');
+ 
+                item.addEventListener('mouseenter', function() {
+                    item.style.background = '#f8faff';
+                });
+                item.addEventListener('mouseleave', function() {
+                    item.style.background = '';
+                });
+ 
+                dropdown.appendChild(item);
+            });
+        }
+ 
+        // Blog search row — always shown when there's a query
+        var blogRow = document.createElement('a');
+        blogRow.href = '/blog/?search=' + encodeURIComponent(q);
+        blogRow.style.cssText = [
+            'display:flex',
+            'align-items:center',
+            'gap:12px',
+            'padding:11px 16px',
+            'text-decoration:none',
+            'background:#f8faff',
+            'transition:background 0.15s'
+        ].join(';');
+ 
+        blogRow.innerHTML = [
+            '<div style="width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#667eea,#764ba2);display:flex;align-items:center;justify-content:center;flex-shrink:0">',
+                '<i class="fas fa-newspaper" style="color:white;font-size:0.85rem"></i>',
+            '</div>',
+            '<div>',
+                '<div style="font-weight:600;color:#0f172a;font-size:0.9rem">Search blogs for "' + q + '"</div>',
+                '<div style="font-size:0.75rem;color:#64748b">Find articles and guides</div>',
+            '</div>',
+            '<div style="margin-left:auto"><i class="fas fa-arrow-right" style="color:#cbd5e1;font-size:0.75rem"></i></div>'
+        ].join('');
+ 
+        blogRow.addEventListener('mouseenter', function() {
+            blogRow.style.background = '#f0f4ff';
+        });
+        blogRow.addEventListener('mouseleave', function() {
+            blogRow.style.background = '#f8faff';
+        });
+ 
+        dropdown.appendChild(blogRow);
+        dropdown.style.display = 'block';
+    }
+ 
+    // ── Events ──────────────────────────────────────────────────
+    var debounceTimer;
+    searchInput.addEventListener('input', function() {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(function() {
+            renderDropdown(searchInput.value);
+        }, 120);
+    });
+ 
+    searchInput.addEventListener('focus', function() {
+        if (searchInput.value.trim()) renderDropdown(searchInput.value);
+    });
+ 
+    // Enter key → go to blog search
+    searchInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+            var q = searchInput.value.trim();
+            if (q) window.location.href = '/blog/?search=' + encodeURIComponent(q);
+        }
+        if (e.key === 'Escape') {
+            dropdown.style.display = 'none';
+            searchInput.blur();
+        }
+    });
+ 
+    searchBtn.addEventListener('click', function() {
+        var q = searchInput.value.trim();
+        if (q) window.location.href = '/blog/?search=' + encodeURIComponent(q);
+    });
+ 
+    // Close on outside click
+    document.addEventListener('click', function(e) {
+        if (!searchBox || !searchBox.contains(e.target)) {
+            dropdown.style.display = 'none';
+        }
+    });
+});
     // ==================== SMOOTH SCROLL ====================
     
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
