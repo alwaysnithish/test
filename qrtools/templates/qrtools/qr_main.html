@@ -2378,7 +2378,491 @@ input[type="range"]::-moz-range-thumb:hover {
         </div>
     </div>
 </div>
+<!-- 
+  =====================================================================
+  QR CODE SUITE — Guide & FAQ Section
+  Drop this block inside qr_main.html AFTER the closing </div> of
+  the templates-section (at the very bottom of {% block content %},
+  just before {% endblock %}).
+  =====================================================================
+-->
 
+<style>
+
+    .qr-about-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+    .qr-info-card {
+        background: white;
+        border-radius: 24px;
+        padding: 40px;
+        margin-bottom: 40px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        border: 1px solid #e2e8f0;
+    }
+    .qr-info-card h2 {
+        color: #667eea;
+        font-size: 2rem;
+        margin-bottom: 30px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        font-weight: 800;
+    }
+    .qr-info-card h2 i { font-size: 1.8rem; }
+
+    /* Steps */
+    .qr-steps { display: flex; flex-direction: column; gap: 25px; }
+    .qr-step {
+        display: flex;
+        align-items: flex-start;
+        gap: 20px;
+        padding: 25px;
+        background: linear-gradient(135deg, #f5f7fa 0%, #eef2ff 100%);
+        border-radius: 15px;
+        border-left: 5px solid #667eea;
+    }
+    .qr-step-num {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.4rem;
+        font-weight: 800;
+        flex-shrink: 0;
+    }
+    .qr-step-content h3 { color: #667eea; margin-bottom: 10px; font-size: 1.2rem; font-weight: 700; }
+    .qr-step-content p { color: #718096; line-height: 1.7; margin: 0; }
+
+    /* Offer grid */
+    .qr-offer-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 25px;
+        margin-top: 20px;
+    }
+    .qr-offer-card {
+        background: linear-gradient(135deg, #f5f7fa 0%, #eef2ff 100%);
+        padding: 30px;
+        border-radius: 15px;
+        border: 2px solid #667eea;
+        text-align: center;
+        transition: all 0.3s ease;
+    }
+    .qr-offer-card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(102,126,234,0.15); }
+    .qr-offer-card .qr-offer-icon { font-size: 2.8rem; color: #667eea; margin-bottom: 18px; }
+    .qr-offer-card h3 { color: #667eea; margin-bottom: 12px; font-size: 1.2rem; font-weight: 700; }
+    .qr-offer-card p { color: #718096; line-height: 1.6; font-size: 0.95rem; margin: 0; }
+
+    /* QR types table */
+    .qr-types-table-wrapper {
+        overflow-x: auto;
+        margin-top: 20px;
+        border-radius: 12px;
+        border: 2px solid #e2e8f0;
+    }
+    .qr-types-table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+    .qr-types-table th {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        padding: 14px 18px;
+        text-align: left;
+        font-weight: 700;
+    }
+    .qr-types-table td {
+        padding: 12px 18px;
+        border-bottom: 1px solid #e2e8f0;
+        color: #718096;
+        line-height: 1.5;
+    }
+    .qr-types-table tr:last-child td { border-bottom: none; }
+    .qr-types-table tr:nth-child(even) td { background: #f5f7fa; }
+    .qr-types-table td:first-child { font-weight: 700; color: #667eea; }
+
+    /* Tips */
+    .qr-tips-list {
+        list-style: none;
+        padding: 0;
+        margin-top: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+    .qr-tips-list li {
+        display: flex;
+        align-items: flex-start;
+        gap: 14px;
+        padding: 18px 22px;
+        background: linear-gradient(135deg, #f5f7fa 0%, #eef2ff 100%);
+        border-radius: 12px;
+        border-left: 4px solid #667eea;
+        color: #718096;
+        line-height: 1.6;
+    }
+    .qr-tips-list li i { color: #667eea; font-size: 1.2rem; margin-top: 2px; flex-shrink: 0; }
+    .qr-tips-list li strong { color: #2d3748; }
+
+    /* Highlight box */
+    .qr-highlight-box {
+        background: linear-gradient(135deg, #e8f5e8 0%, #d4edda 100%);
+        padding: 25px;
+        border-radius: 15px;
+        border-left: 5px solid #00d4aa;
+        margin-top: 25px;
+    }
+    .qr-highlight-box h4 { color: #155724; margin-bottom: 12px; font-size: 1.1rem; font-weight: 700; display: flex; align-items: center; gap: 10px; }
+    .qr-highlight-box p { color: #155724; line-height: 1.7; margin: 0; }
+
+    /* FAQ */
+    .qr-faq-container { display: flex; flex-direction: column; gap: 18px; }
+    .qr-faq-item {
+        background: white;
+        border-radius: 15px;
+        border: 2px solid #e2e8f0;
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+    .qr-faq-item:hover { border-color: #667eea; box-shadow: 0 5px 15px rgba(102,126,234,0.1); }
+    .qr-faq-question {
+        padding: 22px 25px;
+        background: linear-gradient(135deg, #f5f7fa 0%, #eef2ff 100%);
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 15px;
+        transition: background 0.3s ease;
+    }
+    .qr-faq-question:hover { background: linear-gradient(135deg, #eef2ff 0%, #e5eaff 100%); }
+    .qr-faq-question h3 { color: #667eea; font-size: 1.1rem; font-weight: 700; margin: 0; display: flex; align-items: center; gap: 10px; }
+    .qr-faq-toggle { color: #667eea; font-size: 1.1rem; transition: transform 0.3s ease; flex-shrink: 0; }
+    .qr-faq-item.active .qr-faq-toggle { transform: rotate(45deg); }
+    .qr-faq-answer { padding: 0 25px; max-height: 0; overflow: hidden; transition: all 0.4s ease; }
+    .qr-faq-item.active .qr-faq-answer { padding: 25px; max-height: 700px; }
+    .qr-faq-answer p { color: #718096; line-height: 1.7; margin: 0; }
+
+    @media (max-width: 768px) {
+        .qr-info-card { padding: 25px; margin-bottom: 25px; }
+        .qr-info-card h2 { font-size: 1.5rem; flex-direction: column; text-align: center; }
+        .qr-step { flex-direction: column; text-align: center; }
+        .qr-offer-grid { grid-template-columns: 1fr; }
+        .qr-faq-question { flex-direction: column; text-align: center; }
+        .qr-faq-item.active .qr-faq-answer { padding: 20px; }
+        .qr-tips-list li { flex-direction: column; }
+    }
+</style>
+
+
+    <div class="qr-about-container">
+
+        <!-- How to Use -->
+        <div class="qr-info-card">
+            <h2><i class="fas fa-question-circle"></i> How to Use the QR Code Suite</h2>
+            <div class="qr-steps">
+
+                <div class="qr-step">
+                    <div class="qr-step-num">1</div>
+                    <div class="qr-step-content">
+                        <h3><i class="fas fa-th"></i> Select a QR Type</h3>
+                        <p>Choose from 11 content types — Website URL, Contact Card (vCard), Email, Phone, SMS, WiFi, UPI Payment, Location, Plain Text, WhatsApp, or File Upload. Each type reveals a tailored form that collects exactly the data needed to build a valid, scannable QR code for that content.</p>
+                    </div>
+                </div>
+
+                <div class="qr-step">
+                    <div class="qr-step-num">2</div>
+                    <div class="qr-step-content">
+                        <h3><i class="fas fa-keyboard"></i> Fill in the Content</h3>
+                        <p>Enter the relevant details in the form fields shown. For URLs include the full address with https://. For WiFi provide the network name, password, and encryption type. For UPI enter your UPI ID and payee name. For vCard include as many contact fields as you want — only the name is required. For file upload, drag and drop any file up to 10 MB to receive a hosted URL which is encoded into the QR code.</p>
+                    </div>
+                </div>
+
+                <div class="qr-step">
+                    <div class="qr-step-num">3</div>
+                    <div class="qr-step-content">
+                        <h3><i class="fas fa-palette"></i> Customise the Design</h3>
+                        <p>Set primary and background colours using the colour pickers or enter hex codes directly. Enable the gradient option to apply a two-colour gradient across the QR modules. Choose a pattern style (Square, Dots, Rounded, Classy, Classy Rounded, or Extra Rounded) and a frame style from 10 options including Scan Me, Badge, Neon, and Vintage. Optionally add a logo by URL or file upload, choose its shape, and adjust its size from 10–30% of the QR code width.</p>
+                    </div>
+                </div>
+
+                <div class="qr-step">
+                    <div class="qr-step-num">4</div>
+                    <div class="qr-step-content">
+                        <h3><i class="fas fa-magic"></i> Generate Your QR Code</h3>
+                        <p>Click "Generate QR Code". The code is created instantly on our servers using your design settings and content data. A preview image is displayed together with your unique analytics code, a link to the analytics dashboard, and the creation timestamp. Dynamic QR codes are enabled by default, which means the destination URL can be edited after printing without changing the QR image itself.</p>
+                    </div>
+                </div>
+
+                <div class="qr-step">
+                    <div class="qr-step-num">5</div>
+                    <div class="qr-step-content">
+                        <h3><i class="fas fa-download"></i> Download and Track</h3>
+                        <p>Download the QR code as a PNG image ready for use in print or digital media. Copy the analytics link to monitor scan counts, geographic data, and referral sources over time. Your analytics dashboard is private and accessible only through the unique analytics URL assigned to each QR code.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- What We Offer -->
+        <div class="qr-info-card">
+            <h2><i class="fas fa-star"></i> What We Offer</h2>
+            <div class="qr-offer-grid">
+                <div class="qr-offer-card">
+                    <div class="qr-offer-icon"><i class="fas fa-th-large"></i></div>
+                    <h3>11 QR Content Types</h3>
+                    <p>Generate QR codes for URLs, contacts, WiFi, UPI payments, locations, WhatsApp, SMS, email, plain text, and file uploads — all from one tool.</p>
+                </div>
+                <div class="qr-offer-card">
+                    <div class="qr-offer-icon"><i class="fas fa-paint-brush"></i></div>
+                    <h3>Full Design Customisation</h3>
+                    <p>Custom colours, gradients, 6 pattern styles, 10 frame styles, and logo embedding with shape and size controls for truly branded QR codes.</p>
+                </div>
+                <div class="qr-offer-card">
+                    <div class="qr-offer-icon"><i class="fas fa-bolt"></i></div>
+                    <h3>Dynamic QR Codes</h3>
+                    <p>Dynamic QR codes let you update the destination URL at any time after printing, without regenerating or reprinting the QR image itself.</p>
+                </div>
+                <div class="qr-offer-card">
+                    <div class="qr-offer-icon"><i class="fas fa-chart-line"></i></div>
+                    <h3>Scan Analytics</h3>
+                    <p>Every QR code includes a private analytics dashboard tracking total scans, scan timestamps, geographic distribution, and referral sources.</p>
+                </div>
+                <div class="qr-offer-card">
+                    <div class="qr-offer-icon"><i class="fas fa-layer-group"></i></div>
+                    <h3>Bulk Generation</h3>
+                    <p>Generate hundreds of QR codes at once from a CSV file or by adding items manually. Download the full batch as a ZIP archive in one click.</p>
+                </div>
+                <div class="qr-offer-card">
+                    <div class="qr-offer-icon"><i class="fas fa-id-card"></i></div>
+                    <h3>Digital Profile Cards</h3>
+                    <p>Create a beautiful digital business card page with your contact details, social links, and bio. Share it via a single QR code that links to your profile.</p>
+                </div>
+                <div class="qr-offer-card">
+                    <div class="qr-offer-icon"><i class="fas fa-camera"></i></div>
+                    <h3>Built-in QR Scanner</h3>
+                    <p>Scan QR codes using your device camera or by uploading an image. The scanner decodes the content instantly and lets you open URLs or copy text directly.</p>
+                </div>
+                <div class="qr-offer-card">
+                    <div class="qr-offer-icon"><i class="fas fa-th"></i></div>
+                    <h3>Industry Templates</h3>
+                    <p>20+ pre-designed templates for restaurants, retail, events, healthcare, education, technology, travel, fitness, real estate, and business.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- QR Types Reference -->
+        <div class="qr-info-card">
+            <h2><i class="fas fa-list"></i> QR Code Types Reference</h2>
+            <p style="color: #718096; line-height: 1.7; margin-bottom: 10px;">Each QR type encodes content in a standard format that compatible scanner apps and devices can interpret automatically.</p>
+            <div class="qr-types-table-wrapper">
+                <table class="qr-types-table">
+                    <thead>
+                        <tr>
+                            <th>Type</th>
+                            <th>What It Encodes</th>
+                            <th>Scanner Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Website URL</td>
+                            <td>Any valid web address including https:// links</td>
+                            <td>Opens URL in the default browser</td>
+                        </tr>
+                        <tr>
+                            <td>Contact Card (vCard)</td>
+                            <td>Name, phone, email, company, job title, website, address</td>
+                            <td>Prompts to save as a new contact</td>
+                        </tr>
+                        <tr>
+                            <td>Email</td>
+                            <td>Email address with optional pre-filled subject and body</td>
+                            <td>Opens email app with fields pre-populated</td>
+                        </tr>
+                        <tr>
+                            <td>Phone</td>
+                            <td>Phone number with country code</td>
+                            <td>Opens dialler with the number pre-filled</td>
+                        </tr>
+                        <tr>
+                            <td>SMS</td>
+                            <td>Phone number with optional pre-filled message text</td>
+                            <td>Opens SMS app with recipient and message ready</td>
+                        </tr>
+                        <tr>
+                            <td>WiFi</td>
+                            <td>Network name (SSID), password, encryption type, hidden status</td>
+                            <td>Prompts to join the network automatically</td>
+                        </tr>
+                        <tr>
+                            <td>UPI Payment</td>
+                            <td>UPI ID, payee name, optional amount and note</td>
+                            <td>Opens UPI payment apps (GPay, PhonePe, Paytm, etc.)</td>
+                        </tr>
+                        <tr>
+                            <td>Location</td>
+                            <td>Latitude and longitude coordinates with optional name</td>
+                            <td>Opens the location in maps application</td>
+                        </tr>
+                        <tr>
+                            <td>Plain Text</td>
+                            <td>Any text content up to 4,296 characters</td>
+                            <td>Displays the text directly in the scanner</td>
+                        </tr>
+                        <tr>
+                            <td>WhatsApp</td>
+                            <td>Phone number with optional pre-filled message</td>
+                            <td>Opens WhatsApp chat with the contact and message</td>
+                        </tr>
+                        <tr>
+                            <td>File Upload</td>
+                            <td>Hosted URL of an uploaded file (any type, max 10 MB)</td>
+                            <td>Opens or downloads the file in the browser</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="qr-highlight-box">
+                <h4><i class="fas fa-shield-alt"></i> Error Correction Levels</h4>
+                <p>All QR codes include error correction so they remain scannable even when partially obscured or damaged. Low (L) allows 7% recovery and produces the densest, smallest code. Medium (M) at 15% is the default and works well for most uses. Quartile (Q) at 25% is recommended when adding a logo. High (H) at 30% is best for printed materials that may get worn or dirty, though it increases the QR code's visual complexity.</p>
+            </div>
+        </div>
+
+        <!-- Design Tips -->
+        <div class="qr-info-card">
+            <h2><i class="fas fa-lightbulb"></i> QR Code Design Tips</h2>
+            <ul class="qr-tips-list">
+                <li>
+                    <i class="fas fa-shield-alt"></i>
+                    <div><strong>Use High error correction when adding a logo:</strong> The logo covers part of the QR modules. Set error correction to Quartile (25%) or High (30%) to ensure the code remains readable even with 20–30% of its surface obscured by the logo image.</div>
+                </li>
+                <li>
+                    <i class="fas fa-adjust"></i>
+                    <div><strong>Maintain sufficient contrast:</strong> The modules (dark squares) must contrast clearly against the background. Avoid light-on-light or dark-on-dark combinations — most scanners require at least a 40% luminance difference between foreground and background colours.</div>
+                </li>
+                <li>
+                    <i class="fas fa-expand"></i>
+                    <div><strong>Print at a minimum size of 2 cm × 2 cm:</strong> QR codes printed smaller than 2 cm square are difficult for most smartphone cameras to resolve reliably, especially in low light. For distance scanning (e.g. on billboards or posters), increase the size proportionally with the expected scan distance.</div>
+                </li>
+                <li>
+                    <i class="fas fa-border-all"></i>
+                    <div><strong>Keep the quiet zone clear:</strong> The white border (quiet zone) around the QR code is part of the standard. Do not crop or print over it — scanners use it to locate the code boundary. Keep at least 4 module widths of clear space on all sides.</div>
+                </li>
+                <li>
+                    <i class="fas fa-bolt"></i>
+                    <div><strong>Use Dynamic QR for print campaigns:</strong> Dynamic QR codes redirect through a short URL, allowing you to change the final destination at any time. This is essential for printed materials where reprinting is costly if the target URL changes.</div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- FAQ -->
+        <div class="qr-info-card">
+            <h2><i class="fas fa-question-circle"></i> Frequently Asked Questions</h2>
+            <div class="qr-faq-container">
+
+                <div class="qr-faq-item">
+                    <div class="qr-faq-question">
+                        <h3><i class="fas fa-bolt"></i> What is the difference between a Static and Dynamic QR code?</h3>
+                        <i class="fas fa-plus qr-faq-toggle"></i>
+                    </div>
+                    <div class="qr-faq-answer">
+                        <p>A static QR code encodes the destination data directly. Once created, the content cannot be changed — if the destination URL changes you must generate and reprint a new code. A dynamic QR code encodes a short redirect URL. The final destination is stored on our server and can be changed at any time through the analytics dashboard without altering the QR image, making it ideal for print materials and ongoing campaigns.</p>
+                    </div>
+                </div>
+
+                <div class="qr-faq-item">
+                    <div class="qr-faq-question">
+                        <h3><i class="fas fa-chart-line"></i> What analytics data does the dashboard show?</h3>
+                        <i class="fas fa-plus qr-faq-toggle"></i>
+                    </div>
+                    <div class="qr-faq-answer">
+                        <p>The analytics dashboard for each QR code shows total scan count, scan timestamps, geographic distribution by country and city, and referral source data. Each QR code is assigned a unique analytics code at generation time. Access your dashboard via the private analytics URL shown immediately after generation — keep this URL private as anyone who has it can view the scan statistics for that code.</p>
+                    </div>
+                </div>
+
+                <div class="qr-faq-item">
+                    <div class="qr-faq-question">
+                        <h3><i class="fas fa-image"></i> How do I add a logo to my QR code?</h3>
+                        <i class="fas fa-plus qr-faq-toggle"></i>
+                    </div>
+                    <div class="qr-faq-answer">
+                        <p>Enable the "Add Logo to Center" toggle in the Design Customisation section. Choose between providing a direct image URL or uploading a file (JPG, PNG, GIF, SVG, or WebP up to 5 MB). Select the logo shape (Square, Circle, or Rounded) and adjust the size slider between 10% and 30% of the QR code width. We strongly recommend setting error correction to Quartile or High when using a logo, as the logo obscures part of the QR data modules.</p>
+                    </div>
+                </div>
+
+                <div class="qr-faq-item">
+                    <div class="qr-faq-question">
+                        <h3><i class="fas fa-layer-group"></i> How does Bulk Generation work?</h3>
+                        <i class="fas fa-plus qr-faq-toggle"></i>
+                    </div>
+                    <div class="qr-faq-answer">
+                        <p>Navigate to the "Bulk Generate" tab. You can add items manually by entering a title and URL for each entry, or upload a CSV file with the format: title, url, description (one row per QR code, first row as header). Click "Generate All QR Codes" to process the entire batch. Individual QR codes can be downloaded from the result grid, or download all of them at once as a ZIP archive using the "Download All" button.</p>
+                    </div>
+                </div>
+
+                <div class="qr-faq-item">
+                    <div class="qr-faq-question">
+                        <h3><i class="fas fa-id-card"></i> What is a Digital Profile Card?</h3>
+                        <i class="fas fa-plus qr-faq-toggle"></i>
+                    </div>
+                    <div class="qr-faq-answer">
+                        <p>A Digital Profile Card is a hosted webpage that acts as your digital business card. Fill in your name, title, company, contact details, social media links, profile photo, and bio in the Profile Card tab. We generate a unique profile page URL and a QR code that links directly to it. Anyone who scans the code sees your complete profile and can tap to call, email, or connect on social media. The profile page is hosted by us at no cost and remains live indefinitely.</p>
+                    </div>
+                </div>
+
+                <div class="qr-faq-item">
+                    <div class="qr-faq-question">
+                        <h3><i class="fas fa-camera"></i> Can I scan QR codes with this tool?</h3>
+                        <i class="fas fa-plus qr-faq-toggle"></i>
+                    </div>
+                    <div class="qr-faq-answer">
+                        <p>Yes. The "QR Scanner" tab provides two scanning methods. Click "Start Camera Scanning" to use your device's camera — point it at any QR code and the result is decoded automatically. Alternatively, upload an image file containing a QR code using the "Upload QR Code Image" button. The scanner supports JPG, PNG, GIF, and WebP image formats. Decoded URLs can be opened in a new tab; any other text can be copied to the clipboard.</p>
+                    </div>
+                </div>
+
+                <div class="qr-faq-item">
+                    <div class="qr-faq-question">
+                        <h3><i class="fas fa-rupee-sign"></i> How do I create a UPI Payment QR code?</h3>
+                        <i class="fas fa-plus qr-faq-toggle"></i>
+                    </div>
+                    <div class="qr-faq-answer">
+                        <p>Select "UPI Payment" from the QR type grid. Enter your UPI ID (e.g. username@upi), the payee name as it should appear to the payer, an optional amount in rupees, and an optional transaction note. The generated QR code follows the standard UPI deep-link format and is compatible with all major UPI apps including Google Pay, PhonePe, Paytm, BHIM, and bank UPI apps. Leave the amount field blank if you want the payer to enter the amount themselves.</p>
+                    </div>
+                </div>
+
+                <div class="qr-faq-item">
+                    <div class="qr-faq-question">
+                        <h3><i class="fas fa-dollar-sign"></i> Is the QR Code Suite completely free?</h3>
+                        <i class="fas fa-plus qr-faq-toggle"></i>
+                    </div>
+                    <div class="qr-faq-answer">
+                        <p>Yes, all features are completely free including custom design, dynamic QR codes, scan analytics, bulk generation, profile cards, and the QR scanner. There are no watermarks on generated QR codes, no account or sign-up required, and no limits on the number of QR codes you can create. File uploads for the file-type QR code are hosted at no cost and remain available indefinitely.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+
+<script>
+(function () {
+    document.querySelectorAll('.qr-faq-item').forEach(function (item) {
+        item.querySelector('.qr-faq-question').addEventListener('click', function () {
+            var isActive = item.classList.contains('active');
+            document.querySelectorAll('.qr-faq-item').forEach(function (o) { o.classList.remove('active'); });
+            if (!isActive) item.classList.add('active');
+        });
+    });
+}());
+</script>
 <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
 <script>
 // ============================================
