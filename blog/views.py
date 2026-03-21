@@ -18,7 +18,32 @@ from .forms import BlogPostForm, AuthorProfileForm
 import json
 import re
 import uuid
-
+from functools import wraps
+from django.db import OperationalError, DatabaseError, ProgrammingError
+import logging
+ 
+logger = logging.getLogger(__name__)
+ 
+ 
+def safe_blog_view(fallback_template='500.html'):
+    """
+    Wrap any blog view. If the DB fails for any reason,
+    renders 500.html (which has the silent auto-retry spinner)
+    instead of crashing with a raw Django error page.
+    """
+    def decorator(view_func):
+        @wraps(view_func)
+        def wrapper(request, *args, **kwargs):
+            try:
+                return view_func(request, *args, **kwargs)
+            except (OperationalError, DatabaseError, ProgrammingError) as e:
+                logger.error(f"DB error in {view_func.__name__}: {e}")
+                return render(request, fallback_template, status=200)
+            except Exception as e:
+                logger.error(f"Unexpected error in {view_func.__name__}: {e}")
+                return render(request, fallback_template, status=200)
+        return wrapper
+    return decorator
 # Import password reset views
 from django.contrib.auth.views import (
     PasswordResetView,
@@ -385,7 +410,7 @@ def delete_post(request, slug):
 
 
 # ==================== PUBLIC BLOG VIEWS ====================
-
+@safe_blog_view()
 def blog_list(request):
     """Main blog list view with search and filtering"""
     search_query = request.GET.get('search', '')
@@ -448,7 +473,7 @@ def blog_list(request):
     return render(request, 'blog/blog_list.html', context)
 
 # Add this to your blog_detail view in views.py to debug tags
-
+@safe_blog_view()
 def blog_detail(request, slug):
     """Individual blog post detail view"""
     post = get_object_or_404(
@@ -513,7 +538,7 @@ def blog_detail(request, slug):
     }
     return render(request, 'blog/blog_detail.html', context)
 
-
+@safe_blog_view()
 def category_posts(request, slug):
     """View posts filtered by category"""
     category = get_object_or_404(Category, slug=slug)
@@ -563,7 +588,7 @@ def category_posts(request, slug):
     }
     return render(request, 'blog/category_posts.html', context)
 
-
+@safe_blog_view()
 def tag_posts(request, slug):
     """View posts filtered by tag"""
     tag = get_object_or_404(Tag, slug=slug)
@@ -636,7 +661,7 @@ def edit_profile(request):
     }
     return render(request, 'blog/edit_profile.html', context)
 
-
+@safe_blog_view()
 def author_profile(request, username):
     """Public view of author profile with their posts"""
     user = get_object_or_404(User, username=username)
@@ -749,7 +774,7 @@ def unsubscribe_newsletter(request, token):
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from .models import BlogPost, AuthorProfile
-
+@safe_blog_view()
 def serve_blog_thumbnail(request, slug):
     """Serve blog post thumbnail from database"""
     post = get_object_or_404(BlogPost, slug=slug)
@@ -762,7 +787,7 @@ def serve_blog_thumbnail(request, slug):
     response['Content-Disposition'] = f'inline; filename="{post.thumbnail_name}"'
     return response
 
-
+@safe_blog_view()
 def serve_author_profile_picture(request, username):
     """Serve author profile picture from database"""
     from django.contrib.auth.models import User
