@@ -4,17 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>21K Tools - We'll Be Right Back</title>
+    <title>21K Tools - Loading...</title>
     <link rel="icon" type="image/x-icon" href="{% static '21k.png' %}">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             display: flex;
@@ -22,123 +18,244 @@
             justify-content: center;
             padding: 20px;
         }
-        
-        .container {
-            background: white;
-            border-radius: 20px;
-            padding: 60px 40px;
-            text-align: center;
-            max-width: 600px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-        }
-        
-        .logo {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
-            border-radius: 20px;
+
+        /* Phase 1: silent spinner */
+        .loading-screen {
             display: flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: center;
-            font-size: 32px;
-            color: white;
-            font-weight: 800;
-            margin: 0 auto 30px;
-            box-shadow: 0 8px 30px rgba(59, 130, 246, 0.3);
+            gap: 20px;
         }
-        
-        h1 {
-            font-size: 2rem;
-            color: #1e3a8a;
-            margin-bottom: 20px;
-            font-weight: 800;
+
+        .spinner-ring {
+            width: 64px;
+            height: 64px;
+            border: 4px solid rgba(255,255,255,0.2);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.9s linear infinite;
         }
-        
-        .message {
-            font-size: 1.1rem;
-            color: #64748b;
-            line-height: 1.8;
-            margin-bottom: 30px;
-        }
-        
-        .status {
-            background: rgba(59, 130, 246, 0.1);
-            border: 2px solid #3b82f6;
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 30px;
-        }
-        
-        .status-text {
-            color: #2563eb;
-            font-weight: 600;
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .loading-text {
+            color: rgba(255,255,255,0.9);
             font-size: 1rem;
+            font-weight: 500;
         }
-        
-        .cta-button {
-            display: inline-block;
+
+        .loading-dot { animation: blink 1.2s ease-in-out infinite; }
+        .loading-dot:nth-child(2) { animation-delay: 0.2s; }
+        .loading-dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes blink {
+            0%, 80%, 100% { opacity: 0.2; }
+            40% { opacity: 1; }
+        }
+
+        /* Phase 2: fallback card */
+        .fallback-card {
+            display: none;
+            background: white;
+            border-radius: 24px;
+            padding: 55px 40px;
+            text-align: center;
+            max-width: 480px;
+            width: 100%;
+            box-shadow: 0 25px 70px rgba(0,0,0,0.25);
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .logo {
+            width: 64px; height: 64px;
             background: linear-gradient(135deg, #3b82f6, #1d4ed8);
-            color: white;
-            padding: 16px 40px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            margin-top: 10px;
+            border-radius: 16px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 24px; color: white; font-weight: 800;
+            margin: 0 auto 24px;
+            box-shadow: 0 8px 30px rgba(59,130,246,0.3);
         }
-        
-        .cta-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.4);
+
+        h1 { font-size: 1.6rem; color: #1e3a8a; margin-bottom: 12px; font-weight: 800; }
+
+        .sub {
+            font-size: 0.95rem; color: #64748b;
+            line-height: 1.7; margin-bottom: 28px;
         }
-        
-        .tools-link {
-            margin-top: 20px;
-            color: #64748b;
-            font-size: 0.95rem;
+
+        .hint-box {
+            background: #f0f9ff; border: 1.5px solid #bae6fd;
+            border-radius: 12px; padding: 14px 20px; margin-bottom: 22px;
+            font-size: 0.9rem; color: #0369a1; font-weight: 600;
         }
-        
-        .tools-link a {
-            color: #3b82f6;
-            text-decoration: none;
-            font-weight: 600;
+
+        .bar-wrap {
+            background: #e2e8f0; border-radius: 10px;
+            height: 5px; margin-bottom: 10px; overflow: hidden;
         }
-        
-        .tools-link a:hover {
-            text-decoration: underline;
+
+        .bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            border-radius: 10px; width: 100%;
+            transition: width 1s linear;
         }
-        
-        @media (max-width: 600px) {
-            .container {
-                padding: 40px 30px;
-            }
-            
-            h1 {
-                font-size: 1.6rem;
-            }
-            
-            .message {
-                font-size: 1rem;
-            }
+
+        .countdown-text {
+            font-size: 0.82rem; color: #94a3b8; margin-bottom: 24px;
+        }
+        .countdown-text span { font-weight: 700; color: #2563eb; }
+
+        .btn-group {
+            display: flex; gap: 10px;
+            justify-content: center; flex-wrap: wrap;
+        }
+
+        .btn-refresh {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: white; padding: 13px 28px; border-radius: 30px;
+            border: none; font-weight: 700; font-size: 0.95rem;
+            cursor: pointer; transition: all 0.3s ease;
+        }
+
+        .btn-refresh:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(59,130,246,0.4); }
+        .btn-refresh .icon { transition: transform 0.4s ease; display: inline-block; }
+        .btn-refresh:hover .icon { transform: rotate(180deg); }
+
+        .btn-home {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: transparent; color: #64748b;
+            padding: 13px 22px; border-radius: 30px;
+            border: 1.5px solid #e2e8f0; font-weight: 600;
+            font-size: 0.9rem; cursor: pointer;
+            transition: all 0.3s ease; text-decoration: none;
+        }
+
+        .btn-home:hover { background: #f8fafc; color: #1e3a8a; border-color: #cbd5e1; }
+
+        .attempt-badge { font-size: 0.75rem; color: #94a3b8; margin-top: 18px; }
+
+        @media (max-width: 480px) {
+            .fallback-card { padding: 40px 22px; }
+            h1 { font-size: 1.4rem; }
+            .btn-group { flex-direction: column; align-items: stretch; }
+            .btn-refresh, .btn-home { justify-content: center; }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="logo">21K</div>
-        <h1>We'll Be Right Back!</h1>
-        <p class="message">
-            We're currently recovering our data to serve you better. 
-            Our team is working to restore full blog functionality as quickly as possible.
-        </p>
-        <div class="status">
-            <p class="status-text">⏱️ Expected restoration: Within 24-48 hours</p>
+
+    <!-- Phase 1: just a spinner, user thinks page is loading -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="spinner-ring"></div>
+        <div class="loading-text">
+            Loading
+            <span class="loading-dot">.</span>
+            <span class="loading-dot">.</span>
+            <span class="loading-dot">.</span>
         </div>
-        <a href="https://21k.tools" class="cta-button">Explore Our Tools</a>
-        <p class="tools-link">
-            Meanwhile, all our tools are fully operational at <a href="https://21k.tools">21k.tools</a>
-        </p>
     </div>
+
+    <!-- Phase 2: only shown if all silent retries fail -->
+    <div class="fallback-card" id="fallbackCard">
+        <div class="logo">21K</div>
+        <h1>Taking a moment...</h1>
+        <p class="sub">
+            We hit a brief hiccup. This usually fixes itself in seconds —
+            we're refreshing the page for you automatically.
+        </p>
+        <div class="hint-box">🔄 Refreshing automatically — no action needed</div>
+        <div class="bar-wrap">
+            <div class="bar-fill" id="barFill"></div>
+        </div>
+        <div class="countdown-text">
+            Refreshing in <span id="countNum">5</span> seconds...
+        </div>
+        <div class="btn-group">
+            <button class="btn-refresh" onclick="location.reload()">
+                <span class="icon">↻</span> Refresh Now
+            </button>
+            <a href="/" class="btn-home">← Homepage</a>
+        </div>
+        <div class="attempt-badge" id="attemptBadge"></div>
+    </div>
+
+    <script>
+    (function () {
+        var MAX_SILENT_RETRIES = 3;    // how many background retries before showing card
+        var RETRY_INTERVAL     = 1500; // ms between each silent retry
+        var COUNTDOWN_SECS     = 5;    // countdown on the fallback card
+
+        var url      = window.location.href;
+        var attempts = parseInt(sessionStorage.getItem('_retryCount') || '0');
+
+        // ── Silent background fetch retry ──────────────────────────────
+        function silentRetry() {
+            fetch(url, { cache: 'no-store' })
+                .then(function (res) {
+                    if (res.ok) {
+                        // Page recovered — load it for real, no error flash
+                        sessionStorage.removeItem('_retryCount');
+                        window.location.reload();
+                    } else {
+                        onFailed();
+                    }
+                })
+                .catch(function () { onFailed(); });
+        }
+
+        function onFailed() {
+            attempts++;
+            sessionStorage.setItem('_retryCount', attempts);
+
+            if (attempts < MAX_SILENT_RETRIES) {
+                // Still in silent phase — keep trying
+                setTimeout(silentRetry, RETRY_INTERVAL);
+            } else {
+                // Give up on silent retries — show the card
+                showFallback();
+            }
+        }
+
+        // ── Fallback card with countdown ───────────────────────────────
+        function showFallback() {
+            document.getElementById('loadingScreen').style.display = 'none';
+            document.getElementById('fallbackCard').style.display  = 'block';
+
+            document.getElementById('attemptBadge').textContent =
+                'Attempted ' + attempts + ' reconnection' + (attempts !== 1 ? 's' : '');
+
+            var secs    = COUNTDOWN_SECS;
+            var barFill = document.getElementById('barFill');
+            var countEl = document.getElementById('countNum');
+
+            var timer = setInterval(function () {
+                secs--;
+                countEl.textContent = secs;
+                barFill.style.width = (secs / COUNTDOWN_SECS * 100) + '%';
+                if (secs <= 0) {
+                    clearInterval(timer);
+                    sessionStorage.setItem('_retryCount', '0'); // reset for next attempt
+                    window.location.reload();
+                }
+            }, 1000);
+        }
+
+        // ── Entry point ────────────────────────────────────────────────
+        if (attempts < MAX_SILENT_RETRIES) {
+            setTimeout(silentRetry, RETRY_INTERVAL);
+        } else {
+            showFallback();
+        }
+
+    })();
+    </script>
+
 </body>
 </html>
