@@ -62,22 +62,25 @@
         margin-bottom: 20px;
         font-size: 1.05rem;
     }
-     .note {font-family: 'Courier New', Courier, monospace;
-    background:#202020;
-    border-left: 4px solid #2563eb;
-    color: #0d1117;
-    border: 1px solid rgba(29,155,240,0.4);
-    padding: 18px 22px;
-    border-radius: 10px;
-    font-size: 1.05rem;
-}
+
+    .note {
+        font-family: 'Courier New', Courier, monospace;
+        background: #202020;
+        border-left: 4px solid #2563eb;
+        color: #0d1117;
+        border: 1px solid rgba(29,155,240,0.4);
+        padding: 18px 22px;
+        border-radius: 10px;
+        font-size: 1.05rem;
+    }
+
     .note h2 {
         color: blue;
         font-size: 2rem;
         margin-bottom: 20px;
         font-weight: 800;
         font-family: 'Courier New', Courier, monospace;
-        text-align:center;
+        text-align: center;
     }
 
     .note h3 {
@@ -146,32 +149,202 @@
         margin-bottom: 10px;
     }
 
+    /* ── Meet the Developer card ── */
+    .developer-card {
+        background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+        border: 2px solid #bfdbfe;
+        border-radius: 20px;
+        padding: 40px;
+        margin: 40px 0;
+        box-shadow: 0 10px 30px rgba(37, 99, 235, 0.08);
+        display: flex;
+        gap: 35px;
+        align-items: flex-start;
+        flex-wrap: wrap;
+    }
+
+    .developer-avatar {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #2563eb, #1e40af);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        box-shadow: 0 6px 20px rgba(37, 99, 235, 0.35);
+    }
+
+    .developer-avatar i {
+        font-size: 2.8rem;
+        color: white;
+    }
+
+    .developer-info {
+        flex: 1;
+        min-width: 220px;
+    }
+
+    .developer-info h2 {
+        color: #1e3a8a;
+        font-size: 1.8rem;
+        margin-bottom: 4px;
+        font-weight: 800;
+    }
+
+    .developer-info .dev-role {
+        color: #2563eb;
+        font-size: 1rem;
+        font-weight: 600;
+        margin-bottom: 18px;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+    }
+
+    .developer-info p {
+        color: #334155;
+        line-height: 1.8;
+        margin-bottom: 16px;
+        font-size: 1.05rem;
+    }
+
+    .developer-info p:last-child {
+        margin-bottom: 0;
+    }
+
+    .dev-highlight {
+        background: white;
+        border-left: 4px solid #2563eb;
+        border-radius: 0 10px 10px 0;
+        padding: 14px 20px;
+        margin: 20px 0;
+        font-style: italic;
+        color: #1e40af !important;
+        font-weight: 500;
+    }
+
+    .dev-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 18px;
+    }
+
+    .dev-tag {
+        background: #2563eb;
+        color: white;
+        border-radius: 20px;
+        padding: 5px 16px;
+        font-size: 0.88rem;
+        font-weight: 600;
+        letter-spacing: 0.3px;
+    }
+
+    /* ── Social Links Grid ── */
+    .social-links-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 16px;
+        margin: 20px 0 30px;
+    }
+
+    .social-card {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 16px 20px;
+        border-radius: 14px;
+        text-decoration: none;
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+        border: 2px solid transparent;
+    }
+
+    .social-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    }
+
+    .social-card i {
+        font-size: 1.6rem;
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        color: white;
+    }
+
+    .social-info {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .social-name {
+        font-weight: 700;
+        font-size: 0.95rem;
+    }
+
+    .social-handle {
+        font-size: 0.85rem;
+        opacity: 0.75;
+        margin-top: 2px;
+        word-break: break-all;
+    }
+
+    /* Per-platform colours */
+    .social-card.email    { background: #f0f9ff; border-color: #bae6fd; color: #0369a1; }
+    .social-card.email i  { background: #0369a1; }
+    .social-card.twitter  { background: #f0f0f0; border-color: #d1d5db; color: #111; }
+    .social-card.twitter i{ background: #111; }
+    .social-card.linkedin { background: #eff6ff; border-color: #bfdbfe; color: #0a66c2; }
+    .social-card.linkedin i{ background: #0a66c2; }
+    .social-card.facebook { background: #eff6ff; border-color: #c7d7fc; color: #1877f2; }
+    .social-card.facebook i{ background: #1877f2; }
+    .social-card.instagram{ background: #fdf2f8; border-color: #f9a8d4; color: #c2185b; }
+    .social-card.instagram i{ background: linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888); }
+    .social-card.youtube  { background: #fff5f5; border-color: #fecaca; color: #c00; }
+    .social-card.youtube i{ background: #ff0000; }
+
     .page-nav-link {
         font-weight: 600;
-    font-size: 16px;
-    color: #2563eb;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 10px 16px;
-    background: rgba(37, 99, 235, 0.1);
-    border-radius: 8px;
-    transition: background 0.3s ease;
+        font-size: 16px;
+        color: #2563eb;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 16px;
+        background: rgba(37, 99, 235, 0.1);
+        border-radius: 8px;
+        transition: background 0.3s ease;
     }
     
     .page-nav-link:hover {
         background: rgba(37, 99, 235, 0.15);
         color: #1d4ed8;
     }
+
     .page-nav-link p {
-    color: white;
-    margin: 0;
-  }
+        color: white;
+        margin: 0;
+    }
 
     @media (max-width: 768px) {
         .demo-title { 
             font-size: 2rem; 
+        }
+        .developer-card {
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        .developer-info .dev-highlight {
+            text-align: left;
+        }
+        .dev-tags {
+            justify-content: center;
         }
     }
 </style>
@@ -179,17 +352,50 @@
 
 {% block content %}
 <main class="main-content">
+
+    <!-- Hero -->
     <section class="demo-section">
         <h1 class="demo-title">About 21K Tools</h1>
         <p class="demo-subtitle">Your trusted source for free online utilities</p>
         <a href="https://21k.tools" class="page-nav-link">
-            <i class="fas fa-home"></i> Home<p style="color:white;">/About</p>
+            <i class="fas fa-home"></i> Home<p>/About</p>
         </a>
     </section>
-    
+
+    <!-- Meet the Developer -->
+    <div class="developer-card">
+        <div class="developer-avatar">
+            <i class="fas fa-user-circle"></i>
+        </div>
+        <div class="developer-info">
+            <h2>Hi, I'm Nithish</h2>
+            <div class="dev-role">Developer &amp; Blogger</div>
+
+            <p>A few years ago, I got tired of using online tools that were either painfully slow, full of ads, locked behind paywalls, or didn't respect privacy. Every simple task — resizing an image, converting a PDF, making a QR code, or calculating interest — felt unnecessarily complicated.</p>
+
+            <p class="dev-highlight">"So I decided to build something better: a collection of free, fast, and privacy-first online tools that actually feel good to use."</p>
+
+            <p>Everything on 21K Tools runs directly in your browser. No sign-up required. No tracking. No data leaves your device. Just open the page and get the job done.</p>
+
+            <p>I personally code every tool, test everything myself, and write the blog posts based on real problems I've faced and solutions that actually worked for me.</p>
+
+            <p><strong>My goal is simple:</strong> Make useful digital tools completely free, fast, and private — without any hidden catches. Whether you're a student, freelancer, or just someone who wants things to work smoothly, 21K Tools is made for you.</p>
+
+            <p>If you have feedback, suggestions, or find something that isn't working right, feel free to email me at <a href="mailto:contact@21k.tools" style="color:#2563eb;font-weight:600;">contact@21k.tools</a> or use the form in the Help Center. You can also follow <a href="https://x.com/21ktools" target="_blank" rel="noopener" style="color:#2563eb;font-weight:600;">@21ktools</a> on X for updates and occasional tips.</p>
+
+            <div class="dev-tags">
+                <span class="dev-tag"><i class="fas fa-code"></i> Developer</span>
+                <span class="dev-tag"><i class="fas fa-pen"></i> Blogger</span>
+                <span class="dev-tag"><i class="fas fa-shield-alt"></i> Privacy Advocate</span>
+                <span class="dev-tag"><i class="fas fa-tools"></i> Tool Builder</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main About Content -->
     <div class="about-content">
         <h2>Welcome to 21K Tools</h2>
-        <p>Your all-in-one hub for free, powerful, and easy-to-use online tools that simplify everyday digital tasks. Whether you need to convert files, resize images, calculate interest, manage PDFs, or generate AI content, 21K Tools brings everything together in a seamless platform designed for speed, precision, and convenience.</p>
+        <p>Your all-in-one hub for free, powerful, and easy-to-use online tools that simplify everyday digital tasks. Whether you need to convert files, resize images, calculate interest, or manage PDFs, 21K Tools brings everything together in a seamless platform designed for speed, precision, and convenience.</p>
         
         <p>At 21K Tools, we believe technology should make life easier, not more complicated. In a world where productivity is key, people waste hours switching between different websites and apps for simple tasks. That's why we built 21K Tools — a centralized platform offering a variety of online utility tools accessible with a single click. No sign-ups. No downloads. No hidden fees. Just instant solutions.</p>
         
@@ -203,7 +409,7 @@
         <ul>
             <li><strong>Completely Free:</strong> No subscriptions, no paywalls, no intrusive ads.</li>
             <li><strong>Simple to Use:</strong> Clean, intuitive interfaces designed for everyone.</li>
-            <li><strong>Reliable & Fast:</strong> High-performance tools that deliver results instantly.</li>
+            <li><strong>Reliable &amp; Fast:</strong> High-performance tools that deliver results instantly.</li>
             <li><strong>Privacy-Focused:</strong> We don't track personal data or force sign-ups. Your tasks are processed securely in your browser.</li>
         </ul>
         
@@ -237,14 +443,14 @@
         <h3>Our Featured Tools</h3>
         <p>At 21K Tools, we are continuously expanding our toolset. Some of our most popular utilities include:</p>
         <ul>
-            <li><strong>URL Shortener:</strong>Create short, memorable links with advanced analytics, tracking and a QR code</li>
+            <li><strong>URL Shortener:</strong> Create short, memorable links with advanced analytics, tracking and a QR code.</li>
             <li><strong>File Converter:</strong> Convert between 100+ formats, including documents, images, audio, and videos.</li>
             <li><strong>Image Resizer:</strong> Resize, compress, and optimize images while preserving quality.</li>
             <li><strong>PDF Toolkit:</strong> Merge, split, compress, and convert PDFs with ease.</li>
-            <li><strong>AI Content Generator:</strong> Create high-quality articles, product descriptions, and marketing content.</li>
             <li><strong>Age Calculator:</strong> Accurately calculate age in years, months, and days.</li>
             <li><strong>Interest Calculator:</strong> Compute simple and compound interest for loans and investments.</li>
-            <li><strong>Unit Converter:</strong> Convert between measurement units, including real-time currency conversion.</li>
+            <li><strong>Unit Converter:</strong> Convert between measurement units across length, weight, temperature, and more.</li>
+            <li><strong>QR Tools:</strong> Generate static &amp; dynamic QR codes with analytics, scan QR codes instantly, create QR codes in bulk, and build stylish profile card QR codes — all in one place.</li>
             <li><strong>Time Calculator:</strong> Calculate date differences, add/subtract time, and manage time zones.</li>
         </ul>
         
@@ -261,23 +467,63 @@
         </ul>
         
         <h3>Community-Driven Growth</h3>
-        <p>At 21K Tools, we consider our users as our biggest asset. Your feedback shapes the development of our tools. We invite our community to suggest new tool ideas, report bugs, and share their experiences. This collaborative approach ensures we always align with real-world needs.</p>
+        <p>At 21K Tools, we consider our users our biggest asset. Your feedback shapes the development of our tools. We invite our community to suggest new tool ideas, report bugs, and share their experiences. This collaborative approach ensures we always align with real-world needs.</p>
         
         <p>You can connect with us via:</p>
-        <ul>
-            <li>Email: contact@21k.tools</li>
-            <li>Twitter/X: @21KTools</li>
-            <li>Instagram: @21K.Tools</li>
-            <li>YouTube: @21KTools</li>
-        </ul>
+        <div class="social-links-grid">
+            <a href="mailto:contact@21k.tools" class="social-card email">
+                <i class="fas fa-envelope"></i>
+                <div class="social-info">
+                    <span class="social-name">Email</span>
+                    <span class="social-handle">contact@21k.tools</span>
+                </div>
+            </a>
+            <a href="https://x.com/21ktools" target="_blank" rel="noopener" class="social-card twitter">
+                <i class="fab fa-x-twitter"></i>
+                <div class="social-info">
+                    <span class="social-name">Twitter / X</span>
+                    <span class="social-handle">@21KTools</span>
+                </div>
+            </a>
+            <a href="https://linkedin.com/company/21ktools" target="_blank" rel="noopener" class="social-card linkedin">
+                <i class="fab fa-linkedin-in"></i>
+                <div class="social-info">
+                    <span class="social-name">LinkedIn</span>
+                    <span class="social-handle">linkedin.com/company/21ktools</span>
+                </div>
+            </a>
+            <a href="https://facebook.com/21ktools" target="_blank" rel="noopener" class="social-card facebook">
+                <i class="fab fa-facebook-f"></i>
+                <div class="social-info">
+                    <span class="social-name">Facebook</span>
+                    <span class="social-handle">facebook.com/21ktools</span>
+                </div>
+            </a>
+            <a href="https://instagram.com/21k.tools" target="_blank" rel="noopener" class="social-card instagram">
+                <i class="fab fa-instagram"></i>
+                <div class="social-info">
+                    <span class="social-name">Instagram</span>
+                    <span class="social-handle">@21K.Tools</span>
+                </div>
+            </a>
+            <a href="https://youtube.com/@21KTools" target="_blank" rel="noopener" class="social-card youtube">
+                <i class="fab fa-youtube"></i>
+                <div class="social-info">
+                    <span class="social-name">YouTube</span>
+                    <span class="social-handle">@21KTools</span>
+                </div>
+            </a>
+        </div>
         
         <h3>Why 21K?</h3>
         <p>The name 21K represents simplicity, scalability, and modernity — a platform that keeps growing with user needs while maintaining the speed and clarity that today's fast-paced world demands. We want to become your go-to destination for useful tools, all under one unified brand.</p>
-      
     </div>
-    <div class='note'>
-    <h2>Important Disclaimer</h2>
-<p><strong>21K Tools is an independent individual platform and is not associated, affiliated, or connected with any organization, company, network, or group of any kind.</strong> It is solely created and managed by a team of 21K Tools. All tools, services, and content available on this website are independently built and maintained. Any similarities in name or reference to other entities are purely coincidental.</p>
-</div>
+
+    <!-- Disclaimer -->
+    <div class="note">
+        <h2>Important Disclaimer</h2>
+        <p><strong>21K Tools is an independent individual platform and is not associated, affiliated, or connected with any organization, company, network, or group of any kind.</strong> It is solely created and managed by Nithish, the developer behind 21K Tools. All tools, services, and content available on this website are independently built and maintained. Any similarities in name or reference to other entities are purely coincidental.</p>
+    </div>
+
 </main>
 {% endblock %}
