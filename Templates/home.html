@@ -1,1159 +1,1352 @@
-
 {% extends "base1.html" %}
 {% load static %}
 
-{% block title %}21K Tools - Free Online PDF, Image Resizer, QR code Generator & Scanner, Calculator & File Converter Tools{% endblock %}
+{% block title %}21K Tools – Free Online Tools: File Converter, Image Resizer, QR Code & PDF Toolkit{% endblock %}
 
 {% block meta_description %}
-Access 9+ free online tools including URL shortener with QR codes, QR code generator & scanner, PDF editor, file converter, image resizer, age calculator, interest calculator, unit converter and more. No registration required.
+Access 9+ Free browser-based tools for everyday digital tasks. Convert files, resize images, generate QR codes, merge PDFs, shorten URLs, and calculate anything — directly in your browser. No sign-up required.
 {% endblock %}
 
 {% block meta_keywords %}
 free online tools, url shortener, qr code generator, qr scanner, pdf tools, file converter, image resizer, age calculator, interest calculator, unit converter, time calculator, online calculators, free utilities, 21k tools
 {% endblock %}
+
 {% block extra_css %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
 <style>
-   body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            bakground-color: var(--bg-light);
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
-  background-attachment: fixed !important;
-            min-height: 100vh;
-            color: var(--text-dark);
-            display: flex;
-            flex-direction: column;
-            line-height: 1.6;
-        }
+/* ═══════════════════════════════════════════
+   BASE
+═══════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    .main-content {
-      flex: 1; 
-      padding: 40px 20px; 
-      max-width:1200px ;
-      margin: 0 auto; 
-      text-align: center;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+body {
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
   background-attachment: fixed !important;
-    }
-    
-    .demo-section {
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      padding: 60px 20px; 
-      border-radius: 20px; 
-      margin: 20px 0;
-      backdrop-filter: blur(10px);
-    }
-    
-    .demo-title {
-      font-size: 2.5rem; 
-      color: white; 
-      margin-bottom: 20px; 
-      font-weight: 700;
-    }
-    
-    .demo-subtitle {
-      font-size: 1.2rem; 
-      color: rgba(255, 255, 255, 0.9); 
-      margin-bottom: 30px;
-    }
-
-   /* ==================== RECENT BLOGS SECTION ==================== */
-.recent-blogs-section {
-  max-width: 1200px;
-  margin: 0 auto 30px;
-  padding: 0;
+  min-height: 100vh;
+  color: #1a1a2e;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.6;
 }
- 
+
+a { text-decoration: none; color: inherit; }
+
+.main-content {
+  flex: 1;
+  width: 100%;
+  max-width: 1220px;
+  margin: 0 auto;
+  padding: 36px 20px 60px;
+}
+
+/* ═══════════════════════════════════════════
+   HERO
+═══════════════════════════════════════════ */
+.hero {
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.22);
+  border-radius: 24px;
+  padding: 72px 32px 60px;
+  text-align: center;
+  margin-bottom: 20px;
+  backdrop-filter: blur(14px);
+  position: relative;
+  overflow: hidden;
+}
+
+/* subtle grid pattern overlay */
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+}
+
+/* glowing orb */
+.hero::after {
+  content: '';
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.3);
+  color: rgba(255,255,255,0.95);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 7px 18px;
+  border-radius: 30px;
+  margin-bottom: 24px;
+  position: relative;
+  z-index: 1;
+}
+
+.hero-badge-dot {
+  width: 7px;
+  height: 7px;
+  background: #4ade80;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.3); }
+}
+
+.hero h1 {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 900;
+  color: #fff;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  margin-bottom: 18px;
+  position: relative;
+  z-index: 1;
+  max-width: 780px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hero h1 em {
+  font-style: normal;
+  background: linear-gradient(90deg, #a5f3fc, #c4b5fd);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-sub {
+  font-size: 1.1rem;
+  color: rgba(255,255,255,0.82);
+  max-width: 560px;
+  margin: 0 auto 32px;
+  font-weight: 400;
+  line-height: 1.7;
+  position: relative;
+  z-index: 1;
+}
+
+.hero-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+}
+
+.hero-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: rgba(255,255,255,0.13);
+  border: 1px solid rgba(255,255,255,0.24);
+  color: rgba(255,255,255,0.9);
+  padding: 9px 20px;
+  border-radius: 30px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+
+.hero-pill:hover {
+  background: rgba(255,255,255,0.22);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+  color: #fff;
+}
+
+/* ═══════════════════════════════════════════
+   STATS ROW
+═══════════════════════════════════════════ */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 18px;
+  backdrop-filter: blur(14px);
+  margin-bottom: 48px;
+  overflow: hidden;
+}
+
+.stat-item {
+  padding: 24px 16px;
+  text-align: center;
+  border-right: 1px solid rgba(255,255,255,0.12);
+  transition: background 0.2s;
+}
+
+.stat-item:last-child { border-right: none; }
+.stat-item:hover { background: rgba(255,255,255,0.08); }
+
+.stat-num {
+  font-size: 1.9rem;
+  font-weight: 900;
+  color: #fff;
+  line-height: 1;
+  margin-bottom: 5px;
+  letter-spacing: -0.02em;
+}
+
+.stat-label {
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.65);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+}
+
+/* ═══════════════════════════════════════════
+   SECTION HEADER
+═══════════════════════════════════════════ */
+.sec-head {
+  text-align: center;
+  margin-bottom: 42px;
+}
+
+.sec-label {
+  display: inline-block;
+  background: rgba(255,255,255,0.14);
+  border: 1px solid rgba(255,255,255,0.24);
+  color: rgba(255,255,255,0.9);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  padding: 6px 16px;
+  border-radius: 30px;
+  margin-bottom: 14px;
+}
+
+.sec-title {
+  font-size: clamp(1.7rem, 3.5vw, 2.2rem);
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.025em;
+  margin-bottom: 12px;
+  text-shadow: 0 2px 16px rgba(0,0,0,0.15);
+}
+
+.sec-sub {
+  font-size: 1rem;
+  color: rgba(255,255,255,0.74);
+  max-width: 500px;
+  margin: 0 auto;
+  font-weight: 400;
+}
+
+/* ═══════════════════════════════════════════
+   BLOG SECTION  (original style preserved)
+═══════════════════════════════════════════ */
+.recent-blogs-section {
+  margin-bottom: 56px;
+}
+
 .blogs-section-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 22px;
-  padding: 0 4px;
 }
- 
+
 .blogs-section-heading {
-  font-size: 1.9rem;
+  font-size: 1.7rem;
   font-weight: 800;
-  color: white;
-  letter-spacing: -0.3px;
-  text-shadow: 0 2px 12px rgba(0,0,0,0.2);
+  color: #fff;
   display: flex;
   align-items: center;
   gap: 12px;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.18);
+  letter-spacing: -0.02em;
 }
- 
-.blogs-section-heading .heading-icon {
+
+.heading-icon {
   width: 42px;
   height: 42px;
-  background: rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.18);
   border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.1rem;
+  font-size: 1.05rem;
+  border: 1px solid rgba(255,255,255,0.28);
   flex-shrink: 0;
-  border: 1px solid rgba(255,255,255,0.3);
 }
- 
+
 .blogs-view-all-btn {
   display: flex;
   align-items: center;
   gap: 8px;
-  background: rgba(255,255,255,0.15);
-  color: white;
-  border: 1.5px solid rgba(255,255,255,0.35);
+  background: rgba(255,255,255,0.14);
+  color: #fff;
+  border: 1.5px solid rgba(255,255,255,0.3);
   padding: 9px 20px;
   border-radius: 30px;
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 0.88rem;
-  transition: all 0.3s ease;
+  font-weight: 700;
+  font-size: 0.86rem;
+  transition: background 0.25s, transform 0.25s;
+  backdrop-filter: blur(8px);
   white-space: nowrap;
-  backdrop-filter: blur(10px);
 }
- 
+
 .blogs-view-all-btn:hover {
-  background: rgba(255,255,255,0.28);
-  color: white;
+  background: rgba(255,255,255,0.26);
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.12);
 }
- 
-/* Horizontal scroll track */
-.blogs-scroll-outer {
-  position: relative;
-}
- 
+
+.blogs-scroll-outer { position: relative; }
+
 .blogs-scroll-outer::after {
   content: '';
   position: absolute;
-  right: 0;
-  top: 0;
-  bottom: 16px;
+  right: 0; top: 0; bottom: 16px;
   width: 80px;
-  background: linear-gradient(to right, transparent, rgba(102,126,234,0.6));
+  background: linear-gradient(to right, transparent, rgba(102,126,234,0.55));
   pointer-events: none;
   border-radius: 0 20px 20px 0;
   z-index: 2;
 }
- 
+
 .blogs-h-scroll {
   display: flex;
-  gap: 20px;
+  gap: 18px;
   overflow-x: auto;
-  padding-bottom: 16px;
+  padding-bottom: 14px;
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: thin;
-  scrollbar-color: rgba(255,255,255,0.3) transparent;
+  scrollbar-color: rgba(255,255,255,0.28) transparent;
   cursor: grab;
 }
- 
-.blogs-h-scroll:active {
-  cursor: grabbing;
-}
- 
-.blogs-h-scroll::-webkit-scrollbar {
-  height: 4px;
-}
- 
-.blogs-h-scroll::-webkit-scrollbar-track {
-  background: rgba(255,255,255,0.08);
-  border-radius: 10px;
-}
- 
-.blogs-h-scroll::-webkit-scrollbar-thumb {
-  background: rgba(255,255,255,0.3);
-  border-radius: 10px;
-}
- 
-/* Blog card */
+
+.blogs-h-scroll:active { cursor: grabbing; }
+.blogs-h-scroll::-webkit-scrollbar { height: 4px; }
+.blogs-h-scroll::-webkit-scrollbar-track { background: rgba(255,255,255,0.07); border-radius: 10px; }
+.blogs-h-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.28); border-radius: 10px; }
+
 .blog-hcard {
   background: rgba(255,255,255,0.97);
   border-radius: 20px;
   overflow: hidden;
   flex: 0 0 300px;
   scroll-snap-align: start;
-  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.35s cubic-bezier(0.4,0,0.2,1), box-shadow 0.35s;
   text-decoration: none;
   display: flex;
   flex-direction: column;
   box-shadow: 0 6px 28px rgba(0,0,0,0.1);
   border: 1px solid rgba(255,255,255,0.4);
 }
- 
+
 .blog-hcard:hover {
   transform: translateY(-8px) scale(1.02);
-  box-shadow: 0 20px 50px rgba(0,0,0,0.18);
+  box-shadow: 0 22px 55px rgba(0,0,0,0.18);
 }
- 
+
+.blog-hcard-img-wrap { overflow: hidden; height: 170px; flex-shrink: 0; }
+
 .blog-hcard-img {
-  width: 100%;
-  height: 170px;
-  object-fit: cover;
-  display: block;
-  transition: transform 0.4s ease;
+  width: 100%; height: 170px; object-fit: cover; display: block;
+  transition: transform 0.4s;
 }
- 
-.blog-hcard:hover .blog-hcard-img {
-  transform: scale(1.04);
-}
- 
-.blog-hcard-img-wrap {
-  overflow: hidden;
-  height: 170px;
-  flex-shrink: 0;
-}
- 
+
+.blog-hcard:hover .blog-hcard-img { transform: scale(1.05); }
+
 .blog-hcard-placeholder {
-  width: 100%;
-  height: 170px;
+  width: 100%; height: 170px;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 2.2rem;
-  color: rgba(255,255,255,0.3);
-  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2.2rem; color: rgba(255,255,255,0.28); flex-shrink: 0;
 }
- 
+
 .blog-hcard-body {
-  padding: 20px;
-  flex: 1;
+  padding: 20px; flex: 1; display: flex; flex-direction: column; gap: 10px;
+}
+
+.blog-hcard-top {
+  display: flex; justify-content: space-between; align-items: center; gap: 8px;
+}
+
+.blog-hcard-cat {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: #fff; padding: 4px 10px; border-radius: 20px;
+  font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em;
+  max-width: 110px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+
+.blog-hcard-date { font-size: 0.74rem; color: #94a3b8; white-space: nowrap; flex-shrink: 0; }
+
+.blog-hcard-title {
+  font-size: 0.98rem; font-weight: 700; color: #0f172a; line-height: 1.45; flex: 1;
+  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+}
+
+.blog-hcard-excerpt {
+  font-size: 0.82rem; color: #64748b; line-height: 1.55;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+
+.blog-hcard-footer {
+  display: flex; align-items: center; justify-content: space-between;
+  padding-top: 10px; border-top: 1px solid #f1f5f9; margin-top: auto;
+}
+
+.blog-hcard-author {
+  font-size: 0.74rem; color: #94a3b8;
+  display: flex; align-items: center; gap: 5px; overflow: hidden;
+}
+
+.blog-hcard-author span {
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 110px;
+}
+
+.blog-hcard-arrow {
+  width: 30px; height: 30px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  color: #fff; font-size: 0.75rem; flex-shrink: 0; transition: transform 0.3s;
+}
+
+.blog-hcard:hover .blog-hcard-arrow { transform: translateX(3px); }
+
+.blogs-scroll-dots {
+  display: flex; justify-content: center; gap: 6px; margin-top: 16px;
+}
+
+.scroll-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: rgba(255,255,255,0.3); transition: all 0.3s; cursor: pointer;
+}
+
+.scroll-dot.active { background: #fff; width: 20px; border-radius: 3px; }
+
+/* ═══════════════════════════════════════════
+   TOOL CARDS  (original centered style, elevated)
+═══════════════════════════════════════════ */
+.tools-section { margin-bottom: 60px; }
+
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
+}
+
+.tool-app {
+  background: rgba(255,255,255,0.97);
+  backdrop-filter: blur(20px);
+  border-radius: 24px;
+  padding: 36px 28px 28px;
+  text-align: center;
+  transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.35s;
+  border: 1px solid rgba(255,255,255,0.25);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+/* colored top accent bar */
+.tool-app::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #667eea, #764ba2);
+  transform: scaleX(0);
+  transition: transform 0.35s ease;
+  transform-origin: left;
+}
+
+.tool-app:hover::before { transform: scaleX(1); }
+
+/* subtle shimmer layer */
+.tool-app::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(102,126,234,0.05) 0%, rgba(118,75,162,0.07) 100%);
+  opacity: 0;
+  transition: opacity 0.35s;
+}
+
+.tool-app:hover::after { opacity: 1; }
+
+.tool-app:hover {
+  transform: translateY(-14px) scale(1.015);
+  box-shadow: 0 32px 72px rgba(102,126,234,0.22), 0 8px 24px rgba(0,0,0,0.1);
+}
+
+.app-icon {
+  width: 80px; height: 80px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 22px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 34px; color: #fff;
+  margin: 0 auto 22px;
+  box-shadow: 0 10px 32px rgba(102,126,234,0.38);
+  transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.35s;
+  position: relative; z-index: 1;
+}
+
+.tool-app:hover .app-icon {
+  transform: scale(1.12) rotate(6deg);
+  box-shadow: 0 18px 48px rgba(102,126,234,0.48);
+}
+
+.app-title {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #1a1a2e;
+  margin-bottom: 11px;
+  position: relative; z-index: 1;
+  letter-spacing: -0.015em;
+}
+
+.app-description {
+  color: #5a6480;
+  font-size: 0.9rem;
+  line-height: 1.68;
+  margin-bottom: 20px;
+  position: relative; z-index: 1;
+  font-weight: 400;
+}
+
+.app-features {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  justify-content: center;
+  margin-bottom: 24px;
+  position: relative; z-index: 1;
+}
+
+.feature-badge {
+  background: rgba(102,126,234,0.09);
+  color: #5b50d6;
+  padding: 6px 13px;
+  border-radius: 20px;
+  font-size: 0.73rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  border: 1px solid rgba(102,126,234,0.15);
+}
+
+.app-button {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff;
+  border: none;
+  padding: 13px 32px;
+  border-radius: 30px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: transform 0.25s, box-shadow 0.25s, opacity 0.2s;
+  position: relative; z-index: 1;
+  letter-spacing: 0.01em;
+}
+
+.app-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(102,126,234,0.45);
+  opacity: 0.92;
+}
+
+/* ═══════════════════════════════════════════
+   WHY CHOOSE — FEATURE STRIPS
+═══════════════════════════════════════════ */
+.why-section { margin-bottom: 60px; }
+
+.why-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 18px;
+}
+
+.why-card {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 20px;
+  padding: 28px 22px;
+  backdrop-filter: blur(12px);
+  transition: background 0.25s, transform 0.25s;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-}
- 
-.blog-hcard-top {
-  display: flex;
-  justify-content: space-between;
   align-items: center;
-  gap: 8px;
+  text-align: center;
+  gap: 14px;
 }
- 
-.blog-hcard-cat {
-  background: linear-gradient(135deg, #2563eb, #4f46e5);
-  color: white;
-  padding: 4px 10px;
-  border-radius: 20px;
-  font-size: 0.68rem;
+
+.why-card:hover {
+  background: rgba(255,255,255,0.16);
+  transform: translateY(-4px);
+}
+
+.why-icon {
+  width: 52px; height: 52px;
+  background: rgba(255,255,255,0.18);
+  border: 1.5px solid rgba(255,255,255,0.3);
+  border-radius: 16px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem; color: #fff;
+}
+
+.why-card h3 {
+  font-size: 1.02rem;
   font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.4px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 110px;
+  color: #fff;
+  letter-spacing: -0.01em;
 }
- 
-.blog-hcard-date {
-  font-size: 0.75rem;
-  color: #94a3b8;
-  white-space: nowrap;
-  flex-shrink: 0;
+
+.why-card p {
+  font-size: 0.86rem;
+  color: rgba(255,255,255,0.72);
+  line-height: 1.65;
+  font-weight: 400;
 }
- 
-.blog-hcard-title {
+
+/* ═══════════════════════════════════════════
+   HOW IT WORKS
+═══════════════════════════════════════════ */
+.how-section { margin-bottom: 60px; }
+
+.how-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 18px;
+  position: relative;
+}
+
+/* connector line between steps (desktop) */
+.how-grid::before {
+  content: '';
+  position: absolute;
+  top: 38px;
+  left: calc(12.5% + 21px);
+  right: calc(12.5% + 21px);
+  height: 2px;
+  background: linear-gradient(90deg, rgba(255,255,255,0.08), rgba(255,255,255,0.22), rgba(255,255,255,0.08));
+  pointer-events: none;
+  z-index: 0;
+}
+
+.how-card {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 20px;
+  padding: 30px 20px 26px;
+  text-align: center;
+  backdrop-filter: blur(12px);
+  transition: background 0.25s, transform 0.25s;
+  position: relative;
+  z-index: 1;
+}
+
+.how-card:hover {
+  background: rgba(255,255,255,0.16);
+  transform: translateY(-5px);
+}
+
+.how-num {
+  width: 46px; height: 46px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.22), rgba(255,255,255,0.1));
+  border: 2px solid rgba(255,255,255,0.36);
+  color: #fff;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: 1.05rem;
+  margin: 0 auto 18px;
+}
+
+.how-card h3 {
   font-size: 1rem;
   font-weight: 700;
-  color: #0f172a;
-  line-height: 1.45;
-  flex: 1;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+  color: #fff;
+  margin-bottom: 9px;
 }
- 
-.blog-hcard-excerpt {
-  font-size: 0.82rem;
-  color: #64748b;
-  line-height: 1.55;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+
+.how-card p {
+  font-size: 0.86rem;
+  color: rgba(255,255,255,0.72);
+  line-height: 1.65;
 }
- 
-.blog-hcard-footer {
+
+/* ═══════════════════════════════════════════
+   USE CASES
+═══════════════════════════════════════════ */
+.uses-section { margin-bottom: 60px; }
+
+.uses-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.use-card {
+  background: rgba(255,255,255,0.97);
+  border-radius: 20px;
+  padding: 28px 24px;
+  border: 1px solid rgba(255,255,255,0.3);
+  box-shadow: 0 6px 28px rgba(0,0,0,0.08);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.use-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.13);
+}
+
+.use-head {
+  display: flex; align-items: center; gap: 14px; margin-bottom: 20px;
+}
+
+.use-icon {
+  width: 48px; height: 48px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-size: 1.15rem; flex-shrink: 0;
+  box-shadow: 0 4px 16px rgba(102,126,234,0.3);
+}
+
+.use-head h3 {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #1a1a2e;
+  letter-spacing: -0.01em;
+}
+
+.use-list { list-style: none; display: flex; flex-direction: column; gap: 11px; }
+
+.use-list li {
+  font-size: 0.88rem; color: #374155; line-height: 1.55;
+  display: flex; align-items: flex-start; gap: 10px;
+}
+
+.use-list li::before {
+  content: '';
+  width: 20px; height: 20px; flex-shrink: 0;
+  background: rgba(102,126,234,0.1);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  margin-top: 1px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%23667eea'%3E%3Cpath fill-rule='evenodd' d='M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z' clip-rule='evenodd'/%3E%3C/svg%3E");
+  background-size: 12px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/* ═══════════════════════════════════════════
+   FAQ
+═══════════════════════════════════════════ */
+.faq-section { margin-bottom: 60px; }
+
+.faq-wrap {
+  max-width: 780px;
+  margin: 0 auto;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-top: 10px;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.faq-item {
+  background: rgba(255,255,255,0.97);
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.3);
+  overflow: hidden;
+  box-shadow: 0 3px 16px rgba(0,0,0,0.06);
+  transition: box-shadow 0.25s;
+}
+
+.faq-item.open { box-shadow: 0 8px 32px rgba(102,126,234,0.14); }
+
+.faq-q {
+  width: 100%; background: none; border: none;
+  padding: 20px 24px;
+  display: flex; justify-content: space-between; align-items: center; gap: 14px;
+  font-family: inherit; font-size: 1rem; font-weight: 700;
+  color: #1a1a2e; cursor: pointer; text-align: left;
+}
+
+.faq-q-icon {
+  width: 30px; height: 30px; flex-shrink: 0;
+  background: rgba(102,126,234,0.1);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  color: #667eea; font-size: 0.78rem;
+  transition: transform 0.28s, background 0.2s;
+}
+
+.faq-item.open .faq-q-icon {
+  transform: rotate(180deg);
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: #fff;
+}
+
+.faq-body { max-height: 0; overflow: hidden; transition: max-height 0.32s ease; }
+.faq-item.open .faq-body { max-height: 300px; }
+
+.faq-a {
+  padding: 0 24px 20px;
+  font-size: 0.92rem; color: #4a5568; line-height: 1.75; font-weight: 400;
   border-top: 1px solid #f1f5f9;
-  margin-top: auto;
+  margin-top: 0;
+  padding-top: 16px;
 }
- 
-.blog-hcard-author {
-  font-size: 0.75rem;
-  color: #94a3b8;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  overflow: hidden;
-}
- 
-.blog-hcard-author span {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 110px;
-}
- 
-.blog-hcard-arrow {
-  width: 30px;
-  height: 30px;
-  background: linear-gradient(135deg, #3b82f6, #6366f1);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-size: 0.75rem;
-  flex-shrink: 0;
-  transition: transform 0.3s ease;
-}
- 
-.blog-hcard:hover .blog-hcard-arrow {
-  transform: translateX(3px);
-}
- 
-/* Scroll hint dots */
-.blogs-scroll-dots {
-  display: flex;
-  justify-content: center;
-  gap: 6px;
-  margin-top: 16px;
-}
- 
-.scroll-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.3);
-  transition: all 0.3s ease;
-  cursor: pointer;
-}
- 
-.scroll-dot.active {
-  background: white;
-  width: 20px;
-  border-radius: 3px;
-}
- 
-/* Bottom CTA */
-.blogs-bottom-cta {
+
+.faq-a a { color: #667eea; font-weight: 600; }
+
+/* ═══════════════════════════════════════════
+   CTA BAND
+═══════════════════════════════════════════ */
+.cta-band {
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.22);
+  border-radius: 24px;
+  padding: 64px 32px;
   text-align: center;
-  margin-top: 24px;
+  backdrop-filter: blur(14px);
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 10px;
 }
- 
-.blogs-explore-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  background: white;
-  color: #2563eb;
-  padding: 13px 34px;
-  border-radius: 30px;
+
+.cta-band::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+}
+
+.cta-band h2 {
+  font-size: 2rem; font-weight: 900; color: #fff;
+  margin-bottom: 12px; letter-spacing: -0.03em;
+  position: relative; z-index: 1;
+}
+
+.cta-band p {
+  color: rgba(255,255,255,0.76); margin-bottom: 30px;
+  max-width: 460px; margin-left: auto; margin-right: auto;
+  font-size: 1.03rem; position: relative; z-index: 1;
+}
+
+.cta-btns {
+  display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;
+  position: relative; z-index: 1;
+}
+
+.cta-btn-primary {
+  display: inline-flex; align-items: center; gap: 9px;
+  background: #fff; color: #5b50d6;
+  font-family: inherit; font-weight: 800; font-size: 0.95rem;
+  padding: 15px 36px; border-radius: 30px; cursor: pointer;
+  border: none; transition: transform 0.25s, box-shadow 0.25s;
+  box-shadow: 0 6px 26px rgba(0,0,0,0.16);
   text-decoration: none;
-  font-weight: 700;
-  font-size: 0.95rem;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.12);
 }
- 
-.blogs-explore-btn:hover {
+
+.cta-btn-primary:hover {
   transform: translateY(-3px);
-  box-shadow: 0 12px 35px rgba(0,0,0,0.2);
-  color: #1d4ed8;
+  box-shadow: 0 16px 40px rgba(0,0,0,0.2);
+  color: #4338ca;
 }
- 
-/* Responsive */
+
+.cta-btn-secondary {
+  display: inline-flex; align-items: center; gap: 9px;
+  background: rgba(255,255,255,0.14); color: #fff;
+  font-family: inherit; font-weight: 700; font-size: 0.95rem;
+  padding: 15px 34px; border-radius: 30px; cursor: pointer;
+  border: 1.5px solid rgba(255,255,255,0.3);
+  transition: background 0.25s, transform 0.25s;
+  text-decoration: none;
+}
+
+.cta-btn-secondary:hover {
+  background: rgba(255,255,255,0.24);
+  transform: translateY(-3px);
+}
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════ */
+@media (max-width: 900px) {
+  .how-grid::before { display: none; }
+}
+
 @media (max-width: 768px) {
-  .blogs-section-heading {
-    font-size: 1.5rem;
+  .hero { padding: 54px 22px 46px; }
+  .hero h1 { font-size: 1.9rem; }
+  .stats-row { grid-template-columns: repeat(2, 1fr); }
+  .stat-item:nth-child(2) { border-right: none; }
+  .stat-item:nth-child(1), .stat-item:nth-child(2) {
+    border-bottom: 1px solid rgba(255,255,255,0.12);
   }
-  .blog-hcard {
-    flex: 0 0 265px;
-  }
+  .sec-title { font-size: 1.65rem; }
+  .tools-grid { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+  .blogs-section-heading { font-size: 1.45rem; }
+  .blog-hcard { flex: 0 0 268px; }
+  .cta-band { padding: 46px 22px; }
+  .cta-band h2 { font-size: 1.65rem; }
 }
- 
+
 @media (max-width: 480px) {
-  .blogs-section-heading {
-    font-size: 1.3rem;
-  }
-  .blogs-section-heading .heading-icon {
-    width: 36px;
-    height: 36px;
-    font-size: 1rem;
-  }
-  .blog-hcard {
-    flex: 0 0 240px;
-  }
-  .blog-hcard-img-wrap,
-  .blog-hcard-placeholder {
-    height: 145px;
-  }
-  .blogs-view-all-btn span {
-    display: none;
-  }
+  .main-content { padding: 24px 16px 50px; }
+  .hero h1 { font-size: 1.55rem; }
+  .hero { padding: 44px 18px 38px; }
+  .stat-item { padding: 18px 10px; }
+  .stat-num { font-size: 1.5rem; }
+  .tools-grid { grid-template-columns: 1fr; }
+  .blog-hcard { flex: 0 0 244px; }
+  .blog-hcard-img-wrap, .blog-hcard-placeholder { height: 148px; }
+  .blogs-view-all-btn span { display: none; }
+  .blogs-section-heading { font-size: 1.25rem; }
+  .heading-icon { width: 36px; height: 36px; font-size: 0.92rem; }
+  .cta-btns { flex-direction: column; align-items: center; }
 }
-    .tools-section {
-      max-width: 1400px;
-      margin: 60px auto;
-      padding: 0px;
-    }
-
-    .section-header {
-      text-align: center;
-      margin-bottom: 50px;
-    }
-
-    .section-title {
-      font-size: 2.5rem;
-      font-weight: 800;
-      color: white;
-      margin-bottom: 15px;
-      text-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-    }
-
-    .section-subtitle {
-      font-size: 1.2rem;
-      color: rgba(255, 255, 255, 0.8);
-    }
-
-    .tools-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 25px;
-      margin-bottom: 60px;
-    }
-
-    .tool-app {
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(20px);
-      border-radius: 24px;
-      padding: 30px;
-      text-align: center;
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      cursor: pointer;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .tool-app::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: linear-gradient(135deg, rgba(59, 130, 246, 0.05), rgba(147, 51, 234, 0.05));
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-
-    .tool-app:hover::before {
-      opacity: 1;
-    }
-
-    .tool-app:hover {
-      transform: translateY(-12px) scale(1.02);
-      box-shadow: 0 25px 70px rgba(0, 0, 0, 0.15);
-    }
-
-    .app-icon {
-      width: 80px;
-      height: 80px;
-      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
-      border-radius: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 36px;
-      margin: 0 auto 20px;
-      box-shadow: 0 8px 30px rgba(59, 130, 246, 0.3);
-      transition: all 0.3s ease;
-      position: relative;
-      z-index: 1;
-    }
-
-    .tool-app:hover .app-icon {
-      transform: scale(1.1) rotate(5deg);
-      box-shadow: 0 15px 50px rgba(59, 130, 246, 0.4);
-    }
-
-    .app-title {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: #1a1a1a;
-      margin-bottom: 10px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .app-description {
-      color: #64748b;
-      font-size: 14px;
-      line-height: 1.6;
-      margin-bottom: 20px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .app-features {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      justify-content: center;
-      margin-bottom: 25px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .feature-badge {
-      background: rgba(59, 130, 246, 0.1);
-      color: #2563eb;
-      padding: 6px 12px;
-      border-radius: 20px;
-      font-size: 12px;
-      font-weight: 600;
-    }
-
-    .app-button {
-      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
-      color: white;
-      border: none;
-      padding: 14px 30px;
-      border-radius: 30px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      text-decoration: none;
-      display: inline-block;
-      position: relative;
-      z-index: 1;
-      font-size: 14px;
-    }
-
-    .app-button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 30px rgba(59, 130, 246, 0.4);
-    }
-
-    /* Tool Details Section */
-    .tool-details-section {
-      background-color: white;
-      padding: 80px 0;
-      margin: 0;
-      width: 100%;
-    }
-
-    .tool-detail {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 40px 20px;
-      border-bottom: 1px solid rgba(0,0,0,0.1);
-    }
-
-    .tool-detail:last-child {
-      border-bottom: none;
-    }
-
-    .tool-detail-header {
-      display: flex;
-      align-items: center;
-      margin-bottom: 30px;
-      flex-wrap: wrap;
-      gap: 20px;
-    }
-
-    .tool-detail-icon {
-      width: 80px;
-      height: 80px;
-      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
-      border-radius: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 36px;
-      color: white;
-      box-shadow: 0 8px 30px rgba(59, 130, 246, 0.3);
-    }
-
-    .tool-detail-title {
-      font-size: 2rem;
-      font-weight: 800;
-      color: #1e3a8a;
-      margin-bottom: 10px;
-      flex: 1;
-    }
-
-    .tool-detail-subtitle {
-      font-size: 1.1rem;
-      color: #64748b;
-      margin-bottom: 20px;
-    }
-
-    .tool-detail-content {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 30px;
-    }
-
-    .tool-detail-description {
-      font-size: 1.05rem;
-      line-height: 1.8;
-      color: #333;
-    }
-
-    .tool-detail-features h3 {
-      font-size: 1.3rem;
-      color: #2563eb;
-      margin-bottom: 15px;
-    }
-
-    .tool-detail-features ul {
-      list-style-type: none;
-    }
-
-    .tool-detail-features li {
-      margin-bottom: 12px;
-      position: relative;
-      padding-left: 25px;
-      font-size: 1rem;
-      line-height: 1.6;
-      color: #333;
-    }
-
-    .tool-detail-features li:before {
-      content: "✓";
-      position: absolute;
-      left: 0;
-      color: #3b82f6;
-      font-weight: bold;
-    }
-
-    .tool-detail-cta {
-      text-align: center;
-      margin-top: 30px;
-    }
-
-    .tool-detail-cta .app-button {
-      padding: 16px 40px;
-      font-size: 16px;
-    }
-
-    /* Responsive styles */
-    @media (max-width: 1024px) {
-      .tool-detail-content {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    @media (max-width: 768px) {
-      .demo-title { 
-        font-size: 2rem; 
-      }
-      
-      .tool-detail {
-        padding: 30px 20px;
-      }
-
-      .tool-detail-title {
-        font-size: 1.8rem;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .tool-detail {
-        padding: 25px 15px;
-      }
-
-      .tool-detail-title {
-        font-size: 1.6rem;
-      }
-
-      .tool-detail-icon {
-        width: 60px;
-        height: 60px;
-        font-size: 28px;
-      }
-    }
 </style>
 {% endblock %}
 
 {% block content %}
 <main class="main-content">
-  <div class="demo-section">
-    <h1 class="demo-title">Welcome to 21K Tools</h1>
-    <p class="demo-subtitle">Your one-stop destination for powerful utility tools</p>
-    <p style="color:rgba(255,255,255,0.9)">Calculate, convert, and manage your documents with our powerful online tools</p>
+
+  <!-- ══ HERO ══ -->
+  <section class="hero">
+    <span class="hero-badge">
+      <span class="hero-badge-dot"></span>
+      Free &nbsp;·&nbsp; No Sign-up &nbsp;·&nbsp; Browser-Based
+    </span>
+    <h1>The tools you need for<br><em>everyday digital work</em></h1>
+    <p class="hero-sub">Convert files, resize images, generate QR codes, merge PDFs, shorten links, and calculate anything — all running directly in your browser.</p>
+    <div class="hero-pills">
+      <a href="https://21k.tools/fileconverter"    class="hero-pill"><i class="fas fa-file-export"></i> File Converter</a>
+      <a href="https://21k.tools/imageresizer"      class="hero-pill"><i class="fas fa-image"></i> Image Resizer</a>
+      <a href="https://21k.tools/qrcodeandscanner"  class="hero-pill"><i class="fas fa-qrcode"></i> QR Code</a>
+      <a href="https://21k.tools/pdftools"          class="hero-pill"><i class="fas fa-file-pdf"></i> PDF Toolkit</a>
+      <a href="https://21k.tools/urlshortener"      class="hero-pill"><i class="fas fa-link"></i> URL Shortener</a>
+      <a href="https://21k.tools/agecalculator"     class="hero-pill"><i class="fas fa-birthday-cake"></i> Age Calculator</a>
+    </div>
+  </section>
+
+  <!-- ══ STATS ══ -->
+  <div class="stats-row">
+    <div class="stat-item">
+      <div class="stat-num">9+</div>
+      <div class="stat-label">Free Tools</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">100%</div>
+      <div class="stat-label">Browser-Based</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">0</div>
+      <div class="stat-label">Sign-ups Needed</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">Free</div>
+      <div class="stat-label">Always &amp; Forever</div>
+    </div>
   </div>
-   {% if recent_blog_posts %}
-<section class="recent-blogs-section">
- 
-  <div class="blogs-section-header">
-    <h2 class="blogs-section-heading">
-      <span class="heading-icon"><i class="fas fa-newspaper"></i></span>
-      Latest Articles
-    </h2>
-    <a href="{% url 'blog_list' %}" class="blogs-view-all-btn">
-      <span>View All</span>
-      <i class="fas fa-arrow-right" style="font-size:0.8rem;"></i>
-    </a>
-  </div>
- 
-  <div class="blogs-scroll-outer">
-    <div class="blogs-h-scroll" id="blogsScroll">
- 
-      {% for post in recent_blog_posts %}
-      <a href="{% url 'blog_detail' post.slug %}" class="blog-hcard">
- 
-        {% if post.has_thumbnail %}
-        <div class="blog-hcard-img-wrap">
-          <img src="{% url 'serve_blog_thumbnail' post.slug %}"
-               alt="{{ post.title }}"
-               class="blog-hcard-img"
-               loading="lazy">
-        </div>
-        {% else %}
-        <div class="blog-hcard-placeholder">
-          <i class="fas fa-image"></i>
-        </div>
-        {% endif %}
- 
-        <div class="blog-hcard-body">
-          <div class="blog-hcard-top">
-            {% if post.category %}
-            <span class="blog-hcard-cat">{{ post.category.name }}</span>
-            {% else %}
-            <span class="blog-hcard-cat">Blog</span>
-            {% endif %}
-            <span class="blog-hcard-date">
-              {{ post.published_at|date:"M d" }}
-            </span>
+
+  <!-- ══ BLOG ══ -->
+  {% if recent_blog_posts %}
+  <section class="recent-blogs-section">
+    <div class="blogs-section-header">
+      <h2 class="blogs-section-heading">
+        <span class="heading-icon"><i class="fas fa-newspaper"></i></span>
+        Latest Articles
+      </h2>
+      <a href="{% url 'blog_list' %}" class="blogs-view-all-btn">
+        <span>View All</span>
+        <i class="fas fa-arrow-right" style="font-size:0.76rem;"></i>
+      </a>
+    </div>
+
+    <div class="blogs-scroll-outer">
+      <div class="blogs-h-scroll" id="blogsScroll">
+        {% for post in recent_blog_posts %}
+        <a href="{% url 'blog_detail' post.slug %}" class="blog-hcard">
+          {% if post.has_thumbnail %}
+          <div class="blog-hcard-img-wrap">
+            <img src="{% url 'serve_blog_thumbnail' post.slug %}" alt="{{ post.title }}" class="blog-hcard-img" loading="lazy">
           </div>
- 
-          <div class="blog-hcard-title">{{ post.title }}</div>
- 
-          {% if post.excerpt %}
-          <div class="blog-hcard-excerpt">{{ post.excerpt|truncatewords:12 }}</div>
+          {% else %}
+          <div class="blog-hcard-placeholder"><i class="fas fa-image"></i></div>
           {% endif %}
- 
-          <div class="blog-hcard-footer">
-            <div class="blog-hcard-author">
-              <i class="fas fa-user-circle" style="font-size:0.85rem; color:#cbd5e1;"></i>
-              <span>{{ post.author.get_full_name|default:post.author.username }}</span>
+          <div class="blog-hcard-body">
+            <div class="blog-hcard-top">
+              <span class="blog-hcard-cat">{% if post.category %}{{ post.category.name }}{% else %}Blog{% endif %}</span>
+              <span class="blog-hcard-date">{{ post.published_at|date:"M d" }}</span>
             </div>
-            <div class="blog-hcard-arrow">
-              <i class="fas fa-arrow-right"></i>
+            <div class="blog-hcard-title">{{ post.title }}</div>
+            {% if post.excerpt %}<div class="blog-hcard-excerpt">{{ post.excerpt|truncatewords:12 }}</div>{% endif %}
+            <div class="blog-hcard-footer">
+              <div class="blog-hcard-author">
+                <i class="fas fa-user-circle" style="font-size:0.85rem;color:#cbd5e1;"></i>
+                <span>{{ post.author.get_full_name|default:post.author.username }}</span>
+              </div>
+              <div class="blog-hcard-arrow"><i class="fas fa-arrow-right"></i></div>
             </div>
           </div>
-        </div>
- 
-      </a>
-      {% endfor %}
- 
-      <!-- "See More" card at the end -->
-      <a href="{% url 'blog_list' %}" class="blog-hcard" style="justify-content:center; align-items:center; min-height:300px; background: rgba(255,255,255,0.15); border: 2px dashed rgba(255,255,255,0.4); text-decoration:none; gap:16px; padding:30px;">
-        <div style="text-align:center; color:white;">
-          <div style="width:60px;height:60px;background:rgba(255,255,255,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:1.5rem;">
-            <i class="fas fa-book-open"></i>
+        </a>
+        {% endfor %}
+
+        <a href="{% url 'blog_list' %}" class="blog-hcard" style="justify-content:center;align-items:center;min-height:300px;background:rgba(255,255,255,0.13);border:2px dashed rgba(255,255,255,0.35);gap:14px;padding:28px;">
+          <div style="text-align:center;color:#fff;">
+            <div style="width:60px;height:60px;background:rgba(255,255,255,0.18);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-size:1.5rem;">
+              <i class="fas fa-book-open"></i>
+            </div>
+            <div style="font-size:1.05rem;font-weight:700;margin-bottom:6px;">More Articles</div>
+            <div style="font-size:0.82rem;opacity:0.76;">Browse all posts on our blog</div>
           </div>
-          <div style="font-size:1.1rem;font-weight:700;margin-bottom:8px;">More Articles</div>
-          <div style="font-size:0.85rem;opacity:0.8;">Explore all posts on our blog</div>
-        </div>
-      </a>
- 
+        </a>
+      </div>
     </div>
-  </div>
- 
-  <div class="blogs-scroll-dots" id="blogsDots"></div>
- 
-</section>
-{% endif %}
-  
+    <div class="blogs-scroll-dots" id="blogsDots"></div>
+  </section>
+  {% endif %}
+
+  <!-- ══ TOOLS ══ -->
   <section class="tools-section">
-    <div class="section-header">
-      <h2 class="section-title">Featured Tools</h2>
-      <p class="section-subtitle">Our most popular and useful tools used by millions</p>
+    <div class="sec-head">
+      <div class="sec-label">All Tools</div>
+      <h2 class="sec-title">What would you like to do today?</h2>
+      <p class="sec-sub">Pick a tool and start immediately — no account, no installation, no cost.</p>
     </div>
+
     <div class="tools-grid">
-     <div class="tool-app" onclick="window.open('https://21k.tools/urlshortener', '_blank')">
+
+      <div class="tool-app" onclick="location.href='https://21k.tools/urlshortener'">
         <div class="app-icon"><i class="fas fa-link"></i></div>
         <h3 class="app-title">URL Shortener</h3>
-        <p class="app-description">Short URL and get QR Code, analytics Dashboard</p>
+        <p class="app-description">Paste any long URL to get a short link, a QR code, and a real-time click analytics dashboard — all generated in one step.</p>
         <div class="app-features">
-          <span class="feature-badge">URL</span>
+          <span class="feature-badge">Short Links</span>
           <span class="feature-badge">QR Code</span>
-          <span class="feature-badge">Analytics</span>
+          <span class="feature-badge">Click Analytics</span>
         </div>
         <button class="app-button">Launch Tool</button>
       </div>
-       <div class="tool-app" onclick="window.open('https://21k.tools/qrcodeandscanner', '_blank')">
+
+      <div class="tool-app" onclick="location.href='https://21k.tools/qrcodeandscanner'">
         <div class="app-icon"><i class="fas fa-qrcode"></i></div>
         <h3 class="app-title">QR Code Generator & Scanner</h3>
-        <p class="app-description">Create QR codes from text, URLs, or files. Scan QR codes instantly.</p>
+        <p class="app-description">Generate a QR code from text, a URL, or an uploaded file. Scan any QR code using your device camera or by uploading an image. Download as PNG.</p>
         <div class="app-features">
           <span class="feature-badge">Generate</span>
-          <span class="feature-badge">Scan</span>
-          <span class="feature-badge">File Upload</span>
+          <span class="feature-badge">Scan via Camera</span>
+          <span class="feature-badge">PNG Download</span>
         </div>
         <button class="app-button">Launch Tool</button>
       </div>
-      <div class="tool-app" onclick="window.open('https://21k.tools/fileconverter', '_blank')">
-        <div class="app-icon"><i class="fas fa-file"></i></div>
+
+      <div class="tool-app" onclick="location.href='https://21k.tools/fileconverter'">
+        <div class="app-icon"><i class="fas fa-file-export"></i></div>
         <h3 class="app-title">File Converter</h3>
-        <p class="app-description">Convert between all popular file formats with ease</p>
+        <p class="app-description">Convert between documents, images, audio, and video formats. Supports 100+ format combinations including PDF to Word, JPG to PNG, and MP4 to MP3.</p>
         <div class="app-features">
           <span class="feature-badge">100+ Formats</span>
-          <span class="feature-badge">Batch Process</span>
-          <span class="feature-badge">Fast</span>
+          <span class="feature-badge">Batch Upload</span>
+          <span class="feature-badge">No Install</span>
         </div>
         <button class="app-button">Launch Tool</button>
       </div>
-      
-      <div class="tool-app" onclick="window.open('https://21k.tools/imageresizer', '_blank')">
-        <div class="app-icon"><i class="fas fa-image"></i></div>
+
+      <div class="tool-app" onclick="location.href='https://21k.tools/imageresizer'">
+        <div class="app-icon"><i class="fas fa-expand-arrows-alt"></i></div>
         <h3 class="app-title">Image Resizer</h3>
-        <p class="app-description">Resize, compress, and optimize images while maintaining quality</p>
+        <p class="app-description">Resize photos to exact pixel dimensions or by percentage. Compress JPG, PNG, WebP, and GIF files while keeping the image sharp and clear.</p>
         <div class="app-features">
-          <span class="feature-badge">Bulk Process</span>
-          <span class="feature-badge">Smart Crop</span>
-          <span class="feature-badge">All Formats</span>
+          <span class="feature-badge">Resize</span>
+          <span class="feature-badge">Compress</span>
+          <span class="feature-badge">JPG · PNG · WebP</span>
         </div>
         <button class="app-button">Launch Tool</button>
       </div>
-      
-     
-      
-      <div class="tool-app" onclick="window.open('https://21k.tools/agecalculator/', '_blank')">
+
+      <div class="tool-app" onclick="location.href='https://21k.tools/agecalculator/'">
         <div class="app-icon"><i class="fas fa-birthday-cake"></i></div>
         <h3 class="app-title">Age Calculator</h3>
-        <p class="app-description">Calculate exact age in years, months, and days from any birth date</p>
+        <p class="app-description">Enter a birth date to get the exact age in years, months, and days. Handles leap years correctly and supports both past and future date calculations.</p>
         <div class="app-features">
-          <span class="feature-badge">Precise</span>
-          <span class="feature-badge">Leap Year Aware</span>
-          <span class="feature-badge">Future Dates</span>
+          <span class="feature-badge">Years · Months · Days</span>
+          <span class="feature-badge">Leap Year</span>
+          <span class="feature-badge">Instant Result</span>
         </div>
         <button class="app-button">Launch Tool</button>
       </div>
-      
-      <div class="tool-app" onclick="window.open('https://21k.tools/interestcalculator', '_blank')">
+
+      <div class="tool-app" onclick="location.href='https://21k.tools/interestcalculator'">
         <div class="app-icon"><i class="fas fa-percentage"></i></div>
         <h3 class="app-title">Interest Calculator</h3>
-        <p class="app-description">Calculate simple and compound interest for loans and investments</p>
+        <p class="app-description">Calculate simple or compound interest on any loan or investment. Adjust rate, tenure, and compounding frequency to compare different financial scenarios.</p>
         <div class="app-features">
-          <span class="feature-badge">Simple & Compound</span>
-          <span class="feature-badge">Amortization</span>
+          <span class="feature-badge">Simple Interest</span>
+          <span class="feature-badge">Compound</span>
           <span class="feature-badge">Visual Charts</span>
         </div>
         <button class="app-button">Launch Tool</button>
       </div>
-      
-      <div class="tool-app" onclick="window.open('https://21k.tools/pdftools', '_blank')">
+
+      <div class="tool-app" onclick="location.href='https://21k.tools/pdftools'">
         <div class="app-icon"><i class="fas fa-file-pdf"></i></div>
         <h3 class="app-title">PDF Toolkit</h3>
-        <p class="app-description">Merge, split, compress, and convert PDF files with ease</p>
+        <p class="app-description">Merge multiple PDFs, split by page range, compress file size, and convert PDFs to Word or images. Most operations run directly inside your browser.</p>
         <div class="app-features">
-          <span class="feature-badge">Merge/Split</span>
+          <span class="feature-badge">Merge</span>
+          <span class="feature-badge">Split</span>
           <span class="feature-badge">Compress</span>
           <span class="feature-badge">Convert</span>
         </div>
         <button class="app-button">Launch Tool</button>
       </div>
-      
-      <div class="tool-app" onclick="window.open('https://21k.tools/unitconverter/', '_blank')">
+
+      <div class="tool-app" onclick="location.href='https://21k.tools/unitconverter/'">
         <div class="app-icon"><i class="fas fa-balance-scale"></i></div>
         <h3 class="app-title">Unit Converter</h3>
-        <p class="app-description">Convert between all measurement units - length, weight, temperature and more</p>
+        <p class="app-description">Switch between metric and imperial units across length, weight, temperature, volume, and area. Includes a live currency exchange rate converter.</p>
         <div class="app-features">
-          <span class="feature-badge">100+ Units</span>
-          <span class="feature-badge">Currency Rates</span>
-          <span class="feature-badge">History</span>
+          <span class="feature-badge">Length & Weight</span>
+          <span class="feature-badge">Temperature</span>
+          <span class="feature-badge">Live Currency</span>
         </div>
         <button class="app-button">Launch Tool</button>
       </div>
-      
-      <div class="tool-app" onclick="window.open('https://21k.tools/timecalculator', '_blank')">
+
+      <div class="tool-app" onclick="location.href='https://21k.tools/timecalculator'">
         <div class="app-icon"><i class="fas fa-stopwatch"></i></div>
         <h3 class="app-title">Time Calculator</h3>
-        <p class="app-description">Calculate duration between dates and times with precision</p>
+        <p class="app-description">Find the exact difference between two dates, add or subtract time durations, and convert across time zones. Accounts for daylight saving changes automatically.</p>
         <div class="app-features">
           <span class="feature-badge">Date Difference</span>
-          <span class="feature-badge">Add/Subtract</span>
+          <span class="feature-badge">Add / Subtract</span>
           <span class="feature-badge">Time Zones</span>
         </div>
         <button class="app-button">Launch Tool</button>
       </div>
+
     </div>
   </section>
-</main>
 
-<!-- Detailed Tool Descriptions with white background -->
-<section class="tool-details-section">
-  <div class="tool-detail">
-    <div class="tool-detail-header">
-      <div class="tool-detail-icon"><i class="fas fa-file"></i></div>
-      <div>
-        <h2 class="tool-detail-title">File Converter Tool</h2>
-        <p class="tool-detail-subtitle">Convert between 100+ file formats instantly</p>
+  <!-- ══ WHY CHOOSE ══ -->
+  <section class="why-section">
+    <div class="sec-head">
+      <div class="sec-label">Why 21K Tools</div>
+      <h2 class="sec-title">Built differently, on purpose</h2>
+      <p class="sec-sub">Every decision behind these tools was made to save you time and respect your privacy.</p>
+    </div>
+
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="why-icon"><i class="fas fa-shield-alt"></i></div>
+        <h3>Private by Default</h3>
+        <p>Most tools process data inside your browser using JavaScript. Your files never leave your device.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon"><i class="fas fa-bolt"></i></div>
+        <h3>No Wait, No Queues</h3>
+        <p>Browser-based processing means results appear in seconds — no upload queue, no server lag.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon"><i class="fas fa-ban"></i></div>
+        <h3>Zero Sign-up Friction</h3>
+        <p>No account, no email, no password. Open any tool, complete your task, and close the tab.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon"><i class="fas fa-mobile-alt"></i></div>
+        <h3>Works on Any Device</h3>
+        <p>Every tool is responsive and tested on desktop, tablet, and mobile. The QR scanner uses your phone camera directly.</p>
       </div>
     </div>
-    <div class="tool-detail-content">
-      <div class="tool-detail-description">
-        <p>Our File Converter tool at 21K Tools is a comprehensive solution for all your file conversion needs. Whether you're working with documents, images, audio, or video files, our converter handles it all with precision and speed.</p>
-        <p>With support for over 100 file formats, you can easily convert PDF to Word, JPG to PNG, MP4 to MP3, and much more. The tool preserves formatting and quality while ensuring fast processing times, even for large files.</p>
-        <p>Perfect for professionals, students, and anyone who works with digital files regularly. No software installation required - everything happens securely in your browser.</p>
+  </section>
+
+  <!-- ══ HOW IT WORKS ══ -->
+  <section class="how-section">
+    <div class="sec-head">
+      <div class="sec-label">How It Works</div>
+      <h2 class="sec-title">Three steps, every time</h2>
+      <p class="sec-sub">The same simple flow works across all nine tools on this site.</p>
+    </div>
+
+    <div class="how-grid">
+      <div class="how-card">
+        <div class="how-num">1</div>
+        <h3>Open the tool</h3>
+        <p>Click a tool link. The page loads in seconds with no login screen or pop-ups in your way.</p>
       </div>
-      <div class="tool-detail-features">
-        <h3>Key Features</h3>
-        <ul>
-          <li>Supports documents, images, audio, video, and archive formats</li>
-          <li>Batch conversion for multiple files at once</li>
-          <li>Cloud-based processing - no software installation needed</li>
-          <li>Military-grade encryption for file security</li>
-          <li>Optimized for fast conversion even with large files</li>
-          <li>Preserves formatting and quality during conversion</li>
-          <li>Works on all devices including mobile phones</li>
+      <div class="how-card">
+        <div class="how-num">2</div>
+        <h3>Upload or enter your data</h3>
+        <p>Drop a file, paste a URL, or type numbers directly. The interface is intentionally minimal.</p>
+      </div>
+      <div class="how-card">
+        <div class="how-num">3</div>
+        <h3>Download or copy the result</h3>
+        <p>Save the output file, copy the result, or share a link. Nothing is stored after you leave the page.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ USE CASES ══ -->
+  <section class="uses-section">
+    <div class="sec-head">
+      <div class="sec-label">Real Use Cases</div>
+      <h2 class="sec-title">Who uses 21K Tools?</h2>
+      <p class="sec-sub">These tools solve specific, everyday problems across different types of users.</p>
+    </div>
+
+    <div class="uses-grid">
+      <div class="use-card">
+        <div class="use-head">
+          <div class="use-icon"><i class="fas fa-user-graduate"></i></div>
+          <h3>Students</h3>
+        </div>
+        <ul class="use-list">
+          <li>Convert assignment files from DOCX to PDF before submission</li>
+          <li>Compress images for presentations without losing clarity</li>
+          <li>Calculate an exact age in years and days for science or statistics tasks</li>
+          <li>Find the time difference between two historical dates for a class project</li>
+        </ul>
+      </div>
+
+      <div class="use-card">
+        <div class="use-head">
+          <div class="use-icon"><i class="fas fa-briefcase"></i></div>
+          <h3>Freelancers & Remote Workers</h3>
+        </div>
+        <ul class="use-list">
+          <li>Merge separate client contracts into one PDF for easy review</li>
+          <li>Shorten campaign tracking URLs and attach a QR code for print use</li>
+          <li>Resize a profile photo to a platform's exact pixel requirements</li>
+          <li>Run a quick compound interest calculation when reviewing project payment terms</li>
+        </ul>
+      </div>
+
+      <div class="use-card">
+        <div class="use-head">
+          <div class="use-icon"><i class="fas fa-store"></i></div>
+          <h3>Small Business Owners</h3>
+        </div>
+        <ul class="use-list">
+          <li>Generate QR codes for digital menus, payment pages, or social profiles</li>
+          <li>Compress product images before uploading to an online store or catalogue</li>
+          <li>Convert audio or video files between formats for different publishing platforms</li>
+          <li>Track how many people click a shortened link printed on a flyer or brochure</li>
         </ul>
       </div>
     </div>
-    <div class="tool-detail-cta">
-      <button class="app-button" onclick="window.open('https://21k.tools/fileconverter', '_blank')">Try File Converter Now</button>
+  </section>
+
+  <!-- ══ FAQ ══ -->
+  <section class="faq-section">
+    <div class="sec-head">
+      <div class="sec-label">FAQ</div>
+      <h2 class="sec-title">Common questions answered</h2>
+      <p class="sec-sub">Things people ask before using these tools for the first time.</p>
+    </div>
+
+    <div class="faq-wrap">
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Are these tools completely free to use?
+          <span class="faq-q-icon"><i class="fas fa-chevron-down"></i></span>
+        </button>
+        <div class="faq-body">
+          <div class="faq-a">Yes. Every tool on 21K Tools is free with no subscription tiers, no trial limits, and no watermarks on output files. The platform is independently funded and maintained by its developer, Nithish.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Do I need to create an account?
+          <span class="faq-q-icon"><i class="fas fa-chevron-down"></i></span>
+        </button>
+        <div class="faq-body">
+          <div class="faq-a">No account is required for any tool on this site. You open the page, complete your task, and close the tab. No email, no password, and nothing stored about your session.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Where are my files and data processed?
+          <span class="faq-q-icon"><i class="fas fa-chevron-down"></i></span>
+        </button>
+        <div class="faq-body">
+          <div class="faq-a">Most tools process data directly inside your browser using JavaScript, which means the file never leaves your device. For tools that require a server (such as certain video conversions), the file is processed and immediately discarded — it is not saved, indexed, or shared with anyone.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Do the tools work on mobile phones and tablets?
+          <span class="faq-q-icon"><i class="fas fa-chevron-down"></i></span>
+        </button>
+        <div class="faq-body">
+          <div class="faq-a">Yes. Every tool is responsive and works on Android and iOS browsers without any app download. The QR code scanner can access your phone's camera directly from the browser.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          How do I suggest a new tool or report a bug?
+          <span class="faq-q-icon"><i class="fas fa-chevron-down"></i></span>
+        </button>
+        <div class="faq-body">
+          <div class="faq-a">Email <a href="mailto:contact@21k.tools">contact@21k.tools</a> or use the contact form in the Help Center. Every message is read by the developer and several tools were added based directly on user suggestions.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Is there a file size limit for uploads?
+          <span class="faq-q-icon"><i class="fas fa-chevron-down"></i></span>
+        </button>
+        <div class="faq-body">
+          <div class="faq-a">File size limits vary by tool and depend on what your browser can handle for client-side processing. For most image and PDF tasks, files up to several hundred megabytes work without issues. Server-side tools may have lower limits which are shown clearly in the tool interface.</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══ CTA BAND ══ -->
+  <div class="cta-band">
+    <h2>Ready to get started?</h2>
+    <p>Pick any tool above and complete your task in under a minute. No account required. No cost.</p>
+    <div class="cta-btns">
+      <a href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;" class="cta-btn-primary">
+        <i class="fas fa-arrow-up"></i> Browse all tools
+      </a>
+      <a href="{% url 'blog_list' %}" class="cta-btn-secondary">
+        <i class="fas fa-newspaper"></i> Read the blog
+      </a>
     </div>
   </div>
-   <div class="tool-detail">
-    <div class="tool-detail-header">
-      <div class="tool-detail-icon"><i class="fas fa-qrcode"></i></div>
-      <div>
-        <h2 class="tool-detail-title">QR Code Generator & Scanner</h2>
-        <p class="tool-detail-subtitle">Create and scan QR codes with advanced features</p>
-      </div>
-    </div>
-    <div class="tool-detail-content">
-      <div class="tool-detail-description">
-        <p>The QR Code Generator & Scanner from 21K Tools is a comprehensive solution for creating professional QR codes and scanning them instantly. Whether you need to generate QR codes for business cards, marketing materials, or file sharing, our tool handles it all.</p>
-        <p>Upload files to Cloudinary and get shareable QR codes that link directly to your content. Our advanced scanner works with your device camera or uploaded images, providing instant decoding of any QR code.</p>
-        <p>With customizable size options, error correction levels, and support for multiple data types, this is the most versatile QR code tool available. Perfect for businesses, marketers, educators, and personal use.</p>
-      </div>
-      <div class="tool-detail-features">
-        <h3>Key Features</h3>
-        <ul>
-          <li>Generate QR codes from text, URLs, or files</li>
-          <li>Upload files to Cloudinary with QR code links</li>
-          <li>Camera-based QR code scanning</li>
-          <li>Upload QR images for instant scanning</li>
-          <li>Customizable size and error correction</li>
-          <li>High-resolution output for printing</li>
-          <li>Professional blue color scheme</li>
-          <li>Download QR codes as PNG images</li>
-          <li>No data storage - complete privacy</li>
-          <li>Works on all devices</li>
-        </ul>
-      </div>
-    </div>
-    <div class="tool-detail-cta">
-      <button class="app-button" onclick="window.open('https://21k.tools/qrcodeandscanner', '_blank')">Try QR Code Tool Now</button>
-    </div>
-  </div>
-  
-  <div class="tool-detail">
-    <div class="tool-detail-header">
-      <div class="tool-detail-icon"><i class="fas fa-image"></i></div>
-      <div>
-        <h2 class="tool-detail-title">Image Resizer Tool</h2>
-        <p class="tool-detail-subtitle">Resize, compress, and optimize images effortlessly</p>
-      </div>
-    </div>
-    <div class="tool-detail-content">
-      <div class="tool-detail-description">
-        <p>The Image Resizer from 21K Tools is a powerful yet simple solution for all your image editing needs. Whether you're preparing photos for social media, optimizing images for your website, or adjusting pictures for printing, our tool makes it easy.</p>
-        <p>With smart compression algorithms, you can significantly reduce file sizes without noticeable quality loss. The bulk processing feature lets you resize multiple images at once, saving you hours of work.</p>
-        <p>Our tool supports all popular image formats including JPG, PNG, GIF, SVG, and WebP. The intuitive interface makes professional-grade image optimization accessible to everyone.</p>
-      </div>
-      <div class="tool-detail-features">
-        <h3>Key Features</h3>
-        <ul>
-          <li>Resize by dimensions or percentage</li>
-          <li>Smart compression with quality control</li>
-          <li>Bulk processing for multiple images</li>
-          <li>Preserve aspect ratio or custom crop</li>
-          <li>Format conversion between all major types</li>
-          <li>Preview before downloading</li>
-          <li>No quality loss with advanced algorithms</li>
-        </ul>
-      </div>
-    </div>
-    <div class="tool-detail-cta">
-      <button class="app-button" onclick="window.open('https://21k.tools/imageresizer', '_blank')">Try Image Resizer Now</button>
-    </div>
-  </div>
-  
-  <div class="tool-detail">
-    <div class="tool-detail-header">
-      <div class="tool-detail-icon"><i class="fas fa-birthday-cake"></i></div>
-      <div>
-        <h2 class="tool-detail-title">Age Calculator</h2>
-        <p class="tool-detail-subtitle">Calculate exact ages down to the day</p>
-      </div>
-    </div>
-    <div class="tool-detail-content">
-      <div class="tool-detail-description">
-        <p>The Age Calculator from 21K Tools provides precise age calculations in years, months, and days. Perfect for determining eligibility, planning events, or simply satisfying curiosity about exact ages.</p>
-        <p>Our calculator automatically accounts for leap years and varying month lengths to deliver accurate results. You can calculate ages from past dates or project ages into the future for planning purposes.</p>
-        <p>The intuitive interface makes it easy to use, with clear visual representation of the results. Whether you're calculating human ages, pet ages, or the age of historical events, our tool handles it with precision.</p>
-      </div>
-      <div class="tool-detail-features">
-        <h3>Key Features</h3>
-        <ul>
-          <li>Calculates exact age in years, months, and days</li>
-          <li>Automatically accounts for leap years</li>
-          <li>Future age projection capability</li>
-          <li>Simple, intuitive interface</li>
-          <li>Works on all devices including mobile</li>
-          <li>No registration required</li>
-          <li>Instant results with no waiting</li>
-        </ul>
-      </div>
-    </div>
-    <div class="tool-detail-cta">
-      <button class="app-button" onclick="window.open('https://21k.tools/agecalculator', '_blank')">Try Age Calculator Now</button>
-    </div>
-  </div>
-  
-  <div class="tool-detail">
-    <div class="tool-detail-header">
-      <div class="tool-detail-icon"><i class="fas fa-percentage"></i></div>
-      <div>
-        <h2 class="tool-detail-title">Interest Calculator</h2>
-        <p class="tool-detail-subtitle">Calculate loan and investment interest with precision</p>
-      </div>
-    </div>
-    <div class="tool-detail-content">
-      <div class="tool-detail-description">
-        <p>The Interest Calculator from 21K Tools is a comprehensive financial tool that helps you understand the true cost of loans or the potential growth of investments. Whether you're planning to take out a mortgage, evaluating credit card interest, or projecting investment returns, our calculator provides clear insights.</p>
-        <p>With support for both simple and compound interest calculations, you can model various financial scenarios. The tool includes amortization schedules to show how payments are applied over time, helping you make informed financial decisions.</p>
-        <p>Perfect for personal finance management, business planning, or educational purposes. The visual charts make complex financial concepts easy to understand at a glance.</p>
-      </div>
-      <div class="tool-detail-features">
-        <h3>Key Features</h3>
-        <ul>
-          <li>Simple and compound interest calculations</li>
-          <li>Detailed amortization schedules</li>
-          <li>Interactive charts for visualization</li>
-          <li>Multiple compounding frequency options</li>
-          <li>Extra payment calculations</li>
-          <li>Export results to PDF or CSV</li>
-          <li>Mobile-friendly interface</li>
-        </ul>
-      </div>
-    </div>
-    <div class="tool-detail-cta">
-      <button class="app-button" onclick="window.open('https://21k.tools/interestcalculator', '_blank')">Try Interest Calculator Now</button>
-    </div>
-  </div>
-  
-  <div class="tool-detail">
-    <div class="tool-detail-header">
-      <div class="tool-detail-icon"><i class="fas fa-file-pdf"></i></div>
-      <div>
-        <h2 class="tool-detail-title">PDF Toolkit</h2>
-        <p class="tool-detail-subtitle">Complete solution for all PDF needs</p>
-      </div>
-    </div>
-    <div class="tool-detail-content">
-      <div class="tool-detail-description">
-        <p>The PDF Toolkit from 21K Tools is your comprehensive solution for working with PDF documents. Whether you need to merge multiple files, split large documents, compress file sizes, or convert to other formats, our toolkit has you covered.</p>
-        <p>Our tool maintains document formatting and quality while providing fast processing. The intuitive interface makes professional PDF manipulation accessible to everyone, from students to business professionals.</p>
-        <p>With advanced security features, you can be confident your documents are handled safely. All processing happens in your browser - no files are uploaded to our servers, ensuring complete privacy.</p>
-      </div>
-      <div class="tool-detail-features">
-        <h3>Key Features</h3>
-        <ul>
-          <li>Merge multiple PDFs into one document</li>
-          <li>Split PDFs by pages or extract specific pages</li>
-          <li>Compress PDFs without noticeable quality loss</li>
-          <li>Convert to/from Word, Excel, PowerPoint, JPG</li>
-          <li>Password protection and encryption</li>
-          <li>OCR for scanned documents</li>
-          <li>Batch processing capabilities</li>
-        </ul>
-      </div>
-    </div>
-    <div class="tool-detail-cta">
-      <button class="app-button" onclick="window.open('https://21k.tools/pdftools', '_blank')">Try PDF Toolkit Now</button>
-    </div>
-  </div>
-  
-  <div class="tool-detail">
-    <div class="tool-detail-header">
-      <div class="tool-detail-icon"><i class="fas fa-balance-scale"></i></div>
-      <div>
-        <h2 class="tool-detail-title">Unit Converter</h2>
-        <p class="tool-detail-subtitle">Convert between hundreds of measurement units</p>
-      </div>
-    </div>
-    <div class="tool-detail-content">
-      <div class="tool-detail-description">
-        <p>The Unit Converter from 21K Tools is an essential tool for students, professionals, and anyone who needs to work with different measurement systems. Convert between metric and imperial units, or between any of hundreds of specialized units across various categories.</p>
-        <p>Our converter includes up-to-date currency exchange rates, making it perfect for travelers and international business. The history feature lets you track your recent conversions, and you can save favorites for quick access.</p>
-        <p>With support for length, weight, volume, temperature, area, speed, time, and more, this is the most comprehensive unit converter available online. The clean interface makes conversions quick and easy.</p>
-      </div>
-      <div class="tool-detail-features">
-        <h3>Key Features</h3>
-        <ul>
-          <li>100+ unit types across all categories</li>
-          <li>Real-time currency conversion</li>
-          <li>Conversion history tracking</li>
-          <li>Favorite units for quick access</li>
-          <li>Mobile-optimized interface</li>
-          <li>Copy results with one click</li>
-          <li>Share conversions via link</li>
-        </ul>
-      </div>
-    </div>
-    <div class="tool-detail-cta">
-      <button class="app-button" onclick="window.open('https://21k.tools/unitconverter', '_blank')">Try Unit Converter Now</button>
-    </div>
-  </div>
-  
-  <div class="tool-detail">
-    <div class="tool-detail-header">
-      <div class="tool-detail-icon"><i class="fas fa-stopwatch"></i></div>
-      <div>
-        <h2 class="tool-detail-title">Time Calculator</h2>
-        <p class="tool-detail-subtitle">Calculate durations, add/subtract time, and manage time zones</p>
-      </div>
-    </div>
-    <div class="tool-detail-content">
-      <div class="tool-detail-description">
-        <p>The Time Calculator from 21K Tools is a versatile tool for all your time-related calculations. Calculate the duration between two dates or times, add or subtract time intervals, and convert between time zones with ease.</p>
-        <p>Perfect for project planning, work scheduling, or simply calculating how many days until an important event. Our calculator accounts for daylight saving time changes and leap years to ensure accurate results.</p>
-        <p>The time zone converter is ideal for coordinating with teams or contacts across the globe. With support for hundreds of locations worldwide, you'll always know the correct local time.</p>
-      </div>
-      <div class="tool-detail-features">
-        <h3>Key Features</h3>
-        <ul>
-          <li>Calculate duration between dates/times</li>
-          <li>Add or subtract time intervals</li>
-          <li>Time zone conversion for 500+ locations</li>
-          <li>Daylight saving time awareness</li>
-          <li>Workday calculations excluding weekends</li>
-          <li>Countdown timers</li>
-          <li>Shareable results</li>
-        </ul>
-      </div>
-    </div>
-    <div class="tool-detail-cta">
-      <button class="app-button" onclick="window.open('https://21k.tools/timecalculator', '_blank')">Try Time Calculator Now</button>
-    </div>
-  </div>
-</section>
+
+</main>
 {% endblock %}
 
 {% block schema_markup %}
@@ -1161,243 +1354,104 @@ free online tools, url shortener, qr code generator, qr scanner, pdf tools, file
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "WebApplication",
+  "@type": "WebSite",
   "name": "21K Tools",
   "url": "https://21k.tools/",
-  "description": "Comprehensive suite of free online tools for productivity and file management",
-  "applicationCategory": "UtilityApplication",
-  "operatingSystem": "Any",
-  "offers": {
-    "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "USD"
-  },
-  "aggregateRating": {
-    "@type": "AggregateRating",
-    "ratingValue": "4.8",
-    "ratingCount": "1250",
-    "bestRating": "5",
-    "worstRating": "1"
+  "description": "Access 9+ Free browser-based tools for everyday digital tasks — file conversion, image resizing, QR codes, PDFs, calculators and more.",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://21k.tools/?s={search_term_string}",
+    "query-input": "required name=search_term_string"
   }
 }
 </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "21K Tools – Free Online Tools",
+  "itemListElement": [
+    {"@type":"ListItem","position":1,"item":{"@type":"SoftwareApplication","name":"URL Shortener","url":"https://21k.tools/urlshortener","applicationCategory":"UtilityApplication","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}},
+    {"@type":"ListItem","position":2,"item":{"@type":"SoftwareApplication","name":"QR Code Generator & Scanner","url":"https://21k.tools/qrcodeandscanner","applicationCategory":"UtilityApplication","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}},
+    {"@type":"ListItem","position":3,"item":{"@type":"SoftwareApplication","name":"File Converter","url":"https://21k.tools/fileconverter","applicationCategory":"UtilityApplication","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}},
+    {"@type":"ListItem","position":4,"item":{"@type":"SoftwareApplication","name":"Image Resizer","url":"https://21k.tools/imageresizer","applicationCategory":"UtilityApplication","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}},
+    {"@type":"ListItem","position":5,"item":{"@type":"SoftwareApplication","name":"PDF Toolkit","url":"https://21k.tools/pdftools","applicationCategory":"UtilityApplication","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}},
+    {"@type":"ListItem","position":6,"item":{"@type":"SoftwareApplication","name":"Age Calculator","url":"https://21k.tools/agecalculator","applicationCategory":"UtilityApplication","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}},
+    {"@type":"ListItem","position":7,"item":{"@type":"SoftwareApplication","name":"Interest Calculator","url":"https://21k.tools/interestcalculator","applicationCategory":"UtilityApplication","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}},
+    {"@type":"ListItem","position":8,"item":{"@type":"SoftwareApplication","name":"Unit Converter","url":"https://21k.tools/unitconverter","applicationCategory":"UtilityApplication","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}},
+    {"@type":"ListItem","position":9,"item":{"@type":"SoftwareApplication","name":"Time Calculator","url":"https://21k.tools/timecalculator","applicationCategory":"UtilityApplication","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}}
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"Are these tools completely free to use?","acceptedAnswer":{"@type":"Answer","text":"Yes. Every tool on 21K Tools is free with no subscription tiers, no trial limits, and no watermarks on output files."}},
+    {"@type":"Question","name":"Do I need to create an account?","acceptedAnswer":{"@type":"Answer","text":"No account is required for any tool. You open the page, complete your task, and close the tab."}},
+    {"@type":"Question","name":"Where are my files and data processed?","acceptedAnswer":{"@type":"Answer","text":"Most tools process data inside your browser using JavaScript so the file never leaves your device. For tools needing a server, files are processed and immediately discarded."}},
+    {"@type":"Question","name":"Do the tools work on mobile phones and tablets?","acceptedAnswer":{"@type":"Answer","text":"Yes. Every tool is responsive and works on Android and iOS browsers. The QR code scanner uses your phone camera directly from the browser."}},
+    {"@type":"Question","name":"How do I suggest a new tool or report a bug?","acceptedAnswer":{"@type":"Answer","text":"Email contact@21k.tools or use the contact form in the Help Center."}},
+    {"@type":"Question","name":"Is there a file size limit for uploads?","acceptedAnswer":{"@type":"Answer","text":"File size limits vary by tool. For most image and PDF tasks, files up to several hundred megabytes work without issues. Limits are shown in the tool interface where applicable."}}
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{"@type":"ListItem","position":1,"name":"Home","item":"https://21k.tools/"}]
+}
+</script>
+
 <script>
-(function() {
+/* ── FAQ accordion ── */
+function toggleFaq(btn) {
+  var item = btn.closest('.faq-item');
+  var isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(function(el){ el.classList.remove('open'); });
+  if (!isOpen) item.classList.add('open');
+}
+
+/* ── Blog scroll dots + drag ── */
+(function () {
   var track = document.getElementById('blogsScroll');
   var dotsEl = document.getElementById('blogsDots');
   if (!track) return;
- 
+
   var cards = track.querySelectorAll('.blog-hcard');
   var total = cards.length;
- 
-  // Build dots
+
   if (dotsEl && total > 1) {
     for (var i = 0; i < total; i++) {
       var d = document.createElement('div');
       d.className = 'scroll-dot' + (i === 0 ? ' active' : '');
       d.setAttribute('data-i', i);
-      d.addEventListener('click', function() {
-        var idx = parseInt(this.getAttribute('data-i'));
-        cards[idx].scrollIntoView({behavior: 'smooth', block: 'nearest', inline: 'start'});
+      d.addEventListener('click', function () {
+        cards[parseInt(this.getAttribute('data-i'))].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
       });
       dotsEl.appendChild(d);
     }
   }
- 
-  // Update active dot on scroll
-  track.addEventListener('scroll', function() {
+
+  track.addEventListener('scroll', function () {
     if (!dotsEl) return;
-    var cardW = cards[0] ? cards[0].offsetWidth + 20 : 320;
+    var cardW = cards[0] ? cards[0].offsetWidth + 18 : 318;
     var active = Math.round(track.scrollLeft / cardW);
-    dotsEl.querySelectorAll('.scroll-dot').forEach(function(d, i) {
+    dotsEl.querySelectorAll('.scroll-dot').forEach(function (d, i) {
       d.classList.toggle('active', i === active);
     });
   });
- 
-  // Drag to scroll (desktop)
-  var isDown = false, startX, scrollLeft;
-  track.addEventListener('mousedown', function(e) {
-    isDown = true;
-    startX = e.pageX - track.offsetLeft;
-    scrollLeft = track.scrollLeft;
-  });
-  track.addEventListener('mouseleave', function() { isDown = false; });
-  track.addEventListener('mouseup', function() { isDown = false; });
-  track.addEventListener('mousemove', function(e) {
-    if (!isDown) return;
-    e.preventDefault();
-    var x = e.pageX - track.offsetLeft;
-    track.scrollLeft = scrollLeft - (x - startX) * 1.5;
-  });
-})();</script>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "ItemList",
-  "name": "21K Tools - Featured Tools",
-  "description": "Collection of free online utility tools",
-  "itemListElement": [
-    {
-      "@type": "ListItem",
-      "position": 1,
-      "item": {
-        "@type": "SoftwareApplication",
-        "name": "URL Shortener",
-        "description": "Short URL and get QR Code, analytics Dashboard",
-        "url": "https://21k.tools/urlshortener",
-        "applicationCategory": "UtilityApplication",
-        "offers": {
-          "@type": "Offer",
-          "price": "0",
-          "priceCurrency": "USD"
-        }
-      }
-    },
-    {
-      "@type": "ListItem",
-      "position": 2,
-      "item": {
-        "@type": "SoftwareApplication",
-        "name": "File Converter",
-        "description": "Convert between all popular file formats with ease",
-        "url": "https://21k.tools/fileconverter",
-        "applicationCategory": "UtilityApplication",
-        "offers": {
-          "@type": "Offer",
-          "price": "0",
-          "priceCurrency": "USD"
-        }
-      }
-    },
-    {
-      "@type": "ListItem",
-      "position": 3,
-      "item": {
-        "@type": "SoftwareApplication",
-        "name": "Image Resizer",
-        "description": "Resize, compress, and optimize images while maintaining quality",
-        "url": "https://21k.tools/imageresizer",
-        "applicationCategory": "UtilityApplication",
-        "offers": {
-          "@type": "Offer",
-          "price": "0",
-          "priceCurrency": "USD"
-        }
-      }
-    },
-    {
-      "@type": "ListItem",
-      "position": 4,
-      "item": {
-        "@type": "SoftwareApplication",
-        "name": "Age Calculator",
-        "description": "Calculate exact age in years, months, and days from any birth date",
-        "url": "https://21k.tools/agecalculator",
-        "applicationCategory": "UtilityApplication",
-        "offers": {
-          "@type": "Offer",
-          "price": "0",
-          "priceCurrency": "USD"
-        }
-      }
-    },
-    {
-      "@type": "ListItem",
-      "position": 5,
-      "item": {
-        "@type": "SoftwareApplication",
-        "name": "Interest Calculator",
-        "description": "Calculate simple and compound interest for loans and investments",
-        "url": "https://21k.tools/interestcalculator",
-        "applicationCategory": "UtilityApplication",
-        "offers": {
-          "@type": "Offer",
-          "price": "0",
-          "priceCurrency": "USD"
-        }
-      }
-    },
-    {
-      "@type": "ListItem",
-      "position": 6,
-      "item": {
-        "@type": "SoftwareApplication",
-        "name": "PDF Toolkit",
-        "description": "Merge, split, compress, and convert PDF files with ease",
-        "url": "https://21k.tools/pdftools",
-        "applicationCategory": "UtilityApplication",
-        "offers": {
-          "@type": "Offer",
-          "price": "0",
-          "priceCurrency": "USD"
-        }
-      }
-    },
-    {
-      "@type": "ListItem",
-      "position": 7,
-      "item": {
-        "@type": "SoftwareApplication",
-        "name": "Unit Converter",
-        "description": "Convert between all measurement units - length, weight, temperature and more",
-        "url": "https://21k.tools/unitconverter",
-        "applicationCategory": "UtilityApplication",
-        "offers": {
-          "@type": "Offer",
-          "price": "0",
-          "priceCurrency": "USD"
-        }
-      }
-    },
-    {
-      "@type": "ListItem",
-      "position": 8,
-      "item": {
-        "@type": "SoftwareApplication",
-        "name": "Time Calculator",
-        "description": "Calculate duration between dates and times with precision",
-        "url": "https://21k.tools/timecalculator",
-        "applicationCategory": "UtilityApplication",
-        "offers": {
-          "@type": "Offer",
-          "price": "0",
-          "priceCurrency": "USD"
-        }
-      }
-    },
-    {
-      "@type": "ListItem",
-      "position": 9,
-      "item": {
-        "@type": "SoftwareApplication",
-        "name": "QR Code Generator & Scanner",
-        "description": "Create QR codes from text, URLs, or files. Scan QR codes using camera or image upload.",
-        "url": "https://21k.tools/qrcodeandscanner",
-        "applicationCategory": "UtilityApplication",
-        "offers": {
-          "@type": "Offer",
-          "price": "0",
-          "priceCurrency": "USD"
-        }
-      }
-    }
-  ]
-}
-</script>
 
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [
-    {
-      "@type": "ListItem",
-      "position": 1,
-      "name": "Home",
-      "item": "https://21k.tools/"
-    }
-  ]
-}
+  var isDown = false, startX, sl;
+  track.addEventListener('mousedown', function (e) { isDown = true; startX = e.pageX - track.offsetLeft; sl = track.scrollLeft; });
+  track.addEventListener('mouseleave', function () { isDown = false; });
+  track.addEventListener('mouseup', function () { isDown = false; });
+  track.addEventListener('mousemove', function (e) {
+    if (!isDown) return; e.preventDefault();
+    track.scrollLeft = sl - (e.pageX - track.offsetLeft - startX) * 1.5;
+  });
+})();
 </script>
 {% endblock %}
-[file content end]
