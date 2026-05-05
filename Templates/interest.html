@@ -1,1857 +1,375 @@
 {% extends 'base1.html' %}
-
-{% block title %}{{ page_title }} - 21K Tools{% endblock %}
-
+{% block title %}Interest Calculator Free — Compounding Frequency, EMI Amortization, and Why Banks Love That You Don't Understand Effective Rate | 21K Tools{% endblock %}
 {% block extra_css %}
 <style>
-    :root {
-        --interest-primary: #4285f4;
-        --interest-secondary: #3367d6;
-        --interest-accent: #f72585;
-        --interest-light: #f8f9fa;
-        --interest-dark: #212529;
-        --interest-gray: #6c757d;
-        --bg-pm: #4361ee;
-        --bg-sd:#3a0ca3;
-    }
-    
-    /* Force reset for interest calculator sections */
-    .interest-calc-container{
-    max-width: 950px;
-        margin: 30px auto;
-        background: white;
-        border-radius: 20px;
-        box-shadow: 0 10px 40px rgba(0,0,0,0.15);
-        overflow: hidden;}
-    .edu-note,
-    .interest-guide {
-        background: white !important;
-        color: var(--interest-dark) !important;
-    }
-    
-    .interest-calc-header {
-        background: linear-gradient(135deg, var(--bg-pm) 0%, var(--bg-sd) 100%);
-        color: white !important;
-        padding:2rem;
-        text-align:center;
-    }
-    
-    .interest-calc-header h1 {
-        color: white !important;
-        font-size: 2rem;
-        margin-bottom: 0.5rem;
-        font-weight: 700;
-    }
-    
-    .interest-calc-subtitle {
-        color: white !important;
-        font-weight: 300;
-        opacity: 0.9;
-        font-size: 1rem;
-        margin: 0;
-    }
-    
-    .interest-calc-body {
-        padding: 2rem;
-        color: var(--interest-dark) !important;
-    }
-    
-    .interest-calc-tabs {
-        display: flex;
-        border-bottom: 2px solid #dee2e6;
-        margin-bottom: 2rem;
-        overflow-x: auto;
-        scrollbar-width: none;
-        gap: 8px;
-    }
-    
-    .interest-calc-tabs::-webkit-scrollbar {
-        display: none;
-    }
-    
-    .interest-calc-tab {
-        padding: 1rem 1.5rem;
-        cursor: pointer;
-        font-weight: 600;
-        border-bottom: 3px solid transparent;
-        transition: all 0.3s ease;
-        white-space: nowrap;
-        flex-shrink: 0;
-        color: var(--interest-gray) !important;
-        font-size: 15px;
-        background: transparent;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-    }
-    
-    .interest-calc-tab.active {
-        border-bottom: 3px solid var(--interest-accent);
-        color: var(--interest-accent) !important;
-    }
-    
-    .interest-calc-tab:hover {
-        background: #f8f9fa;
-    }
-    
-    .interest-calc-tab-content {
-        display: none;
-    }
-    
-    .interest-calc-tab-content.active {
-        display: block;
-        animation: interestCalcFadeIn 0.4s ease;
-    }
-    
-    @keyframes interestCalcFadeIn {
-        from { opacity: 0; transform: translateY(10px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-    
-    .interest-calc-form-group {
-        margin-bottom: 1.5rem;
-    }
-    
-    .interest-calc-label {
-        display: block;
-        margin-bottom: 0.5rem;
-        font-weight: 600;
-        color: var(--interest-dark) !important;
-        font-size: 14px;
-    }
-    
-    .interest-calc-input, .interest-calc-select {
-        width: 100%;
-        padding: 12px 16px;
-        border: 2px solid #dee2e6;
-        border-radius: 10px;
-        font-size: 16px;
-        transition: all 0.3s ease;
-        color: var(--interest-dark) !important;
-        background: white !important;
-    }
-    
-    .interest-calc-input:focus, .interest-calc-select:focus {
-        outline: none;
-        border-color: var(--interest-primary);
-        box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.1);
-    }
-    
-    .interest-calc-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 1.5rem;
-    }
-    
-    .interest-calc-btn {
-        background: linear-gradient(135deg, var(--bg-pm) 0%, var(--bg-sd) 100%);
-        color: white !important;
-        border: none;
-        padding: 14px 24px;
-        font-size: 16px;
-        font-weight: 600;
-        border-radius: 10px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        width: 100%;
-        margin-top: 1rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-    }
-    
-    .interest-calc-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(66, 133, 244, 0.4);
-    }
-    
-    .interest-calc-results {
-        margin-top: 2rem;
-        padding: 1.5rem;
-        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-        border-radius: 15px;
-        border-left: 5px solid var(--interest-primary);
-        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-        position: relative;
-        color: var(--interest-dark) !important;
-    }
-    
-    .interest-calc-results h3 {
-        color: var(--interest-primary) !important;
-        margin-bottom: 1rem;
-        font-size: 1.3rem;
-        font-weight: 700;
-    }
-    
-    .interest-calc-result-item {
-        margin-bottom: 1rem;
-        padding: 12px 16px;
-        background: white;
-        border-radius: 10px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-        flex-wrap: wrap;
-        gap: 10px;
-    }
-    
-    .interest-calc-result-label {
-        font-weight: 600;
-        color: var(--interest-gray) !important;
-        font-size: 14px;
-    }
-    
-    .interest-calc-result-value {
-        font-weight: 700;
-        color: var(--interest-dark) !important;
-        font-size: 16px;
-        background: rgba(66, 133, 244, 0.1);
-        padding: 8px 12px;
-        border-radius: 8px;
-        border-left: 3px solid var(--interest-primary);
-    }
-
-    .interest-calc-result-value.total {
-        font-size: 20px;
-        color: var(--interest-primary) !important;
-    }
-
-    .currency-selector {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        width: 100px;
-        padding: 8px;
-        border: 1px solid #dee2e6;
-        border-radius: 8px;
-        background: white;
-        cursor: pointer;
-        color: var(--interest-dark) !important;
-    }
-
-    .interest-calc-action-buttons {
-        display: flex;
-        gap: 12px;
-        margin-top: 1.5rem;
-        flex-wrap: wrap;
-    }
-
-    .interest-calc-action-btn {
-        padding: 10px 20px;
-        border-radius: 8px;
-        border: 2px solid;
-        cursor: pointer;
-        font-weight: 600;
-        font-size: 14px;
-        transition: all 0.3s ease;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        background: white;
-        flex: 1;
-        min-width: 120px;
-        justify-content: center;
-    }
-
-    .interest-calc-action-btn.share-btn {
-        color: var(--interest-primary);
-        border-color: var(--interest-primary);
-    }
-
-    .interest-calc-action-btn.share-btn:hover {
-        background: var(--interest-primary);
-        color: white;
-    }
-
-    .interest-calc-action-btn.reset-btn {
-        color: #dc3545;
-        border-color: #dc3545;
-    }
-
-    .interest-calc-action-btn.reset-btn:hover {
-        background: #dc3545;
-        color: white;
-    }
-
-    .interest-calc-action-btn.amortization-btn {
-        color: #28a745;
-        border-color: #28a745;
-    }
-
-    .interest-calc-action-btn.amortization-btn:hover {
-        background: #28a745;
-        color: white;
-    }
-
-    .amortization-container {
-        margin-top: 20px;
-        display: none;
-    }
-
-    .amortization-container.show {
-        display: block;
-        animation: interestCalcFadeIn 0.3s ease;
-    }
-
-    .amortization-table {
-        width: 100%;
-        border-collapse: collapse;
-        font-size: 13px;
-        background: white;
-        border-radius: 10px;
-        overflow: hidden;
-    }
-
-    .amortization-table th,
-    .amortization-table td {
-        border: 1px solid #e0e0e0;
-        padding: 10px;
-        text-align: right;
-        color: var(--interest-dark) !important;
-    }
-
-    .amortization-table th {
-        background: var(--interest-primary);
-        color: white !important;
-        font-weight: 600;
-    }
-
-    .amortization-table td:first-child,
-    .amortization-table th:first-child {
-        text-align: left;
-    }
-
-    .amortization-table tbody tr:hover {
-        background: #f8f9fa;
-    }
-
-    .interest-share-modal {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.8);
-        z-index: 10000;
-        justify-content: center;
-        align-items: center;
-        padding: 20px;
-    }
-
-    .interest-share-modal.active {
-        display: flex;
-    }
-
-    .interest-modal-content {
-        background: white;
-        border-radius: 20px;
-        padding: 30px;
-        max-width: 600px;
-        width: 100%;
-        max-height: 90vh;
-        overflow-y: auto;
-        color: var(--interest-dark) !important;
-    }
-
-    .interest-modal-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 20px;
-    }
-
-    .interest-modal-header h3 {
-        color: var(--interest-primary) !important;
-        font-size: 1.5rem;
-        margin: 0;
-    }
-
-    .interest-close-modal {
-        background: none;
-        border: none;
-        font-size: 1.5rem;
-        cursor: pointer;
-        color: #6c757d;
-        transition: color 0.3s ease;
-    }
-
-    .interest-close-modal:hover {
-        color: #dc3545;
-    }
-
-    .interest-share-card {
-        background: linear-gradient(135deg, var(--interest-primary), var(--interest-secondary));
-        color: white !important;
-        padding: 30px;
-        border-radius: 15px;
-        margin: 20px 0;
-    }
-
-    .interest-share-card h4 {
-        font-size: 1.3rem;
-        margin-bottom: 15px;
-        color: white !important;
-        text-align: center;
-    }
-
-    .interest-modal-actions {
-        display: flex;
-        gap: 12px;
-        flex-wrap: wrap;
-    }
-
-    .interest-modal-actions button {
-        flex: 1;
-        min-width: 120px;
-        padding: 12px 20px;
-        border-radius: 10px;
-        border: none;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-    }
-
-    .interest-download-btn {
-        background: var(--interest-primary);
-        color: white !important;
-    }
-
-    .interest-download-btn:hover {
-        background: var(--interest-secondary);
-        transform: translateY(-2px);
-    }
-
-    .edu-note {
-       max-width: 1200px;
-        margin: 40px auto;
-        background: white !important;
-        padding: 40px;
-        border-radius: 20px;
-        box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-        color: var(--interest-dark) !important;
-    }
-
-    .edu-note h3 {
-        color: var(--bg-pm) !important;
-        margin-bottom: 15px;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-
-    .edu-note p {
-        line-height: 1.8;
-        color: #495057 !important;
-        margin-bottom: 15px;
-    }
-
-    .edu-note ul {
-        margin: 10px 0;
-        padding-left: 30px;
-        line-height: 1.8;
-    }
-
-    .edu-note li {
-        margin-bottom: 8px;
-        color: #495057 !important;
-    }
-
-    .interest-guide {
-        max-width: 1200px;
-        margin: 40px auto;
-        background: white !important;
-        padding: 40px;
-        border-radius: 20px;
-        box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-        color: var(--interest-dark) !important;
-    }
-    
-    .interest-guide h2 {
-        font-size: 2rem;
-        color: var(--bg-pm) !important;
-        margin-bottom: 20px;
-        font-weight: 700;
-    }
-    
-    .interest-guide h3 {
-        font-size: 1.5rem;
-        color: var(--bg-sd) !important;
-        margin: 30px 0 15px;
-        font-weight: 600;
-    }
-    
-    .interest-guide p {
-        line-height: 1.8;
-        color: #495057 !important;
-        margin-bottom: 15px;
-        font-size: 1.05rem;
-    }
-    
-    .interest-guide ul,
-    .interest-guide ol {
-        margin: 15px 0;
-        padding-left: 30px;
-        line-height: 1.8;
-        color: #495057 !important;
-    }
-    
-    .interest-guide li {
-        margin-bottom: 10px;
-        color: #495057 !important;
-    }
-    
-    .interest-feature-card {
-        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-        padding: 25px;
-        border-radius: 15px;
-        border-left: 5px solid var(--interest-primary);
-        margin: 25px 0;
-        color: var(--interest-dark) !important;
-    }
-    
-    .interest-feature-card h4 {
-        color: var(--interest-primary) !important;
-        margin-bottom: 12px;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        font-size: 1.2rem;
-    }
-
-    .formula {
-        background: #f8f9fa;
-        padding: 15px;
-        border-radius: 8px;
-        font-family: 'Courier New', monospace;
-        font-size: 1.1rem;
-        margin: 15px 0;
-        border-left: 4px solid var(--interest-accent);
-        color: #333 !important;
-    }
-
-    .interest-faq-section {
-        margin: 30px 0;
-    }
-
-    .interest-faq-item {
-        background: white;
-        border: 2px solid #e9ecef;
-        border-radius: 12px;
-        margin-bottom: 15px;
-        overflow: hidden;
-    }
-
-    .interest-faq-question {
-        padding: 20px;
-        cursor: pointer;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        font-weight: 600;
-        color: var(--interest-primary) !important;
-        transition: background 0.3s ease;
-    }
-
-    .interest-faq-question:hover {
-        background: #f8f9fa;
-    }
-
-    .interest-faq-question i {
-        transition: transform 0.3s ease;
-    }
-
-    .interest-faq-item.active .interest-faq-question i {
-        transform: rotate(180deg);
-    }
-
-    .interest-faq-answer {
-        max-height: 0;
-        overflow: hidden;
-        transition: max-height 0.3s ease;
-    }
-
-    .interest-faq-item.active .interest-faq-answer {
-        max-height: 500px;
-    }
-
-    .interest-faq-answer-content {
-        padding: 0 20px 20px 20px;
-        color: #495057 !important;
-        line-height: 1.8;
-    }
-    
-    @media (max-width: 768px) {
-        .interest-calc-container, .edu-note, .interest-guide {
-            margin: 20px 15px;
-        }
-
-        .interest-calc-body {
-            padding: 1.5rem;
-        }
-
-        .interest-calc-header h1 {
-            font-size: 1.6rem;
-        }
-
-        .interest-calc-tab {
-            padding: 0.8rem 1.2rem;
-            font-size: 14px;
-        }
-        
-        .interest-calc-grid {
-            grid-template-columns: 1fr;
-        }
-
-        .interest-calc-action-buttons {
-            flex-direction: column;
-        }
-
-        .interest-calc-action-btn {
-            width: 100%;
-        }
-
-        .interest-modal-actions {
-            flex-direction: column;
-        }
-
-        .interest-modal-actions button {
-            width: 100%;
-        }
-
-        .interest-guide {
-            padding: 25px 20px;
-        }
-
-        .currency-selector {
-            position: static;
-            width: 100%;
-            margin-bottom: 15px;
-        }
-
-        .amortization-table {
-            font-size: 11px;
-        }
-
-        .amortization-table th,
-        .amortization-table td {
-            padding: 6px;
-        }
-    }
-
-    @media (max-width: 480px) {
-        .interest-calc-header h1 {
-            font-size: 1.4rem;
-        }
-
-        .interest-calc-subtitle {
-            font-size: 0.9rem;
-        }
-
-        .interest-calc-body {
-            padding: 1rem;
-        }
-
-        .interest-modal-content {
-            padding: 20px;
-        }
-
-        .interest-guide {
-            padding: 20px 15px;
-        }
-
-        .edu-note {
-            padding: 20px;
-        }
-    }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%) fixed;min-height:100vh;color:#1a1a2e;line-height:1.6}
+a{text-decoration:none;color:inherit}
+.page-wrap{max-width:1100px;margin:0 auto;padding:36px 20px 72px}
+.breadcrumb{display:flex;align-items:center;gap:8px;font-size:.8rem;color:rgba(255,255,255,.72);margin-bottom:28px;flex-wrap:wrap}
+.breadcrumb a{color:rgba(255,255,255,.9);font-weight:600}
+.breadcrumb i{font-size:.6rem}
+.page-header{background:rgba(255,255,255,.97);border-radius:24px;padding:48px 44px 40px;margin-bottom:28px;box-shadow:0 8px 40px rgba(0,0,0,.1);border-left:5px solid #667eea}
+.page-header-label{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:#667eea;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.page-header h1{font-size:clamp(1.5rem,3.5vw,2.2rem);font-weight:900;color:#1a1a2e;line-height:1.2;letter-spacing:-.03em;margin-bottom:18px}
+.page-header h1 em{font-style:normal;background:linear-gradient(90deg,#667eea,#764ba2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.header-intro p{font-size:.97rem;color:#4a5568;line-height:1.82;margin-bottom:13px;max-width:820px}
+.page-meta{display:flex;gap:20px;margin-top:22px;padding-top:18px;border-top:1px solid #f1f5f9;flex-wrap:wrap}
+.page-meta-item{font-size:.78rem;color:#94a3b8;display:flex;align-items:center;gap:6px;font-weight:600}
+.page-meta-item i{color:#667eea}
+.prose-section{background:rgba(255,255,255,.97);border-radius:20px;padding:36px 38px;margin-bottom:24px;box-shadow:0 4px 24px rgba(0,0,0,.08)}
+.prose-section h2{font-size:1.28rem;font-weight:800;color:#1a1a2e;letter-spacing:-.02em;margin-bottom:16px;display:flex;align-items:center;gap:12px}
+.h2-icon{width:36px;height:36px;background:linear-gradient(135deg,#667eea,#764ba2);border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:.85rem;flex-shrink:0}
+.prose-section p{font-size:.95rem;color:#374155;line-height:1.82;margin-bottom:14px}
+.prose-section p:last-child{margin-bottom:0}
+.prose-section h3{font-size:1rem;font-weight:700;color:#1a1a2e;margin:22px 0 9px}
+.callout{background:rgba(102,126,234,.07);border-left:3px solid #667eea;border-radius:0 10px 10px 0;padding:15px 20px;margin:18px 0;font-size:.9rem;color:#374155;line-height:1.72}
+.callout strong{color:#5b50d6}
+.formula-box{background:#f8faff;border:1.5px solid rgba(102,126,234,.2);border-radius:10px;padding:15px 20px;margin:16px 0;font-family:'Courier New',monospace;font-size:.95rem;color:#1a1a2e;border-left:3px solid #667eea}
+/* comparison table */
+.cmp-table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.87rem}
+.cmp-table th{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;padding:11px 14px;text-align:left;font-weight:700;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em}
+.cmp-table th:first-child{border-radius:8px 0 0 0}
+.cmp-table th:last-child{border-radius:0 8px 0 0}
+.cmp-table td{padding:10px 14px;border-bottom:1px solid #f1f5f9;color:#374155;line-height:1.5;vertical-align:top}
+.cmp-table tr:last-child td{border-bottom:none}
+.cmp-table tr:nth-child(even) td{background:#fafbff}
+.cmp-table td:first-child{font-weight:700;color:#5b50d6}
+/* tool */
+.tool-section{background:rgba(255,255,255,.97);border-radius:22px;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,.12);margin-bottom:28px}
+.tool-header{background:linear-gradient(135deg,#667eea,#764ba2);padding:26px 32px 22px;position:relative;overflow:hidden}
+.tool-header::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.06) 1px,transparent 1px);background-size:24px 24px;pointer-events:none}
+.tool-header h2{font-size:1.2rem;font-weight:800;color:#fff;display:flex;align-items:center;gap:10px;position:relative;z-index:1;margin-bottom:4px}
+.tool-header p{font-size:.84rem;color:rgba(255,255,255,.8);position:relative;z-index:1}
+/* interest calc */
+.ic-body{padding:28px 32px 32px}
+.ic-tabs{display:flex;border-bottom:2px solid #dee2e6;margin-bottom:2rem;overflow-x:auto;scrollbar-width:none;gap:0}
+.ic-tabs::-webkit-scrollbar{display:none}
+.ic-tab{padding:.9rem 1.3rem;cursor:pointer;font-weight:600;border-bottom:3px solid transparent;transition:all .3s;white-space:nowrap;flex-shrink:0;color:#6c757d;font-size:.88rem;background:transparent;font-family:inherit;display:flex;align-items:center;gap:7px}
+.ic-tab.active{border-bottom-color:#f72585;color:#f72585}
+.ic-tab:hover{background:#f8f9fa}
+.ic-content{display:none}
+.ic-content.active{display:block;animation:icFade .35s}
+@keyframes icFade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.ic-fg{margin-bottom:1.4rem}
+.ic-label{display:block;margin-bottom:.5rem;font-weight:700;color:#212529;font-size:.88rem}
+.ic-input,.ic-select{width:100%;padding:12px 16px;border:2px solid #dee2e6;border-radius:10px;font-size:.92rem;transition:all .3s;color:#212529;background:#fff;font-family:inherit}
+.ic-input:focus,.ic-select:focus{outline:none;border-color:#667eea;box-shadow:0 0 0 3px rgba(102,126,234,.1)}
+.ic-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.4rem}
+.ic-btn{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;border:none;padding:13px 22px;font-size:.95rem;font-weight:700;border-radius:10px;cursor:pointer;transition:all .3s;width:100%;margin-top:1rem;display:flex;align-items:center;justify-content:center;gap:9px;font-family:inherit}
+.ic-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(102,126,234,.4)}
+.ic-results{margin-top:1.8rem;padding:1.4rem;background:linear-gradient(135deg,#f8f9fa,#e9ecef);border-radius:14px;border-left:4px solid #667eea;position:relative}
+.ic-results h3{color:#667eea;margin-bottom:.9rem;font-size:1.1rem;font-weight:700}
+.curr-sel{position:absolute;top:10px;right:10px;width:106px;padding:7px;border:1px solid #dee2e6;border-radius:8px;background:#fff;cursor:pointer;font-size:.82rem;font-family:inherit}
+.ic-ri{margin-bottom:.9rem;padding:11px 14px;background:#fff;border-radius:9px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 8px rgba(0,0,0,.05);flex-wrap:wrap;gap:8px}
+.ic-rl{font-weight:600;color:#6c757d;font-size:.84rem}
+.ic-rv{font-weight:700;color:#212529;font-size:.92rem;background:rgba(102,126,234,.09);padding:7px 11px;border-radius:7px;border-left:3px solid #667eea}
+.ic-rv.total{font-size:1.05rem;color:#667eea}
+.ic-actions{display:flex;gap:10px;margin-top:1.2rem;flex-wrap:wrap}
+.ic-abtn{padding:9px 16px;border-radius:8px;border:2px solid;cursor:pointer;font-weight:600;font-size:.82rem;transition:all .3s;display:flex;align-items:center;gap:7px;background:#fff;flex:1;min-width:110px;justify-content:center;font-family:inherit}
+.ic-abtn.green{color:#28a745;border-color:#28a745}
+.ic-abtn.green:hover{background:#28a745;color:#fff}
+.ic-abtn.reset{color:#dc3545;border-color:#dc3545}
+.ic-abtn.reset:hover{background:#dc3545;color:#fff}
+.amort-wrap{margin-top:18px;display:none}
+.amort-wrap.show{display:block}
+.amort-table{width:100%;border-collapse:collapse;font-size:.82rem;background:#fff;border-radius:9px;overflow:hidden}
+.amort-table th,.amort-table td{border:1px solid #e2e8f0;padding:8px 10px;text-align:right;color:#212529}
+.amort-table th{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;font-weight:600}
+.amort-table td:first-child,.amort-table th:first-child{text-align:left}
+.amort-table tbody tr:hover{background:#f8f9fa}
+/* faq */
+.faq-item{background:rgba(255,255,255,.97);border-radius:14px;border:1px solid rgba(255,255,255,.3);overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.05);margin-bottom:10px}
+.faq-item.open{box-shadow:0 6px 26px rgba(102,126,234,.12)}
+.faq-q{width:100%;background:none;border:none;padding:18px 22px;display:flex;justify-content:space-between;align-items:center;gap:14px;font-family:inherit;font-size:.92rem;font-weight:700;color:#1a1a2e;cursor:pointer;text-align:left}
+.faq-icon{width:27px;height:27px;flex-shrink:0;background:rgba(102,126,234,.1);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#667eea;font-size:.7rem;transition:transform .25s,background .2s}
+.faq-item.open .faq-icon{transform:rotate(180deg);background:linear-gradient(135deg,#667eea,#764ba2);color:#fff}
+.faq-body{max-height:0;overflow:hidden;transition:max-height .3s ease}
+.faq-item.open .faq-body{max-height:400px}
+.faq-a{padding:0 22px 18px;font-size:.88rem;color:#4a5568;line-height:1.78;border-top:1px solid #f1f5f9;padding-top:13px}
+@media(max-width:700px){.page-wrap{padding:18px 14px 56px}.page-header{padding:28px 20px}.prose-section{padding:24px 18px}.ic-body{padding:18px 16px}.ic-grid{grid-template-columns:1fr}.ic-actions{flex-direction:column}.curr-sel{position:static;width:100%;margin-bottom:14px}.cmp-table{font-size:.8rem}}
 </style>
 {% endblock %}
 
 {% block content %}
-<div class="interest-calc-container">
-    <div class="interest-calc-header">
-        <h1><i class="fas fa-percentage"></i> Interest & Loan Calculator</h1>
-        <p class="interest-calc-subtitle">Calculate simple interest, compound interest, loan payments, and compare financial plans</p>
-    </div>
-    
-    <div class="interest-calc-body">
-        <div class="interest-calc-tabs">
-            <div class="interest-calc-tab active" onclick="switchInterestTab('simple')">
-                <i class="fas fa-percentage"></i> Simple Interest
-            </div>
-            <div class="interest-calc-tab" onclick="switchInterestTab('compound')">
-                <i class="fas fa-chart-line"></i> Compound Interest
-            </div>
-            <div class="interest-calc-tab" onclick="switchInterestTab('loan')">
-                <i class="fas fa-home"></i> Loan Calculator
-            </div>
-            <div class="interest-calc-tab" onclick="switchInterestTab('compare')">
-                <i class="fas fa-balance-scale"></i> Compare Plans
-            </div>
-        </div>
-        
-        <!-- Simple Interest Calculator -->
-        <div id="interest-simple" class="interest-calc-tab-content active">
-            <div class="interest-calc-grid">
-                <div class="interest-calc-form-group">
-                    <label for="simple-principal" class="interest-calc-label">
-                        <i class="fas fa-dollar-sign"></i> Principal Amount
-                    </label>
-                    <input type="number" id="simple-principal" class="interest-calc-input" value="1000" min="0" step="any">
-                </div>
-                <div class="interest-calc-form-group">
-                    <label for="simple-rate" class="interest-calc-label">
-                        <i class="fas fa-percent"></i> Annual Interest Rate (%)
-                    </label>
-                    <input type="number" id="simple-rate" class="interest-calc-input" value="5" min="0" max="100" step="any">
-                </div>
-                <div class="interest-calc-form-group">
-                    <label for="simple-time" class="interest-calc-label">
-                        <i class="fas fa-clock"></i> Time Period
-                    </label>
-                    <input type="number" id="simple-time" class="interest-calc-input" value="5" min="0" step="any">
-                </div>
-                <div class="interest-calc-form-group">
-                    <label for="simple-time-unit" class="interest-calc-label">
-                        <i class="fas fa-calendar"></i> Time Unit
-                    </label>
-                    <select id="simple-time-unit" class="interest-calc-select">
-                        <option value="days">Days</option>
-                        <option value="months">Months</option>
-                        <option value="years" selected>Years</option>
-                    </select>
-                </div>
-            </div>
-            <button class="interest-calc-btn" onclick="calculateSimpleInterest()">
-                <i class="fas fa-calculator"></i> Calculate Simple Interest
-            </button>
-            
-            <div id="simple-results" class="interest-calc-results" style="display: none;">
-                <select id="simple-currency" class="currency-selector" onchange="calculateSimpleInterest()">
-                    <option value="USD">USD ($)</option>
-                    <option value="EUR">EUR (€)</option>
-                    <option value="GBP">GBP (£)</option>
-                    <option value="JPY">JPY (¥)</option>
-                    <option value="INR" selected>INR (₹)</option>
-                </select>
-                <h3>Results</h3>
-                <div class="interest-calc-result-item">
-                    <span class="interest-calc-result-label">Principal Amount:</span>
-                    <span id="simple-principal-result" class="interest-calc-result-value">-</span>
-                </div>
-                <div class="interest-calc-result-item">
-                    <span class="interest-calc-result-label">Interest Earned:</span>
-                    <span id="simple-interest-result" class="interest-calc-result-value">-</span>
-                </div>
-                <div class="interest-calc-result-item">
-                    <span class="interest-calc-result-label">Total Amount:</span>
-                    <span id="simple-total-result" class="interest-calc-result-value total">-</span>
-                </div>
-                <div class="interest-calc-action-buttons">
-                    <button class="interest-calc-action-btn share-btn" onclick="openInterestShareModal('simple')">
-                        <i class="fas fa-share-alt"></i> Share
-                    </button>
-                    <button class="interest-calc-action-btn reset-btn" onclick="resetInterestCalculator('simple')">
-                        <i class="fas fa-redo"></i> Reset
-                    </button>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Compound Interest Calculator -->
-        <div id="interest-compound" class="interest-calc-tab-content">
-            <div class="interest-calc-grid">
-                <div class="interest-calc-form-group">
-                    <label for="compound-principal" class="interest-calc-label">
-                        <i class="fas fa-dollar-sign"></i> Principal Amount
-                    </label>
-                    <input type="number" id="compound-principal" class="interest-calc-input" value="1000" min="0" step="any">
-                </div>
-                <div class="interest-calc-form-group">
-                    <label for="compound-rate" class="interest-calc-label">
-                        <i class="fas fa-percent"></i> Annual Interest Rate (%)
-                    </label>
-                    <input type="number" id="compound-rate" class="interest-calc-input" value="5" min="0" max="100" step="any">
-                </div>
-                <div class="interest-calc-form-group">
-                    <label for="compound-time" class="interest-calc-label">
-                        <i class="fas fa-calendar-alt"></i> Time Period (Years)
-                    </label>
-                    <input type="number" id="compound-time" class="interest-calc-input" value="5" min="0" step="any">
-                </div>
-                <div class="interest-calc-form-group">
-                    <label for="compound-frequency" class="interest-calc-label">
-                        <i class="fas fa-sync"></i> Compounding Frequency
-                    </label>
-                    <select id="compound-frequency" class="interest-calc-select">
-                        <option value="1">Annually</option>
-                        <option value="2">Semi-Annually</option>
-                        <option value="4">Quarterly</option>
-                        <option value="12" selected>Monthly</option>
-                        <option value="52">Weekly</option>
-                        <option value="365">Daily</option>
-                    </select>
-                </div>
-                <div class="interest-calc-form-group">
-                    <label for="compound-contribution" class="interest-calc-label">
-                        <i class="fas fa-plus-circle"></i> Regular Contribution
-                    </label>
-                    <input type="number" id="compound-contribution" class="interest-calc-input" value="100" min="0" step="any">
-                </div>
-                <div class="interest-calc-form-group">
-                    <label for="compound-contribution-frequency" class="interest-calc-label">
-                        <i class="fas fa-calendar-check"></i> Contribution Frequency
-                    </label>
-                    <select id="compound-contribution-frequency" class="interest-calc-select">
-                        <option value="0">No Contributions</option>
-                        <option value="1">Annually</option>
-                        <option value="2">Semi-Annually</option>
-                        <option value="4">Quarterly</option>
-                        <option value="12" selected>Monthly</option>
-                        <option value="52">Weekly</option>
-                        <option value="365">Daily</option>
-                    </select>
-                </div>
-            </div>
-            <button class="interest-calc-btn" onclick="calculateCompoundInterest()">
-                <i class="fas fa-calculator"></i> Calculate Compound Interest
-            </button>
-            
-            <div id="compound-results" class="interest-calc-results" style="display: none;">
-                <select id="compound-currency" class="currency-selector" onchange="calculateCompoundInterest()">
-                    <option value="USD">USD ($)</option>
-                    <option value="EUR">EUR (€)</option>
-                    <option value="GBP">GBP (£)</option>
-                    <option value="JPY">JPY (¥)</option>
-                    <option value="INR" selected>INR (₹)</option>
-                </select>
-                <h3>Results</h3>
-                <div class="interest-calc-result-item">
-                    <span class="interest-calc-result-label">Principal Amount:</span>
-                    <span id="compound-principal-result" class="interest-calc-result-value">-</span>
-                </div>
-                <div class="interest-calc-result-item">
-                    <span class="interest-calc-result-label">Total Contributions:</span>
-                    <span id="compound-contributions-result" class="interest-calc-result-value">-</span>
-                </div>
-                <div class="interest-calc-result-item">
-                    <span class="interest-calc-result-label">Interest Earned:</span>
-                    <span id="compound-interest-result" class="interest-calc-result-value">-</span>
-                </div>
-                <div class="interest-calc-result-item">
-                    <span class="interest-calc-result-label">Total Amount:</span>
-                    <span id="compound-total-result" class="interest-calc-result-value total">-</span>
-                </div>
-                <div class="interest-calc-action-buttons">
-                    <button class="interest-calc-action-btn share-btn" onclick="openInterestShareModal('compound')">
-                        <i class="fas fa-share-alt"></i> Share
-                    </button>
-                    <button class="interest-calc-action-btn reset-btn" onclick="resetInterestCalculator('compound')">
-                        <i class="fas fa-redo"></i> Reset
-                    </button>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Loan Calculator -->
-        <div id="interest-loan" class="interest-calc-tab-content">
-            <div class="interest-calc-grid">
-                <div class="interest-calc-form-group">
-                    <label for="loan-amount" class="interest-calc-label">
-                        <i class="fas fa-dollar-sign"></i> Loan Amount
-                    </label>
-                    <input type="number" id="loan-amount" class="interest-calc-input" value="100000" min="0" step="any">
-                </div>
-                <div class="interest-calc-form-group">
-                    <label for="loan-rate" class="interest-calc-label">
-                        <i class="fas fa-percent"></i> Annual Interest Rate (%)
-                    </label>
-                    <input type="number" id="loan-rate" class="interest-calc-input" value="5" min="0" max="100" step="any">
-                </div>
-                <div class="interest-calc-form-group">
-                    <label for="loan-term" class="interest-calc-label">
-                        <i class="fas fa-calendar-alt"></i> Loan Term (Years)
-                    </label>
-                    <input type="number" id="loan-term" class="interest-calc-input" value="30" min="0" step="any">
-                </div>
-                <div class="interest-calc-form-group">
-                    <label for="loan-frequency" class="interest-calc-label">
-                        <i class="fas fa-calendar-check"></i> Payment Frequency
-                    </label>
-                    <select id="loan-frequency" class="interest-calc-select">
-                        <option value="12" selected>Monthly</option>
-                        <option value="26">Bi-Weekly</option>
-                        <option value="52">Weekly</option>
-                    </select>
-                </div>
-            </div>
-            <button class="interest-calc-btn" onclick="calculateLoan()">
-                <i class="fas fa-calculator"></i> Calculate Loan Payment
-            </button>
-            
-            <div id="loan-results" class="interest-calc-results" style="display: none;">
-                <select id="loan-currency" class="currency-selector" onchange="calculateLoan()">
-                    <option value="USD">USD ($)</option>
-                    <option value="EUR">EUR (€)</option>
-                    <option value="GBP">GBP (£)</option>
-                    <option value="JPY">JPY (¥)</option>
-                    <option value="INR" selected>INR (₹)</option>
-                </select>
-                <h3>Results</h3>
-                <div class="interest-calc-result-item">
-                    <span class="interest-calc-result-label">Payment per Period:</span>
-                    <span id="loan-payment-result" class="interest-calc-result-value total">-</span>
-                </div>
-                <div class="interest-calc-result-item">
-                    <span class="interest-calc-result-label">Total Interest:</span>
-                    <span id="loan-interest-result" class="interest-calc-result-value">-</span>
-                </div>
-                <div class="interest-calc-result-item">
-                    <span class="interest-calc-result-label">Total Cost:</span>
-                    <span id="loan-total-result" class="interest-calc-result-value">-</span>
-                </div>
-                <div class="interest-calc-action-buttons">
-                    <button class="interest-calc-action-btn amortization-btn" onclick="toggleAmortization()">
-                        <i class="fas fa-table"></i> Show Amortization
-                    </button>
-                    <button class="interest-calc-action-btn share-btn" onclick="openInterestShareModal('loan')">
-                        <i class="fas fa-share-alt"></i> Share
-                    </button>
-                    <button class="interest-calc-action-btn reset-btn" onclick="resetInterestCalculator('loan')">
-                        <i class="fas fa-redo"></i> Reset
-                    </button>
-                </div>
+<div class="page-wrap">
+  <nav class="breadcrumb">
+    <a href="/">21K Tools</a><i class="fas fa-chevron-right"></i><span>Interest Calculator</span>
+  </nav>
 
-                <div id="amortization-container" class="amortization-container">
-                    <h4 style="margin-top: 20px; color: var(--interest-primary);">Amortization Schedule</h4>
-                    <div style="overflow-x: auto;">
-                        <table class="amortization-table" id="amortization-table">
-                            <!-- Table will be populated by JavaScript -->
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Compare Plans Calculator -->
-        <div id="interest-compare" class="interest-calc-tab-content">
-            <div class="interest-calc-grid">
-                <div class="interest-calc-form-group">
-                    <label for="compare-principal" class="interest-calc-label">
-                        <i class="fas fa-dollar-sign"></i> Principal Amount
-                    </label>
-                    <input type="number" id="compare-principal" class="interest-calc-input" value="1000" min="0" step="any">
-                </div>
-                <div class="interest-calc-form-group">
-                    <label for="compare-rate1" class="interest-calc-label">
-                        <i class="fas fa-percent"></i> Interest Rate Plan 1 (%)
-                    </label>
-                    <input type="number" id="compare-rate1" class="interest-calc-input" value="5" min="0" max="100" step="any">
-                </div>
-                <div class="interest-calc-form-group">
-                    <label for="compare-rate2" class="interest-calc-label">
-                        <i class="fas fa-percent"></i> Interest Rate Plan 2 (%)
-                    </label>
-                    <input type="number" id="compare-rate2" class="interest-calc-input" value="7" min="0" max="100" step="any">
-                </div>
-                <div class="interest-calc-form-group">
-                    <label for="compare-time" class="interest-calc-label">
-                        <i class="fas fa-calendar-alt"></i> Time Period (Years)
-                    </label>
-                    <input type="number" id="compare-time" class="interest-calc-input" value="5" min="0" step="any">
-                </div>
-            </div>
-            <button class="interest-calc-btn" onclick="comparePlans()">
-                <i class="fas fa-balance-scale"></i> Compare Plans
-            </button>
-            
-            <div id="compare-results" class="interest-calc-results" style="display: none;">
-                <select id="compare-currency" class="currency-selector" onchange="comparePlans()">
-                    <option value="USD">USD ($)</option>
-                    <option value="EUR">EUR (€)</option>
-                    <option value="GBP">GBP (£)</option>
-                    <option value="JPY">JPY (¥)</option>
-                    <option value="INR" selected>INR (₹)</option>
-                </select>
-                <h3>Comparison Results</h3>
-                <div class="interest-calc-result-item">
-                    <span class="interest-calc-result-label">Plan 1 Total:</span>
-                    <span id="compare-plan1-result" class="interest-calc-result-value">-</span>
-                </div>
-                <div class="interest-calc-result-item">
-                    <span class="interest-calc-result-label">Plan 2 Total:</span>
-                    <span id="compare-plan2-result" class="interest-calc-result-value">-</span>
-                </div>
-                <div class="interest-calc-result-item">
-                    <span class="interest-calc-result-label">Difference:</span>
-                    <span id="compare-diff-result" class="interest-calc-result-value total">-</span>
-                </div>
-                <div class="interest-calc-result-item">
-                    <span class="interest-calc-result-label">Better Plan:</span>
-                    <span id="compare-better-result" class="interest-calc-result-value">-</span>
-                </div>
-                <div class="interest-calc-action-buttons">
-                    <button class="interest-calc-action-btn share-btn" onclick="openInterestShareModal('compare')">
-                        <i class="fas fa-share-alt"></i> Share
-                    </button>
-                    <button class="interest-calc-action-btn reset-btn" onclick="resetInterestCalculator('compare')">
-                        <i class="fas fa-redo"></i> Reset
-                    </button>
-                </div>
-            </div>
-        </div>
+  <header class="page-header">
+    <div class="page-header-label"><i class="fas fa-percentage"></i> Guide &amp; Tool</div>
+    <h1>Compounding frequency, effective annual rate, and <em>why banks love that you don't understand the difference</em></h1>
+    <div class="header-intro">
+      <p>Most people learn that compound interest means "interest on interest." That's true but it misses the part that actually matters for comparing financial products: compounding frequency. A loan advertised at "12% per annum" compounded monthly is not the same product as one compounded annually. The first has an effective annual rate of 12.68%. Over a 20-year home loan that difference is not abstract — it's real money you pay every month for two decades.</p>
+      <p>This page covers how the EMI formula works and why it front-loads interest into early payments, what compounding frequency does to your numbers, how to compare two loan offers honestly using effective annual rate, and why early prepayments have a disproportionate effect on total interest paid. The calculator below handles simple interest, compound interest with regular contributions, loan EMIs with full amortisation schedules, and side-by-side plan comparison.</p>
     </div>
+    <div class="page-meta">
+      <span class="page-meta-item"><i class="fas fa-clock"></i> 7 min read</span>
+      <span class="page-meta-item"><i class="fas fa-tools"></i> 4 calculators included</span>
+      <span class="page-meta-item"><i class="fas fa-tag"></i> Finance &amp; Loans</span>
+    </div>
+  </header>
+
+  <!-- S1 -->
+  <div class="prose-section">
+    <h2><span class="h2-icon"><i class="fas fa-percentage"></i></span> Simple vs compound — the number that actually changes your life</h2>
+    <p>Simple interest is calculated only on the original principal. Borrow ₹10,000 at 10% per year for 5 years: you owe ₹5,000 in interest total. Every year is exactly ₹1,000, the principal doesn't change, and the annual charge stays fixed. Personal loans and some car loans work this way.</p>
+    <p>Compound interest adds earned interest back to the principal and then calculates the next period's interest on the new total. Same numbers — ₹10,000 at 10% for 5 years compounded annually. Year 1: ₹1,000 interest. Year 2: interest on ₹11,000, so ₹1,100. By year 5 you owe ₹16,105 — not ₹15,000. That extra ₹1,105 is the compounding effect.</p>
+    <p>Now add compounding frequency. An annual rate of 12% compounded monthly means that each month you're charged 1% (12% ÷ 12), which gets added to your balance before next month's interest is calculated. The effective annual rate is (1 + 0.12/12)^12 − 1 = 12.68%, not 12%. On a ₹50 lakh loan over 20 years, that 0.68% difference is roughly ₹3–4 lakh in total extra interest.</p>
+    <div class="formula-box">
+      Simple Interest: SI = (P × R × T) / 100<br><br>
+      Compound Interest: A = P × (1 + r/n)^(n×t)<br>
+      where n = compounding periods per year<br><br>
+      Effective Annual Rate: EAR = (1 + r/n)^n − 1
+    </div>
+    <div class="callout">
+      <strong>The honest comparison:</strong> when comparing two loan offers, always ask for the effective annual rate, not just the nominal annual rate. Banks are required to disclose this in most countries, but they don't always make it prominent. A 9.5% loan compounded monthly has an EAR of 9.92%. A 9.8% loan compounded annually has an EAR of 9.8%. The second loan is actually cheaper, even though its stated rate is higher.
+    </div>
+
+    <h3>Why the comparison calculator is worth using</h3>
+    <p>The compare tab runs compound interest for two different rates against the same principal and time period. It tells you the exact rupee difference between the two — not a percentage difference, but the actual amount. This is the number you should be looking at when two banks are competing for your home loan business.</p>
+  </div>
+
+  <!-- S2 -->
+  <div class="prose-section">
+    <h2><span class="h2-icon"><i class="fas fa-home"></i></span> How the EMI formula works — and why you pay mostly interest for the first several years</h2>
+    <p>An EMI (Equated Monthly Instalment) stays the same every month for the life of the loan. That consistency feels fair. What most borrowers don't realise until they look at an amortisation schedule is that early EMIs are mostly interest, and the loan balance drops very slowly at first.</p>
+    <p>The reason is that your outstanding balance is at its highest right at the start. Take a ₹30 lakh home loan at 8.5% for 20 years. Monthly interest rate is 8.5% ÷ 12 = 0.708%. Your EMI is approximately ₹26,035. In month 1, your outstanding balance is ₹30 lakh, so the interest portion is ₹30,00,000 × 0.00708 = ₹21,250. Only ₹4,785 of your ₹26,035 payment actually reduces the loan balance.</p>
+    <p>By month 60 (five years in), your outstanding balance is about ₹26.7 lakh. Your EMI is still ₹26,035, but now the interest portion is ₹18,920 and the principal portion is ₹7,115. The balance is finally starting to drop more meaningfully.</p>
+    <p>This structure is what the amortisation schedule shows. It's not a trick — it's mathematics. But it has one important implication: prepayments made early in the loan have a much larger effect on total interest paid than the same prepayment made late.</p>
+
+    <table class="cmp-table">
+      <thead><tr><th>Month</th><th>EMI</th><th>Interest portion</th><th>Principal portion</th><th>Balance remaining</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>₹26,035</td><td>₹21,250</td><td>₹4,785</td><td>₹29,95,215</td></tr>
+        <tr><td>12</td><td>₹26,035</td><td>₹20,906</td><td>₹5,129</td><td>₹29,47,xxx</td></tr>
+        <tr><td>60</td><td>₹26,035</td><td>₹18,920</td><td>₹7,115</td><td>₹26,7x,xxx</td></tr>
+        <tr><td>120</td><td>₹26,035</td><td>₹15,800</td><td>₹10,235</td><td>₹22,3x,xxx</td></tr>
+        <tr><td>240</td><td>₹26,035</td><td>₹184</td><td>₹25,851</td><td>₹0</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <strong>Prepayment timing matters more than amount.</strong> An extra ₹50,000 paid in year 2 of a 20-year loan reduces the principal you'll pay interest on for the remaining 18 years. The same ₹50,000 in year 18 saves only two years of interest on a balance that's already nearly paid off. If you ever receive a bonus or windfall during a loan, the earlier you prepay, the more you save.
+    </div>
+  </div>
+
+  <!-- S3 -->
+  <div class="prose-section">
+    <h2><span class="h2-icon"><i class="fas fa-chart-line"></i></span> Regular contributions and why time in the market beats amount invested</h2>
+    <p>The compound interest calculator's contribution feature simulates SIP-style investing — a fixed monthly addition on top of an initial lump sum. This is where compound interest stops being an abstract mathematical concept and becomes genuinely powerful.</p>
+    <p>Consider two scenarios. Person A invests ₹5,000 per month for 20 years at 10% annual return (compounded monthly). Total invested: ₹12 lakh. Final value: approximately ₹38 lakh. The extra ₹26 lakh is entirely from compounding.</p>
+    <p>Person B starts 5 years later, also invests ₹5,000 per month at the same rate, for 15 years. Total invested: ₹9 lakh. Final value: approximately ₹21 lakh. Person A invested only ₹3 lakh more, but ended up with ₹17 lakh more — because compound growth is exponential. The early years grow into the most valuable years later.</p>
+    <p>The interest rate matters, but time matters more. At 8%: 20 years of ₹5,000/month = ₹29 lakh. At 12%: 15 years of ₹5,000/month = ₹25 lakh. The 20-year 8% scenario beats the 15-year 12% scenario despite a significantly lower return rate. Start earlier if you can. The calculator lets you test these scenarios directly.</p>
+  </div>
+
+  <!-- TOOL -->
+  <div class="tool-section">
+    <div class="tool-header">
+      <h2><i class="fas fa-percentage"></i> Interest &amp; Loan Calculator</h2>
+      <p>Simple · Compound · Loan EMI · Compare Plans — free, no sign-up, no registration</p>
+    </div>
+    <div class="ic-body">
+      <div class="ic-tabs">
+        <div class="ic-tab active" onclick="switchTab('simple',this)"><i class="fas fa-percentage"></i> Simple Interest</div>
+        <div class="ic-tab" onclick="switchTab('compound',this)"><i class="fas fa-chart-line"></i> Compound Interest</div>
+        <div class="ic-tab" onclick="switchTab('loan',this)"><i class="fas fa-home"></i> Loan / EMI</div>
+        <div class="ic-tab" onclick="switchTab('compare',this)"><i class="fas fa-balance-scale"></i> Compare Plans</div>
+      </div>
+
+      <!-- Simple -->
+      <div id="ic-simple" class="ic-content active">
+        <div class="ic-grid">
+          <div class="ic-fg"><label class="ic-label">Principal Amount</label><input type="number" id="simple-principal" class="ic-input" value="10000" min="0" step="any"></div>
+          <div class="ic-fg"><label class="ic-label">Annual Rate (%)</label><input type="number" id="simple-rate" class="ic-input" value="8" min="0" max="100" step="any"></div>
+          <div class="ic-fg"><label class="ic-label">Time Period</label><input type="number" id="simple-time" class="ic-input" value="3" min="0" step="any"></div>
+          <div class="ic-fg"><label class="ic-label">Time Unit</label><select id="simple-time-unit" class="ic-select"><option value="days">Days</option><option value="months">Months</option><option value="years" selected>Years</option></select></div>
+        </div>
+        <button class="ic-btn" onclick="calcSimple()"><i class="fas fa-calculator"></i> Calculate Simple Interest</button>
+        <div id="simple-results" class="ic-results" style="display:none;">
+          <select id="simple-currency" class="curr-sel" onchange="calcSimple()"><option value="INR" selected>INR (₹)</option><option value="USD">USD ($)</option><option value="EUR">EUR (€)</option><option value="GBP">GBP (£)</option></select>
+          <h3>Results</h3>
+          <div class="ic-ri"><span class="ic-rl">Principal</span><span id="simple-p-res" class="ic-rv">-</span></div>
+          <div class="ic-ri"><span class="ic-rl">Interest Earned</span><span id="simple-i-res" class="ic-rv">-</span></div>
+          <div class="ic-ri"><span class="ic-rl">Total Amount</span><span id="simple-t-res" class="ic-rv total">-</span></div>
+          <div class="ic-actions"><button class="ic-abtn reset" onclick="resetIC('simple')"><i class="fas fa-redo"></i> Reset</button></div>
+        </div>
+      </div>
+
+      <!-- Compound -->
+      <div id="ic-compound" class="ic-content">
+        <div class="ic-grid">
+          <div class="ic-fg"><label class="ic-label">Principal Amount</label><input type="number" id="compound-principal" class="ic-input" value="10000" min="0" step="any"></div>
+          <div class="ic-fg"><label class="ic-label">Annual Rate (%)</label><input type="number" id="compound-rate" class="ic-input" value="12" min="0" max="100" step="any"></div>
+          <div class="ic-fg"><label class="ic-label">Time (Years)</label><input type="number" id="compound-time" class="ic-input" value="10" min="0" step="any"></div>
+          <div class="ic-fg"><label class="ic-label">Compounding Frequency</label><select id="compound-frequency" class="ic-select"><option value="1">Annually</option><option value="2">Semi-Annually</option><option value="4">Quarterly</option><option value="12" selected>Monthly</option><option value="365">Daily</option></select></div>
+          <div class="ic-fg"><label class="ic-label">Monthly Contribution</label><input type="number" id="compound-contribution" class="ic-input" value="500" min="0" step="any"></div>
+          <div class="ic-fg"><label class="ic-label">Contribution Frequency</label><select id="compound-contribution-frequency" class="ic-select"><option value="0">No Contributions</option><option value="12" selected>Monthly</option><option value="4">Quarterly</option><option value="1">Annually</option></select></div>
+        </div>
+        <button class="ic-btn" onclick="calcCompound()"><i class="fas fa-calculator"></i> Calculate Compound Interest</button>
+        <div id="compound-results" class="ic-results" style="display:none;">
+          <select id="compound-currency" class="curr-sel" onchange="calcCompound()"><option value="INR" selected>INR (₹)</option><option value="USD">USD ($)</option><option value="EUR">EUR (€)</option><option value="GBP">GBP (£)</option></select>
+          <h3>Results</h3>
+          <div class="ic-ri"><span class="ic-rl">Principal</span><span id="compound-p-res" class="ic-rv">-</span></div>
+          <div class="ic-ri"><span class="ic-rl">Total Contributions</span><span id="compound-c-res" class="ic-rv">-</span></div>
+          <div class="ic-ri"><span class="ic-rl">Interest Earned</span><span id="compound-i-res" class="ic-rv">-</span></div>
+          <div class="ic-ri"><span class="ic-rl">Total Amount</span><span id="compound-t-res" class="ic-rv total">-</span></div>
+          <div class="ic-actions"><button class="ic-abtn reset" onclick="resetIC('compound')"><i class="fas fa-redo"></i> Reset</button></div>
+        </div>
+      </div>
+
+      <!-- Loan -->
+      <div id="ic-loan" class="ic-content">
+        <div class="ic-grid">
+          <div class="ic-fg"><label class="ic-label">Loan Amount</label><input type="number" id="loan-amount" class="ic-input" value="3000000" min="0" step="any"></div>
+          <div class="ic-fg"><label class="ic-label">Annual Rate (%)</label><input type="number" id="loan-rate" class="ic-input" value="8.5" min="0" max="100" step="any"></div>
+          <div class="ic-fg"><label class="ic-label">Loan Term (Years)</label><input type="number" id="loan-term" class="ic-input" value="20" min="0" step="any"></div>
+          <div class="ic-fg"><label class="ic-label">Payment Frequency</label><select id="loan-frequency" class="ic-select"><option value="12" selected>Monthly</option><option value="26">Bi-Weekly</option><option value="52">Weekly</option></select></div>
+        </div>
+        <button class="ic-btn" onclick="calcLoan()"><i class="fas fa-calculator"></i> Calculate EMI</button>
+        <div id="loan-results" class="ic-results" style="display:none;">
+          <select id="loan-currency" class="curr-sel" onchange="calcLoan()"><option value="INR" selected>INR (₹)</option><option value="USD">USD ($)</option><option value="EUR">EUR (€)</option><option value="GBP">GBP (£)</option></select>
+          <h3>Results</h3>
+          <div class="ic-ri"><span class="ic-rl">EMI per Period</span><span id="loan-p-res" class="ic-rv total">-</span></div>
+          <div class="ic-ri"><span class="ic-rl">Total Interest</span><span id="loan-i-res" class="ic-rv">-</span></div>
+          <div class="ic-ri"><span class="ic-rl">Total Repayment</span><span id="loan-t-res" class="ic-rv">-</span></div>
+          <div class="ic-actions">
+            <button class="ic-abtn green" onclick="toggleAmort()"><i class="fas fa-table"></i> Amortisation</button>
+            <button class="ic-abtn reset" onclick="resetIC('loan')"><i class="fas fa-redo"></i> Reset</button>
+          </div>
+          <div class="amort-wrap" id="amort-wrap">
+            <h4 style="margin:16px 0 10px;color:#667eea;font-size:.9rem;">Amortisation Schedule (first 12 payments)</h4>
+            <div style="overflow-x:auto;"><table class="amort-table" id="amort-table"></table></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Compare -->
+      <div id="ic-compare" class="ic-content">
+        <div class="ic-grid">
+          <div class="ic-fg"><label class="ic-label">Principal Amount</label><input type="number" id="compare-principal" class="ic-input" value="500000" min="0" step="any"></div>
+          <div class="ic-fg"><label class="ic-label">Rate — Plan 1 (%)</label><input type="number" id="compare-rate1" class="ic-input" value="8" min="0" max="100" step="any"></div>
+          <div class="ic-fg"><label class="ic-label">Rate — Plan 2 (%)</label><input type="number" id="compare-rate2" class="ic-input" value="10" min="0" max="100" step="any"></div>
+          <div class="ic-fg"><label class="ic-label">Time (Years)</label><input type="number" id="compare-time" class="ic-input" value="10" min="0" step="any"></div>
+        </div>
+        <button class="ic-btn" onclick="calcCompare()"><i class="fas fa-balance-scale"></i> Compare Plans</button>
+        <div id="compare-results" class="ic-results" style="display:none;">
+          <select id="compare-currency" class="curr-sel" onchange="calcCompare()"><option value="INR" selected>INR (₹)</option><option value="USD">USD ($)</option><option value="EUR">EUR (€)</option><option value="GBP">GBP (£)</option></select>
+          <h3>Comparison</h3>
+          <div class="ic-ri"><span class="ic-rl">Plan 1 Total</span><span id="compare-p1-res" class="ic-rv">-</span></div>
+          <div class="ic-ri"><span class="ic-rl">Plan 2 Total</span><span id="compare-p2-res" class="ic-rv">-</span></div>
+          <div class="ic-ri"><span class="ic-rl">Difference</span><span id="compare-d-res" class="ic-rv total">-</span></div>
+          <div class="ic-ri"><span class="ic-rl">Better Plan</span><span id="compare-b-res" class="ic-rv">-</span></div>
+          <div class="ic-actions"><button class="ic-abtn reset" onclick="resetIC('compare')"><i class="fas fa-redo"></i> Reset</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S4 practical -->
+  <div class="prose-section">
+    <h2><span class="h2-icon"><i class="fas fa-rupee-sign"></i></span> Real situations where understanding interest calculation matters</h2>
+    <p>Comparing home loan offers is the most common real-money situation. Two banks quote 8.5% and 8.7%. The difference looks small. On a ₹50 lakh, 20-year loan, 0.2% is about ₹1.3 lakh in total interest over the loan's life. That's worth a few minutes of calculation.</p>
+    <p>Credit card debt compounds daily in most countries. A credit card balance of ₹50,000 at "36% per annum" doesn't mean ₹18,000 in annual interest — it means 0.0986% per day, which compounds to an effective annual rate of about 43%. If you only make minimum payments, the balance barely moves for months. The compound calculator makes this terrifyingly clear.</p>
+    <p>Fixed deposits and recurring deposits work in your favour with the same mechanics. A bank offering 7% compounded quarterly on an FD is offering an effective rate of 7.19%. A bank offering 7.1% compounded annually is offering exactly 7.1%. The first bank's product is actually better, despite the lower headline number.</p>
+    <p>SIP investments — monthly investments into mutual funds — combine regular contributions with compound growth in a way that the simple "7% return" calculation significantly understates. The compound interest calculator with monthly contributions is a more realistic model for what an SIP produces over time. The actual return varies because stock market returns aren't fixed, but the compounding structure is the same.</p>
+    <div class="callout">
+      <strong>Disclaimer:</strong> the results from this calculator are mathematically correct but represent idealised scenarios — constant interest rates, no fees, no tax implications. Real loans have processing fees, prepayment charges, and varying rates. For actual financial decisions, use these calculations to understand the mechanics and compare scenarios, then verify the final numbers with your specific lender or a qualified financial advisor.
+    </div>
+  </div>
+
+  <!-- FAQ -->
+  <div class="prose-section">
+    <h2><span class="h2-icon"><i class="fas fa-question"></i></span> Common questions about interest calculation</h2>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">Why does daily compounding give a higher amount than monthly at the same annual rate?<span class="faq-icon"><i class="fas fa-chevron-down"></i></span></button>
+      <div class="faq-body"><div class="faq-a">More frequent compounding means interest is added to the principal more often, creating a larger base for each subsequent calculation. With daily compounding, interest is added 365 times per year; with monthly, 12 times. Each addition is smaller but happens more often. The difference between monthly and daily is genuinely small — usually fractions of a percent per year — but over decades and large amounts it adds up to real money.</div></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">Why does my loan balance barely drop in the first few years?<span class="faq-icon"><i class="fas fa-chevron-down"></i></span></button>
+      <div class="faq-body"><div class="faq-a">Because your outstanding balance is highest at the start, so the interest portion of each EMI is also at its highest. The EMI formula keeps your payment constant, which means the principal portion starts small and grows as the balance reduces. Open the amortisation schedule in the loan calculator to see exactly how your specific loan breaks down each month.</div></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">What does the "regular contribution" field in compound interest actually simulate?<span class="faq-icon"><i class="fas fa-chevron-down"></i></span></button>
+      <div class="faq-body"><div class="faq-a">It simulates investing a fixed amount at regular intervals — the same structure as a Systematic Investment Plan (SIP) or a recurring deposit. Each contribution adds new principal that also begins compounding from the moment it's added. The cumulative effect of both the initial lump sum and the regular contributions compounding simultaneously is what produces the large totals over long time periods.</div></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">Are these calculations accurate enough for real financial decisions?<span class="faq-icon"><i class="fas fa-chevron-down"></i></span></button>
+      <div class="faq-body"><div class="faq-a">For understanding the mechanics and comparing scenarios, yes. For actual loan agreements or investment decisions, verify with your lender or financial advisor — banks may include processing fees, prepayment penalties, tax implications, and other factors the calculator doesn't model. Use this to build intuition and understand what you're agreeing to, not as the final number on a contract.</div></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">What's an amortisation schedule and why does it matter?<span class="faq-icon"><i class="fas fa-chevron-down"></i></span></button>
+      <div class="faq-body"><div class="faq-a">An amortisation schedule shows every payment in a loan broken into its interest and principal components, with the remaining balance after each payment. It matters because it shows you concretely how much of each EMI goes to the bank versus reducing what you actually owe. Most borrowers are surprised to see how slowly the balance drops in early payments. Use the loan calculator, run any home loan scenario, and click "Amortisation" to see this for your numbers.</div></div>
+    </div>
+  </div>
 </div>
-
-<!-- Share Modal -->
-<div class="interest-share-modal" id="interestShareModal">
-    <div class="interest-modal-content">
-        <div class="interest-modal-header">
-            <h3><i class="fas fa-share-alt"></i> Share Your Calculation</h3>
-            <button class="interest-close-modal" onclick="closeInterestShareModal()">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-        
-        <div id="interestShareCardContainer">
-            <!-- Share card content will be inserted here -->
-        </div>
-
-        <div class="interest-modal-actions">
-            <button class="interest-download-btn" onclick="downloadInterestShareCard()">
-                <i class="fas fa-download"></i> Download Image
-            </button>
-        </div>
-    </div>
-</div>
-
-<!-- Educational Note -->
-<div class="edu-note">
-    <h3><i class="fas fa-info-circle"></i> Educational Note</h3>
-    <p>
-        The <strong>Interest Calculator</strong> provided on <strong>21K Tools</strong> is designed 
-        <em>for educational and informational purposes only</em>. 
-        It helps students, learners, and individuals understand how 
-        simple and compound interest are calculated in mathematics and finance.
-    </p>
-    <ul>
-        <li>The results are <strong>illustrative examples</strong> and may differ from actual values used by banks or institutions.</li>
-        <li>This tool should <strong>not</strong> be used as a substitute for professional financial advice.</li>
-        <li>For real-world applications like loans, savings, or investments, please consult your bank or financial advisor.</li>
-    </ul>
-</div>
-
-<!-- Guide Section -->
-<div class="interest-guide">
-    <h2><i class="fas fa-book"></i> Complete Guide to Interest & Loan Calculations</h2>
-    
-    <p>Managing finances is a daily part of life, whether you are saving for the future, paying off a loan, or just curious about how interest grows over time. To make this process easier, <strong>21K Tools offers a free Interest & Loan Calculator</strong> – a powerful, browser-based tool that helps you calculate simple interest, compound interest with contributions, loan payments, and even compare multiple financial plans.</p>
-    
-    <h3>Why Do You Need an Interest & Loan Calculator?</h3>
-    
-    <p>Finance may look complicated at first glance, but at its core, it comes down to three main elements: <strong>principal amount, interest rate, and time</strong>. Whether you are depositing money into a savings account, investing in a scheme, or borrowing from a bank, interest is always involved.</p>
-    
-    <div class="interest-feature-card">
-        <h4><i class="fas fa-percentage"></i> Simple Interest Calculator</h4>
-        <p>Simple interest is the most basic form of interest. It is calculated using the formula:</p>
-        <div class="formula">SI = (Principal × Rate × Time) / 100</div>
-        <p>For example, if you deposit ₹10,000 at 5% annual interest for 3 years, you'll earn ₹1,500 as interest.</p>
-        <p><strong>Perfect for:</strong></p>
-        <ul>
-            <li>Short-term deposits and savings accounts</li>
-            <li>Educational projects and learning</li>
-            <li>Quick financial calculations</li>
-            <li>Understanding basic interest concepts</li>
-        </ul>
-    </div>
-    
-    <div class="interest-feature-card">
-        <h4><i class="fas fa-chart-line"></i> Compound Interest Calculator</h4>
-        <p>Compound interest is often called the <strong>eighth wonder of the world</strong> because it makes money grow exponentially. Unlike simple interest, compound interest adds earned interest back into the principal.</p>
-        <div class="formula">A = P(1 + r/n)^(nt)</div>
-        <p>Where:</p>
-        <ul>
-            <li><strong>A</strong> = Total amount</li>
-            <li><strong>P</strong> = Principal</li>
-            <li><strong>r</strong> = Interest rate (decimal)</li>
-            <li><strong>n</strong> = Compounding frequency per year</li>
-            <li><strong>t</strong> = Time in years</li>
-        </ul>
-        <p><strong>Features:</strong></p>
-        <ul>
-            <li>Multiple compounding frequencies (Daily to Annually)</li>
-            <li>Regular contribution options (like monthly SIPs)</li>
-            <li>See how contributions accelerate growth</li>
-            <li>Ideal for long-term investment planning</li>
-        </ul>
-    </div>
-    
-    <div class="interest-feature-card">
-        <h4><i class="fas fa-home"></i> Loan Calculator</h4>
-        <p>Understanding monthly payments (EMIs) and total repayment cost is crucial before borrowing. The tool uses the standard EMI formula:</p>
-        <div class="formula">EMI = [P × r × (1+r)^n] / [(1+r)^n – 1]</div>
-        <p><strong>Features:</strong></p>
-        <ul>
-            <li>Calculate EMI for home loans, car loans, personal loans</li>
-            <li>Choose payment frequency (Monthly, Bi-Weekly, Weekly)</li>
-            <li>View detailed amortization schedule</li>
-            <li>See breakdown of principal vs interest for each payment</li>
-            <li>Understand total interest paid over loan term</li>
-        </ul>
-    </div>
-    
-    <div class="interest-feature-card">
-        <h4><i class="fas fa-balance-scale"></i> Compare Financial Plans</h4>
-        <p>Sometimes you have multiple options with different interest rates. Our comparison tool helps you:</p>
-        <ul>
-            <li>Compare two investment or loan schemes side by side</li>
-            <li>See the exact difference in returns or costs</li>
-            <li>Identify which plan is better for your situation</li>
-            <li>Make informed financial decisions</li>
-        </ul>
-    </div>
-    
-    <h3>How to Use Each Calculator</h3>
-    
-    <h4>Simple Interest Calculator</h4>
-    <ol>
-        <li>Enter your <strong>Principal Amount</strong></li>
-        <li>Enter the <strong>Annual Interest Rate</strong> (in percentage)</li>
-        <li>Enter the <strong>Time Period</strong></li>
-        <li>Select the <strong>Time Unit</strong> (Days, Months, or Years)</li>
-        <li>Choose your preferred <strong>Currency</strong></li>
-        <li>Click <strong>"Calculate Simple Interest"</strong></li>
-    </ol>
-
-    <h4>Compound Interest Calculator</h4>
-    <ol>
-        <li>Enter the <strong>Principal Amount</strong></li>
-        <li>Enter the <strong>Annual Interest Rate</strong></li>
-        <li>Enter the <strong>Time Period</strong> in years</li>
-        <li>Select <strong>Compounding Frequency</strong></li>
-        <li>Enter <strong>Regular Contribution</strong> (optional)</li>
-        <li>Select <strong>Contribution Frequency</strong></li>
-        <li>Click <strong>"Calculate Compound Interest"</strong></li>
-    </ol>
-
-    <h4>Loan Calculator</h4>
-    <ol>
-        <li>Enter the <strong>Loan Amount</strong></li>
-        <li>Enter the <strong>Annual Interest Rate</strong></li>
-        <li>Enter the <strong>Loan Term</strong> in years</li>
-        <li>Select <strong>Payment Frequency</strong></li>
-        <li>Click <strong>"Calculate Loan Payment"</strong></li>
-        <li>Optionally view the <strong>Amortization Schedule</strong></li>
-    </ol>
-
-    <h4>Compare Plans</h4>
-    <ol>
-        <li>Enter the <strong>Principal Amount</strong></li>
-        <li>Enter interest rates for <strong>Plan 1 and Plan 2</strong></li>
-        <li>Enter the <strong>Time Period</strong></li>
-        <li>Click <strong>"Compare Plans"</strong></li>
-    </ol>
-    
-    <h3>Key Benefits</h3>
-    
-    <ol>
-        <li><strong>All-in-One Solution</strong> – Four calculators in a single platform</li>
-        <li><strong>Multi-Currency Support</strong> – Calculate in USD, EUR, GBP, JPY, or INR</li>
-        <li><strong>Shareable Results</strong> – Download calculations as images</li>
-        <li><strong>Amortization Schedule</strong> – Detailed payment breakdown for loans</li>
-        <li><strong>No Registration Required</strong> – 100% free and instant access</li>
-        <li><strong>Mobile Friendly</strong> – Works perfectly on all devices</li>
-        <li><strong>Privacy Protected</strong> – All calculations happen in your browser</li>
-    </ol>
-    
-    <h3>Practical Use Cases</h3>
-    
-    <ul>
-        <li><strong>Students:</strong> Learn financial mathematics with real examples</li>
-        <li><strong>Investors:</strong> Plan long-term savings and retirement funds</li>
-        <li><strong>Borrowers:</strong> Understand loan costs before committing</li>
-        <li><strong>Homebuyers:</strong> Compare mortgage options</li>
-        <li><strong>Professionals:</strong> Make quick financial decisions</li>
-        <li><strong>Teachers:</strong> Demonstrate interest calculations in class</li>
-    </ul>
-    
-    <div class="interest-faq-section">
-        <h2>Frequently Asked Questions</h2>
-        
-        <div class="interest-faq-item" onclick="toggleInterestFAQ(this)">
-            <div class="interest-faq-question">
-                What is the difference between simple and compound interest?
-                <i class="fas fa-chevron-down"></i>
-            </div>
-            <div class="interest-faq-answer">
-                <div class="interest-faq-answer-content">
-                    <p>Simple interest is calculated only on the principal amount throughout the investment period. The formula is: SI = (P × R × T) / 100.</p>
-                    <p>Compound interest includes both the principal and accumulated interest from previous periods, leading to exponential growth. It's calculated using: A = P(1 + r/n)^(nt).</p>
-                    <p>For example, ₹10,000 at 10% for 5 years:</p>
-                    <ul>
-                        <li><strong>Simple Interest:</strong> ₹5,000 interest (Total: ₹15,000)</li>
-                        <li><strong>Compound Interest (Annual):</strong> ₹6,105 interest (Total: ₹16,105)</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        
-        <div class="interest-faq-item" onclick="toggleInterestFAQ(this)">
-            <div class="interest-faq-question">
-                Can I use this calculator for student loans?
-                <i class="fas fa-chevron-down"></i>
-            </div>
-            <div class="interest-faq-answer">
-                <div class="interest-faq-answer-content">
-                    <p>Yes! The Loan Calculator works for all types of loans including student loans, home loans, car loans, and personal loans. Simply enter:</p>
-                    <ul>
-                        <li>The total loan amount you're borrowing</li>
-                        <li>The annual interest rate offered by the lender</li>
-                        <li>The repayment period (tenure) in years</li>
-                        <li>Your preferred payment frequency</li>
-                    </ul>
-                    <p>The calculator will show you the exact payment amount per period, total interest you'll pay, and overall cost of the loan.</p>
-                </div>
-            </div>
-        </div>
-        
-        <div class="interest-faq-item" onclick="toggleInterestFAQ(this)">
-            <div class="interest-faq-question">
-                How accurate are the calculations?
-                <i class="fas fa-chevron-down"></i>
-            </div>
-            <div class="interest-faq-answer">
-                <div class="interest-faq-answer-content">
-                    <p>Our calculations use standard financial formulas and are mathematically accurate. However, please note:</p>
-                    <ul>
-                        <li>Real-world interest rates may include additional fees, taxes, or charges</li>
-                        <li>Banks may use slightly different calculation methods</li>
-                        <li>This tool is for educational and planning purposes</li>
-                        <li>Always verify final numbers with your financial institution</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        
-        <div class="interest-faq-item" onclick="toggleInterestFAQ(this)">
-            <div class="interest-faq-question">
-                What is an amortization schedule?
-                <i class="fas fa-chevron-down"></i>
-            </div>
-            <div class="interest-faq-answer">
-                <div class="interest-faq-answer-content">
-                    <p>An amortization schedule is a detailed table that shows the breakdown of each loan payment into:</p>
-                    <ul>
-                        <li><strong>Payment Number:</strong> Sequential payment periods</li>
-                        <li><strong>Payment Amount:</strong> Total EMI paid</li>
-                        <li><strong>Interest Portion:</strong> Amount going toward interest</li>
-                        <li><strong>Principal Portion:</strong> Amount reducing the loan balance</li>
-                        <li><strong>Remaining Balance:</strong> Outstanding loan amount</li>
-                    </ul>
-                    <p>This helps you understand how your loan gets paid off over time. Early payments have more interest, while later payments have more principal.</p>
-                </div>
-            </div>
-        </div>
-        
-        <div class="interest-faq-item" onclick="toggleInterestFAQ(this)">
-            <div class="interest-faq-question">
-                Is this calculator free to use?
-                <i class="fas fa-chevron-down"></i>
-            </div>
-            <div class="interest-faq-answer">
-                <div class="interest-faq-answer-content">
-                    <p>Yes! The Interest & Loan Calculator by 21K Tools is completely free to use with no hidden charges, subscriptions, or registration required. You can:</p>
-                    <ul>
-                        <li>Perform unlimited calculations</li>
-                        <li>Access all four calculator types</li>
-                        <li>Download and share your results</li>
-                        <li>Use it on any device (phone, tablet, computer)</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        
-        <div class="interest-faq-item" onclick="toggleInterestFAQ(this)">
-            <div class="interest-faq-question">
-                Which currencies are supported?
-                <i class="fas fa-chevron-down"></i>
-            </div>
-            <div class="interest-faq-answer">
-                <div class="interest-faq-answer-content">
-                    <p>We currently support five major currencies:</p>
-                    <ul>
-                        <li><strong>USD ($)</strong> - US Dollar</li>
-                        <li><strong>EUR (€)</strong> - Euro</li>
-                        <li><strong>GBP (£)</strong> - British Pound</li>
-                        <li><strong>JPY (¥)</strong> - Japanese Yen</li>
-                        <li><strong>INR (₹)</strong> - Indian Rupee</li>
-                    </ul>
-                    <p>You can switch between currencies anytime using the currency selector in the results section.</p>
-                </div>
-            </div>
-        </div>
-        
-        <div class="interest-faq-item" onclick="toggleInterestFAQ(this)">
-            <div class="interest-faq-question">
-                Can I save my calculations?
-                <i class="fas fa-chevron-down"></i>
-            </div>
-            <div class="interest-faq-answer">
-                <div class="interest-faq-answer-content">
-                    <p>Yes! You can download your calculation results as an image using the "Share" button. This creates a professional-looking card with:</p>
-                    <ul>
-                        <li>All your input values</li>
-                        <li>Complete calculation results</li>
-                        <li>Timestamp of calculation</li>
-                        <li>21K Tools branding</li>
-                    </ul>
-                    <p>You can save these images for your records or share them with others.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <h3>Conclusion</h3>
-    
-    <p>The <strong>Interest & Loan Calculator by 21K Tools</strong> is your comprehensive financial planning companion. Whether you're learning about interest, planning investments, comparing loan options, or making important financial decisions, this tool provides accurate, instant calculations in an easy-to-use interface.</p>
-    
-    <p>Start calculating now and take control of your financial future!</p>
-</div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+{% endblock %}
+{% block extra_js %}
 <script>
-    const csrftoken = '{{ csrf_token }}';
-    const currencySymbols = {
-        USD: '$',
-        EUR: '€',
-        GBP: '£',
-        JPY: '¥',
-        INR: '₹'
-    };
-
-    // Tab switching
-    function switchInterestTab(tabName) {
-        document.querySelectorAll('.interest-calc-tab-content').forEach(content => {
-            content.classList.remove('active');
-        });
-        
-        document.querySelectorAll('.interest-calc-tab').forEach(tab => {
-            tab.classList.remove('active');
-        });
-        
-        document.getElementById('interest-' + tabName).classList.add('active');
-        event.currentTarget.classList.add('active');
-    }
-
-    // Format currency function
-    function formatCurrency(amount, symbol = '') {
-        return symbol + parseFloat(amount).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-    }
-
-    // Simple Interest Calculator
-    async function calculateSimpleInterest() {
-        const principal = parseFloat(document.getElementById('simple-principal').value);
-        const rate = parseFloat(document.getElementById('simple-rate').value);
-        const time = parseFloat(document.getElementById('simple-time').value);
-        const timeUnit = document.getElementById('simple-time-unit').value;
-        const currency = document.getElementById('simple-currency').value;
-        const symbol = currencySymbols[currency];
-
-        if (isNaN(principal) || isNaN(rate) || isNaN(time)) {
-            alert('Please enter valid numbers for all fields');
-            return;
-        }
-
-        try {
-            const response = await fetch('{% url "simple_interest_api" %}', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': csrftoken
-                },
-                body: JSON.stringify({
-                    principal,
-                    rate,
-                    time,
-                    time_unit: timeUnit
-                })
-            });
-
-            const data = await response.json();
-
-            if (data.success) {
-                document.getElementById('simple-principal-result').textContent = formatCurrency(data.principal, symbol);
-                document.getElementById('simple-interest-result').textContent = formatCurrency(data.interest, symbol);
-                document.getElementById('simple-total-result').textContent = formatCurrency(data.total, symbol);
-                document.getElementById('simple-results').style.display = 'block';
-            } else {
-                alert('Error: ' + data.error);
-            }
-        } catch (error) {
-            console.error('Error:', error);
-            alert('Calculation failed. Please try again.');
-        }
-    }
-
-    // Compound Interest Calculator
-    async function calculateCompoundInterest() {
-        const principal = parseFloat(document.getElementById('compound-principal').value);
-        const rate = parseFloat(document.getElementById('compound-rate').value);
-        const time = parseFloat(document.getElementById('compound-time').value);
-        const frequency = parseInt(document.getElementById('compound-frequency').value);
-        const contribution = parseFloat(document.getElementById('compound-contribution').value) || 0;
-        const contributionFrequency = parseInt(document.getElementById('compound-contribution-frequency').value);
-        const currency = document.getElementById('compound-currency').value;
-        const symbol = currencySymbols[currency];
-
-        if (isNaN(principal) || isNaN(rate) || isNaN(time)) {
-            alert('Please enter valid numbers for all fields');
-            return;
-        }
-
-        try {
-            const response = await fetch('{% url "compound_interest_api" %}', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': csrftoken
-                },
-                body: JSON.stringify({
-                    principal,
-                    rate,
-                    time,
-                    frequency,
-                    contribution,
-                    contribution_frequency: contributionFrequency
-                })
-            });
-
-            const data = await response.json();
-
-            if (data.success) {
-                document.getElementById('compound-principal-result').textContent = formatCurrency(data.principal, symbol);
-                document.getElementById('compound-contributions-result').textContent = formatCurrency(data.contributions, symbol);
-                document.getElementById('compound-interest-result').textContent = formatCurrency(data.interest, symbol);
-                document.getElementById('compound-total-result').textContent = formatCurrency(data.total, symbol);
-                document.getElementById('compound-results').style.display = 'block';
-            } else {
-                alert('Error: ' + data.error);
-            }
-        } catch (error) {
-            console.error('Error:', error);
-            alert('Calculation failed. Please try again.');
-        }
-    }
-
-    // Loan Calculator
-    async function calculateLoan() {
-        const amount = parseFloat(document.getElementById('loan-amount').value);
-        const rate = parseFloat(document.getElementById('loan-rate').value);
-        const term = parseFloat(document.getElementById('loan-term').value);
-        const frequency = parseInt(document.getElementById('loan-frequency').value);
-        const currency = document.getElementById('loan-currency').value;
-        const symbol = currencySymbols[currency];
-
-        if (isNaN(amount) || isNaN(rate) || isNaN(term)) {
-            alert('Please enter valid numbers for all fields');
-            return;
-        }
-
-        try {
-            const response = await fetch('{% url "loan_calculator_api" %}', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': csrftoken
-                },
-                body: JSON.stringify({
-                    amount,
-                    rate,
-                    term,
-                    frequency,
-                    include_schedule: false
-                })
-            });
-
-            const data = await response.json();
-
-            if (data.success) {
-                document.getElementById('loan-payment-result').textContent = formatCurrency(data.payment, symbol);
-                document.getElementById('loan-interest-result').textContent = formatCurrency(data.total_interest, symbol);
-                document.getElementById('loan-total-result').textContent = formatCurrency(data.total_cost, symbol);
-                document.getElementById('loan-results').style.display = 'block';
-            } else {
-                alert('Error: ' + data.error);
-            }
-        } catch (error) {
-            console.error('Error:', error);
-            alert('Calculation failed. Please try again.');
-        }
-    }
-
-    // Toggle Amortization Schedule
-    async function toggleAmortization() {
-        const container = document.getElementById('amortization-container');
-        
-        if (container.classList.contains('show')) {
-            container.classList.remove('show');
-            return;
-        }
-
-        const amount = parseFloat(document.getElementById('loan-amount').value);
-        const rate = parseFloat(document.getElementById('loan-rate').value);
-        const term = parseFloat(document.getElementById('loan-term').value);
-        const frequency = parseInt(document.getElementById('loan-frequency').value);
-        const currency = document.getElementById('loan-currency').value;
-        const symbol = currencySymbols[currency];
-
-        try {
-            const response = await fetch('{% url "loan_calculator_api" %}', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': csrftoken
-                },
-                body: JSON.stringify({
-                    amount,
-                    rate,
-                    term,
-                    frequency,
-                    include_schedule: true
-                })
-            });
-
-            const data = await response.json();
-
-            if (data.success && data.schedule) {
-                const table = document.getElementById('amortization-table');
-                let html = `
-                    <thead>
-                        <tr>
-                            <th>Period</th>
-                            <th>Payment</th>
-                            <th>Interest</th>
-                            <th>Principal</th>
-                            <th>Balance</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                `;
-                
-                // Show only first 12 payments for better display
-                const displaySchedule = data.schedule.slice(0, 12);
-                
-                displaySchedule.forEach(row => {
-                    html += `
-                        <tr>
-                            <td>${row.period}</td>
-                            <td>${formatCurrency(row.payment, symbol)}</td>
-                            <td>${formatCurrency(row.interest, symbol)}</td>
-                            <td>${formatCurrency(row.principal, symbol)}</td>
-                            <td>${formatCurrency(row.balance, symbol)}</td>
-                        </tr>
-                    `;
-                });
-                
-                // Add note if there are more payments
-                if (data.schedule.length > 12) {
-                    html += `
-                        <tr>
-                            <td colspan="5" style="text-align: center; font-style: italic;">
-                                ... and ${data.schedule.length - 12} more payments
-                            </td>
-                        </tr>
-                    `;
-                }
-                
-                html += '</tbody>';
-                table.innerHTML = html;
-                container.classList.add('show');
-            }
-        } catch (error) {
-            console.error('Error:', error);
-            alert('Failed to generate amortization schedule.');
-        }
-    }
-
-    // Compare Plans
-    async function comparePlans() {
-        const principal = parseFloat(document.getElementById('compare-principal').value);
-        const rate1 = parseFloat(document.getElementById('compare-rate1').value);
-        const rate2 = parseFloat(document.getElementById('compare-rate2').value);
-        const time = parseFloat(document.getElementById('compare-time').value);
-        const currency = document.getElementById('compare-currency').value;
-        const symbol = currencySymbols[currency];
-
-        if (isNaN(principal) || isNaN(rate1) || isNaN(rate2) || isNaN(time)) {
-            alert('Please enter valid numbers for all fields');
-            return;
-        }
-
-        try {
-            const response = await fetch('{% url "compare_plans_api" %}', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': csrftoken
-                },
-                body: JSON.stringify({
-                    principal,
-                    rate1,
-                    rate2,
-                    time
-                })
-            });
-
-            const data = await response.json();
-
-            if (data.success) {
-                document.getElementById('compare-plan1-result').textContent = formatCurrency(data.plan1_total, symbol);
-                document.getElementById('compare-plan2-result').textContent = formatCurrency(data.plan2_total, symbol);
-                document.getElementById('compare-diff-result').textContent = formatCurrency(data.difference, symbol);
-                document.getElementById('compare-better-result').textContent = `Plan ${data.better_plan}`;
-                document.getElementById('compare-results').style.display = 'block';
-            } else {
-                alert('Error: ' + data.error);
-            }
-        } catch (error) {
-            console.error('Error:', error);
-            alert('Calculation failed. Please try again.');
-        }
-    }
-
-    // Reset calculator
-    function resetInterestCalculator(type) {
-        if (type === 'simple') {
-            document.getElementById('simple-principal').value = 1000;
-            document.getElementById('simple-rate').value = 5;
-            document.getElementById('simple-time').value = 5;
-            document.getElementById('simple-time-unit').value = 'years';
-            document.getElementById('simple-results').style.display = 'none';
-        } else if (type === 'compound') {
-            document.getElementById('compound-principal').value = 1000;
-            document.getElementById('compound-rate').value = 5;
-            document.getElementById('compound-time').value = 5;
-            document.getElementById('compound-frequency').value = 12;
-            document.getElementById('compound-contribution').value = 100;
-            document.getElementById('compound-contribution-frequency').value = 12;
-            document.getElementById('compound-results').style.display = 'none';
-        } else if (type === 'loan') {
-            document.getElementById('loan-amount').value = 100000;
-            document.getElementById('loan-rate').value = 5;
-            document.getElementById('loan-term').value = 30;
-            document.getElementById('loan-frequency').value = 12;
-            document.getElementById('loan-results').style.display = 'none';
-            document.getElementById('amortization-container').classList.remove('show');
-        } else if (type === 'compare') {
-            document.getElementById('compare-principal').value = 1000;
-            document.getElementById('compare-rate1').value = 5;
-            document.getElementById('compare-rate2').value = 7;
-            document.getElementById('compare-time').value = 5;
-            document.getElementById('compare-results').style.display = 'none';
-        }
-    }
-
-    // Open share modal
-    function openInterestShareModal(type) {
-        const modal = document.getElementById('interestShareModal');
-        const container = document.getElementById('interestShareCardContainer');
-        
-        let cardHTML = '';
-        const timestamp = new Date().toLocaleString();
-        
-        if (type === 'simple') {
-            const principal = document.getElementById('simple-principal-result').textContent;
-            const interest = document.getElementById('simple-interest-result').textContent;
-            const total = document.getElementById('simple-total-result').textContent;
-            
-            cardHTML = `
-                <div class="interest-share-card">
-                    <h4><i class="fas fa-percentage"></i> Simple Interest Calculation</h4>
-                    <div style="margin: 20px 0;">
-                        <div style="margin: 10px 0; display: flex; justify-content: space-between;">
-                            <span>Principal:</span>
-                            <strong>${principal}</strong>
-                        </div>
-                        <div style="margin: 10px 0; display: flex; justify-content: space-between;">
-                            <span>Interest Earned:</span>
-                            <strong>${interest}</strong>
-                        </div>
-                        <div style="margin: 10px 0; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.3); display: flex; justify-content: space-between;">
-                            <span>Total Amount:</span>
-                            <strong style="font-size: 1.3rem;">${total}</strong>
-                        </div>
-                    </div>
-                    <div style="margin-top: 20px; font-size: 0.85rem; opacity: 0.8; text-align: center;">
-                        ${timestamp}<br>
-                        <strong style="margin-top: 10px; display: block;">© 21K Tools</strong>
-                    </div>
-                </div>
-            `;
-        } else if (type === 'compound') {
-            const principal = document.getElementById('compound-principal-result').textContent;
-            const contributions = document.getElementById('compound-contributions-result').textContent;
-            const interest = document.getElementById('compound-interest-result').textContent;
-            const total = document.getElementById('compound-total-result').textContent;
-            
-            cardHTML = `
-                <div class="interest-share-card">
-                    <h4><i class="fas fa-chart-line"></i> Compound Interest Calculation</h4>
-                    <div style="margin: 20px 0;">
-                        <div style="margin: 10px 0; display: flex; justify-content: space-between;">
-                            <span>Principal:</span>
-                            <strong>${principal}</strong>
-                        </div>
-                        <div style="margin: 10px 0; display: flex; justify-content: space-between;">
-                            <span>Contributions:</span>
-                            <strong>${contributions}</strong>
-                        </div>
-                        <div style="margin: 10px 0; display: flex; justify-content: space-between;">
-                            <span>Interest Earned:</span>
-                            <strong>${interest}</strong>
-                        </div>
-                        <div style="margin: 10px 0; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.3); display: flex; justify-content: space-between;">
-                            <span>Total Amount:</span>
-                            <strong style="font-size: 1.3rem;">${total}</strong>
-                        </div>
-                    </div>
-                    <div style="margin-top: 20px; font-size: 0.85rem; opacity: 0.8; text-align: center;">
-                        ${timestamp}<br>
-                        <strong style="margin-top: 10px; display: block;">© 21K Tools</strong>
-                    </div>
-                </div>
-            `;
-        } else if (type === 'loan') {
-            const payment = document.getElementById('loan-payment-result').textContent;
-            const interest = document.getElementById('loan-interest-result').textContent;
-            const total = document.getElementById('loan-total-result').textContent;
-            
-            cardHTML = `
-                <div class="interest-share-card">
-                    <h4><i class="fas fa-home"></i> Loan Calculation</h4>
-                    <div style="margin: 20px 0;">
-                        <div style="margin: 10px 0; display: flex; justify-content: space-between;">
-                            <span>Payment per Period:</span>
-                            <strong style="font-size: 1.3rem;">${payment}</strong>
-                        </div>
-                        <div style="margin: 10px 0; display: flex; justify-content: space-between;">
-                            <span>Total Interest:</span>
-                            <strong>${interest}</strong>
-                        </div>
-                        <div style="margin: 10px 0; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.3); display: flex; justify-content: space-between;">
-                            <span>Total Cost:</span>
-                            <strong>${total}</strong>
-                        </div>
-                    </div>
-                    <div style="margin-top: 20px; font-size: 0.85rem; opacity: 0.8; text-align: center;">
-                        ${timestamp}<br>
-                        <strong style="margin-top: 10px; display: block;">© 21K Tools</strong>
-                    </div>
-                </div>
-            `;
-        } else if (type === 'compare') {
-            const plan1 = document.getElementById('compare-plan1-result').textContent;
-            const plan2 = document.getElementById('compare-plan2-result').textContent;
-            const diff = document.getElementById('compare-diff-result').textContent;
-            const better = document.getElementById('compare-better-result').textContent;
-            
-            cardHTML = `
-                <div class="interest-share-card">
-                    <h4><i class="fas fa-balance-scale"></i> Plan Comparison</h4>
-                    <div style="margin: 20px 0;">
-                        <div style="margin: 10px 0; display: flex; justify-content: space-between;">
-                            <span>Plan 1 Total:</span>
-                            <strong>${plan1}</strong>
-                        </div>
-                        <div style="margin: 10px 0; display: flex; justify-content: space-between;">
-                            <span>Plan 2 Total:</span>
-                            <strong>${plan2}</strong>
-                        </div>
-                        <div style="margin: 10px 0; display: flex; justify-content: space-between;">
-                            <span>Difference:</span>
-                            <strong>${diff}</strong>
-                        </div>
-                        <div style="margin: 10px 0; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.3); display: flex; justify-content: space-between;">
-                            <span>Better Option:</span>
-                            <strong style="font-size: 1.3rem;">${better}</strong>
-                        </div>
-                    </div>
-                    <div style="margin-top: 20px; font-size: 0.85rem; opacity: 0.8; text-align: center;">
-                        ${timestamp}<br>
-                        <strong style="margin-top: 10px; display: block;">© 21K Tools</strong>
-                    </div>
-                </div>
-            `;
-        }
-        
-        container.innerHTML = cardHTML;
-        modal.classList.add('active');
-    }
-
-    // Close share modal
-    function closeInterestShareModal() {
-        document.getElementById('interestShareModal').classList.remove('active');
-    }
-
-    // Download share card
-    function downloadInterestShareCard() {
-        const container = document.getElementById('interestShareCardContainer');
-        
-        html2canvas(container, {
-            backgroundColor: '#ffffff',
-            scale: 2,
-            logging: false
-        }).then(canvas => {
-            const link = document.createElement('a');
-            link.download = `interest-calculation-${Date.now()}.png`;
-            link.href = canvas.toDataURL('image/png');
-            link.click();
-        }).catch(err => {
-            console.error('Failed to generate image:', err);
-            alert('Failed to generate image. Please try again.');
-        });
-    }
-
-    // Toggle FAQ
-    function toggleInterestFAQ(element) {
-        const wasActive = element.classList.contains('active');
-        
-        document.querySelectorAll('.interest-faq-item').forEach(item => {
-            item.classList.remove('active');
-        });
-        
-        if (!wasActive) {
-            element.classList.add('active');
-        }
-    }
-
-    // Close modal on outside click
-    document.getElementById('interestShareModal').addEventListener('click', function(e) {
-        if (e.target === this) {
-            closeInterestShareModal();
-        }
-    });
-
-    // Close modal with Escape key
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') {
-            closeInterestShareModal();
-        }
-    });
-
-    // Initialize default values
-    document.addEventListener('DOMContentLoaded', function() {
-        // Set default values for all calculators
-        resetInterestCalculator('simple');
-        resetInterestCalculator('compound');
-        resetInterestCalculator('loan');
-        resetInterestCalculator('compare');
-    });
+const csrftoken='{{ csrf_token }}';
+const cs={INR:'₹',USD:'$',EUR:'€',GBP:'£'};
+function fmt(v,sym){return (sym||'')+(parseFloat(v)||0).toFixed(2).replace(/\d(?=(\d{3})+\.)/g,'$&,');}
+function switchTab(n,el){document.querySelectorAll('.ic-content').forEach(c=>c.classList.remove('active'));document.querySelectorAll('.ic-tab').forEach(t=>t.classList.remove('active'));document.getElementById('ic-'+n).classList.add('active');el.classList.add('active');}
+async function calcSimple(){
+  const p=+document.getElementById('simple-principal').value,r=+document.getElementById('simple-rate').value,t=+document.getElementById('simple-time').value,tu=document.getElementById('simple-time-unit').value,cur=document.getElementById('simple-currency').value,s=cs[cur];
+  if(isNaN(p)||isNaN(r)||isNaN(t)){alert('Please enter valid numbers.');return;}
+  const res=await fetch('{% url "simple_interest_api" %}',{method:'POST',headers:{'Content-Type':'application/json','X-CSRFToken':csrftoken},body:JSON.stringify({principal:p,rate:r,time:t,time_unit:tu})});
+  const d=await res.json();
+  if(d.success){document.getElementById('simple-p-res').textContent=fmt(d.principal,s);document.getElementById('simple-i-res').textContent=fmt(d.interest,s);document.getElementById('simple-t-res').textContent=fmt(d.total,s);document.getElementById('simple-results').style.display='block';}
+  else alert('Error: '+d.error);
+}
+async function calcCompound(){
+  const p=+document.getElementById('compound-principal').value,r=+document.getElementById('compound-rate').value,t=+document.getElementById('compound-time').value,f=+document.getElementById('compound-frequency').value,c=+document.getElementById('compound-contribution').value||0,cf=+document.getElementById('compound-contribution-frequency').value,cur=document.getElementById('compound-currency').value,s=cs[cur];
+  if(isNaN(p)||isNaN(r)||isNaN(t)){alert('Please enter valid numbers.');return;}
+  const res=await fetch('{% url "compound_interest_api" %}',{method:'POST',headers:{'Content-Type':'application/json','X-CSRFToken':csrftoken},body:JSON.stringify({principal:p,rate:r,time:t,frequency:f,contribution:c,contribution_frequency:cf})});
+  const d=await res.json();
+  if(d.success){document.getElementById('compound-p-res').textContent=fmt(d.principal,s);document.getElementById('compound-c-res').textContent=fmt(d.contributions,s);document.getElementById('compound-i-res').textContent=fmt(d.interest,s);document.getElementById('compound-t-res').textContent=fmt(d.total,s);document.getElementById('compound-results').style.display='block';}
+  else alert('Error: '+d.error);
+}
+async function calcLoan(){
+  const a=+document.getElementById('loan-amount').value,r=+document.getElementById('loan-rate').value,t=+document.getElementById('loan-term').value,f=+document.getElementById('loan-frequency').value,cur=document.getElementById('loan-currency').value,s=cs[cur];
+  if(isNaN(a)||isNaN(r)||isNaN(t)){alert('Please enter valid numbers.');return;}
+  const res=await fetch('{% url "loan_calculator_api" %}',{method:'POST',headers:{'Content-Type':'application/json','X-CSRFToken':csrftoken},body:JSON.stringify({amount:a,rate:r,term:t,frequency:f,include_schedule:false})});
+  const d=await res.json();
+  if(d.success){document.getElementById('loan-p-res').textContent=fmt(d.payment,s);document.getElementById('loan-i-res').textContent=fmt(d.total_interest,s);document.getElementById('loan-t-res').textContent=fmt(d.total_cost,s);document.getElementById('loan-results').style.display='block';}
+  else alert('Error: '+d.error);
+}
+async function toggleAmort(){
+  const w=document.getElementById('amort-wrap');
+  if(w.classList.contains('show')){w.classList.remove('show');return;}
+  const a=+document.getElementById('loan-amount').value,r=+document.getElementById('loan-rate').value,t=+document.getElementById('loan-term').value,f=+document.getElementById('loan-frequency').value,cur=document.getElementById('loan-currency').value,s=cs[cur];
+  const res=await fetch('{% url "loan_calculator_api" %}',{method:'POST',headers:{'Content-Type':'application/json','X-CSRFToken':csrftoken},body:JSON.stringify({amount:a,rate:r,term:t,frequency:f,include_schedule:true})});
+  const d=await res.json();
+  if(d.success&&d.schedule){
+    const tbl=document.getElementById('amort-table');
+    let h=`<thead><tr><th>Period</th><th>Payment</th><th>Interest</th><th>Principal</th><th>Balance</th></tr></thead><tbody>`;
+    d.schedule.slice(0,12).forEach(row=>{h+=`<tr><td>${row.period}</td><td>${fmt(row.payment,s)}</td><td>${fmt(row.interest,s)}</td><td>${fmt(row.principal,s)}</td><td>${fmt(row.balance,s)}</td></tr>`;});
+    if(d.schedule.length>12) h+=`<tr><td colspan="5" style="text-align:center;font-style:italic;color:#718096;font-size:.8rem;">…and ${d.schedule.length-12} more payments</td></tr>`;
+    tbl.innerHTML=h+'</tbody>';w.classList.add('show');
+  }
+}
+async function calcCompare(){
+  const p=+document.getElementById('compare-principal').value,r1=+document.getElementById('compare-rate1').value,r2=+document.getElementById('compare-rate2').value,t=+document.getElementById('compare-time').value,cur=document.getElementById('compare-currency').value,s=cs[cur];
+  if(isNaN(p)||isNaN(r1)||isNaN(r2)||isNaN(t)){alert('Please enter valid numbers.');return;}
+  const res=await fetch('{% url "compare_plans_api" %}',{method:'POST',headers:{'Content-Type':'application/json','X-CSRFToken':csrftoken},body:JSON.stringify({principal:p,rate1:r1,rate2:r2,time:t})});
+  const d=await res.json();
+  if(d.success){document.getElementById('compare-p1-res').textContent=fmt(d.plan1_total,s);document.getElementById('compare-p2-res').textContent=fmt(d.plan2_total,s);document.getElementById('compare-d-res').textContent=fmt(d.difference,s);document.getElementById('compare-b-res').textContent='Plan '+d.better_plan;document.getElementById('compare-results').style.display='block';}
+  else alert('Error: '+d.error);
+}
+function resetIC(t){
+  const map={simple:{p:'simple-principal',r:'simple-rate',t:'simple-time'},compound:{p:'compound-principal',r:'compound-rate',t:'compound-time'},loan:{a:'loan-amount',r:'loan-rate',t:'loan-term'},compare:{p:'compare-principal',r1:'compare-rate1',r2:'compare-rate2',t:'compare-time'}};
+  if(t==='simple'){document.getElementById('simple-principal').value=10000;document.getElementById('simple-rate').value=8;document.getElementById('simple-time').value=3;document.getElementById('simple-results').style.display='none';}
+  else if(t==='compound'){document.getElementById('compound-principal').value=10000;document.getElementById('compound-rate').value=12;document.getElementById('compound-time').value=10;document.getElementById('compound-results').style.display='none';}
+  else if(t==='loan'){document.getElementById('loan-amount').value=3000000;document.getElementById('loan-rate').value=8.5;document.getElementById('loan-term').value=20;document.getElementById('loan-results').style.display='none';document.getElementById('amort-wrap').classList.remove('show');}
+  else if(t==='compare'){document.getElementById('compare-principal').value=500000;document.getElementById('compare-rate1').value=8;document.getElementById('compare-rate2').value=10;document.getElementById('compare-time').value=10;document.getElementById('compare-results').style.display='none';}
+}
+function toggleFaq(btn){const i=btn.closest('.faq-item'),o=i.classList.contains('open');document.querySelectorAll('.faq-item.open').forEach(e=>e.classList.remove('open'));if(!o)i.classList.add('open');}
 </script>
 {% endblock %}
+
