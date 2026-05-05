@@ -35,7 +35,7 @@ a { text-decoration: none; color: inherit; }
   padding: 36px 20px 60px;
 }
 
-/* ═══════════════ SITE INTRO (replaces hero — blog-first signal) ═══════════════ */
+/* ═══════════════ SITE INTRO ═══════════════ */
 .site-intro {
   background: rgba(255,255,255,0.97);
   border-radius: 24px;
@@ -99,10 +99,8 @@ a { text-decoration: none; color: inherit; }
   font-weight: 700;
 }
 
-/* ═══════════════ FEATURED GUIDE (editorial centerpiece) ═══════════════ */
-.featured-guide {
-  margin-bottom: 48px;
-}
+/* ═══════════════ FEATURED GUIDE ═══════════════ */
+.featured-guide { margin-bottom: 48px; }
 
 .section-label {
   display: inline-block;
@@ -127,7 +125,6 @@ a { text-decoration: none; color: inherit; }
   text-shadow: 0 2px 16px rgba(0,0,0,0.15);
 }
 
-/* Featured = 1 large card + 2 small side cards */
 .featured-grid {
   display: grid;
   grid-template-columns: 1.6fr 1fr;
@@ -253,7 +250,6 @@ a { text-decoration: none; color: inherit; }
 
 .read-btn:hover { opacity: 0.88; transform: translateY(-1px); }
 
-/* Small guide cards */
 .guide-card-small {
   background: rgba(255,255,255,0.97);
   border-radius: 18px;
@@ -386,7 +382,6 @@ a { text-decoration: none; color: inherit; }
   margin-bottom: 18px;
 }
 
-/* Article link list inside topic card */
 .article-links {
   display: flex;
   flex-direction: column;
@@ -415,7 +410,7 @@ a { text-decoration: none; color: inherit; }
   margin-top: 1px;
 }
 
-/* ═══════════════ RECENT BLOGS (horizontal scroll — preserved) ═══════════════ */
+/* ═══════════════ RECENT BLOGS ═══════════════ */
 .recent-blogs-section { margin-bottom: 56px; }
 
 .blogs-section-header {
@@ -571,7 +566,7 @@ a { text-decoration: none; color: inherit; }
 
 .scroll-dot.active { background:#fff; width:20px; border-radius:3px; }
 
-/* ═══════════════ INLINE EXPLAINER (editorial block about tools) ═══════════════ */
+/* ═══════════════ INLINE EXPLAINER ═══════════════ */
 .explainer-section { margin-bottom: 56px; }
 
 .explainer-grid {
@@ -632,7 +627,7 @@ a { text-decoration: none; color: inherit; }
 
 .explainer-cta:hover { color: #764ba2; }
 
-/* ═══════════════ TOOLS (secondary — below content) ═══════════════ */
+/* ═══════════════ TOOLS ═══════════════ */
 .tools-section { margin-bottom: 56px; }
 
 .tools-grid {
@@ -685,9 +680,7 @@ a { text-decoration: none; color: inherit; }
 .tool-app:hover .app-icon { transform: scale(1.1) rotate(5deg); }
 
 .app-title { font-size:1.1rem; font-weight:800; color:#1a1a2e; margin-bottom:10px; letter-spacing:-0.015em; }
-
 .app-description { color:#5a6480; font-size:0.88rem; line-height:1.68; margin-bottom:18px; }
-
 .app-features { display:flex; flex-wrap:wrap; gap:7px; justify-content:center; margin-bottom:20px; }
 
 .feature-badge {
@@ -714,7 +707,6 @@ a { text-decoration: none; color: inherit; }
 
 /* ═══════════════ FAQ ═══════════════ */
 .faq-section { margin-bottom: 56px; }
-
 .faq-wrap { max-width:780px; margin:0 auto; display:flex; flex-direction:column; gap:12px; }
 
 .faq-item {
@@ -840,11 +832,7 @@ a { text-decoration: none; color: inherit; }
 {% block content %}
 <main class="main-content">
 
-  <!-- ══════════════════════════════════════════════
-       1. SITE INTRO — editorial, blog-first signal
-       This is what Google crawls first.
-       It reads as a publication, not a tool directory.
-  ═══════════════════════════════════════════════ -->
+  <!-- ══ 1. SITE INTRO ══ -->
   <section class="site-intro">
     <div class="site-intro-label">📖 Guides, Explainers &amp; Free Tools</div>
     <h1>Understanding <em>everyday digital tools</em> — and using them better</h1>
@@ -864,35 +852,32 @@ a { text-decoration: none; color: inherit; }
       <span class="intro-topic">🔗 URL &amp; Links</span>
       <span class="intro-topic">📷 QR Codes</span>
       <span class="intro-topic">🖼️ Image Formats</span>
-      <span class="intro-topic">📐 Unit Conversion</span>
       <span class="intro-topic">💰 Finance Calculators</span>
       <span class="intro-topic">⏱️ Time &amp; Dates</span>
     </div>
   </section>
 
-  <!-- ══════════════════════════════════════════════
-       2. FEATURED GUIDES — editorial centrepiece
-  ═══════════════════════════════════════════════ -->
+  <!-- ══ 2. FEATURED GUIDES ══ -->
   <section class="featured-guide">
     <div class="section-label">Featured Guides</div>
     <div class="section-title">Start with these</div>
 
     <div class="featured-grid">
 
-      <!-- Large featured card — link to your best/longest blog post -->
-      <a href="{% url 'blog_list' %}" class="guide-card-featured">
+      <!-- Large featured card -->
+      <a href="/blog/scanned-pdf-vs-native-pdf-why-ocr-makes-the-difference/" class="guide-card-featured">
         <div class="guide-featured-banner">
           <i class="fas fa-file-pdf big-icon"></i>
-          <span class="guide-badge">Complete Guide</span>
-          <h2>Everything you need to know about PDF files — compression, conversion, and security</h2>
+          <span class="guide-badge">In-Depth Guide</span>
+          <h2>Scanned PDF vs native PDF — why OCR makes all the difference</h2>
         </div>
         <div class="guide-featured-body">
           <p>
-            PDF is the most widely used document format in the world, yet most users only scratch the surface of what it can do. This guide covers how PDF compression works under the hood, the difference between lossless and lossy compression, when to convert vs. when to compress, and how to protect PDFs with passwords — all explained in plain language with practical examples.
+            Most people don't realise there are two fundamentally different types of PDFs. A native PDF has a real text layer — you can copy text, search it, and it stays sharp at any zoom. A scanned PDF is just a photograph of a document. OCR (Optical Character Recognition) is the technology that turns that photograph into searchable, editable text. This guide explains exactly how that process works, when it fails, and how to tell which type of PDF you're working with before you start.
           </p>
           <div class="guide-meta">
             <div class="guide-meta-left">
-              <span><i class="fas fa-clock"></i> 8 min read</span>
+              <span><i class="fas fa-clock"></i> 6 min read</span>
               <span><i class="fas fa-tag"></i> PDF</span>
             </div>
             <span class="read-btn">Read guide <i class="fas fa-arrow-right"></i></span>
@@ -900,28 +885,28 @@ a { text-decoration: none; color: inherit; }
         </div>
       </a>
 
-      <!-- Small card 1 -->
-      <a href="{% url 'blog_list' %}" class="guide-card-small">
+      <!-- Small card 1 — QR -->
+      <a href="/blog/what-is-a-dynamic-qr-code-and-why-does-it-matter/" class="guide-card-small">
         <div class="guide-small-top">
           <div class="guide-small-icon"><i class="fas fa-qrcode"></i></div>
           <div class="guide-small-cat">QR Codes</div>
         </div>
         <div class="guide-small-body">
-          <h3>How QR codes store data — and why some fail to scan</h3>
-          <p>A QR code is not just a picture. It encodes data using a matrix of black and white modules with built-in error correction. Learn why some codes scan instantly while others fail, and how to generate codes that work every time.</p>
+          <h3>What is a dynamic QR code and why does it matter?</h3>
+          <p>A static QR code burns the destination directly into the pattern — change the URL and you need a new code. A dynamic code stores a redirect that you can update any time. This explains when each type makes sense and what you give up with each.</p>
           <span class="guide-link">Read guide <i class="fas fa-arrow-right"></i></span>
         </div>
       </a>
 
-      <!-- Small card 2 -->
-      <a href="{% url 'blog_list' %}" class="guide-card-small">
+      <!-- Small card 2 — URL -->
+      <a href="/blog/how-url-shorteners-actually-work-and-what-makes-21k-tools-shortener-different/" class="guide-card-small">
         <div class="guide-small-top">
           <div class="guide-small-icon"><i class="fas fa-link"></i></div>
           <div class="guide-small-cat">URLs &amp; Links</div>
         </div>
         <div class="guide-small-body">
-          <h3>URL shorteners explained — how they redirect, track clicks, and store data</h3>
-          <p>When you shorten a URL, a redirect is created on a server that points your short link to the original destination. This guide explains HTTP 301 vs 302 redirects, click tracking, and when short links can hurt your SEO.</p>
+          <h3>How URL shorteners actually work — redirects, tracking, and what happens in between</h3>
+          <p>When you click a short link, your browser hits a redirect server before reaching the destination. This guide explains how that works, what click tracking captures, and the difference between 301 and 302 redirects.</p>
           <span class="guide-link">Read guide <i class="fas fa-arrow-right"></i></span>
         </div>
       </a>
@@ -929,117 +914,118 @@ a { text-decoration: none; color: inherit; }
     </div>
   </section>
 
-  <!-- ══════════════════════════════════════════════
-       3. TOPIC GUIDE CARDS — shows Google topical depth
-  ═══════════════════════════════════════════════ -->
+  <!-- ══ 3. TOPIC GUIDE CARDS ══ -->
   <section class="topics-section">
     <div class="section-label">Browse by Topic</div>
     <div class="section-title">In-depth guides for every tool</div>
 
     <div class="topics-grid">
 
+      <!-- PDF & Documents -->
       <div class="topic-card">
         <div class="topic-head">
           <div class="topic-icon"><i class="fas fa-file-pdf"></i></div>
           <h3>PDF &amp; Documents</h3>
         </div>
         <p class="topic-desc">
-          PDFs are everywhere — in assignments, contracts, invoices, and e-books. Understanding how to compress, merge, split, and convert them saves hours of work every week.
+          PDFs are everywhere — in assignments, contracts, invoices, and e-books. Understanding how to convert, merge, and work with them saves hours of work every week.
         </p>
         <div class="article-links">
-          <a href="{% url 'blog_list' %}" class="article-link">How to compress a PDF without losing quality</a>
-          <a href="{% url 'blog_list' %}" class="article-link">PDF vs DOCX — which format should you send?</a>
-          <a href="{% url 'blog_list' %}" class="article-link">How to merge multiple PDFs into one file</a>
-          <a href="{% url 'blog_list' %}" class="article-link">What is OCR and how does it work with PDFs?</a>
+          <a href="/blog/scanned-pdf-vs-native-pdf-why-ocr-makes-the-difference/" class="article-link">Scanned PDF vs native PDF — why OCR makes the difference</a>
+          <a href="/blog/how-to-convert-pdf-to-word-free-online-in-2026-mdash-step-by-step-21k-tools/" class="article-link">How to convert PDF to Word free online — step by step</a>
+          <a href="/blog/how-to-merge-pdf-files-online-free/" class="article-link">How to merge multiple PDF files online free</a>
+          <a href="/blog/top-7-free-pdf-tools-in-2026/" class="article-link">Top 7 free PDF tools in 2026</a>
         </div>
       </div>
 
+      <!-- QR Codes -->
       <div class="topic-card">
         <div class="topic-head">
           <div class="topic-icon"><i class="fas fa-qrcode"></i></div>
           <h3>QR Codes</h3>
         </div>
         <p class="topic-desc">
-          QR codes went from niche barcodes to everyday infrastructure. Menus, payment pages, event tickets, and business cards all use them — but most people do not know how to create or use them well.
+          QR codes are on menus, payment pages, business cards and event tickets. Most people don't know how to create ones that actually work well — or how to spot ones that might be dangerous.
         </p>
         <div class="article-links">
-          <a href="{% url 'blog_list' %}" class="article-link">Static vs dynamic QR codes — what's the difference?</a>
-          <a href="{% url 'blog_list' %}" class="article-link">How to make a QR code that links to a PDF</a>
-          <a href="{% url 'blog_list' %}" class="article-link">Why QR codes stop working — and how to fix them</a>
-          <a href="{% url 'blog_list' %}" class="article-link">Best QR code sizes for print vs. digital use</a>
+          <a href="/blog/what-is-a-dynamic-qr-code-and-why-does-it-matter/" class="article-link">Static vs dynamic QR codes — what's the actual difference?</a>
+          <a href="/blog/how-to-create-a-qr-code-free-for-business-in-2026-complete-guide-21k-tools/" class="article-link">How to create a QR code for business in 2026 — complete guide</a>
+          <a href="/blog/can-a-qr-code-get-hacked-what-scammers-do-and-how-to-stay-safe/" class="article-link">Can a QR code get hacked? What scammers do and how to stay safe</a>
+          <a href="/blog/why-static-qr-codes-are-making-a-comeback-in-2026-dynamic-risks-exposed/" class="article-link">Why static QR codes are making a comeback — dynamic risks exposed</a>
         </div>
       </div>
 
+      <!-- Image Formats & Resizing -->
       <div class="topic-card">
         <div class="topic-head">
           <div class="topic-icon"><i class="fas fa-image"></i></div>
           <h3>Image Formats &amp; Resizing</h3>
         </div>
         <p class="topic-desc">
-          JPEG, PNG, WebP, SVG — every image format has a different use case. Choosing the wrong one costs you file size, load speed, or image quality. This guide breaks it all down.
+          JPEG, PNG, WebP — every image format has a different use case. Choosing the wrong one costs you file size, load speed, or image quality. These guides break it all down.
         </p>
         <div class="article-links">
-          <a href="{% url 'blog_list' %}" class="article-link">JPG vs PNG vs WebP — which format to use and when</a>
-          <a href="{% url 'blog_list' %}" class="article-link">How to resize an image without losing sharpness</a>
-          <a href="{% url 'blog_list' %}" class="article-link">What is image compression and how does it work?</a>
-          <a href="{% url 'blog_list' %}" class="article-link">Correct image sizes for WhatsApp, Instagram and LinkedIn</a>
+          <a href="/blog/png-vs-jpg-vs-webp-which-image-format-is-best-in-2026/" class="article-link">PNG vs JPG vs WebP — which image format is best in 2026?</a>
+          <a href="/blog/how-to-compress-images-online-free-without-losing-quality-2026-21k-tools/" class="article-link">How to compress images online free without losing quality</a>
+          <a href="/blog/why-your-instagram-images-look-blurry-after-upload-exact-pixel-sizes-for-every-platform-in-2026/" class="article-link">Why your Instagram images look blurry — exact pixel sizes for every platform</a>
+          <a href="/blog/why-90-of-resized-images-still-load-like-trash-on-mobile-in-2026/" class="article-link">Why 90% of resized images still load poorly on mobile in 2026</a>
         </div>
       </div>
 
+      <!-- URLs & Link Management -->
       <div class="topic-card">
         <div class="topic-head">
           <div class="topic-icon"><i class="fas fa-link"></i></div>
           <h3>URLs &amp; Link Management</h3>
         </div>
         <p class="topic-desc">
-          A URL is more than an address — it contains the protocol, domain, path, query parameters, and fragments that tell a browser exactly what to fetch and how. Understanding URLs helps you work smarter online.
+          A URL is more than just an address. Understanding how shorteners, redirects, and link tracking actually work helps you use them smarter and spot the ones that aren't safe.
         </p>
         <div class="article-links">
-          <a href="{% url 'blog_list' %}" class="article-link">Anatomy of a URL — every part explained simply</a>
-          <a href="{% url 'blog_list' %}" class="article-link">How URL shorteners work — redirects, tracking, expiry</a>
-          <a href="{% url 'blog_list' %}" class="article-link">UTM parameters — what they are and how to use them</a>
-          <a href="{% url 'blog_list' %}" class="article-link">Do short links hurt SEO? The honest answer</a>
+          <a href="/blog/how-url-shorteners-actually-work-and-what-makes-21k-tools-shortener-different/" class="article-link">How URL shorteners actually work — and what makes 21K Tools different</a>
+          <a href="/blog/how-to-shorten-a-url-free-in-2026-complete-guide-with-analytics-21k-tools/" class="article-link">How to shorten a URL free in 2026 — complete guide with analytics</a>
+          <a href="/blog/top-7-url-shorteners/" class="article-link">Top 7 URL shorteners compared in 2026</a>
         </div>
       </div>
 
+      <!-- Finance & Calculators -->
       <div class="topic-card">
         <div class="topic-head">
           <div class="topic-icon"><i class="fas fa-percentage"></i></div>
           <h3>Finance &amp; Calculators</h3>
         </div>
         <p class="topic-desc">
-          Simple interest, compound interest, EMIs, loan amortisation — these calculations affect every financial decision you make. Understanding the maths behind them puts you in control.
+          Simple interest, compound interest, EMIs — these calculations affect every financial decision. Understanding the maths behind them puts you in control.
         </p>
         <div class="article-links">
-          <a href="{% url 'blog_list' %}" class="article-link">Simple interest vs compound interest — with real examples</a>
-          <a href="{% url 'blog_list' %}" class="article-link">How EMI is calculated — the formula explained step by step</a>
-          <a href="{% url 'blog_list' %}" class="article-link">What is compounding frequency and why it matters</a>
-          <a href="{% url 'blog_list' %}" class="article-link">How to compare two loan offers using an interest calculator</a>
+          <a href="/blog/simple-interest-vs-compound-interest-whats-the-difference-and-why-it-matters-more-than-you-think/" class="article-link">Simple interest vs compound interest — why it matters more than you think</a>
+          <a href="/blog/how-banks-calculate-your-loan-emi-whats-actually-happening-every-month/" class="article-link">How banks calculate your loan EMI — what's actually happening every month</a>
+          <a href="/blog/how-to-calculate-your-exact-age-online-free-in-2026-the-complete-guide/" class="article-link">How to calculate your exact age online free — the complete guide</a>
+          <a href="/blog/how-to-calculate-time-difference-between-two-dates-free-online-complete-2026-guide/" class="article-link">How to calculate time difference between two dates — complete guide</a>
         </div>
       </div>
 
+      <!-- Browser Tools & Privacy -->
       <div class="topic-card">
         <div class="topic-head">
-          <div class="topic-icon"><i class="fas fa-balance-scale"></i></div>
-          <h3>Units &amp; Conversions</h3>
+          <div class="topic-icon"><i class="fas fa-shield-alt"></i></div>
+          <h3>Browser Tools &amp; Privacy</h3>
         </div>
         <p class="topic-desc">
-          Metric, imperial, SI — the world runs on multiple unit systems and converting between them accurately matters in science, cooking, construction, and everyday life.
+          What does "processing locally in your browser" actually mean? How long do your files live on free converters? These guides explain what really happens behind the scenes.
         </p>
         <div class="article-links">
-          <a href="{% url 'blog_list' %}" class="article-link">Metric vs imperial — a complete comparison guide</a>
-          <a href="{% url 'blog_list' %}" class="article-link">Temperature conversion explained — Celsius, Fahrenheit, Kelvin</a>
-          <a href="{% url 'blog_list' %}" class="article-link">How to convert units without making errors</a>
-          <a href="{% url 'blog_list' %}" class="article-link">Common unit conversion mistakes and how to avoid them</a>
+          <a href="/blog/what-does-processing-locally-in-your-browser-actually-mean/" class="article-link">What does "processing locally in your browser" actually mean?</a>
+          <a href="/blog/how-long-does-your-file-really-live-on-free-online-converters/" class="article-link">How long does your file really live on free online converters?</a>
+          <a href="/blog/why-browser-based-tools-are-outperforming-native-apps-for-everyday-tasks-in-2026/" class="article-link">Why browser-based tools are outperforming native apps in 2026</a>
+          <a href="/blog/client-side-vs-cloud-why-privacy-first-tools-feel-faster-on-low-end-phones-right-now/" class="article-link">Client-side vs cloud — why privacy-first tools feel faster on low-end phones</a>
         </div>
       </div>
 
     </div>
   </section>
 
-  <!-- ══════════════════════════════════════════════
-       4. RECENT BLOG POSTS — horizontal scroll
-  ═══════════════════════════════════════════════ -->
+  <!-- ══ 4. RECENT BLOG POSTS ══ -->
   {% if recent_blog_posts %}
   <section class="recent-blogs-section">
     <div class="blogs-section-header">
@@ -1097,10 +1083,7 @@ a { text-decoration: none; color: inherit; }
   </section>
   {% endif %}
 
-  <!-- ══════════════════════════════════════════════
-       5. INLINE EXPLAINERS — editorial deep-dives
-       (pure text content — very important for AdSense)
-  ═══════════════════════════════════════════════ -->
+  <!-- ══ 5. INLINE EXPLAINERS ══ -->
   <section class="explainer-section">
     <div class="section-label">How It All Works</div>
     <div class="section-title">Understanding the technology behind the tools</div>
@@ -1118,7 +1101,7 @@ a { text-decoration: none; color: inherit; }
         <p>
           Understanding this distinction helps you choose the right compression level: use high compression only for text-heavy documents, and moderate compression for PDFs with important photographs or diagrams.
         </p>
-        <a href="{% url 'blog_list' %}" class="explainer-cta">Read the full PDF guide <i class="fas fa-arrow-right"></i></a>
+        <a href="/blog/scanned-pdf-vs-native-pdf-why-ocr-makes-the-difference/" class="explainer-cta">Read the full PDF guide <i class="fas fa-arrow-right"></i></a>
       </div>
 
       <div class="explainer-card">
@@ -1132,7 +1115,7 @@ a { text-decoration: none; color: inherit; }
         <p>
           Every QR code also includes error correction data, which means up to 30% of the code's modules can be damaged or obscured and it will still scan correctly — which is why you can place a logo in the centre of a QR code and it often still works.
         </p>
-        <a href="{% url 'blog_list' %}" class="explainer-cta">Read the full QR code guide <i class="fas fa-arrow-right"></i></a>
+        <a href="/blog/what-is-a-dynamic-qr-code-and-why-does-it-matter/" class="explainer-cta">Read the full QR code guide <i class="fas fa-arrow-right"></i></a>
       </div>
 
       <div class="explainer-card">
@@ -1146,7 +1129,7 @@ a { text-decoration: none; color: inherit; }
         <p>
           The moment between the click and the redirect is also when click analytics are recorded — the shortener logs the timestamp, the country derived from your IP address, the referring page, and the device type. This is what powers the click dashboards in link management tools.
         </p>
-        <a href="{% url 'blog_list' %}" class="explainer-cta">Read the full URL guide <i class="fas fa-arrow-right"></i></a>
+        <a href="/blog/how-url-shorteners-actually-work-and-what-makes-21k-tools-shortener-different/" class="explainer-cta">Read the full URL guide <i class="fas fa-arrow-right"></i></a>
       </div>
 
       <div class="explainer-card">
@@ -1160,15 +1143,13 @@ a { text-decoration: none; color: inherit; }
         <p>
           The compounding frequency changes everything. Monthly compounding at the same annual rate produces more interest than annual compounding, because the base amount grows faster. This is why banks often advertise annual rates but compound monthly — always check the effective annual rate (EAR) when comparing financial products.
         </p>
-        <a href="{% url 'blog_list' %}" class="explainer-cta">Use the interest calculator <i class="fas fa-arrow-right"></i></a>
+        <a href="/blog/simple-interest-vs-compound-interest-whats-the-difference-and-why-it-matters-more-than-you-think/" class="explainer-cta">Read the interest guide <i class="fas fa-arrow-right"></i></a>
       </div>
 
     </div>
   </section>
 
-  <!-- ══════════════════════════════════════════════
-       6. TOOLS — now secondary, below all content
-  ═══════════════════════════════════════════════ -->
+  <!-- ══ 6. TOOLS ══ -->
   <section class="tools-section">
     <div class="section-label">Free Tools</div>
     <div class="section-title">Use the tools directly — no sign-up needed</div>
@@ -1280,9 +1261,7 @@ a { text-decoration: none; color: inherit; }
     </div>
   </section>
 
-  <!-- ══════════════════════════════════════════════
-       7. FAQ
-  ═══════════════════════════════════════════════ -->
+  <!-- ══ 7. FAQ ══ -->
   <section class="faq-section">
     <div class="section-label">FAQ</div>
     <div class="section-title">Common questions answered</div>
@@ -1294,7 +1273,7 @@ a { text-decoration: none; color: inherit; }
           <span class="faq-q-icon"><i class="fas fa-chevron-down"></i></span>
         </button>
         <div class="faq-body">
-          <div class="faq-a">The guides cover digital file formats (PDF, JPEG, PNG, MP4), URL structures and link management, QR code encoding, image compression, unit conversion across metric and imperial systems, and financial calculations including simple and compound interest. New guides are published regularly based on reader questions.</div>
+          <div class="faq-a">The guides cover digital file formats (PDF, JPEG, PNG), URL structures and link management, QR code encoding and security, image compression and resizing, browser-based vs cloud processing, and financial calculations including EMI and compound interest. New guides are published regularly based on reader questions.</div>
         </div>
       </div>
 
@@ -1304,7 +1283,7 @@ a { text-decoration: none; color: inherit; }
           <span class="faq-q-icon"><i class="fas fa-chevron-down"></i></span>
         </button>
         <div class="faq-body">
-          <div class="faq-a">Yes. Every tool on 21K Tools is permanently free with no subscription tiers, no trial limits, and no watermarks. The platform is independently built and maintained by its developer, Nithish, a student from RGUKT Basar.</div>
+          <div class="faq-a">Yes. Every tool on 21K Tools is permanently free with no subscription tiers, no trial limits, and no watermarks. The platform is independently built and maintained by its developer, Nithish.</div>
         </div>
       </div>
 
@@ -1314,7 +1293,7 @@ a { text-decoration: none; color: inherit; }
           <span class="faq-q-icon"><i class="fas fa-chevron-down"></i></span>
         </button>
         <div class="faq-body">
-          <div class="faq-a">Most tools process data entirely inside your browser using JavaScript, which means no file ever leaves your device. For operations that require server-side processing (such as certain video conversions), files are processed and immediately discarded — they are never stored, indexed, or shared.</div>
+          <div class="faq-a">Most tools process everything inside your browser using JavaScript — your file never leaves your device. Two exceptions exist: the URL Shortener (which stores the redirect server-side so links resolve) and the QR Code file upload feature (which uses Cloudinary to host the file). Both are explained in full in the Privacy Policy.</div>
         </div>
       </div>
 
@@ -1324,15 +1303,13 @@ a { text-decoration: none; color: inherit; }
           <span class="faq-q-icon"><i class="fas fa-chevron-down"></i></span>
         </button>
         <div class="faq-body">
-          <div class="faq-a">Send an email to <a href="mailto:contact@21k.tools">contact@21k.tools</a>. Guide topics are often chosen based on reader questions, and several existing articles were written because users asked about a specific concept they could not find explained clearly elsewhere.</div>
+          <div class="faq-a">Send an email to <a href="mailto:contact@21k.tools" style="color:#667eea;font-weight:600;">contact@21k.tools</a>. Guide topics are often chosen based on reader questions, and several existing articles were written because users asked about a specific concept they couldn't find explained clearly elsewhere.</div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ══════════════════════════════════════════════
-       8. CTA
-  ═══════════════════════════════════════════════ -->
+  <!-- ══ 8. CTA ══ -->
   <div class="cta-band">
     <h2>Guides and tools — in one place</h2>
     <p>Read the guide to understand how something works. Use the tool to get it done. No account needed, ever.</p>
@@ -1357,7 +1334,7 @@ a { text-decoration: none; color: inherit; }
   "@type": "WebSite",
   "name": "21K Tools",
   "url": "https://21k.tools/",
-  "description": "In-depth guides on PDF compression, QR codes, URL shorteners, image formats, unit conversion, and finance calculators — with free browser-based tools.",
+  "description": "In-depth guides on PDF compression, QR codes, URL shorteners, image formats, and finance calculators — with free browser-based tools.",
   "potentialAction": {
     "@type": "SearchAction",
     "target": "https://21k.tools/?search={search_term_string}",
@@ -1370,9 +1347,9 @@ a { text-decoration: none; color: inherit; }
   "@context": "https://schema.org",
   "@type": "FAQPage",
   "mainEntity": [
-    {"@type":"Question","name":"What topics do the guides on this site cover?","acceptedAnswer":{"@type":"Answer","text":"PDF, JPEG, PNG, URL structures, QR code encoding, image compression, unit conversion, and financial calculations including compound interest."}},
+    {"@type":"Question","name":"What topics do the guides on this site cover?","acceptedAnswer":{"@type":"Answer","text":"PDF, image formats, URL structures, QR code encoding and security, browser-based vs cloud processing, and financial calculations including EMI and compound interest."}},
     {"@type":"Question","name":"Are the tools free to use permanently?","acceptedAnswer":{"@type":"Answer","text":"Yes. Every tool is permanently free with no subscription tiers, trial limits, or watermarks."}},
-    {"@type":"Question","name":"Do my files get uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"Most tools process data inside your browser. Files that require server processing are immediately discarded after conversion."}},
+    {"@type":"Question","name":"Do my files get uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"Most tools process data inside your browser — your file never leaves your device. Two exceptions are the URL Shortener and QR Code file upload, both explained in the Privacy Policy."}},
     {"@type":"Question","name":"How do I suggest a new guide topic?","acceptedAnswer":{"@type":"Answer","text":"Email contact@21k.tools. Guide topics are chosen based on reader questions."}}
   ]
 }
