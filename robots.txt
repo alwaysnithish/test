@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /blog/dashboard
+
+Sitemap: https://21k.tools/blog/sitemap.xml
+Sitemap: https://21k.tools/sitemap.xml
