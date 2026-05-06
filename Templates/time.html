@@ -72,6 +72,43 @@ a{text-decoration:none;color:inherit}
 .faq-item.open .faq-body{max-height:380px}
 .faq-a{padding:0 22px 18px;font-size:.88rem;color:#4a5568;line-height:1.78;border-top:1px solid #f1f5f9;padding-top:13px}
 @media(max-width:700px){.page-wrap{padding:18px 14px 56px}.page-header{padding:28px 20px}.prose-section{padding:24px 18px}.tc-body{padding:18px 16px}.tc-grid{grid-template-columns:1fr}.tc-actions{flex-direction:column}.unit-grid{grid-template-columns:1fr 1fr}}
+  /* ── Go to Tool pill ── */
+#gtt-pill {
+  position: fixed;
+  right: 20px;
+  bottom: 50%;
+  transform: translateY(50%);
+  z-index: 999;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  background: #fff;
+  color: #5b50d6;
+  border-radius: 30px;
+  padding: 10px 14px;
+  text-decoration: none;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.18);
+  transition: transform 0.22s, box-shadow 0.22s;
+  line-height: 1.4;
+  text-align: center;
+}
+#gtt-pill:hover { transform: translateY(50%) scale(1.07); box-shadow: 0 10px 32px rgba(0,0,0,0.24); }
+#gtt-pill span {
+  width: 30px; height: 30px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px; color: #fff;
+}
+.gtt-bounce { animation: gtt-b 1.5s ease-in-out infinite; }
+@keyframes gtt-b { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-4px)} }
+@media(max-width:480px){ #gtt-pill{ right: 10px; } }
 </style>
 {% endblock %}
 
@@ -267,6 +304,10 @@ a{text-decoration:none;color:inherit}
     </div>
   </div>
 </div>
+<a href="#tool-section" id="gtt-pill" aria-label="Jump to tool">
+  <span>↓</span>
+  Go to<br>Tool
+</a>
 {% endblock %}
 {% block extra_js %}
 <script>
@@ -323,5 +364,18 @@ function resetTc(type){
 }
 
 function toggleFaq(btn){const i=btn.closest('.faq-item'),o=i.classList.contains('open');document.querySelectorAll('.faq-item.open').forEach(e=>e.classList.remove('open'));if(!o)i.classList.add('open');}
-</script>
+/* ── Go to Tool floating pill ── */
+(function(){
+  var btn = document.getElementById('gtt-pill');
+  var tool = document.getElementById('tool-section');
+  if (!btn || !tool) return;
+  function update(){
+    var toolTop = tool.getBoundingClientRect().top + window.scrollY;
+    var visible = window.scrollY > 160 && window.scrollY < toolTop - 120;
+    btn.style.display = visible ? 'flex' : 'none';
+    if (visible) btn.querySelector('span').classList.add('gtt-bounce');
+  }
+  window.addEventListener('scroll', update, { passive: true });
+  update();
+})();</script>
 {% endblock %}
