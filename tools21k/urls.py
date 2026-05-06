@@ -79,6 +79,10 @@ urlpatterns = [
         'document_root': settings.BASE_DIR, 
         'path': 'ads.txt'
     }),
+    re_path(r'^robots\.txt$', serve, {
+        'document_root': settings.BASE_DIR, 
+        'path': 'robots.txt'
+    }),
 ]
 
 # Static and Media files serving
