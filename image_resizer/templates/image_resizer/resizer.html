@@ -613,7 +613,43 @@ a { text-decoration: none; color: inherit; }
   .ri-btn { width: 100%; justify-content: center; }
   .fmt-table { font-size: 0.8rem; }
   .fmt-table th, .fmt-table td { padding: 8px 9px; }
+}/* ── Go to Tool pill ── */
+#gtt-pill {
+  position: fixed;
+  right: 20px;
+  bottom: 50%;
+  transform: translateY(50%);
+  z-index: 999;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  background: #fff;
+  color: #5b50d6;
+  border-radius: 30px;
+  padding: 10px 14px;
+  text-decoration: none;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.18);
+  transition: transform 0.22s, box-shadow 0.22s;
+  line-height: 1.4;
+  text-align: center;
 }
+#gtt-pill:hover { transform: translateY(50%) scale(1.07); box-shadow: 0 10px 32px rgba(0,0,0,0.24); }
+#gtt-pill span {
+  width: 30px; height: 30px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px; color: #fff;
+}
+.gtt-bounce { animation: gtt-b 1.5s ease-in-out infinite; }
+@keyframes gtt-b { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-4px)} }
+@media(max-width:480px){ #gtt-pill{ right: 10px; } }
 </style>
 {% endblock %}
 
@@ -773,7 +809,7 @@ a { text-decoration: none; color: inherit; }
   </div>
 
   <!-- ══════════ TOOL ══════════ -->
-  <div class="tool-section">
+  <div class="tool-section" id="tool-section">
     <div class="tool-section-header">
       <h2><i class="fas fa-crop-alt"></i> Resize Your Image</h2>
       <p>Free · No sign-up · Preview before downloading · Nothing stored on our servers</p>
@@ -1010,7 +1046,10 @@ a { text-decoration: none; color: inherit; }
 
   </div>
 
-</div><!-- /page-wrap -->
+</div><!-- /page-wrap --><a href="#tool-section" id="gtt-pill" aria-label="Jump to tool">
+  <span>↓</span>
+  Go to<br>Tool
+</a>
 {% endblock %}
 
 {% block extra_js %}
@@ -1227,6 +1266,19 @@ function toggleFaq(btn) {
   const open = item.classList.contains('open');
   document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
   if (!open) item.classList.add('open');
-}
+}/* ── Go to Tool floating pill ── */
+(function(){
+  var btn = document.getElementById('gtt-pill');
+  var tool = document.getElementById('tool-section');
+  if (!btn || !tool) return;
+  function update(){
+    var toolTop = tool.getBoundingClientRect().top + window.scrollY;
+    var visible = window.scrollY > 160 && window.scrollY < toolTop - 120;
+    btn.style.display = visible ? 'flex' : 'none';
+    if (visible) btn.querySelector('span').classList.add('gtt-bounce');
+  }
+  window.addEventListener('scroll', update, { passive: true });
+  update();
+})();
 </script>
 {% endblock %}
