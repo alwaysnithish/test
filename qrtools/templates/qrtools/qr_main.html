@@ -1887,6 +1887,111 @@ input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.2); }
   Go to<br>Tool
 </a>
 {% endblock %}
+{% block schema_markup %}
+{{ block.super }}
+ 
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "QR Code Generator and Scanner",
+  "@id": "https://21k.tools/qrcodeandscanner/#webapp",
+  "url": "https://21k.tools/qrcodeandscanner/",
+  "description": "Free QR code generator and scanner. Generate QR codes from any URL or text, scan with camera or upload image, add logos, choose error correction level, and download as PNG. Supports dynamic QR codes. No sign-up required.",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Web Browser",
+  "browserRequirements": "Requires JavaScript",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "featureList": [
+    "Generate QR codes from URL, text, WiFi credentials, contact info, or email",
+    "Scan QR codes using device camera or image upload",
+    "Add custom logo or image to QR code center",
+    "Choose error correction level (L / M / Q / H)",
+    "Download QR code as PNG",
+    "Supports dynamic QR codes with editable redirect",
+    "All generation runs in the browser — no URL stored unless dynamic QR selected",
+    "No sign-up required"
+  ],
+  "author": { "@id": "https://21k.tools/#author-nithish" },
+  "publisher": {
+    "@type": "Organization",
+    "name": "21K Tools",
+    "url": "https://21k.tools/"
+  },
+  "dateModified": "2026-05-01",
+  "inLanguage": "en"
+}
+</script>
+ 
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "21K Tools",
+      "item": "https://21k.tools/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "QR Code Generator & Scanner",
+      "item": "https://21k.tools/qrcodeandscanner/"
+    }
+  ]
+}
+</script>
+ 
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is the difference between a static and dynamic QR code?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A static QR code permanently encodes the destination URL or text into the dot pattern. You cannot change it after printing. A dynamic QR code encodes a short redirect URL that points to your real destination — you can update the destination any time without reprinting the code. Dynamic codes are tracked (click count, location, device type) while static codes have no analytics."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why can I place a logo in the centre of a QR code and it still scans?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Every QR code includes built-in error correction data. At the highest error correction level (H), up to 30% of the code's modules can be obscured or damaged and the code will still scan correctly. A logo placed in the centre covers some modules, but as long as the logo area is within the error correction capacity, the scanner can reconstruct the missing data. Use error correction level H when adding a logo, and keep the logo to under 25% of the total QR code area."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why is my QR code not scanning after printing?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The most common causes are insufficient contrast (the code is too light, printed on a coloured background, or the ink bled), the quiet zone is too small (QR codes require a blank border of at least 4 modules around all edges), the printed size is too small (minimum 2cm × 2cm for most phone cameras), or the print quality degraded the fine detail. Always test-scan before large print runs."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why doesn't my WiFi QR code prompt to join the network?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "WiFi QR codes use a specific format: WIFI:T:WPA;S:NetworkName;P:Password;;. Some older Android versions and most iPhone camera apps need iOS 11+ to recognise this format natively. If scanning opens a browser page instead of a WiFi prompt, the device doesn't support native WiFi QR — the user needs to manually enter the credentials shown."
+      }
+    }
+  ]
+}
+</script>
+ 
+{% endblock %}
+ 
+ 
 
 {% block extra_js %}
 <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
