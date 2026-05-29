@@ -351,6 +351,167 @@ a{text-decoration:none;color:inherit}
   Go to<br>Tool
 </a>
 {% endblock %}
+
+{% block schema_markup %}
+{{ block.super }}
+ 
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Interest Calculator — Simple, Compound, Loan EMI & Compare Plans",
+  "@id": "https://21k.tools/interestcalculator/#webapp",
+  "url": "https://21k.tools/interestcalculator/",
+  "description": "Free interest calculator covering simple interest, compound interest with regular contributions, loan EMI with full amortisation schedule, and side-by-side plan comparison. No sign-up required.",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Web Browser",
+  "browserRequirements": "Requires JavaScript",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "featureList": [
+    "Simple interest calculation",
+    "Compound interest with monthly contributions",
+    "Loan EMI calculator with amortisation schedule",
+    "Side-by-side plan comparison",
+    "Multi-currency support (INR, USD, EUR, GBP)",
+    "Adjustable compounding frequency (daily, monthly, quarterly, annually)"
+  ],
+  "author": { "@id": "https://21k.tools/#author-nithish" },
+  "publisher": {
+    "@type": "Organization",
+    "name": "21K Tools",
+    "url": "https://21k.tools/"
+  },
+  "dateModified": "2026-05-01",
+  "inLanguage": "en"
+}
+</script>
+ 
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "21K Tools",
+      "item": "https://21k.tools/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Interest Calculator",
+      "item": "https://21k.tools/interestcalculator/"
+    }
+  ]
+}
+</script>
+ 
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Why does daily compounding give a higher amount than monthly at the same annual rate?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "More frequent compounding means interest is added to the principal more often, creating a larger base for each subsequent calculation. With daily compounding, interest is added 365 times per year; with monthly, 12 times. Each addition is smaller but happens more often. The difference between monthly and daily is genuinely small — usually fractions of a percent per year — but over decades and large amounts it adds up to real money."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why does my loan balance barely drop in the first few years?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Because your outstanding balance is highest at the start, so the interest portion of each EMI is also at its highest. The EMI formula keeps your payment constant, which means the principal portion starts small and grows as the balance reduces. Open the amortisation schedule in the loan calculator to see exactly how your specific loan breaks down each month."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What does the regular contribution field in compound interest actually simulate?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It simulates investing a fixed amount at regular intervals — the same structure as a Systematic Investment Plan (SIP) or a recurring deposit. Each contribution adds new principal that also begins compounding from the moment it's added. The cumulative effect of both the initial lump sum and the regular contributions compounding simultaneously is what produces the large totals over long time periods."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Are these interest calculations accurate enough for real financial decisions?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "For understanding the mechanics and comparing scenarios, yes. For actual loan agreements or investment decisions, verify with your lender or financial advisor — banks may include processing fees, prepayment penalties, tax implications, and other factors the calculator doesn't model. Use this to build intuition and understand what you're agreeing to, not as the final number on a contract."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is an amortisation schedule and why does it matter?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "An amortisation schedule shows every payment in a loan broken into its interest and principal components, with the remaining balance after each payment. It matters because it shows you concretely how much of each EMI goes to the bank versus reducing what you actually owe. Most borrowers are surprised to see how slowly the balance drops in early payments. Use the loan calculator, run any home loan scenario, and click 'Amortisation' to see this for your numbers."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the difference between nominal interest rate and effective annual rate (EAR)?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The nominal rate is the advertised annual percentage. The effective annual rate (EAR) is what you actually pay or earn after accounting for compounding frequency. A loan at 12% compounded monthly has an EAR of 12.68%, not 12%. Always compare EAR when evaluating financial products — the EAR is the honest apples-to-apples number. Formula: EAR = (1 + r/n)^n − 1, where r is the nominal rate and n is the number of compounding periods per year."
+      }
+    }
+  ]
+}
+</script>
+ 
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "How to calculate compound interest with monthly SIP contributions",
+  "description": "Step-by-step guide to using the compound interest calculator with regular monthly contributions, simulating a SIP-style investment.",
+  "author": { "@id": "https://21k.tools/#author-nithish" },
+  "step": [
+    {
+      "@type": "HowToStep",
+      "position": "1",
+      "name": "Enter your principal amount",
+      "text": "Type your initial lump-sum investment in the Principal Amount field. For example, ₹10,000."
+    },
+    {
+      "@type": "HowToStep",
+      "position": "2",
+      "name": "Set the annual interest rate",
+      "text": "Enter the expected annual return rate as a percentage. For mutual funds or SIPs, a historical estimate of 10–12% is commonly used."
+    },
+    {
+      "@type": "HowToStep",
+      "position": "3",
+      "name": "Choose compounding frequency",
+      "text": "Select Monthly for SIP-style calculations. Most mutual funds and FDs compound monthly."
+    },
+    {
+      "@type": "HowToStep",
+      "position": "4",
+      "name": "Add your monthly contribution",
+      "text": "Enter your SIP amount (e.g. ₹500/month) in the Monthly Contribution field and set Contribution Frequency to Monthly."
+    },
+    {
+      "@type": "HowToStep",
+      "position": "5",
+      "name": "Click Calculate",
+      "text": "The results show your total principal invested, total contributions, interest earned, and final amount — broken out so you can see exactly how much came from compounding."
+    }
+  ]
+}
+</script>
+ 
+{% endblock %}
+
 {% block extra_js %}
 <script>
 const csrftoken='{{ csrf_token }}';
