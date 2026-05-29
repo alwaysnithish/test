@@ -1051,6 +1051,67 @@ a { text-decoration: none; color: inherit; }
   Go to<br>Tool
 </a>
 {% endblock %}
+{% block schema_markup %}
+{{ block.super }}
+ 
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Image Resizer — Resize and Compress JPG, PNG, WebP",
+  "@id": "https://21k.tools/imageresizer/#webapp",
+  "url": "https://21k.tools/imageresizer/",
+  "description": "Free browser-based image resizer. Resize photos to exact pixel dimensions or by percentage. Compress JPG, PNG, and WebP images while keeping quality. No upload to server — all processing runs in your browser.",
+  "applicationCategory": "MultimediaApplication",
+  "operatingSystem": "Web Browser",
+  "browserRequirements": "Requires JavaScript",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "featureList": [
+    "Resize images to exact pixel width and height",
+    "Resize by percentage",
+    "Compress JPG, PNG, and WebP",
+    "Maintain aspect ratio option",
+    "All processing runs in the browser — no file uploaded to server",
+    "Download resized image instantly"
+  ],
+  "author": { "@id": "https://21k.tools/blog/author/Nithish" },
+  "publisher": {
+    "@type": "Organization",
+    "name": "21K Tools",
+    "url": "https://21k.tools/"
+  },
+  "dateModified": "2026-05-01",
+  "inLanguage": "en"
+}
+</script>
+ 
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "21K Tools",
+      "item": "https://21k.tools/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Image Resizer",
+      "item": "https://21k.tools/imageresizer/"
+    }
+  ]
+}
+</script>
+ 
+{% endblock %}
+ 
 
 {% block extra_js %}
 <script>
