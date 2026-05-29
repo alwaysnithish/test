@@ -318,6 +318,101 @@ a{text-decoration:none;color:inherit}
   Go to<br>Tool
 </a>
 {% endblock %}
+
+{% block schema_markup %}
+{{ block.super }}
+ 
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Age Calculator — Exact Age in Years, Months and Days",
+  "@id": "https://21k.tools/agecalculator/#webapp",
+  "url": "https://21k.tools/agecalculator/",
+  "description": "Free age calculator. Enter a date of birth and get your exact age in years, months, and days. Handles leap years correctly. Useful for age verification, eligibility checks, and document applications including Aadhaar, PAN, passport, and school admissions.",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Web Browser",
+  "browserRequirements": "Requires JavaScript",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "featureList": [
+    "Exact age in years, months, and days",
+    "Handles leap years correctly",
+    "Calculate age on any reference date (not just today)",
+    "Useful for Aadhaar, PAN, passport, and school admission eligibility checks",
+    "Instant result — no sign-up required"
+  ],
+  "author": { "@id": "https://21k.tools/blog/author/Nithish" },
+  "publisher": {
+    "@type": "Organization",
+    "name": "21K Tools",
+    "url": "https://21k.tools/"
+  },
+  "dateModified": "2026-05-01",
+  "inLanguage": "en"
+}
+</script>
+ 
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "21K Tools",
+      "item": "https://21k.tools/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Age Calculator",
+      "item": "https://21k.tools/agecalculator/"
+    }
+  ]
+}
+</script>
+ 
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How does the age calculator handle leap years?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The calculator counts actual calendar days between the birth date and the reference date, so leap years are handled automatically. A person born on February 29 in a leap year will show their birthday as February 28 in non-leap years for age milestone calculations."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I use this to check age eligibility for government schemes?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. You can set any reference date to check your exact age as of a specific cutoff — for school admissions, senior citizen scheme eligibility, passport applications, or any age-restricted government benefit. Enter your date of birth and the scheme's eligibility cutoff date as the reference date."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the difference between age in completed years vs age in total days?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Age in completed years is what most people understand as their age — the number of full years since birth. Age in total days is the exact count of calendar days since birth. The total days figure is used in precise legal and medical contexts where the exact number of elapsed days matters, not just the completed year count."
+      }
+    }
+  ]
+}
+</script>
+ 
+{% endblock %}
+ 
+
 {% block extra_js %}
 <script>
 const csrftoken='{{ csrf_token }}';let currentAgeData=null;
