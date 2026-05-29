@@ -1010,6 +1010,69 @@ a { text-decoration: none; color: inherit; }
 </a>
 {% endblock %}
 
+{% block schema_markup %}
+{{ block.super }}
+ 
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "File Converter — 100+ Formats including PDF to Word, JPG to PNG, MP4 to MP3",
+  "@id": "https://21k.tools/fileconverter/#webapp",
+  "url": "https://21k.tools/fileconverter/",
+  "description": "Free file converter supporting 100+ formats. Convert documents, images, audio, and video including PDF to Word, JPG to PNG, MP4 to MP3, and more. No installation required.",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Web Browser",
+  "browserRequirements": "Requires JavaScript",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "featureList": [
+    "PDF to Word (DOCX)",
+    "Word to PDF",
+    "JPG to PNG and PNG to JPG",
+    "Image format conversion: WebP, BMP, GIF, TIFF",
+    "Audio conversion: MP3, WAV, AAC, FLAC, OGG",
+    "Video conversion: MP4, AVI, MOV, MKV",
+    "100+ supported format pairs",
+    "No software installation required"
+  ],
+  "author": { "@id": "https://21k.tools/#author-nithish" },
+  "publisher": {
+    "@type": "Organization",
+    "name": "21K Tools",
+    "url": "https://21k.tools/"
+  },
+  "dateModified": "2026-05-01",
+  "inLanguage": "en"
+}
+</script>
+ 
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "21K Tools",
+      "item": "https://21k.tools/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "File Converter",
+      "item": "https://21k.tools/fileconverter/"
+    }
+  ]
+}
+</script>
+ 
+{% endblock %}
+
 {% block extra_js %}
 <script>
 const conversionMap = {{ conversion_map|safe }};
