@@ -309,6 +309,126 @@ a{text-decoration:none;color:inherit}
   Go to<br>Tool
 </a>
 {% endblock %}
+
+{% block schema_markup %}
+{{ block.super }}
+ 
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Time Calculator — Date Difference, Add/Subtract Time & Unit Converter",
+  "@id": "https://21k.tools/timecalculator/#webapp",
+  "url": "https://21k.tools/timecalculator/",
+  "description": "Free time calculator with three modes: calculate the exact difference between two dates, add or subtract time from any date, and convert between seconds, minutes, hours, days, weeks, months, and years. Handles daylight saving transitions and month-end edge cases correctly.",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Web Browser",
+  "browserRequirements": "Requires JavaScript",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "featureList": [
+    "Exact date and time difference in years, months, days, hours, minutes, seconds",
+    "Add or subtract days, hours, minutes, seconds from any date",
+    "Time unit converter (seconds ↔ minutes ↔ hours ↔ days ↔ weeks ↔ months ↔ years)",
+    "Handles daylight saving time transitions correctly",
+    "Handles month-end edge cases (January 31 + 1 month = February 28)",
+    "Copy results to clipboard",
+    "No sign-up required"
+  ],
+  "author": { "@id": "https://21k.tools/#author-nithish" },
+  "publisher": {
+    "@type": "Organization",
+    "name": "21K Tools",
+    "url": "https://21k.tools/"
+  },
+  "dateModified": "2026-05-01",
+  "inLanguage": "en"
+}
+</script>
+ 
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "21K Tools",
+      "item": "https://21k.tools/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Time Calculator",
+      "item": "https://21k.tools/timecalculator/"
+    }
+  ]
+}
+</script>
+ 
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Why does the converter label months as 30.44 days average instead of 30 or 31?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Because a calendar month is not a fixed number of days. February has 28 or 29 days. Every other month alternates between 30 and 31. The average over a complete year accounting for the leap year cycle is 365.25 ÷ 12 = 30.4375 days, rounded to 30.44. This is the best approximation for a unit conversion that's inherently imprecise. If you need the number of days in a specific calendar month, use the time difference tool with specific start and end dates instead."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What happens when I add 1 month to January 31st?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The result is February 28th (or 29th in a leap year). February 31st doesn't exist, so the date snaps to the last valid day of the month. The same happens with March 31st + 1 month = April 30th, and any other month-end date that doesn't have an equivalent in the following month. This is the most common convention in calendar software."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does the time difference tool account for daylight saving time?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Calculations run server-side using the timestamps provided, and the system's timezone library correctly handles DST transitions. If you enter times spanning a spring-forward transition in a DST-observing timezone, you'll get 23 hours rather than 24 for that day — which is the correct elapsed time. The clock jumped forward one hour, so only 23 hours actually elapsed on that calendar date."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I calculate the time difference between two different timezones?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Convert both times to UTC before entering them, then calculate the difference. UTC never observes daylight saving time, so the conversion is unambiguous regardless of location. Alternatively, convert both to the same local timezone, then enter the converted times. The calculator uses whatever times you type — it does not apply automatic timezone adjustment."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the most accurate way to track a 30-day deadline from a specific date?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Use the Add/Subtract tool with 30 days (not 1 month). '30 days' means exactly 30 × 24 × 60 × 60 seconds from the start time, which maps to a specific calendar date regardless of month lengths. '1 month' from January 31st would give February 28th (29 days later in a non-leap year), which is not the same as 30 days. For legal and contractual deadlines, '30 days' almost always means exactly 30 calendar days, not one calendar month."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Which time unit conversions are exact and which are approximations?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Seconds to minutes (÷ 60), minutes to hours (÷ 60), hours to days (÷ 24), and days to weeks (÷ 7) are all exact integer ratios. Converting to months or years is an approximation because months have different lengths. This calculator uses 30.44 days per month (365.25 ÷ 12) and 365 days per year."
+      }
+    }
+  ]
+}
+</script>
+ 
+{% endblock %}
+
 {% block extra_js %}
 <script>
 const csrftoken='{{ csrf_token }}';
