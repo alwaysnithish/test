@@ -1069,6 +1069,170 @@ a { text-decoration: none; color: inherit; }
 </a>
 
 {% endblock %}
+ 
+{% block schema_markup %}
+{{ block.super }}
+ 
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "PDF Toolkit — Compress, Split, Merge, Rotate, Watermark & More",
+  "@id": "https://21k.tools/pdftools/#webapp",
+  "url": "https://21k.tools/pdftools/",
+  "description": "Free PDF toolkit with 8 operations: compress, split, merge, rotate, add watermark, extract text, convert to images, and view metadata. Most operations run in your browser — no file uploaded to a server.",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Web Browser",
+  "browserRequirements": "Requires JavaScript",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "featureList": [
+    "Compress PDF — reduce file size by resampling embedded images",
+    "Split PDF into individual pages or custom page ranges (lossless)",
+    "Merge multiple PDFs into one document (lossless)",
+    "Rotate pages — stored as a flag, no re-encoding",
+    "Add text watermark as a vector layer",
+    "Extract text content with page numbers",
+    "Convert PDF pages to PNG or JPEG images",
+    "View PDF metadata: author, creation date, page count, encryption status",
+    "Files deleted immediately after download",
+    "Supports PDFs up to 100MB"
+  ],
+  "author": { "@id": "https://21k.tools/blog/author/Nithish" },
+  "publisher": {
+    "@type": "Organization",
+    "name": "21K Tools",
+    "url": "https://21k.tools/"
+  },
+  "dateModified": "2026-05-01",
+  "inLanguage": "en"
+}
+</script>
+ 
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "21K Tools",
+      "item": "https://21k.tools/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "PDF Tools",
+      "item": "https://21k.tools/pdftools/"
+    }
+  ]
+}
+</script>
+ 
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Why does compressing a text-only PDF barely change the file size?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Text content and vector graphics inside a PDF are usually already compressed with Flate (similar to ZIP). There's not much left to remove. Compression makes the most difference on PDFs that contain large raster images — photographs, scanned pages, or embedded diagrams — where image quality can be traded for file size."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is splitting or merging a PDF completely lossless?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Split and merge operations work at the PDF object level — they copy or concatenate page streams without re-encoding any content. The resulting pages are identical to the corresponding pages in the originals. No image quality is affected, no fonts are modified."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why can't the text extractor read my scanned PDF?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A scanned PDF is essentially a series of images — there is no actual text layer. The text you see is a photograph of text, not stored text data. Extracting meaningful text from a scanned PDF requires OCR (character recognition from pixels), which this tool supports for clean scans. The accuracy depends heavily on scan quality — a clear, well-lit scan of a typed document extracts well; a faded photocopy does not."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What DPI should I choose when converting a PDF to images?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "For screen viewing or web use, 96–150 DPI is sufficient and keeps file sizes manageable. For printing, 300 DPI is the standard. Higher DPI produces sharper images but proportionally larger files — a 600 DPI image of a page has four times as many pixels as the same page at 300 DPI."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is my PDF stored on your server after I download the result?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Files are deleted immediately after your download completes. Files that aren't downloaded expire automatically after 60 minutes. Processing happens in isolated memory — the file is not indexed, logged, or retained."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What happens if PDF processing fails?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "You'll see a specific error message. Common causes are encrypted PDFs without the password provided, corrupted files, or files that use obscure internal structures. Try re-uploading — if the same file consistently fails with a specific operation, a different tool in the grid sometimes succeeds where the first attempt didn't."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the difference between a scanned PDF and a native PDF?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A native PDF is created digitally — exported from Word, Google Docs, or a design tool. It contains actual text layers, embedded fonts, and vector graphics, which makes it searchable and selectable. A scanned PDF is a photograph of a document wrapped in a PDF container. It contains only raster images with no actual text data. To tell which you have: open it and try to select text — if you can highlight individual words, it's a native PDF."
+      }
+    }
+  ]
+}
+</script>
+ 
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "How to compress a PDF without losing visible quality",
+  "description": "Steps to reduce PDF file size using the 21K Tools PDF Toolkit while preserving acceptable image quality.",
+  "author": { "@id": "https://21k.tools/#author-nithish" },
+  "step": [
+    {
+      "@type": "HowToStep",
+      "position": "1",
+      "name": "Upload your PDF",
+      "text": "Click 'Choose PDF File' or drag and drop your PDF onto the upload area. Supported up to 100MB."
+    },
+    {
+      "@type": "HowToStep",
+      "position": "2",
+      "name": "Select Compress PDF",
+      "text": "Once the file is loaded, click the Compress PDF card in the tools grid."
+    },
+    {
+      "@type": "HowToStep",
+      "position": "3",
+      "name": "Set the quality slider",
+      "text": "Use the quality slider (1–100). A value of 75 is the recommended default — it produces a significant size reduction while keeping images visually sharp. For text-only PDFs, the slider has minimal effect."
+    },
+    {
+      "@type": "HowToStep",
+      "position": "4",
+      "name": "Click Process and download",
+      "text": "Click Process to run compression. The results panel shows original size, compressed size, and percentage saved. Click Download to save your compressed PDF."
+    }
+  ]
+}
+</script>
 
 {% block extra_js %}
 <script>
