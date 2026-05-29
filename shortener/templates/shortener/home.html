@@ -1065,6 +1065,67 @@ a { text-decoration: none; color: inherit; }
 </a>
 {% endblock %}
 
+{% block schema_markup %}
+{{ block.super }}
+ 
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "URL Shortener with QR Code and Click Analytics",
+  "@id": "https://21k.tools/urlshortener/#webapp",
+  "url": "https://21k.tools/urlshortener/",
+  "description": "Free URL shortener. Paste any long URL to get a short 21k.tools link, a QR code, and a real-time click analytics dashboard showing total clicks, countries, and devices. No sign-up required for basic shortening.",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Web Browser",
+  "browserRequirements": "Requires JavaScript",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "featureList": [
+    "Shorten any URL to a 21k.tools short link",
+    "QR code automatically generated for every short link",
+    "Real-time click analytics: total clicks, countries, devices",
+    "301 and 302 redirect support",
+    "No sign-up required for basic shortening",
+    "Analytics dashboard per short link"
+  ],
+  "author": { "@id": "https://21k.tools/blog/author/Nithish" },
+  "publisher": {
+    "@type": "Organization",
+    "name": "21K Tools",
+    "url": "https://21k.tools/"
+  },
+  "dateModified": "2026-05-01",
+  "inLanguage": "en"
+}
+</script>
+ 
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "21K Tools",
+      "item": "https://21k.tools/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "URL Shortener",
+      "item": "https://21k.tools/urlshortener/"
+    }
+  ]
+}
+</script>
+ 
+{% endblock %}
+
 {% block extra_js %}
 <script>
 function copyField(id, btn) {
