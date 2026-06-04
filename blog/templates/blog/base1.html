@@ -12,16 +12,49 @@
     </script>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2929918965082865"
          crossorigin="anonymous"></script>
-    
+
     <link rel="icon" type="image/x-icon" href="{% static '21k.png' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Blog System{% endblock %}</title>
+
+    <!-- ═══════════════════════════════════════════════════
+         META TAGS BLOCK
+         Override this entire block in any child template.
+         Default OG tags here cover all tool pages that
+         don't supply their own meta_tags block.
+    ════════════════════════════════════════════════════ -->
+    {% block meta_tags %}
+    <meta name="description" content="{% block meta_description %}Free browser-based tools — PDF toolkit, QR code generator, URL shortener, image resizer, interest calculator, unit converter and more. No sign-up needed.{% endblock %}">
+    <meta name="keywords" content="{% block meta_keywords %}free online tools, PDF tools, QR code generator, URL shortener, image resizer, interest calculator, unit converter, age calculator, time calculator{% endblock %}">
+    <meta name="author" content="Nithish">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="21K Tools">
+    <meta property="og:title" content="{% block og_title %}21K Tools — Free Online Tools{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}Free browser-based tools — PDF toolkit, QR code generator, URL shortener, image resizer, interest calculator and more. No sign-up needed.{% endblock %}">
+    <meta property="og:url" content="https://21k.tools/">
+    <meta property="og:image" content="{% block og_image %}https://21k.tools/static/21k.png{% endblock %}">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@21ktools">
+    <meta name="twitter:creator" content="@21ktools">
+    <meta name="twitter:title" content="{% block twitter_title %}21K Tools — Free Online Tools{% endblock %}">
+    <meta name="twitter:description" content="{% block twitter_description %}Free browser-based tools — PDF toolkit, QR code generator, URL shortener, image resizer, interest calculator and more.{% endblock %}">
+    <meta name="twitter:image" content="{% block twitter_image %}https://21k.tools/static/21k.png{% endblock %}">
+    {% endblock %}
+
+    <title>{% block title %}21K Tools — Free Online Tools{% endblock %}</title>
+
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    
+
     <style>
         :root {
             --primary: #2563eb;
@@ -34,27 +67,13 @@
             --bg-light: #f9fafb;
         }
 
-        * {
-            margin: 0; 
-            padding: 0; 
-            box-sizing: border-box;
-        }
-        
-        html {
-            scroll-behavior: smooth;
-        }
-        /* Remove underlines from all links */
-a {
-    text-decoration: none;
-}
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
-/* Optional: Add underline on hover for better UX */
-a:hover {
-    text-decoration: none;
-}
+        html { scroll-behavior: smooth; }
 
+        a { text-decoration: none; }
+        a:hover { text-decoration: none; }
 
-        
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             background-color: var(--bg-light);
@@ -64,30 +83,28 @@ a:hover {
             flex-direction: column;
             line-height: 1.6;
         }
-        
-
 
         /* ==================== HEADER ==================== */
         .header {
             background: white;
             box-shadow: 0 4px 20px rgba(30, 64, 175, 0.3);
-            position: sticky; 
-            top: 0; 
+            position: sticky;
+            top: 0;
             z-index: 1000;
         }
-        
+
         .header-container {
-            max-width: 1200px; 
-            margin: 0 auto; 
+            max-width: 1200px;
+            margin: 0 auto;
             padding: 0 20px;
         }
-        
+
         .logo-container {
             display: flex;
             justify-content: center;
             padding: 15px 0;
         }
-        
+
         .logo {
             display: flex;
             align-items: center;
@@ -98,10 +115,9 @@ a:hover {
             gap: 8px;
             transition: transform 0.3s ease;
         }
-        .logo:hover {
-            transform: scale(1.05);
-        }
-        
+
+        .logo:hover { transform: scale(1.05); }
+
         .logo-icon {
             width: 50px;
             height: 50px;
@@ -115,62 +131,60 @@ a:hover {
             box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
         }
 
-        
-      .header-actions-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 0;
-    gap: 10px;
-    width: 100%;
-   
-}
+        .header-actions-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            gap: 10px;
+            width: 100%;
+        }
 
-.search-box {
-    position: relative; 
-    flex-grow: 1;
-    max-width: 700px;
-    width: 100%;
-    margin: 0 auto;
-}
+        .search-box {
+            position: relative;
+            flex-grow: 1;
+            max-width: 700px;
+            width: 100%;
+            margin: 0 auto;
+        }
 
-.search-input {
-    width: 100%;
-    background: rgba(255, 255, 255, 0.8);
-    border: 2px solid rgba(59, 130, 246, 0.2);
-    border-radius: 30px;
-    padding: 12px 50px 12px 20px;
-    font-size: 15px;
-    transition: all 0.3s ease;
-}
+        .search-input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            border: 2px solid rgba(59, 130, 246, 0.2);
+            border-radius: 30px;
+            padding: 12px 50px 12px 20px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+        }
 
-.search-input:focus {
-    outline: none;
-    background: rgba(255, 255, 255, 0.95);
-    border-color: #3b82f6;
-    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
-}
+        .search-input:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.95);
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+        }
 
-.search-btn {
-    position: absolute;
-    right: 8px;
-    top: 50%;
-    transform: translateY(-50%);
-    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
-    border: none;
-    border-radius: 50%;
-    width: 36px;
-    height: 36px;
-    color: white;
-    cursor: pointer;
-    font-size: 16px;
-    transition: all 0.3s ease;
-}
+        .search-btn {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            border: none;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
 
-.search-btn:hover {
-    transform: translateY(-50%) scale(1.1);
-    box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4);
-}
+        .search-btn:hover {
+            transform: translateY(-50%) scale(1.1);
+            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4);
+        }
 
         .mobileToggle {
             cursor: pointer;
@@ -181,31 +195,29 @@ a:hover {
             flex-direction: column;
             gap: 6px;
         }
-        
+
         .mobileToggle .bar {
-            width: 23px; 
-            height: 2px; 
+            width: 23px;
+            height: 2px;
             background-color: #1e3a8a;
             transition: 0.4s;
         }
-        
+
         .mobileToggle.change .bar:nth-child(1) { transform: translate(0, 8px) rotate(-45deg); }
         .mobileToggle.change .bar:nth-child(2) { opacity: 0; }
         .mobileToggle.change .bar:nth-child(3) { transform: translate(0, -8px) rotate(45deg); }
 
-        .header-nav {
-            width: 100%;
-        }
+        .header-nav { width: 100%; }
 
         .nav-menu {
-            display: flex; 
-            gap: 10px; 
-            margin-top: 15px; 
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
             padding-bottom: 15px;
             flex-wrap: wrap;
             justify-content: center;
         }
-        
+
         .nav-link {
             color: #1e40af;
             padding: 8px 15px;
@@ -223,16 +235,9 @@ a:hover {
             color: #1e40af;
         }
 
-        .dropdown {
-            position: relative;
-            display: inline-block;
-        }
+        .dropdown { position: relative; display: inline-block; }
 
-        .dropdown-toggle {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
+        .dropdown-toggle { display: flex; align-items: center; gap: 6px; }
 
         .dropdown-content {
             display: none;
@@ -246,11 +251,9 @@ a:hover {
             grid-template-columns: 1fr;
             gap: 5px;
         }
-        
-        .dropdown.active .dropdown-content {
-            display: grid;
-        }
-        
+
+        .dropdown.active .dropdown-content { display: grid; }
+
         .dropdown-content a {
             color: #1e40af;
             padding: 10px 20px;
@@ -260,31 +263,27 @@ a:hover {
             gap: 10px;
             transition: all 0.3s ease;
         }
-        
-        .dropdown-content a:hover {
-            background: rgba(59, 130, 246, 0.1);
-        }
+
+        .dropdown-content a:hover { background: rgba(59, 130, 246, 0.1); }
 
         .mobile-panel {
-            display: none; 
-            flex-direction: column; 
+            display: none;
+            flex-direction: column;
             gap: 15px;
-            background: white; 
-            padding: 20px; 
+            background: white;
+            padding: 20px;
             position: absolute;
-            top: 100%; 
-            left: 0; 
+            top: 100%;
+            left: 0;
             width: 100%;
             animation: slideDown 0.4s ease-in-out;
             z-index: 999;
             box-shadow: 0 10px 15px rgba(0,0,0,0.1);
         }
-        
+
         .mobile-panel.show { display: flex; }
 
-        .mobile-dropdown {
-            position: relative;
-        }
+        .mobile-dropdown { position: relative; }
 
         .mobile-dropdown-content {
             display: none;
@@ -293,11 +292,9 @@ a:hover {
             flex-direction: column;
             gap: 10px;
         }
-        
-        .mobile-dropdown.active .mobile-dropdown-content {
-            display: flex;
-        }
-        
+
+        .mobile-dropdown.active .mobile-dropdown-content { display: flex; }
+
         .mobile-dropdown-content a {
             color: #1e40af;
             text-decoration: none;
@@ -308,10 +305,8 @@ a:hover {
             border-radius: 20px;
             transition: all 0.3s ease;
         }
-        
-        .mobile-dropdown-content a:hover {
-            background: rgba(59, 130, 246, 0.1);
-        }
+
+        .mobile-dropdown-content a:hover { background: rgba(59, 130, 246, 0.1); }
 
         .rotate-180 {
             transform: rotate(540deg);
@@ -323,108 +318,91 @@ a:hover {
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .content-wrapper {
-            fx: 1;
-        }
+        .content-wrapper { flex: 1; }
 
         /* ==================== FOOTER ==================== */
         .footer {
             background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
-            color: white; 
+            color: white;
             margin-top: 80px;
         }
-        
+
         .footer-container {
-            max-width: 1200px; 
-            margin: 0 auto; 
+            max-width: 1200px;
+            margin: 0 auto;
             padding: 50px 20px 20px;
         }
-        
+
         .footer-content {
-            display: grid; 
+            display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 40px; 
+            gap: 40px;
             margin-bottom: 40px;
         }
-        
+
         .footer-section h3 {
-            color: #60a5fa; 
-            font-size: 18px; 
-            font-weight: 600; 
+            color: #60a5fa;
+            font-size: 18px;
+            font-weight: 600;
             margin-bottom: 20px;
         }
 
-        .footer-links {
-            list-style: none;
-            
-        }
-        
-        .footer-links li {
-            margin: 0px 0px 10px -35px;
-            
-        }
-        
+        .footer-links { list-style: none; }
+
+        .footer-links li { margin: 0px 0px 10px -35px; }
+
         .footer-links a {
-            color: rgba(255, 255, 255, 0.8); 
-            text-decoration: none; 
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
             transition: color 0.3s ease;
             display: flex;
             align-items: center;
             gap: 8px;
         }
-        
-        .footer-links a:hover { 
-            color: #60a5fa;
-        }
+
+        .footer-links a:hover { color: #60a5fa; }
 
         .footer-bottom {
             border-top: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 20px 0; 
-            display: flex; 
+            padding: 20px 0;
+            display: flex;
             justify-content: space-between;
-            align-items: center; 
-            flex-wrap: wrap; 
+            align-items: center;
+            flex-wrap: wrap;
             gap: 15px;
         }
-        
-        .footer-brand {
-            display: flex; 
-            align-items: center; 
-            gap: 10px;
-        }
+
+        .footer-brand { display: flex; align-items: center; gap: 10px; }
 
         .footer-brand-icon {
-            width: 38px; 
-            height: 38px; 
+            width: 38px;
+            height: 38px;
             background: #3b82f6;
-            border-radius: 20px; 
-            display: flex; 
+            border-radius: 20px;
+            display: flex;
             align-items: center;
-            justify-content: center; 
+            justify-content: center;
             font-weight: bold;
             font-size: 14px;
         }
-        
-        .social-links {
-            display: flex; 
-            gap: 15px;
-        }
-        
+
+        .social-links { display: flex; gap: 15px; }
+
         .social-link {
-            width: 40px; 
+            width: 40px;
             height: 40px;
             background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%; 
+            border-radius: 50%;
             display: flex;
-            align-items: center; 
+            align-items: center;
             justify-content: center;
-            color: white; 
+            color: white;
             text-decoration: none;
             transition: all 0.3s ease;
         }
-        
+
         .social-link:hover {
-            background: #3b82f6; 
+            background: #3b82f6;
             transform: translateY(-2px);
         }
 
@@ -472,130 +450,54 @@ a:hover {
             border-left: 4px solid #f59e0b;
         }
 
-        .btn-close {
-            opacity: 0.6;
-            transition: opacity 0.3s ease;
-        }
-
-        .btn-close:hover {
-            opacity: 1;
-        }
+        .btn-close { opacity: 0.6; transition: opacity 0.3s ease; }
+        .btn-close:hover { opacity: 1; }
 
         /* ==================== RESPONSIVE ==================== */
         @media (max-width: 1024px) {
-            .header-actions-container {
-                gap: 12px;
-            }
-
-            .controls-section {
-                max-width: 400px;
-            }
-
-            .nav-menu {
-                gap: 6px;
-            }
-
-            .nav-link {
-                padding: 8px 14px;
-                font-size: 0.9rem;
-            }
+            .header-actions-container { gap: 12px; }
+            .controls-section { max-width: 400px; }
+            .nav-menu { gap: 6px; }
+            .nav-link { padding: 8px 14px; font-size: 0.9rem; }
         }
 
         @media (max-width: 768px) {
-            .nav-menu { 
-                display: none; 
-            }
-            
-            .mobileToggle {
-                display: flex;
-            }
-
-            .header-actions-container {
-                gap: 8px;
-            }
-
-            .controls-section {
-                max-width: none;
-            }
-
-            .search-form input {
-                font-size: 14px;
-                padding: 10px 14px;
-            }
-
-            .footer-bottom { 
-                flex-direction: column; 
-                text-align: center; 
-            }
-            
-            .footer-content {
-                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-                gap: 30px;
-            }
-
-            .dropdown-content {
-                position: fixed;
-                bottom: auto;
-                top: auto;
-            }
-            
+            .nav-menu { display: none; }
+            .mobileToggle { display: flex; }
+            .header-actions-container { gap: 8px; }
+            .controls-section { max-width: none; }
+            .search-form input { font-size: 14px; padding: 10px 14px; }
+            .footer-bottom { flex-direction: column; text-align: center; }
+            .footer-content { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; }
+            .dropdown-content { position: fixed; bottom: auto; top: auto; }
         }
 
         @media (max-width: 576px) {
-            .header-container {
-                padding-left: 12px; 
-                padding-right: 12px;
-            }
-
-            .footer-container {
-                padding-left: 12px; 
-                padding-right: 12px;
-                padding-top: 40px;
-                padding-bottom: 20px;
-            }
-
-            .logo {
-                font-size: 22px;
-                gap: 8px;
-            }
-
-            .logo-icon {
-                width: 44px;
-                height: 44px;
-                font-size: 18px;
-            }
-
-            .controls-section {
-                max-width: 100%;
-            }
-
-            .footer-content {
-                grid-template-columns: 1fr;
-                gap: 25px;
-            }
-
-            .footer-brand,
-            .social-links {
-                width: 100%;
-                justify-content: center;
-            }
-
-            .messages-container {
-                padding: 0 12px;
-                margin: 15px auto;
-            }
-
-.search-input { 
-        min-width: 150px; 
-      }
-            .alert {
-                flex-wrap: wrap;
-                padding: 14px 16px;
-            }
+            .header-container { padding-left: 12px; padding-right: 12px; }
+            .footer-container { padding-left: 12px; padding-right: 12px; padding-top: 40px; padding-bottom: 20px; }
+            .logo { font-size: 22px; gap: 8px; }
+            .logo-icon { width: 44px; height: 44px; font-size: 18px; }
+            .controls-section { max-width: 100%; }
+            .footer-content { grid-template-columns: 1fr; gap: 25px; }
+            .footer-brand, .social-links { width: 100%; justify-content: center; }
+            .messages-container { padding: 0 12px; margin: 15px auto; }
+            .search-input { min-width: 150px; }
+            .alert { flex-wrap: wrap; padding: 14px 16px; }
         }
-
-        {% block extra_css %}{% endblock %}
     </style>
+
+    <!-- ═══════════════════════════════════════════════════
+         EXTRA CSS BLOCK — now correctly OUTSIDE </style>
+         Child templates put page-specific <style> tags here.
+    ════════════════════════════════════════════════════ -->
+    {% block extra_css %}{% endblock %}
+
+    <!-- ═══════════════════════════════════════════════════
+         SCHEMA MARKUP BLOCK
+         Child templates inject JSON-LD here.
+    ════════════════════════════════════════════════════ -->
+    {% block schema_markup %}{% endblock %}
+
 </head>
 <body>
 
@@ -608,40 +510,36 @@ a:hover {
                 <span>Tools</span>
             </a>
         </div>
-        
+
         <div class="header-actions-container">
-    <div class="search-box">
-        <input type="text" class="search-input" id="searchInput" placeholder="Search blogs..." autocomplete="off">
-        <button class="search-btn" id="searchBtn"><i class="fas fa-search"></i></button>
-    </div>
-    <button class="mobileToggle" id="mobileToggle" aria-label="Toggle menu">
-        <span class="bar"></span>
-        <span class="bar"></span>
-        <span class="bar"></span>
-    </button>
-</div>
-           
-        
+            <div class="search-box">
+                <input type="text" class="search-input" id="searchInput" placeholder="Search blogs..." autocomplete="off">
+                <button class="search-btn" id="searchBtn"><i class="fas fa-search"></i></button>
+            </div>
+            <button class="mobileToggle" id="mobileToggle" aria-label="Toggle menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+        </div>
+
         <!-- Desktop Navigation -->
-        <nav class="header-nav" role="navigation">
+        <nav class="header-nav" role="navigation" aria-label="Main navigation">
             <div class="nav-menu">
                 <a href="https://21k.tools" class="nav-link">
                     <i class="fas fa-home"></i>
                     <span>Home</span>
                 </a>
-                
-               <div class="dropdown" id="desktopToolsDropdown">
+
+                <div class="dropdown" id="desktopToolsDropdown">
                     <a href="javascript:void(0);" class="nav-link" onclick="toggleDesktopDropdown(event)" role="button" tabindex="0">
                         <i class="fas fa-tools"></i>
-                       
-                            More Tools
-                            <i class="fas fa-caret-down" id="desktopCaret"></i>
-                        </span>
+                        More Tools
+                        <i class="fas fa-caret-down" id="desktopCaret"></i>
                     </a>
-                    
                     <div class="dropdown-content">
                         <a href="https://21k.tools/urlshortener"><i class="fas fa-link"></i> URL Shortener</a>
-                        <a href="https://21k.tools/qrcodeandscanner"><i class="fas fa-qrcode"></i> QR Code Generator&Scanner</a>
+                        <a href="https://21k.tools/qrcodeandscanner"><i class="fas fa-qrcode"></i> QR Code Generator &amp; Scanner</a>
                         <a href="https://21k.tools/pdftools"><i class="fas fa-file-pdf"></i> PDF Tools</a>
                         <a href="https://21k.tools/fileconverter"><i class="fas fa-file"></i> File Converter</a>
                         <a href="https://21k.tools/imageresizer"><i class="fas fa-image"></i> Image Resizer</a>
@@ -649,19 +547,19 @@ a:hover {
                         <a href="https://21k.tools/interestcalculator"><i class="fas fa-percentage"></i> Interest Calculator</a>
                         <a href="https://21k.tools/unitconverter"><i class="fas fa-balance-scale"></i> Unit Converter</a>
                         <a href="https://21k.tools/timecalculator"><i class="fas fa-stopwatch"></i> Time Calculator</a>
+                    </div>
                 </div>
-               </div>
-                
+
                 <a href="{% url 'blog_list' %}" class="nav-link">
                     <i class="fas fa-blog"></i>
                     <span>Blogs</span>
                 </a>
-                
+
                 <a href="/help" class="nav-link">
                     <i class="fas fa-question-circle"></i>
                     <span>Help Center</span>
                 </a>
-                
+
                 <a href="https://21k.tools/contact" class="nav-link">
                     <i class="fas fa-envelope"></i>
                     <span>Contact</span>
@@ -675,45 +573,43 @@ a:hover {
                 {% endif %}
             </div>
         </nav>
-        
+
         <!-- Mobile Navigation -->
-        <div class="mobile-panel" id="mobilePanel" role="navigation">
+        <div class="mobile-panel" id="mobilePanel" role="navigation" aria-label="Mobile navigation">
             <a href="https://21k.tools" class="nav-link">
                 <i class="fas fa-home"></i>
                 <span>Home</span>
             </a>
-            
+
             <div class="mobile-dropdown" id="mobileToolsDropdown">
                 <a href="javascript:void(0);" class="nav-link" onclick="toggleMobileDropdown(event)" role="button" tabindex="0">
                     <i class="fas fa-tools"></i>
-                    
-                        More Tools
-                        <i class="fas fa-caret-down" id="mobileCaret"></i>
-                    </span>
+                    More Tools
+                    <i class="fas fa-caret-down" id="mobileCaret"></i>
                 </a>
                 <div class="mobile-dropdown-content">
-                       <a href="https://21k.tools/urlshortener"><i class="fas fa-link"></i> URL Shortener</a>
-                        <a href="https://21k.tools/qrcodeandscanner"><i class="fas fa-qrcode"></i> QR Code Generator&Scanner</a>
-                        <a href="https://21k.tools/pdftools"><i class="fas fa-file-pdf"></i> PDF Tools</a>
-                        <a href="https://21k.tools/fileconverter"><i class="fas fa-file"></i> File Converter</a>
-                        <a href="https://21k.tools/imageresizer"><i class="fas fa-image"></i> Image Resizer</a>
-                        <a href="https://21k.tools/agecalculator"><i class="fas fa-birthday-cake"></i> Age Calculator</a>
-                        <a href="https://21k.tools/interestcalculator"><i class="fas fa-percentage"></i> Interest Calculator</a>
-                        <a href="https://21k.tools/unitconverter"><i class="fas fa-balance-scale"></i> Unit Converter</a>
-                        <a href="https://21k.tools/timecalculator"><i class="fas fa-stopwatch"></i> Time Calculator</a>
+                    <a href="https://21k.tools/urlshortener"><i class="fas fa-link"></i> URL Shortener</a>
+                    <a href="https://21k.tools/qrcodeandscanner"><i class="fas fa-qrcode"></i> QR Code Generator &amp; Scanner</a>
+                    <a href="https://21k.tools/pdftools"><i class="fas fa-file-pdf"></i> PDF Tools</a>
+                    <a href="https://21k.tools/fileconverter"><i class="fas fa-file"></i> File Converter</a>
+                    <a href="https://21k.tools/imageresizer"><i class="fas fa-image"></i> Image Resizer</a>
+                    <a href="https://21k.tools/agecalculator"><i class="fas fa-birthday-cake"></i> Age Calculator</a>
+                    <a href="https://21k.tools/interestcalculator"><i class="fas fa-percentage"></i> Interest Calculator</a>
+                    <a href="https://21k.tools/unitconverter"><i class="fas fa-balance-scale"></i> Unit Converter</a>
+                    <a href="https://21k.tools/timecalculator"><i class="fas fa-stopwatch"></i> Time Calculator</a>
                 </div>
             </div>
-            
+
             <a href="{% url 'blog_list' %}" class="nav-link">
                 <i class="fas fa-blog"></i>
                 <span>Blogs</span>
             </a>
-            
+
             <a href="/help" class="nav-link">
                 <i class="fas fa-question-circle"></i>
                 <span>Help Center</span>
             </a>
-            
+
             <a href="https://21k.tools/contact" class="nav-link">
                 <i class="fas fa-envelope"></i>
                 <span>Contact</span>
@@ -728,11 +624,11 @@ a:hover {
         </div>
     </div>
 </header>
+
 <h1 style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;">21K Tools</h1>
-    
+
 <!-- CONTENT -->
 <div class="content-wrapper">
-    <!-- Messages -->
     {% if messages %}
     <div class="messages-container">
         {% for message in messages %}
@@ -745,10 +641,10 @@ a:hover {
     </div>
     {% endif %}
 
-    <!-- Page Content -->
     {% block content %}{% endblock %}
 </div>
 
+<!-- FOOTER -->
 <footer class="footer">
     <div class="footer-container">
         <div class="footer-content">
@@ -756,10 +652,9 @@ a:hover {
                 <h3>Popular Tools</h3>
                 <ul class="footer-links">
                     <li><a href="https://21k.tools/urlshortener"><i class="fas fa-link"></i> URL Shortener</a></li>
-                   <li> <a href="https://21k.tools/pdftools"><i class="fas fa-file-pdf"></i> PDF Tools</a></li>
+                    <li><a href="https://21k.tools/pdftools"><i class="fas fa-file-pdf"></i> PDF Tools</a></li>
                     <li><a href="https://21k.tools/fileconverter"><i class="fas fa-file"></i> File Converter</a></li>
                     <li><a href="https://21k.tools/imageresizer"><i class="fas fa-image"></i> Image Resizer</a></li>
-                  
                     <li><a href="https://21k.tools/qrcodeandscanner"><i class="fas fa-qrcode"></i> QR Tools</a></li>
                     <li><a href="https://21k.tools/agecalculator"><i class="fas fa-birthday-cake"></i> Age Calculator</a></li>
                     <li><a href="https://21k.tools/interestcalculator"><i class="fas fa-percentage"></i> Interest Calculator</a></li>
@@ -774,7 +669,6 @@ a:hover {
                     <li><a href="https://21k.tools/pdftools"><i class="fas fa-file-pdf"></i> PDF Tools</a></li>
                     <li><a href="https://21k.tools/fileconverter"><i class="fas fa-exchange-alt"></i> Converters</a></li>
                     <li><a href="https://21k.tools/timecalculator"><i class="fas fa-clock"></i> Time Tools</a></li>
-                    
                     <li><a href="https://21k.tools/qrcodeandscanner"><i class="fas fa-qrcode"></i> QR Tools</a></li>
                 </ul>
             </div>
@@ -813,8 +707,8 @@ a:hover {
                 <a href="https://facebook.com/21ktools" class="social-link" title="Facebook" target="_blank" rel="noopener noreferrer">
                     <i class="fab fa-facebook"></i>
                 </a>
-                  <a href="https://linkedin.com/company/21ktools" class="social-link" title="Linkedin" target="_blank" rel="noopener noreferrer">
-                   <i class="fab fa-linkedin-in"></i>
+                <a href="https://linkedin.com/company/21ktools" class="social-link" title="LinkedIn" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-linkedin-in"></i>
                 </a>
             </div>
         </div>
@@ -826,82 +720,60 @@ a:hover {
 
 <script>
     // ==================== DROPDOWN HANDLERS ====================
-    
-    // Toggle desktop dropdown
+
     function toggleDesktopDropdown(event) {
         event.preventDefault();
         event.stopPropagation();
-        
         const dropdown = document.getElementById('desktopToolsDropdown');
         const caret = document.getElementById('desktopCaret');
-        
         if (dropdown) {
             dropdown.classList.toggle('active');
-            if (caret) {
-                caret.classList.toggle('rotate-180');
-            }
+            if (caret) caret.classList.toggle('rotate-180');
         }
     }
-    
-    // Toggle mobile dropdown
+
     function toggleMobileDropdown(event) {
         event.preventDefault();
         event.stopPropagation();
-        
         const dropdown = document.getElementById('mobileToolsDropdown');
         const caret = document.getElementById('mobileCaret');
-        
         if (dropdown) {
             dropdown.classList.toggle('active');
-            if (caret) {
-                caret.classList.toggle('rotate-180');
-            }
+            if (caret) caret.classList.toggle('rotate-180');
         }
     }
-    
-    // Close dropdowns when clicking outside
+
     document.addEventListener('click', (e) => {
-        // Close desktop dropdown
         if (!e.target.closest('.dropdown')) {
             const desktopDropdown = document.getElementById('desktopToolsDropdown');
             const desktopCaret = document.getElementById('desktopCaret');
-            
             if (desktopDropdown && desktopDropdown.classList.contains('active')) {
                 desktopDropdown.classList.remove('active');
-                if (desktopCaret) {
-                    desktopCaret.classList.remove('rotate-180');
-                }
+                if (desktopCaret) desktopCaret.classList.remove('rotate-180');
             }
         }
     });
-    
-    // ==================== MOBILE MENU HANDLER ====================
-    
+
+    // ==================== MOBILE MENU ====================
+
     document.addEventListener("DOMContentLoaded", () => {
         const mobileToggle = document.getElementById('mobileToggle');
         const mobilePanel = document.getElementById('mobilePanel');
-        
         if (mobileToggle && mobilePanel) {
-            // Toggle mobile menu
             mobileToggle.addEventListener('click', (e) => {
                 e.stopPropagation();
                 mobileToggle.classList.toggle('change');
                 mobilePanel.classList.toggle('show');
             });
-            
-            // Close mobile menu when clicking outside
             document.addEventListener('click', (e) => {
-                const isClickInside = e.target.closest('.header-container') || 
-                                     e.target.closest('.mobileToggle') ||
-                                     e.target.closest('.mobile-panel');
-                
+                const isClickInside = e.target.closest('.header-container') ||
+                                      e.target.closest('.mobileToggle') ||
+                                      e.target.closest('.mobile-panel');
                 if (!isClickInside) {
                     mobileToggle.classList.remove('change');
                     mobilePanel.classList.remove('show');
                 }
             });
-            
-            // Close mobile menu when clicking a link
             const mobileLinks = mobilePanel.querySelectorAll('a:not(.mobile-dropdown > a)');
             mobileLinks.forEach(link => {
                 link.addEventListener('click', () => {
@@ -909,316 +781,131 @@ a:hover {
                     mobilePanel.classList.remove('show');
                 });
             });
-            
-            // Prevent closing when clicking inside panel (except links)
             mobilePanel.addEventListener('click', (e) => {
-                if (e.target.closest('.mobile-dropdown-content') || 
-                    e.target.closest('a.nav-link')) {
-                    return;
-                }
+                if (e.target.closest('.mobile-dropdown-content') || e.target.closest('a.nav-link')) return;
                 e.stopPropagation();
             });
         }
     });
 
     // ==================== KEYBOARD NAVIGATION ====================
-    
+
     document.addEventListener('keydown', (e) => {
-        // Close menu on Escape key
         if (e.key === 'Escape') {
             const mobileToggle = document.getElementById('mobileToggle');
             const mobilePanel = document.getElementById('mobilePanel');
             const desktopDropdown = document.getElementById('desktopToolsDropdown');
             const desktopCaret = document.getElementById('desktopCaret');
-            
             if (mobileToggle && mobilePanel) {
                 mobileToggle.classList.remove('change');
                 mobilePanel.classList.remove('show');
             }
-            
             if (desktopDropdown && desktopDropdown.classList.contains('active')) {
                 desktopDropdown.classList.remove('active');
-                if (desktopCaret) {
-                    desktopCaret.classList.remove('rotate-180');
-                }
+                if (desktopCaret) desktopCaret.classList.remove('rotate-180');
             }
         }
     });
 
-    // ==================== AUTO-DISMISS MESSAGES ====================
-    
-// ==================== SEARCH FUNCTIONALITY ====================
+    // ==================== SEARCH ====================
 
-document.addEventListener('DOMContentLoaded', function() {
-    const searchInput = document.getElementById('searchInput');
-    const searchBtn = document.getElementById('searchBtn');
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchInput = document.getElementById('searchInput');
+        const searchBtn = document.getElementById('searchBtn');
 
-    function performSearch() {
-        const query = searchInput.value.trim();
-        if (query) {
-            window.location.href = `?search=${encodeURIComponent(query)}`;
+        function performSearch() {
+            const query = searchInput.value.trim();
+            if (query) window.location.href = `?search=${encodeURIComponent(query)}`;
         }
-    }
 
-    if (searchInput && searchBtn) {
-        searchInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                performSearch();
-            }
-        });
-        
-        searchBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            performSearch();
-        });
-    }
-});
+        if (searchInput && searchBtn) {
+            searchInput.addEventListener('keypress', function(e) { if (e.key === 'Enter') performSearch(); });
+            searchBtn.addEventListener('click', function(e) { e.preventDefault(); performSearch(); });
+        }
+    });
 
-document.addEventListener('DOMContentLoaded', function() {
-    var searchInput = document.getElementById('searchInput');
-    var searchBtn = document.getElementById('searchBtn');
-    if (!searchInput) return;
- 
-    // ── Tool index ─────────────────────────────────────────────
-    var TOOLS = [
-        {
-            name: 'URL Shortener',
-            desc: 'Shorten links, get QR codes and analytics',
-            url: '/urlshortener',
-            icon: 'fas fa-link',
-            tags: ['url', 'link', 'short', 'qr', 'analytics', 'redirect']
-        },
-        {
-            name: 'QR Code Generator & Scanner',
-            desc: 'Generate and scan QR codes instantly',
-            url: '/qrcodeandscanner',
-            icon: 'fas fa-qrcode',
-            tags: ['qr', 'qrcode', 'scan', 'generate', 'barcode']
-        },
-        {
-            name: 'PDF Tools',
-            desc: 'Merge, split, compress and convert PDFs',
-            url: '/pdftools',
-            icon: 'fas fa-file-pdf',
-            tags: ['pdf', 'merge', 'split', 'compress', 'convert', 'document']
-        },
-        {
-            name: 'File Converter',
-            desc: 'Convert between 100+ file formats',
-            url: '/fileconverter',
-            icon: 'fas fa-file',
-            tags: ['file', 'convert', 'format', 'mp4', 'mp3', 'jpg', 'png', 'docx', 'xlsx']
-        },
-        {
-            name: 'Image Resizer',
-            desc: 'Resize, compress and optimize images',
-            url: '/imageresizer',
-            icon: 'fas fa-image',
-            tags: ['image', 'resize', 'compress', 'photo', 'jpg', 'png', 'webp', 'optimize']
-        },
-        {
-            name: 'Age Calculator',
-            desc: 'Calculate exact age in years, months and days',
-            url: '/agecalculator',
-            icon: 'fas fa-birthday-cake',
-            tags: ['age', 'birthday', 'birth', 'calculate', 'years', 'date', 'born']
-        },
-        {
-            name: 'Interest Calculator',
-            desc: 'Simple interest, compound interest and loan EMI',
-            url: '/interestcalculator',
-            icon: 'fas fa-percentage',
-            tags: ['interest', 'loan', 'emi', 'compound', 'simple', 'finance', 'money', 'bank']
-        },
-        {
-            name: 'Unit Converter',
-            desc: 'Convert length, weight, temperature and more',
-            url: '/unitconverter',
-            icon: 'fas fa-balance-scale',
-            tags: ['unit', 'convert', 'length', 'weight', 'temperature', 'speed', 'area', 'volume', 'kg', 'km', 'celsius', 'fahrenheit']
-        },
-        {
-            name: 'Time Calculator',
-            desc: 'Calculate time differences and convert units',
-            url: '/timecalculator',
-            icon: 'fas fa-clock',
-            tags: ['time', 'date', 'duration', 'hours', 'minutes', 'seconds', 'difference', 'countdown']
-        }
-    ];
- 
-    // ── Build dropdown ──────────────────────────────────────────
-    var dropdown = document.createElement('div');
-    dropdown.id = 'searchDropdown';
-    dropdown.style.cssText = [
-        'position:absolute',
-        'top:calc(100% + 6px)',
-        'left:0',
-        'right:0',
-        'background:white',
-        'border-radius:14px',
-        'box-shadow:0 8px 40px rgba(0,0,0,0.15)',
-        'z-index:9999',
-        'display:none',
-        'overflow:hidden',
-        'border:1px solid rgba(59,130,246,0.15)',
-        'max-height:420px',
-        'overflow-y:auto'
-    ].join(';');
- 
-    var searchBox = searchInput.closest('.search-box');
-    if (searchBox) {
-        searchBox.style.position = 'relative';
-        searchBox.appendChild(dropdown);
-    }
- 
-    // ── Search logic ────────────────────────────────────────────
-    function search(q) {
-        q = q.trim().toLowerCase();
-        if (!q) return [];
-        return TOOLS.filter(function(t) {
-            return (
-                t.name.toLowerCase().includes(q) ||
-                t.desc.toLowerCase().includes(q) ||
-                t.tags.some(function(tag) { return tag.includes(q); })
-            );
-        });
-    }
- 
-    function renderDropdown(q) {
-        var results = search(q);
-        dropdown.innerHTML = '';
- 
-        if (!q.trim()) {
-            dropdown.style.display = 'none';
-            return;
-        }
- 
-        // Tool results
-        if (results.length > 0) {
-            var header = document.createElement('div');
-            header.style.cssText = 'padding:10px 16px 6px;font-size:0.72rem;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:0.5px';
-            header.textContent = 'Tools';
-            dropdown.appendChild(header);
- 
-            results.forEach(function(tool) {
-                var item = document.createElement('a');
-                item.href = tool.url;
-                item.style.cssText = [
-                    'display:flex',
-                    'align-items:center',
-                    'gap:12px',
-                    'padding:11px 16px',
-                    'text-decoration:none',
-                    'transition:background 0.15s',
-                    'border-bottom:1px solid #f1f5f9'
-                ].join(';');
- 
-                item.innerHTML = [
-                    '<div style="width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#3b82f6,#6366f1);display:flex;align-items:center;justify-content:center;flex-shrink:0">',
-                        '<i class="' + tool.icon + '" style="color:white;font-size:0.85rem"></i>',
-                    '</div>',
-                    '<div style="min-width:0">',
-                        '<div style="font-weight:600;color:#0f172a;font-size:0.9rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' + tool.name + '</div>',
-                        '<div style="font-size:0.75rem;color:#64748b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' + tool.desc + '</div>',
-                    '</div>',
-                    '<div style="margin-left:auto;flex-shrink:0"><i class="fas fa-arrow-right" style="color:#cbd5e1;font-size:0.75rem"></i></div>'
-                ].join('');
- 
-                item.addEventListener('mouseenter', function() {
-                    item.style.background = '#f8faff';
-                });
-                item.addEventListener('mouseleave', function() {
-                    item.style.background = '';
-                });
- 
-                dropdown.appendChild(item);
+    document.addEventListener('DOMContentLoaded', function() {
+        var searchInput = document.getElementById('searchInput');
+        var searchBtn   = document.getElementById('searchBtn');
+        if (!searchInput) return;
+
+        var TOOLS = [
+            { name:'URL Shortener', desc:'Shorten links, get QR codes and analytics', url:'/urlshortener', icon:'fas fa-link', tags:['url','link','short','qr','analytics','redirect'] },
+            { name:'QR Code Generator & Scanner', desc:'Generate and scan QR codes instantly', url:'/qrcodeandscanner', icon:'fas fa-qrcode', tags:['qr','qrcode','scan','generate','barcode'] },
+            { name:'PDF Tools', desc:'Merge, split, compress and convert PDFs', url:'/pdftools', icon:'fas fa-file-pdf', tags:['pdf','merge','split','compress','convert','document'] },
+            { name:'File Converter', desc:'Convert between 100+ file formats', url:'/fileconverter', icon:'fas fa-file', tags:['file','convert','format','mp4','mp3','jpg','png','docx','xlsx'] },
+            { name:'Image Resizer', desc:'Resize, compress and optimize images', url:'/imageresizer', icon:'fas fa-image', tags:['image','resize','compress','photo','jpg','png','webp','optimize'] },
+            { name:'Age Calculator', desc:'Calculate exact age in years, months and days', url:'/agecalculator', icon:'fas fa-birthday-cake', tags:['age','birthday','birth','calculate','years','date','born'] },
+            { name:'Interest Calculator', desc:'Simple interest, compound interest and loan EMI', url:'/interestcalculator', icon:'fas fa-percentage', tags:['interest','loan','emi','compound','simple','finance','money','bank'] },
+            { name:'Unit Converter', desc:'Convert length, weight, temperature and more', url:'/unitconverter', icon:'fas fa-balance-scale', tags:['unit','convert','length','weight','temperature','speed','area','volume','kg','km','celsius','fahrenheit'] },
+            { name:'Time Calculator', desc:'Calculate time differences and convert units', url:'/timecalculator', icon:'fas fa-clock', tags:['time','date','duration','hours','minutes','seconds','difference','countdown'] }
+        ];
+
+        var dropdown = document.createElement('div');
+        dropdown.id = 'searchDropdown';
+        dropdown.style.cssText = 'position:absolute;top:calc(100% + 6px);left:0;right:0;background:white;border-radius:14px;box-shadow:0 8px 40px rgba(0,0,0,0.15);z-index:9999;display:none;overflow:hidden;border:1px solid rgba(59,130,246,0.15);max-height:420px;overflow-y:auto';
+
+        var searchBox = searchInput.closest('.search-box');
+        if (searchBox) { searchBox.style.position = 'relative'; searchBox.appendChild(dropdown); }
+
+        function search(q) {
+            q = q.trim().toLowerCase();
+            if (!q) return [];
+            return TOOLS.filter(function(t) {
+                return t.name.toLowerCase().includes(q) || t.desc.toLowerCase().includes(q) || t.tags.some(function(tag){ return tag.includes(q); });
             });
         }
- 
-        // Blog search row — always shown when there's a query
-        var blogRow = document.createElement('a');
-        blogRow.href = '/blog/?search=' + encodeURIComponent(q);
-        blogRow.style.cssText = [
-            'display:flex',
-            'align-items:center',
-            'gap:12px',
-            'padding:11px 16px',
-            'text-decoration:none',
-            'background:#f8faff',
-            'transition:background 0.15s'
-        ].join(';');
- 
-        blogRow.innerHTML = [
-            '<div style="width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#667eea,#764ba2);display:flex;align-items:center;justify-content:center;flex-shrink:0">',
-                '<i class="fas fa-newspaper" style="color:white;font-size:0.85rem"></i>',
-            '</div>',
-            '<div>',
-                '<div style="font-weight:600;color:#0f172a;font-size:0.9rem">Search blogs for "' + q + '"</div>',
-                '<div style="font-size:0.75rem;color:#64748b">Find articles and guides</div>',
-            '</div>',
-            '<div style="margin-left:auto"><i class="fas fa-arrow-right" style="color:#cbd5e1;font-size:0.75rem"></i></div>'
-        ].join('');
- 
-        blogRow.addEventListener('mouseenter', function() {
-            blogRow.style.background = '#f0f4ff';
-        });
-        blogRow.addEventListener('mouseleave', function() {
-            blogRow.style.background = '#f8faff';
-        });
- 
-        dropdown.appendChild(blogRow);
-        dropdown.style.display = 'block';
-    }
- 
-    // ── Events ──────────────────────────────────────────────────
-    var debounceTimer;
-    searchInput.addEventListener('input', function() {
-        clearTimeout(debounceTimer);
-        debounceTimer = setTimeout(function() {
-            renderDropdown(searchInput.value);
-        }, 120);
-    });
- 
-    searchInput.addEventListener('focus', function() {
-        if (searchInput.value.trim()) renderDropdown(searchInput.value);
-    });
- 
-    // Enter key → go to blog search
-    searchInput.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter') {
-            var q = searchInput.value.trim();
-            if (q) window.location.href = '/blog/?search=' + encodeURIComponent(q);
-        }
-        if (e.key === 'Escape') {
-            dropdown.style.display = 'none';
-            searchInput.blur();
-        }
-    });
- 
-    searchBtn.addEventListener('click', function() {
-        var q = searchInput.value.trim();
-        if (q) window.location.href = '/blog/?search=' + encodeURIComponent(q);
-    });
- 
-    // Close on outside click
-    document.addEventListener('click', function(e) {
-        if (!searchBox || !searchBox.contains(e.target)) {
-            dropdown.style.display = 'none';
-        }
-    });
-});
-    // ==================== SMOOTH SCROLL ====================
-    
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
+
+        function renderDropdown(q) {
+            var results = search(q);
+            dropdown.innerHTML = '';
+            if (!q.trim()) { dropdown.style.display = 'none'; return; }
+            if (results.length > 0) {
+                var header = document.createElement('div');
+                header.style.cssText = 'padding:10px 16px 6px;font-size:0.72rem;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:0.5px';
+                header.textContent = 'Tools';
+                dropdown.appendChild(header);
+                results.forEach(function(tool) {
+                    var item = document.createElement('a');
+                    item.href = tool.url;
+                    item.style.cssText = 'display:flex;align-items:center;gap:12px;padding:11px 16px;text-decoration:none;transition:background 0.15s;border-bottom:1px solid #f1f5f9';
+                    item.innerHTML = '<div style="width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#3b82f6,#6366f1);display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="'+tool.icon+'" style="color:white;font-size:0.85rem"></i></div><div style="min-width:0"><div style="font-weight:600;color:#0f172a;font-size:0.9rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+tool.name+'</div><div style="font-size:0.75rem;color:#64748b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+tool.desc+'</div></div><div style="margin-left:auto;flex-shrink:0"><i class="fas fa-arrow-right" style="color:#cbd5e1;font-size:0.75rem"></i></div>';
+                    item.addEventListener('mouseenter', function(){ item.style.background='#f8faff'; });
+                    item.addEventListener('mouseleave', function(){ item.style.background=''; });
+                    dropdown.appendChild(item);
                 });
             }
+            var blogRow = document.createElement('a');
+            blogRow.href = '/blog/?search=' + encodeURIComponent(q);
+            blogRow.style.cssText = 'display:flex;align-items:center;gap:12px;padding:11px 16px;text-decoration:none;background:#f8faff;transition:background 0.15s';
+            blogRow.innerHTML = '<div style="width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#667eea,#764ba2);display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="fas fa-newspaper" style="color:white;font-size:0.85rem"></i></div><div><div style="font-weight:600;color:#0f172a;font-size:0.9rem">Search blogs for "'+q+'"</div><div style="font-size:0.75rem;color:#64748b">Find articles and guides</div></div><div style="margin-left:auto"><i class="fas fa-arrow-right" style="color:#cbd5e1;font-size:0.75rem"></i></div>';
+            blogRow.addEventListener('mouseenter', function(){ blogRow.style.background='#f0f4ff'; });
+            blogRow.addEventListener('mouseleave', function(){ blogRow.style.background='#f8faff'; });
+            dropdown.appendChild(blogRow);
+            dropdown.style.display = 'block';
+        }
+
+        var debounceTimer;
+        searchInput.addEventListener('input', function() {
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(function(){ renderDropdown(searchInput.value); }, 120);
+        });
+        searchInput.addEventListener('focus', function(){ if (searchInput.value.trim()) renderDropdown(searchInput.value); });
+        searchInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') { var q = searchInput.value.trim(); if (q) window.location.href = '/blog/?search=' + encodeURIComponent(q); }
+            if (e.key === 'Escape') { dropdown.style.display = 'none'; searchInput.blur(); }
+        });
+        searchBtn.addEventListener('click', function() { var q = searchInput.value.trim(); if (q) window.location.href = '/blog/?search=' + encodeURIComponent(q); });
+        document.addEventListener('click', function(e) { if (!searchBox || !searchBox.contains(e.target)) dropdown.style.display = 'none'; });
+    });
+
+    // ==================== SMOOTH SCROLL ====================
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
         });
     });
 </script>
