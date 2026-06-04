@@ -1,58 +1,117 @@
 {% extends 'blog/base1.html' %}
 
-{% block head %}
-    <!-- Meta Tags for Blog Post -->
-    <meta name="description" content="{{ post.excerpt|striptags|truncatewords:30 }}">
-    <meta name="keywords" content="{% for tag in post.tags.all %}{{ tag.name }}{% if not forloop.last %}, {% endif %}{% endfor %}">
-    <meta name="author" content="{{ post.author.get_full_name|default:post.author.username }}">
+{% block title %}{{ post.title }} | 21K Tools{% endblock %}
 
-    <!-- Open Graph / Facebook Meta Tags -->
-    <meta property="og:type" content="article">
-    <meta property="og:url" content="https://{{ request.get_host }}{{ request.path }}">
-    <meta property="og:title" content="{{ post.title }} | 21K Tools">
-    <meta property="og:description" content="{{ post.excerpt|striptags|truncatewords:30 }}">
-    <meta property="og:site_name" content="21K Tools Blog">
+{# ═══════════════════════════════════════════════════════════════
+   META TAGS BLOCK — all OG / Twitter tags live here now.
+   This block replaces the default in base1.html entirely.
+   Previously these were inside {% block extra_css %} which put
+   them inside a <style> tag — the browser ignored them completely.
+════════════════════════════════════════════════════════════════ #}
+{% block meta_tags %}
+<meta name="description" content="{{ post.excerpt|striptags|truncatewords:30 }}">
+<meta name="keywords" content="{% for tag in post.tags.all %}{{ tag.name }}{% if not forloop.last %}, {% endif %}{% endfor %}">
+<meta name="author" content="{{ post.author.get_full_name|default:post.author.username }}">
+<meta name="robots" content="index, follow">
 
-    {% if post.has_thumbnail %}
-    <meta property="og:image" content="https://{{ request.get_host }}{% url 'serve_blog_thumbnail' post.slug %}">
-    <meta property="og:image:secure_url" content="https://{{ request.get_host }}{% url 'serve_blog_thumbnail' post.slug %}">
-    <meta property="og:image:type" content="image/jpeg">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <meta property="og:image:alt" content="{{ post.title }}">
-    {% else %}
-    <meta property="og:image" content="https://{{ request.get_host }}/static/21k.png">
-    <meta property="og:image:secure_url" content="https://{{ request.get_host }}/static/21k.png">
-    {% endif %}
+<!-- Open Graph -->
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="21K Tools">
+<meta property="og:url" content="https://{{ request.get_host }}{{ request.path }}">
+<meta property="og:title" content="{{ post.title }} | 21K Tools">
+<meta property="og:description" content="{{ post.excerpt|striptags|truncatewords:30 }}">
+{% if post.has_thumbnail %}
+<meta property="og:image" content="https://{{ request.get_host }}{% url 'serve_blog_thumbnail' post.slug %}">
+<meta property="og:image:secure_url" content="https://{{ request.get_host }}{% url 'serve_blog_thumbnail' post.slug %}">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="{{ post.title }}">
+{% else %}
+<meta property="og:image" content="https://{{ request.get_host }}/static/21k.png">
+<meta property="og:image:secure_url" content="https://{{ request.get_host }}/static/21k.png">
+{% endif %}
 
-    <!-- Twitter Card Meta Tags -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:site" content="@21ktools">
-    <meta name="twitter:creator" content="@21ktools">
-    <meta name="twitter:title" content="{{ post.title }} | 21K Tools">
-    <meta name="twitter:description" content="{{ post.excerpt|striptags|truncatewords:30 }}">
-    {% if post.has_thumbnail %}
-    <meta name="twitter:image" content="https://{{ request.get_host }}{% url 'serve_blog_thumbnail' post.slug %}">
-    {% else %}
-    <meta name="twitter:image" content="https://{{ request.get_host }}/static/21k.png">
-    {% endif %}
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@21ktools">
+<meta name="twitter:creator" content="@21ktools">
+<meta name="twitter:title" content="{{ post.title }} | 21K Tools">
+<meta name="twitter:description" content="{{ post.excerpt|striptags|truncatewords:30 }}">
+{% if post.has_thumbnail %}
+<meta name="twitter:image" content="https://{{ request.get_host }}{% url 'serve_blog_thumbnail' post.slug %}">
+{% else %}
+<meta name="twitter:image" content="https://{{ request.get_host }}/static/21k.png">
+{% endif %}
 
-    <!-- Article Meta Tags -->
-    <meta property="article:published_time" content="{{ post.published_at|date:'c' }}">
-    <meta property="article:modified_time" content="{{ post.updated_at|date:'c' }}">
-    <meta property="article:author" content="{{ post.author.get_full_name|default:post.author.username }}">
-    {% if post.category %}
-    <meta property="article:section" content="{{ post.category.name }}">
-    {% endif %}
+<!-- Article meta -->
+<meta property="article:published_time" content="{{ post.published_at|date:'c' }}">
+<meta property="article:modified_time" content="{{ post.updated_at|date:'c' }}">
+<meta property="article:author" content="{{ post.author.get_full_name|default:post.author.username }}">
+{% if post.category %}
+<meta property="article:section" content="{{ post.category.name }}">
+{% endif %}
 {% endblock %}
-{% block title %}{{ post.title }} | - 21K Tools{% endblock %}
 
+{# ═══════════════════════════════════════════════════════════════
+   SCHEMA MARKUP BLOCK
+════════════════════════════════════════════════════════════════ #}
+{% block schema_markup %}
+{{ block.super }}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "{{ post.title|escapejs }}",
+  "description": "{{ post.excerpt|striptags|truncatewords:30|escapejs }}",
+  "url": "https://21k.tools/blog/{{ post.slug }}/",
+  "datePublished": "{{ post.published_at|date:'Y-m-d' }}",
+  "dateModified": "{{ post.updated_at|date:'Y-m-d' }}",
+  "inLanguage": "en",
+  "author": {
+    "@type": "Person",
+    "@id": "https://21k.tools/#author-nithish",
+    "name": "{{ post.author.get_full_name|default:post.author.username|escapejs }}",
+    "url": "https://21k.tools/about/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "21K Tools",
+    "url": "https://21k.tools/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://21k.tools/static/21k.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://21k.tools/blog/{{ post.slug }}/"
+  }{% if post.has_thumbnail %},
+  "image": {
+    "@type": "ImageObject",
+    "url": "https://21k.tools{% url 'serve_blog_thumbnail' post.slug %}"
+  }{% endif %}
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "21K Tools", "item": "https://21k.tools/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://21k.tools/blog/" }{% if post.category %},
+    { "@type": "ListItem", "position": 3, "name": "{{ post.category.name|escapejs }}", "item": "https://21k.tools/blog/category/{{ post.category.slug }}/" },
+    { "@type": "ListItem", "position": 4, "name": "{{ post.title|truncatewords:5|escapejs }}", "item": "https://21k.tools/blog/{{ post.slug }}/" }{% else %},
+    { "@type": "ListItem", "position": 3, "name": "{{ post.title|truncatewords:5|escapejs }}", "item": "https://21k.tools/blog/{{ post.slug }}/" }{% endif %}
+  ]
+}
+</script>
+{% endblock %}
+
+{# ═══════════════════════════════════════════════════════════════
+   EXTRA CSS — page-specific styles only, NO meta tags here
+════════════════════════════════════════════════════════════════ #}
 {% block extra_css %}
-<!-- ADD THESE META TAGS RIGHT HERE, BEFORE THE <style> TAG -->
-
-
-
-
 <style>
     :root {
         --primary: #2563eb;
@@ -66,1533 +125,303 @@
         --warning: #f59e0b;
         --bg-light: #f9fafb;
     }
-    /* ==================== LINK STYLING ==================== */
-/* Remove underlines from ALL links first */
-a {
-    text-decoration: none;
-}
 
-/* Add underline ONLY to article body links */
-.article-body a {
-    text-decoration: underline !important;
-}
+    a { text-decoration: none; }
+    .article-body a { text-decoration: underline !important; }
+    .article-hero a, .author-bio-section a, .related-section a,
+    .article-sidebar a, .comments-section a, .breadcrumb a,
+    .nav-link, .footer-links a, .social-link, .tool-card,
+    .explore-cta, .bio-cta, .related-link, .tag, .share-item,
+    .mobile-share-item, .share-btn-inline, .dropdown-content a,
+    .mobile-dropdown-content a { text-decoration: none !important; }
+    .article-body a:hover { text-decoration: none !important; color: var(--primary-dark); }
 
-/* Remove underlines from specific elements that shouldn't have them */
-.article-hero a,
-.author-bio-section a,
-.related-section a,
-.article-sidebar a,
-.comments-section a,
-.breadcrumb a,
-.nav-link,
-.footer-links a,
-.social-link,
-.tool-card,
-.explore-cta,
-.bio-cta,
-.related-link,
-.tag,
-.share-item,
-.mobile-share-item,
-.share-btn-inline,
-.dropdown-content a,
-.mobile-dropdown-content a {
-    text-decoration: none !important;
-}
-
-/* Hover effects */
-.article-body a:hover {
-    text-decoration: none !important; /* Remove underline on hover for article links */
-    color: var(--primary-dark);
-}
-
- .bg {
+    .bg {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: ;
         padding: 0px 20px 20px;
         margin: 20px 14px 20px;
         border-radius: 20px;
-        text-algn: center;
     }
-    /* ==================== HERO SECTION ==================== */
-     .article-hero {
+
+    /* ── HERO ── */
+    .article-hero {
         color: white;
         padding: 10px 15px 10px;
         position: relative;
         overflow: hidden;
         align-items: center;
-        
         margin: 5px 145px 5px;
-        bckground: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     }
-
     .article-hero::before {
         content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-image: 
-            radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
-            radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+        position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+        background-image:
+            radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 0%, transparent 50%),
+            radial-gradient(circle at 80% 80%, rgba(255,255,255,0.05) 0%, transparent 50%);
         pointer-events: none;
     }
-
-    .heo-content {
-        max-width: 900px;
-        margin: 0 auto;
-        position: relative;
-        z-index: 1;
-        animation: fadeInDown 0.8s ease-out;
+    .hero-content {
+        max-width: 900px; margin: 0; padding-left: 20px;
+        position: relative; z-index: 1; animation: fadeInDown 0.8s ease-out;
     }
-.hero-content {
-    max-width: 900px;
-    margin: 0;
-    padding-left: 20px; /* Add left padding for breathing room */
-    position: relative;
-    z-index: 1;
-    animation: fadeInDown 0.8s ease-out;
-}
     .hero-category {
-        display: inline-block;
-        background: rgba(255, 255, 255, 0.2);
-        backdrop-filter: blur(10px);
-        color: white;
-        padding: 8px 16px;
-        border-radius: 50px;
-        font-size: 0.75rem;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        margin-bottom: 20px;
-        border: 1px solid rgba(255, 255, 255, 0.3);
-    }
-
-    .hero-title {
-        font-size: clamp(1.8rem, 5vw, 2.8rem);
-        font-weight: 900;
-        line-height: 1.2;
-        margin-bottom: 25px;
-        letter-spacing: -0.5px;
-    }
-
-    .hero-meta {
-        display: flex;
-        align-items: center;
-        gap: 30px;
-        flex-wrap: wrap;
-        font-size: 0.95rem;
-        opacity: 0.95;
-    }
-
-    .meta-item {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-
-    .bio-avatar {
-        width: 20px;
-        height: 20px;
-        border-radius: 50%;
-        object-fit: cover;
-        border: 2px solid rgba(255, 255, 255, 0.3);
-    }
-
-    .author-avatar-placeholder {
-        width: 20px;
-        height: 40px;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.2);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.2rem;
-        border: 2px solid rgba(255, 255, 255, 0.3);
-    }
-
-    .author-name {
-        font-weight: 600;
-    }
-
-    .author-name a {
-        color: white;
-        text-decoration: none;
-        transition: opacity 0.3s;
-    }
-
-    .author-name a:hover {
-        opacity: 0.8;
-    }
-
-    .author-job {
-        font-size: 0.8rem;
-        opacity: 0.85;
-    }
-
-    /* ==================== SOCIAL SHARE BAR ==================== */
-    .share-bar {
-        position: fixed;
-        left: 20px;
-        top: 50%;
-        transform: translateY(-50%);
-        background: white;
-        border-radius: 20px;
-        padding: 20px 16px;
-        display: flex;
-        flex-direction: column;
-        gap: 16px;
-        box-shadow: 0 15px 50px rgba(0, 0, 0, 0.12);
-        z-index: 100;
-        backdrop-filter: blur(10px);
-        animation: slideInLeft 0.6s ease-out;
-    }
-
-    .share-item {
-        width: 50px;
-        height: 50px;
-        border-radius: 12px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        text-decoration: none;
-        font-size: 1.1rem;
-        transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
-        cursor: pointer;
-    }
-
-    .share-twitter { background: #1DA1F2; }
-    .share-facebook { background: #1877F2; }
-    .share-linkedin { background: #0A66C2; }
-    .share-email { background: #EA4335; }
-    .share-whatsapp { background: #25D366; }
-    
-
-    .share-item:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
-    }
-
-    /* ==================== MOBILE SOCIAL SHARE ==================== */
-    .mobile-share-bar {
-        display: none;
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        background: white;
-        padding: 12px 15px;
-        box-shadow: 0 -3px 20px rgba(0, 0, 0, 0.08);
-        z-index: 100;
-        justify-content: space-around;
-        align-items: center;
-        border-top: 1px solid var(--border);
-    }
-
-    .mobile-share-item {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        text-decoration: none;
-        color: var(--secondary);
-        font-size: 0.75rem;
-        gap: 4px;
-    }
-
-    .mobile-share-icon {
-        width: 36px;
-        height: 36px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        font-size: 0.9rem;
-    }
-
-    /* ==================== MAIN ARTICLE CONTAINER ==================== */
-    .article-wrapper {
-        max-width: 1500px;
-        margin: 0 auto;
-        padding: 20px 10px;
-        display: grid;
-        grid-template-columns: 1fr 300px;
-        gap: 40px;
-        align-items: flex-start;
-        position: relative;
-        z-index: 10;
-        
-    }
-
-    .article-content-area {
-        background: white;
-        border-radius: 16px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
-        overflow: hidden;
-    }
-
-    .article-featured-image {
-  height: auto;
-        object-fit: cover;
-        width: 100%;
-        display: block;
-    }
-
-    .article-featured-placeholder {
-        width: 0%;
-        height:0%;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 4rem;
-        color: rgba(255, 255, 255, 0.3);
-    }
-
-    .article-body {
-        padding: 80px 50px;
-    }
-
-    /* ==================== CONTENT TYPOGRAPHY ==================== */
-    .article-body h1,
-    .article-body h2,
-    .article-body h3,
-    .article-body h4 {
-        color: var(--text-dark);
-        font-weight: 800;
-        margin-top: 35px;
-        margin-bottom: 18px;
-        line-height: 1.3;
-    }
-
-    .article-body h1 {
-        font-size: clamp(1.8rem, 2.5vw, 2.3rem);
-    }
-
-    .article-body h2 {
-        font-size: clamp(1.5rem, 2vw, 1.8rem);
-        padding-bottom: 12px;
-        border-bottom: 3px solid var(--primary-light);
-    }
-
-    .article-body h3 {
-        font-size: clamp(1.3rem, 1.8vw, 1.6rem);
-    }
-
-    .article-body h4 {
-        font-size: clamp(1.1rem, 1.3vw, 1.2rem);
-    }
-
-    .article-body p {
-        font-size: clamp(0.95rem, 1vw, 1.05rem);
-        line-height: 2.8;
-        margin-bottom: 22px;
-        color: var(--secondary);
-    }
-
-    .article-body a {
-        color: var(--primary);
-        text-decoration: underline;
-        font-weight: 600;
-        transition: color 0.3s ease;
-    }
-
-    .article-body a:hover {
-        color: var(--primary-dark);
-    }
-
-    .article-body ul,
-    .article-body ol {
-        margin: 22px 0 22px 32px;
-        color: var(--secondary);
-    }
-
-    .article-body li {
-        margin-bottom: 10px;
-        line-height: 1.8;
-        font-size: clamp(0.95rem, 1vw, 1.05rem);
-    }
-
-    .article-body blockquote {
-        border-left: 5px solid var(--primary);
-        background: var(--primary-light);
-        padding: 22px 28px;
-        margin: 30px 0;
-        border-radius: 8px;
-        font-style: italic;
-        color: var(--text-dark);
-        font-size: clamp(0.95rem, 1vw, 1.1rem);
-        line-height: 1.8;
-    }
-
-    .article-body code {
-        background: var(--text-light);
-        padding: 3px 8px;
-        border-radius: 4px;
-        font-family: 'Monaco', 'Courier New', monospace;
-        font-size: 0.9em;
-        color: #d946ef;
-    }
-
-    .article-body pre {
-        background: var(--text-dark);
-        color: #e2e8f0;
-        padding: 22px;
-        border-radius: 12px;
-        overflow-x: auto;
-        margin: 28px 0;
-        font-family: 'Monaco', 'Courier New', monospace;
-        font-size: 0.85rem;
-        line-height: 1.6;
-    }
-
-    .article-body pre code {
-        background: transparent;
-        padding: 0;
-        color: inherit;
-    }
-
-    .article-body img {
-        max-width: 100%;
-        height: auto;
-        border-radius: 12px;
-        margin: 35px 0;
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-    }
-
-    .article-body table {
-        width: 100%;
-        border-collapse: collapse;
-        margin: 28px 0;
-        overflow-x: auto;
-        display: block;
-        border-radius: 8px;
-        overflow: hidden;
-    }
-
-    .article-body th {
-        background: var(--primary-light);
-        padding: 14px;
-        text-align: left;
-        font-weight: 700;
-        color: var(--text-dark);
-    }
-
-    .article-body td {
-        padding: 12px 14px;
-        border-bottom: 1px solid var(--border);
-    }
-
-    /* ==================== AUTHOR BIO CARD ==================== */
-    .author-bio-section {
-        background: linear-gradient(135deg, rgba(102, 126, 234, 0.08), rgba(118, 75, 162, 0.08));
-        border: 2px solid var(--primary-light);
-        border-radius: 16px;
-        padding: 40px;
-        margin: 55px 0;
-        display: grid;
-        grid-template-columns: 120px 1fr;
-        gap: 30px;
-        align-items: center;
-    }
-
-    .bio-avatar {
-        width: 40px;
-        height: 40px;
-        border-radius: 50px;
-        object-fit: cover;
-        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
-    }
-
-    .bio-avatar-placeholder {
-        width: 40px;
-        height: 40px;
-        border-radius: 50px;
-        background: linear-gradient(135deg, #667eea, #764ba2);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 2.5rem;
-        color: white;
-        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
-    }
-
-    .bio-content h3 {
-        font-size: 1.3rem;
-        margin-bottom: 5px;
-        color: var(--text-dark);
-    }
-
-    .bio-content h3 a {
-        color: var(--text-dark);
-        text-decoration: none;
-        transition: color 0.3s;
-    }
-
-    .bio-content h3 a:hover {
-        color: var(--primary);
-    }
-
-    .bio-title {
-        color: var(--primary);
-        font-size: 0.9rem;
-        font-weight: 700;
-        margin-bottom: 10px;
-    }
-
-    .bio-desc {
-        color: var(--secondary);
-        font-size: 0.95rem;
-        line-height: 1.7;
-        margin-bottom: 18px;
-    }
-
-    .bio-cta {
-        display: inline-block;
-        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-        color: white;
-        padding: 11px 26px;
-        border-radius: 30px;
-        text-decoration: none;
-        font-weight: 700;
-        font-size: 0.9rem;
-        transition: all 0.3s ease;
-    }
-
-    .bio-cta:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(37, 99, 235, 0.3);
-    }
-
-    /* ==================== RELATED ARTICLES ==================== */
-    .related-section {
-        margin-top: 60px;
-        padding-top: 45px;
-        border-top: 2px solid var(--border);
-    }
-
-    .related-title {
-        font-size: clamp(1.4rem, 1.8vw, 1.8rem);
-        font-weight: 900;
-        margin-bottom: 35px;
-        color: var(--text-dark);
-    }
-
-    .related-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 28px;
-    }
-
-    .related-card {
-        background: white;
-        border: 1px solid var(--border);
-        border-radius: 12px;
-        overflow: hidden;
-        transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-    }
-
-    .related-card:hover {
-        transform: translateY(-6px);
-        box-shadow: 0 12px 35px rgba(0, 0, 0, 0.08);
-        border-color: var(--primary-light);
-    }
-
-    .related-image {
-        width: 100%;
-        height: 180px;
-        object-fit: cover;
-    }
-
-    .related-image-placeholder {
-        width: 100%;
-        height: 180px;
-        background: linear-gradient(135deg, #667eea, #764ba2);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 2.2rem;
-        color: rgba(255, 255, 255, 0.3);
-    }
-
-    .related-body {
-        padding: 22px;
-    }
-
-    .related-body h4 {
-        font-size: 1rem;
-        font-weight: 800;
-        margin-bottom: 10px;
-        color: var(--text-dark);
-        line-height: 1.4;
-    }
-
-    .related-meta {
-        font-size: 0.8rem;
-        color: var(--secondary);
-        margin-bottom: 12px;
-    }
-
-    .related-link {
-        color: var(--primary);
-        text-decoration: none;
-        font-weight: 700;
-        transition: color 0.3s;
-    }
-
-    .related-link:hover {
-        color: var(--primary-dark);
-    }
-
-    /* ==================== COMMENTS SECTION ==================== */
-    .comments-section {
-        margin-top: 60px;
-        padding-top: 45px;
-        border-top: 2px solid var(--border);
-    }
-
-    .comments-title {
-        font-size: clamp(1.3rem, 1.6vw, 1.6rem);
-        font-weight: 900;
-        margin-bottom: 35px;
-        color: var(--text-dark);
-    }
-
-    .comment-form {
-        background: var(--bg-light);
-        padding: 32px;
-        border-radius: 12px;
-        margin-bottom: 45px;
-        border: 1px solid var(--border);
-    }
-
-    .comment-form h4 {
-        font-size: 1.1rem;
-        margin-bottom: 18px;
-        color: var(--text-dark);
-    }
-
-    .form-group {
-        margin-bottom: 18px;
-    }
-
-    .form-group label {
-        display: block;
-        font-weight: 600;
-        margin-bottom: 8px;
-        color: var(--text-dark);
-        font-size: 0.95rem;
-    }
-
-    .form-group input,
-    .form-group textarea {
-        width: 100%;
-        padding: 11px 14px;
-        border: 1px solid var(--border);
-        border-radius: 8px;
-        font-family: inherit;
-        font-size: 1rem;
-        transition: all 0.3s;
-        background: white;
-    }
-
-    .form-group textarea {
-        resize: vertical;
-        min-height: 130px;
-    }
-
-    .form-group input:focus,
-    .form-group textarea:focus {
-        outline: none;
-        border-color: var(--primary);
-        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-    }
-
-    .comment-btn {
-        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-        color: white;
-        padding: 12px 36px;
-        border: none;
-        border-radius: 30px;
-        font-weight: 700;
-        font-size: 0.95rem;
-        cursor: pointer;
-        transition: all 0.3s ease;
-    }
-
-    .comment-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(37, 99, 235, 0.3);
-    }
-
-    .comments-list {
-        display: flex;
-        flex-direction: column;
-        gap: 30px;
-    }
-
-    .comment-item {
-        display: grid;
-        grid-template-columns: 45px 1fr;
-        gap: 16px;
-    }
-
-    .comment-avatar {
-        width: 45px;
-        height: 45px;
-        border-radius: 50%;
-        background: linear-gradient(135deg, #667eea, #764ba2);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        font-size: 1rem;
-    }
-
-    .comment-body h5 {
-        font-size: 0.95rem;
-        font-weight: 700;
-        color: var(--text-dark);
-        margin-bottom: 3px;
-    }
-
-    .comment-time {
-        font-size: 0.8rem;
-        color: var(--secondary);
-        margin-bottom: 10px;
-    }
-
-    .comment-text {
-        color: var(--secondary);
-        line-height: 1.7;
-        font-size: 0.95rem;
-    }
-
-    .no-comments {
-        color: var(--secondary);
-        text-align: center;
-        padding: 28px;
-        background: var(--bg-light);
-        border-radius: 12px;
-    }
-
-    /* ==================== SIDEBAR ==================== */
-    .article-sidebar {
-        position: sticky;
-        width: 300px;
-        top: 120px;
-        height: fit-content;
-    }
-
-    .sidebar-widget {
-        background: white;
-        border: 1px solid var(--border);
-        border-radius: 12px;
-        padding: 15px;
-        margin-bottom: 22px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
-    }
-
-    .sidebar-widget h4 {
-        font-size: 1rem;
-        font-weight: 800;
-        margin-bottom: 18px;
-        color: var(--text-dark);
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-
-    .sidebar-widget h4 i {
-        color: var(--primary);
-        font-size: 1.1rem;
-    }
-
-    .toc-list {
-        list-style: none;
-    }
-
-    .toc-list li {
-        margin-bottom: 10px;
-    }
-
-    .toc-list a {
-        color: var(--text-dark);
-        text-decoration: none;
-        font-size: 0.9rem;
-        transition: all 0.3s;
-        display: block;
-        padding: 6px 12px;
-        border-left: 3px solid transparent;
-        border-radius: 4px;
-    }
-
-    .toc-list a:hover {
-        color: var(--primary);
-        border-left-color: var(--primary);
-        background: var(--primary-light);
-    }
-
-    .recent-post-item {
-        padding: 12px 0;
-        border-bottom: 1px solid var(--border);
-    }
-
-    .recent-post-item:last-child {
-        border-bottom: none;
-    }
-
-    .recent-post-item a {
-        color: var(--text-dark);
-        text-decoration: none;
-        font-weight: 600;
-        font-size: 0.9rem;
-        transition: color 0.3s;
-        display: block;
-        line-height: 1.4;
-    }
-
-    .recent-post-item a:hover {
-        color: var(--primary);
-    }
-
-    .post-date {
-        font-size: 0.75rem;
-        color: var(--secondary);
-        margin-top: 4px;
-    }
-
-    /* ==================== EXPLORE TOOLS SECTION ==================== */
-    .explore-section {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        padding: 80px 20px;
-        margin: 80px 20px 0;
-        border-radius: 20px;
-        text-align: center;
-        display: none;
-    }
-
-    .explore-title {
-        font-size: clamp(1.8rem, 2.2vw, 2.3rem);
-        font-weight: 900;
-        margin-bottom: 16px;
-        color:white;
-    }
-
-    .explore-desc {
-        font-size: clamp(0.95rem, 1vw, 1.05rem);
-        opacity: 0.93;
-        max-width: 650px;
-        margin: 0 auto 45px;
-        line-height: 1.7;
-        color:white;
-    }
-
-    .tools-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-        gap: 22px;
-        max-width: 1100px;
-        margin: 0 auto 36px;
-    }
-
-    .tool-card {
-        background: rgba(255, 255, 255, 0.12);
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        border-radius: 16px;
-        padding: 32px 22px;
-        text-decoration: none;
-        color: white;
-        transition: all 0.3s ease;
-    }
-
-    .tool-card:hover {
-        background: rgba(255, 255, 255, 0.18);
-        transform: translateY(-4px);
-        border-color: rgba(255, 255, 255, 0.4);
-    }
-
-    .tool-icon {
-        font-size: 2.2rem;
-        margin-bottom: 14px;
-        display: block;
-    }
-
-    .tool-card h5 {
-        font-size: 1.1rem;
-        font-weight: 800;
-        margin-bottom: 10px;
-    }
-
-    .tool-desc {
-        font-size: 0.9rem;
-        opacity: 0.88;
-        color:white;
-    }
-
-    .explore-cta {
-        display: inline-block;
-        background: white;
-        color: #667eea;
-        padding: 13px 36px;
-        border-radius: 30px;
-        text-decoration: none;
-        font-weight: 800;
-        font-size: 0.95rem;
-        transition: all 0.3s ease;
-    }
-
-    .explore-cta:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-    }
-
-    /* ==================== TAGS & CATEGORIES ==================== */
-    .post-tags {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 12px;
-        margin-top: 40px;
-        padding-top: 30px;
-        border-top: 2px solid var(--border);
-    }
-
-    .post-tags h4 {
-        width: 100%;
-        font-size: 1rem;
-        font-weight: 700;
-        margin-bottom: 15px;
-        color: var(--text-dark);
-    }
-
-    .tag {
-        display: inline-block;
-        background: var(--primary-light);
-        color: var(--primary-dark);
-        padding: 8px 16px;
-        border-radius: 30px;
-        text-decoration: none;
-        font-size: 0.9rem;
-        font-weight: 600;
-        transition: all 0.3s ease;
-        border: 1px solid var(--primary);
-    }
-
-    .tag:hover {
-        background: var(--primary);
-        color: white;
-        transform: translateY(-2px);
-        box-shadow: 0 4px 15px rgba(37, 99, 235, 0.2);
-    }
-
-    /* ==================== SHARE SECTION ==================== */
-    .article-footer {
-        display: grid;
-        grid-template-columns: 1fr auto;
-        gap: 40px;
-        align-items: center;
-        padding: 30px 0;
-        margin-top: 40px;
-        border-top: 2px solid var(--border);
-    }
-
-    .article-footer-left h3 {
-        font-size: 1.1rem;
-        font-weight: 700;
-        margin-bottom: 12px;
-        color: var(--text-dark);
-    }
-
-    .article-footer-left p {
-        color: var(--secondary);
-        font-size: 0.95rem;
-        margin-bottom: 0;
-    }
-
-    .share-buttons-inline {
-        display: flex;
-        gap: 12px;
-        align-items: center;
-    }
-
-    .share-btn-inline {
-        width: 45px;
-        height: 45px;
-        border-radius: 10px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        text-decoration: none;
-        font-size: 1.1rem;
-        transition: all 0.3s ease;
-        cursor: pointer;
-    }
-
-    .share-btn-twitter { background: #1DA1F2; }
-    .share-btn-facebook { background: #1877F2; }
-    .share-btn-linkedin { background: #0A66C2; }
-    .share-btn-email { background: #EA4335; }
-
-    .share-btn-inline:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-    }
-
- /* ==================== BREADCRUMB ==================== */
-.breadcrumb {
-    max-width: calc(100% - 20px);
-    margin:10px 20px 5px 20px;
-    padding: 15px 20px;
-    font-size: 1.3rem;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    border-radius: 10px;
-    font-weight: 800;
-      font-size: 19px;
-}
-
-.breadcrumb a {
-    color: white;
-    text-decoration: none;
-    transition: color 0.3s;
-}
-
-.breadcrumb a:hover {
-    color: rgba(255, 255, 255, 0.8);
-    text-decoration: underline;
-}
-
-.breadcrumb span {
-    color: rgba(255, 255, 255, 0.7);
-    margin: 0 8px;
-}
-
-.breadcrumb .current {
-    color: pink;
-}
-
-    /* ==================== ANIMATIONS ==================== */
-    @keyframes fadeInDown {
-        from {
-            opacity: 0;
-            transform: translateY(-25px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    @keyframes slideInLeft {
-        from {
-            opacity: 0;
-            transform: translateX(-35px);
-        }
-        to {
-            opacity: 1;
-            transform: translateX(0);
-        }
-    }
-
-    /* ==================== RESPONSIVE ==================== */
+        display: inline-block; background: rgba(255,255,255,0.2);
+        backdrop-filter: blur(10px); color: white; padding: 8px 16px;
+        border-radius: 50px; font-size: 0.75rem; font-weight: 700;
+        text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 20px;
+        border: 1px solid rgba(255,255,255,0.3);
+    }
+    .hero-title { font-size: clamp(1.8rem, 5vw, 2.8rem); font-weight: 900; line-height: 1.2; margin-bottom: 25px; letter-spacing: -0.5px; }
+    .hero-meta { display: flex; align-items: center; gap: 30px; flex-wrap: wrap; font-size: 0.95rem; opacity: 0.95; }
+    .meta-item { display: flex; align-items: center; gap: 10px; }
+    .bio-avatar { width: 20px; height: 20px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(255,255,255,0.3); }
+    .author-avatar-placeholder { width: 20px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; border: 2px solid rgba(255,255,255,0.3); }
+    .author-name { font-weight: 600; }
+    .author-name a { color: white; text-decoration: none; transition: opacity 0.3s; }
+    .author-name a:hover { opacity: 0.8; }
+    .author-job { font-size: 0.8rem; opacity: 0.85; }
+
+    /* ── SHARE BAR ── */
+    .share-bar { position: fixed; left: 20px; top: 50%; transform: translateY(-50%); background: white; border-radius: 20px; padding: 20px 16px; display: flex; flex-direction: column; gap: 16px; box-shadow: 0 15px 50px rgba(0,0,0,0.12); z-index: 100; animation: slideInLeft 0.6s ease-out; }
+    .share-item { width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; text-decoration: none; font-size: 1.1rem; transition: all 0.3s cubic-bezier(0.165,0.84,0.44,1); cursor: pointer; }
+    .share-twitter { background: #1DA1F2; } .share-facebook { background: #1877F2; } .share-linkedin { background: #0A66C2; } .share-email { background: #EA4335; } .share-whatsapp { background: #25D366; }
+    .share-item:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(0,0,0,0.2); }
+
+    /* ── MOBILE SHARE ── */
+    .mobile-share-bar { display: none; position: fixed; bottom: 0; left: 0; right: 0; background: white; padding: 12px 15px; box-shadow: 0 -3px 20px rgba(0,0,0,0.08); z-index: 100; justify-content: space-around; align-items: center; border-top: 1px solid var(--border); }
+    .mobile-share-item { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: var(--secondary); font-size: 0.75rem; gap: 4px; }
+    .mobile-share-icon { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.9rem; }
+
+    /* ── ARTICLE WRAPPER ── */
+    .article-wrapper { max-width: 1500px; margin: 0 auto; padding: 20px 10px; display: grid; grid-template-columns: 1fr 300px; gap: 40px; align-items: flex-start; position: relative; z-index: 10; }
+    .article-content-area { background: white; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.06); overflow: hidden; }
+    .article-featured-image { height: auto; object-fit: cover; width: 100%; display: block; }
+    .article-featured-placeholder { width: 0%; height: 0%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center; font-size: 4rem; color: rgba(255,255,255,0.3); }
+    .article-body { padding: 80px 50px; }
+
+    /* ── TYPOGRAPHY ── */
+    .article-body h1, .article-body h2, .article-body h3, .article-body h4 { color: var(--text-dark); font-weight: 800; margin-top: 35px; margin-bottom: 18px; line-height: 1.3; }
+    .article-body h1 { font-size: clamp(1.8rem, 2.5vw, 2.3rem); }
+    .article-body h2 { font-size: clamp(1.5rem, 2vw, 1.8rem); padding-bottom: 12px; border-bottom: 3px solid var(--primary-light); }
+    .article-body h3 { font-size: clamp(1.3rem, 1.8vw, 1.6rem); }
+    .article-body h4 { font-size: clamp(1.1rem, 1.3vw, 1.2rem); }
+    .article-body p { font-size: clamp(0.95rem, 1vw, 1.05rem); line-height: 2.8; margin-bottom: 22px; color: var(--secondary); }
+    .article-body a { color: var(--primary); text-decoration: underline; font-weight: 600; transition: color 0.3s ease; }
+    .article-body a:hover { color: var(--primary-dark); }
+    .article-body ul, .article-body ol { margin: 22px 0 22px 32px; color: var(--secondary); }
+    .article-body li { margin-bottom: 10px; line-height: 1.8; font-size: clamp(0.95rem, 1vw, 1.05rem); }
+    .article-body blockquote { border-left: 5px solid var(--primary); background: var(--primary-light); padding: 22px 28px; margin: 30px 0; border-radius: 8px; font-style: italic; color: var(--text-dark); font-size: clamp(0.95rem, 1vw, 1.1rem); line-height: 1.8; }
+    .article-body code { background: var(--text-light); padding: 3px 8px; border-radius: 4px; font-family: 'Monaco','Courier New',monospace; font-size: 0.9em; color: #d946ef; }
+    .article-body pre { background: var(--text-dark); color: #e2e8f0; padding: 22px; border-radius: 12px; overflow-x: auto; margin: 28px 0; font-family: 'Monaco','Courier New',monospace; font-size: 0.85rem; line-height: 1.6; }
+    .article-body pre code { background: transparent; padding: 0; color: inherit; }
+    .article-body img { max-width: 100%; height: auto; border-radius: 12px; margin: 35px 0; box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
+    .article-body table { width: 100%; border-collapse: collapse; margin: 28px 0; overflow-x: auto; display: block; border-radius: 8px; overflow: hidden; }
+    .article-body th { background: var(--primary-light); padding: 14px; text-align: left; font-weight: 700; color: var(--text-dark); }
+    .article-body td { padding: 12px 14px; border-bottom: 1px solid var(--border); }
+
+    /* ── AUTHOR BIO ── */
+    .author-bio-section { background: linear-gradient(135deg, rgba(102,126,234,0.08), rgba(118,75,162,0.08)); border: 2px solid var(--primary-light); border-radius: 16px; padding: 40px; margin: 55px 0; display: grid; grid-template-columns: 120px 1fr; gap: 30px; align-items: center; }
+    .bio-avatar { width: 40px; height: 40px; border-radius: 50px; object-fit: cover; box-shadow: 0 8px 25px rgba(102,126,234,0.2); }
+    .bio-avatar-placeholder { width: 40px; height: 40px; border-radius: 50px; background: linear-gradient(135deg, #667eea, #764ba2); display: flex; align-items: center; justify-content: center; font-size: 2.5rem; color: white; box-shadow: 0 8px 25px rgba(102,126,234,0.2); }
+    .bio-content h3 { font-size: 1.3rem; margin-bottom: 5px; color: var(--text-dark); }
+    .bio-content h3 a { color: var(--text-dark); text-decoration: none; transition: color 0.3s; }
+    .bio-content h3 a:hover { color: var(--primary); }
+    .bio-title { color: var(--primary); font-size: 0.9rem; font-weight: 700; margin-bottom: 10px; }
+    .bio-desc { color: var(--secondary); font-size: 0.95rem; line-height: 1.7; margin-bottom: 18px; }
+    .bio-cta { display: inline-block; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; padding: 11px 26px; border-radius: 30px; text-decoration: none; font-weight: 700; font-size: 0.9rem; transition: all 0.3s ease; }
+    .bio-cta:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(37,99,235,0.3); }
+
+    /* ── RELATED ── */
+    .related-section { margin-top: 60px; padding-top: 45px; border-top: 2px solid var(--border); }
+    .related-title { font-size: clamp(1.4rem, 1.8vw, 1.8rem); font-weight: 900; margin-bottom: 35px; color: var(--text-dark); }
+    .related-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+    .related-card { background: white; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; transition: all 0.4s cubic-bezier(0.165,0.84,0.44,1); }
+    .related-card:hover { transform: translateY(-6px); box-shadow: 0 12px 35px rgba(0,0,0,0.08); border-color: var(--primary-light); }
+    .related-image { width: 100%; height: 180px; object-fit: cover; }
+    .related-image-placeholder { width: 100%; height: 180px; background: linear-gradient(135deg, #667eea, #764ba2); display: flex; align-items: center; justify-content: center; font-size: 2.2rem; color: rgba(255,255,255,0.3); }
+    .related-body { padding: 22px; }
+    .related-body h4 { font-size: 1rem; font-weight: 800; margin-bottom: 10px; color: var(--text-dark); line-height: 1.4; }
+    .related-meta { font-size: 0.8rem; color: var(--secondary); margin-bottom: 12px; }
+    .related-link { color: var(--primary); text-decoration: none; font-weight: 700; transition: color 0.3s; }
+    .related-link:hover { color: var(--primary-dark); }
+
+    /* ── COMMENTS ── */
+    .comments-section { margin-top: 60px; padding-top: 45px; border-top: 2px solid var(--border); }
+    .comments-title { font-size: clamp(1.3rem, 1.6vw, 1.6rem); font-weight: 900; margin-bottom: 35px; color: var(--text-dark); }
+    .comment-form { background: var(--bg-light); padding: 32px; border-radius: 12px; margin-bottom: 45px; border: 1px solid var(--border); }
+    .comment-form h4 { font-size: 1.1rem; margin-bottom: 18px; color: var(--text-dark); }
+    .form-group { margin-bottom: 18px; }
+    .form-group label { display: block; font-weight: 600; margin-bottom: 8px; color: var(--text-dark); font-size: 0.95rem; }
+    .form-group input, .form-group textarea { width: 100%; padding: 11px 14px; border: 1px solid var(--border); border-radius: 8px; font-family: inherit; font-size: 1rem; transition: all 0.3s; background: white; }
+    .form-group textarea { resize: vertical; min-height: 130px; }
+    .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
+    .comment-btn { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; padding: 12px 36px; border: none; border-radius: 30px; font-weight: 700; font-size: 0.95rem; cursor: pointer; transition: all 0.3s ease; }
+    .comment-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(37,99,235,0.3); }
+    .comments-list { display: flex; flex-direction: column; gap: 30px; }
+    .comment-item { display: grid; grid-template-columns: 45px 1fr; gap: 16px; }
+    .comment-avatar { width: 45px; height: 45px; border-radius: 50%; background: linear-gradient(135deg, #667eea, #764ba2); display: flex; align-items: center; justify-content: center; color: white; font-size: 1rem; }
+    .comment-body h5 { font-size: 0.95rem; font-weight: 700; color: var(--text-dark); margin-bottom: 3px; }
+    .comment-time { font-size: 0.8rem; color: var(--secondary); margin-bottom: 10px; }
+    .comment-text { color: var(--secondary); line-height: 1.7; font-size: 0.95rem; }
+    .no-comments { color: var(--secondary); text-align: center; padding: 28px; background: var(--bg-light); border-radius: 12px; }
+
+    /* ── SIDEBAR ── */
+    .article-sidebar { position: sticky; width: 300px; top: 120px; height: fit-content; }
+    .sidebar-widget { background: white; border: 1px solid var(--border); border-radius: 12px; padding: 15px; margin-bottom: 22px; box-shadow: 0 2px 10px rgba(0,0,0,0.04); }
+    .sidebar-widget h4 { font-size: 1rem; font-weight: 800; margin-bottom: 18px; color: var(--text-dark); display: flex; align-items: center; gap: 10px; }
+    .sidebar-widget h4 i { color: var(--primary); font-size: 1.1rem; }
+    .toc-list { list-style: none; }
+    .toc-list li { margin-bottom: 10px; }
+    .toc-list a { color: var(--text-dark); text-decoration: none; font-size: 0.9rem; transition: all 0.3s; display: block; padding: 6px 12px; border-left: 3px solid transparent; border-radius: 4px; }
+    .toc-list a:hover { color: var(--primary); border-left-color: var(--primary); background: var(--primary-light); }
+    .recent-post-item { padding: 12px 0; border-bottom: 1px solid var(--border); }
+    .recent-post-item:last-child { border-bottom: none; }
+    .recent-post-item a { color: var(--text-dark); text-decoration: none; font-weight: 600; font-size: 0.9rem; transition: color 0.3s; display: block; line-height: 1.4; }
+    .recent-post-item a:hover { color: var(--primary); }
+    .post-date { font-size: 0.75rem; color: var(--secondary); margin-top: 4px; }
+
+    /* ── TOOLS SECTION ── */
+    .explore-section { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 80px 20px; margin: 80px 20px 0; border-radius: 20px; text-align: center; display: none; }
+    .explore-title { font-size: clamp(1.8rem, 2.2vw, 2.3rem); font-weight: 900; margin-bottom: 16px; color: white; }
+    .explore-desc { font-size: clamp(0.95rem, 1vw, 1.05rem); opacity: 0.93; max-width: 650px; margin: 0 auto 45px; line-height: 1.7; color: white; }
+    .tools-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 22px; max-width: 1100px; margin: 0 auto 36px; }
+    .tool-card { background: rgba(255,255,255,0.12); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); border-radius: 16px; padding: 32px 22px; text-decoration: none; color: white; transition: all 0.3s ease; }
+    .tool-card:hover { background: rgba(255,255,255,0.18); transform: translateY(-4px); border-color: rgba(255,255,255,0.4); }
+    .tool-icon { font-size: 2.2rem; margin-bottom: 14px; display: block; }
+    .tool-card h5 { font-size: 1.1rem; font-weight: 800; margin-bottom: 10px; }
+    .tool-desc { font-size: 0.9rem; opacity: 0.88; color: white; }
+    .explore-cta { display: inline-block; background: white; color: #667eea; padding: 13px 36px; border-radius: 30px; text-decoration: none; font-weight: 800; font-size: 0.95rem; transition: all 0.3s ease; }
+    .explore-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,0,0,0.2); }
+
+    /* ── TAGS ── */
+    .post-tags { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 40px; padding-top: 30px; border-top: 2px solid var(--border); }
+    .post-tags h4 { width: 100%; font-size: 1rem; font-weight: 700; margin-bottom: 15px; color: var(--text-dark); }
+    .tag { display: inline-block; background: var(--primary-light); color: var(--primary-dark); padding: 8px 16px; border-radius: 30px; text-decoration: none; font-size: 0.9rem; font-weight: 600; transition: all 0.3s ease; border: 1px solid var(--primary); }
+    .tag:hover { background: var(--primary); color: white; transform: translateY(-2px); box-shadow: 0 4px 15px rgba(37,99,235,0.2); }
+
+    /* ── SHARE FOOTER ── */
+    .article-footer { display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: center; padding: 30px 0; margin-top: 40px; border-top: 2px solid var(--border); }
+    .article-footer-left h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 12px; color: var(--text-dark); }
+    .article-footer-left p { color: var(--secondary); font-size: 0.95rem; margin-bottom: 0; }
+    .share-buttons-inline { display: flex; gap: 12px; align-items: center; }
+    .share-btn-inline { width: 45px; height: 45px; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; text-decoration: none; font-size: 1.1rem; transition: all 0.3s ease; cursor: pointer; }
+    .share-btn-twitter { background: #1DA1F2; } .share-btn-facebook { background: #1877F2; } .share-btn-linkedin { background: #0A66C2; } .share-btn-email { background: #EA4335; }
+    .share-btn-inline:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,0.15); }
+
+    /* ── BREADCRUMB ── */
+    .breadcrumb { max-width: calc(100% - 20px); margin: 10px 20px 5px 20px; padding: 15px 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 10px; font-weight: 800; font-size: 19px; }
+    .breadcrumb a { color: white; text-decoration: none; transition: color 0.3s; }
+    .breadcrumb a:hover { color: rgba(255,255,255,0.8); text-decoration: underline; }
+    .breadcrumb span { color: rgba(255,255,255,0.7); margin: 0 8px; }
+    .breadcrumb .current { color: pink; }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeInDown { from { opacity: 0; transform: translateY(-25px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes slideInLeft { from { opacity: 0; transform: translateX(-35px); } to { opacity: 1; transform: translateX(0); } }
+
+    /* ── RESPONSIVE ── */
     @media (max-width: 1024px) {
-        .article-wrapper {
-            grid-template-columns: 1fr;
-            gap: 30px;
-            padding: 30px 20px;
-        }
-
-        .article-sidebar {
-            position: static;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 18px;
-            width: 100%;
-            top: auto;
-        }
-
-        .related-grid {
-            grid-template-columns: repeat(2, 1fr);
-            gap: 22px;
-        }
-
-        .author-bio-section {
-            grid-template-columns: 100px 1fr;
-            gap: 22px;
-            padding: 30px;
-        }
-
-        .bio-avatar,
-        .bio-avatar-placeholder {
-            width: 40px;
-            height: 40px;
-            font-size: 2rem;
-        }
-          .breadcrumb {
-        max-width: calc(100% - 10px);
-        margin: 10px 20px 10px 20px;
-        padding: 12px 15px;
-        font-size: 0.85rem;
-    }
-
-  }
-
-
-/* MOBILE: 768px and below */
-@media (max-width: 768px) {
-    .share-bar {
-        display: none;
-    }
-
-    .mobile-share-bar {
-        display: flex;
-    }
-     .footer {
-            
-            
-        }
-    .bg {
-        margin: 20px 4px 20px;
-        padding: 0px 3px 20px;
-    }
-
-    .article-wrapper {
-        padding: 20px 2px;
-    }
-
-    .article-footer {
-        grid-template-columns: 1fr;
-        gap: 25px;
-    }
-
-    .article-footer-left {
-        text-align: center;
-    }
-
-    .share-buttons-inline {
-        justify-content: center;
-    }
-
-    .breadcrumb {
-        max-width: calc(100% - 6px);
-        margin: 10px 3px 10px 3px;
-        padding: 12px 15px;
-        font-size: 0.95rem;
-        border-radius: 10px;
-    }
-
-    .post-tags {
-        margin-top: 30px;
-        padding-top: 20px;
-    }
-
-    .article-hero {
-        padding: 60px 15px 45px;
-        margin: 5px 2px 5px 2px;
-        text-align: center;
-    }
-
-    .hero-title {
-        font-size: 1.8rem;
-    }
-
-    .hero-meta {
-        gap: 20px;
-        font-size: 0.85rem;
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .article-body {
-        padding: 40px 25px;
-    }
-
-    
-          .article-featured-image {
-       
-               height: auto;
-        object-fit: cover;
-        width: 100%;
-        display: block;
-    
-    }
-
-    .related-grid {
-        grid-template-columns: 1fr;
-        gap: 20px;
-    }
-
-    .author-bio-section {
-        grid-template-columns: 1fr;
-        text-align: center;
-        padding: 25px;
-        gap: 18px;
-    }
-
-    .bio-avatar,
-    .bio-avatar-placeholder {
-        width: 30px;
-        height: 30px;
-        font-size: 1.8rem;
-        margin: 0 auto;
-    }
-
-    .comment-form {
-        padding: 25px;
-    }
-
-    .comment-item {
-        grid-template-columns: 40px 1fr;
-        gap: 12px;
-    }
-
-    .comment-avatar {
-        width: 40px;
-        height: 40px;
-        font-size: 0.9rem;
-    }
-
-    .explore-section {
-        margin: 60px 5px 0;
-        padding: 60px 15px;
-    }
-
-    .sidebar-widget {
-        padding: 20px;
-    }
-}
-
-/* SMALL MOBILE: 576px and below */
-@media (max-width: 576px) {
-    .bg {
-        margin: 15px px 15px;
-        padding: 0px 2px 15px;
-        border-radius: 15px;
-    }
-
-    .article-wrapper {
-        padding: 15px 1px;
-        margin: 0px 10px 0px;
-        
-    }
-
-    .article-body {
-        padding: 25px 10px;
-    }
-
-    .article-hero {
-        padding: 50px 10px 35px;
-        margin: 5px 1px 5px 1px;
-    }
-
-    .hero-title {
-        font-size: 1.5rem;
-        margin-bottom: 18px;
-    }
-
-    .hero-meta {
-        gap: 15px;
-        font-size: 0.8rem;
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .hero-category {
-        padding: 6px 12px;
-        font-size: 0.7rem;
-    }
-
-    .author-avatar,
-    .author-avatar-placeholder {
-        width: 35px;
-        height: 35px;
-        font-size: 0.9rem;
-    }
-
-    .author-bio-section {
-        padding: 20px 16px;
-        margin: 35px 0;
-        grid-template-columns: 1fr;
-    }
-
-    .bio-avatar,
-    .bio-avatar-placeholder {
-        width: 40px;
-        height: 40px;
-        font-size: 1.6rem;
-        margin: 0 auto;
-    }
-
-    .sidebar-widget {
-        padding: 16px;
-        margin-bottom: 18px;
-    }
-
-    .sidebar-widget h4 {
-        font-size: 0.95rem;
-        margin-bottom: 15px;
-    }
-
-    .toc-list a {
-        font-size: 0.85rem;
-        padding: 5px 10px;
-    }
-
-    .recent-post-item a {
-        font-size: 0.85rem;
-    }
-
-    .post-date {
-        font-size: 0.7rem;
-    }
-      .article-featured-image {
-        height: auto;
-        object-fit: cover;
-        width: 100%;
-        display: block;
-    }
-
-    .explore-section {
-        margin: 50px 1px 0;
-        padding: 50px 10px;
-    }
-
-    .explore-title {
-        font-size: 1.5rem;
-        margin-bottom: 12px;
-    }
-
-    .explore-desc {
-        font-size: 0.9rem;
-        margin-bottom: 35px;
-    }
-
-    .tools-grid {
-        grid-template-columns: 1fr;
-        gap: 16px;
-        margin-bottom: 25px;
-    }
-
-    .tool-card {
-        padding: 24px 18px;
-    }
-
-    .tool-icon {
-        font-size: 2rem;
-        margin-bottom: 12px;
-    }
-
-    .tool-card h5 {
-        font-size: 1rem;
-        margin-bottom: 8px;
-    }
-
-    .tool-desc {
-        font-size: 0.85rem;
-    }
-
-    .explore-cta {
-        padding: 11px 32px;
-        font-size: 0.9rem;
-    }
-
-    .mobile-share-bar {
-        padding: 10px 12px;
-        bottom: 0;
-    }
-
-    .mobile-share-item {
-        font-size: 0.65rem;
-        gap: 3px;
-    }
-
-    .mobile-share-icon {
-        width: 34px;
-        height: 34px;
-        font-size: 0.8rem;
-    }
-
-    .breadcrumb {
-        max-width: calc(100% - 4px);
-        margin: 8px 2px 8px 2px;
-        padding: 10px 12px;
-        font-size: 0.8rem;
-        border-radius: 10px;
-    }
-
-    .breadcrumb span {
-        margin: 0 4px;
-    }
-
-    .article-body h1,
-    .article-body h2,
-    .article-body h3,
-    .article-body h4 {
-        margin-top: 25px;
-        margin-bottom: 15px;
-    }
-
-    .article-body p {
-        font-size: 0.95rem;
-        line-height: 1.6;
-        margin-bottom: 18px;
-    }
-
-    .article-body blockquote {
-        padding: 18px 20px;
-        margin: 22px 0;
-    }
-
-    .article-body ul,
-    .article-body ol {
-        margin: 18px 0 18px 24px;
-    }
-
-    .article-body li {
-        margin-bottom: 8px;
-        font-size: 0.95rem;
-        line-height: 1.6;
-    }
-
-    .comment-form h4 {
-        font-size: 1rem;
-        margin-bottom: 15px;
-    }
-
-    .form-group label {
-        font-size: 0.9rem;
-        margin-bottom: 6px;
-    }
-
-    .form-group input,
-    .form-group textarea {
-        padding: 10px 12px;
-        font-size: 0.95rem;
-    }
-
-    .form-group textarea {
-        min-height: 110px;
-    }
-
-    .comment-btn {
-        padding: 10px 28px;
-        font-size: 0.9rem;
-    }
-
-    .comment-avatar {
-        width: 38px;
-        height: 38px;
-        font-size: 0.85rem;
-    }
-
-    .comment-body h5 {
-        font-size: 0.9rem;
-    }
-
-    .comment-time {
-        font-size: 0.75rem;
-    }
-
-    .comment-text {
-        font-size: 0.9rem;
-        line-height: 1.6;
-    }
-
-    .no-comments {
-        padding: 22px;
-    }
-
-    .bio-cta {
-        padding: 9px 20px;
-        font-size: 0.85rem;
-    }
-
-    .article-footer {
-        gap: 18px;
-        padding: 20px 0;
-        margin-top: 30px;
-    }
-
-    .article-footer-left h3 {
-        font-size: 1rem;
-        margin-bottom: 10px;
-    }
-
-    .article-footer-left p {
-        font-size: 0.9rem;
-    }
-
-    .tag {
-        padding: 7px 14px;
-        font-size: 0.85rem;
-    }
-}
-
-/* EXTRA SMALL MOBILE: 360px and below */
-@media (max-width: 360px) {
-    .bg {
-        margin: 10px 2px 10px;
-        padding: 0px 1px 10px;
-        border-radius: 12px;
-    }
-
-    .article-wrapper {
-        padding: 10px 0px;
-         margin: 0px 10px 0px;
-    }
-
-    .article-body {
-        padding: 20px 8px;
-    }
-
-    .article-hero {
-        padding: 40px 8px 30px;
-        margin: 5px 0px 5px 0px;
-    }
-
-    .hero-title {
-        font-size: 1.3rem;
-        line-height: 1.2;
-    }
-
-    .breadcrumb {
-        max-width: calc(100% - 2px);
-        margin: 5px 1px 5px 1px;
-        padding: 8px 10px;
-        font-size: 0.75rem;
-    }
-
-     .article-featured-image {
-         height: auto;
-        object-fit: cover;
-        width: 100%;
-        display: block;
-    }
-    
-
-    .explore-section {
-        margin: 40px 10px 0;
-        padding: 40px 8px;
-    }
-
-    .tools-grid {
-        gap: 14px;
-    }
-
-    .tool-card {
-        padding: 20px 14px;
+        .article-wrapper { grid-template-columns: 1fr; gap: 30px; padding: 30px 20px; }
+        .article-sidebar { position: static; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; width: 100%; top: auto; }
+        .related-grid { grid-template-columns: repeat(2, 1fr); gap: 22px; }
+        .author-bio-section { grid-template-columns: 100px 1fr; gap: 22px; padding: 30px; }
+        .bio-avatar, .bio-avatar-placeholder { width: 40px; height: 40px; font-size: 2rem; }
+        .breadcrumb { max-width: calc(100% - 10px); margin: 10px 20px 10px 20px; padding: 12px 15px; font-size: 0.85rem; }
+    }
+
+    @media (max-width: 768px) {
+        .share-bar { display: none; }
+        .mobile-share-bar { display: flex; }
+        .bg { margin: 20px 4px 20px; padding: 0px 3px 20px; }
+        .article-wrapper { padding: 20px 2px; }
+        .article-footer { grid-template-columns: 1fr; gap: 25px; }
+        .article-footer-left { text-align: center; }
+        .share-buttons-inline { justify-content: center; }
+        .breadcrumb { max-width: calc(100% - 6px); margin: 10px 3px 10px 3px; padding: 12px 15px; font-size: 0.95rem; border-radius: 10px; }
+        .post-tags { margin-top: 30px; padding-top: 20px; }
+        .article-hero { padding: 60px 15px 45px; margin: 5px 2px 5px 2px; text-align: center; }
+        .hero-title { font-size: 1.8rem; }
+        .hero-meta { gap: 20px; font-size: 0.85rem; flex-direction: column; align-items: flex-start; }
+        .article-body { padding: 40px 25px; }
+        .article-featured-image { height: auto; object-fit: cover; width: 100%; display: block; }
+        .related-grid { grid-template-columns: 1fr; gap: 20px; }
+        .author-bio-section { grid-template-columns: 1fr; text-align: center; padding: 25px; gap: 18px; }
+        .bio-avatar, .bio-avatar-placeholder { width: 30px; height: 30px; font-size: 1.8rem; margin: 0 auto; }
+        .comment-form { padding: 25px; }
+        .comment-item { grid-template-columns: 40px 1fr; gap: 12px; }
+        .comment-avatar { width: 40px; height: 40px; font-size: 0.9rem; }
+        .explore-section { margin: 60px 5px 0; padding: 60px 15px; }
+        .sidebar-widget { padding: 20px; }
+    }
+
+    @media (max-width: 576px) {
+        .bg { margin: 15px 2px 15px; padding: 0px 2px 15px; border-radius: 15px; }
+        .article-wrapper { padding: 15px 1px; margin: 0px 10px 0px; }
+        .article-body { padding: 25px 10px; }
+        .article-hero { padding: 50px 10px 35px; margin: 5px 1px 5px 1px; }
+        .hero-title { font-size: 1.5rem; margin-bottom: 18px; }
+        .hero-meta { gap: 15px; font-size: 0.8rem; flex-direction: column; align-items: flex-start; }
+        .hero-category { padding: 6px 12px; font-size: 0.7rem; }
+        .author-bio-section { padding: 20px 16px; margin: 35px 0; grid-template-columns: 1fr; }
+        .bio-avatar, .bio-avatar-placeholder { width: 40px; height: 40px; font-size: 1.6rem; margin: 0 auto; }
+        .sidebar-widget { padding: 16px; margin-bottom: 18px; }
+        .sidebar-widget h4 { font-size: 0.95rem; margin-bottom: 15px; }
+        .toc-list a { font-size: 0.85rem; padding: 5px 10px; }
+        .recent-post-item a { font-size: 0.85rem; }
+        .post-date { font-size: 0.7rem; }
+        .article-featured-image { height: auto; object-fit: cover; width: 100%; display: block; }
+        .explore-section { margin: 50px 1px 0; padding: 50px 10px; }
+        .explore-title { font-size: 1.5rem; margin-bottom: 12px; }
+        .explore-desc { font-size: 0.9rem; margin-bottom: 35px; }
+        .tools-grid { grid-template-columns: 1fr; gap: 16px; margin-bottom: 25px; }
+        .tool-card { padding: 24px 18px; }
+        .tool-icon { font-size: 2rem; margin-bottom: 12px; }
+        .tool-card h5 { font-size: 1rem; margin-bottom: 8px; }
+        .tool-desc { font-size: 0.85rem; }
+        .explore-cta { padding: 11px 32px; font-size: 0.9rem; }
+        .mobile-share-bar { padding: 10px 12px; bottom: 0; }
+        .mobile-share-item { font-size: 0.65rem; gap: 3px; }
+        .mobile-share-icon { width: 34px; height: 34px; font-size: 0.8rem; }
+        .breadcrumb { max-width: calc(100% - 4px); margin: 8px 2px 8px 2px; padding: 10px 12px; font-size: 0.8rem; border-radius: 10px; }
+        .breadcrumb span { margin: 0 4px; }
+        .article-body h1, .article-body h2, .article-body h3, .article-body h4 { margin-top: 25px; margin-bottom: 15px; }
+        .article-body p { font-size: 0.95rem; line-height: 1.6; margin-bottom: 18px; }
+        .article-body blockquote { padding: 18px 20px; margin: 22px 0; }
+        .article-body ul, .article-body ol { margin: 18px 0 18px 24px; }
+        .article-body li { margin-bottom: 8px; font-size: 0.95rem; line-height: 1.6; }
+        .comment-form h4 { font-size: 1rem; margin-bottom: 15px; }
+        .form-group label { font-size: 0.9rem; margin-bottom: 6px; }
+        .form-group input, .form-group textarea { padding: 10px 12px; font-size: 0.95rem; }
+        .form-group textarea { min-height: 110px; }
+        .comment-btn { padding: 10px 28px; font-size: 0.9rem; }
+        .comment-avatar { width: 38px; height: 38px; font-size: 0.85rem; }
+        .comment-body h5 { font-size: 0.9rem; }
+        .comment-time { font-size: 0.75rem; }
+        .comment-text { font-size: 0.9rem; line-height: 1.6; }
+        .no-comments { padding: 22px; }
+        .bio-cta { padding: 9px 20px; font-size: 0.85rem; }
+        .article-footer { gap: 18px; padding: 20px 0; margin-top: 30px; }
+        .article-footer-left h3 { font-size: 1rem; margin-bottom: 10px; }
+        .article-footer-left p { font-size: 0.9rem; }
+        .tag { padding: 7px 14px; font-size: 0.85rem; }
+    }
+
+    @media (max-width: 360px) {
+        .bg { margin: 10px 2px 10px; padding: 0px 1px 10px; border-radius: 12px; }
+        .article-wrapper { padding: 10px 0px; margin: 0px 10px 0px; }
+        .article-body { padding: 20px 8px; }
+        .article-hero { padding: 40px 8px 30px; margin: 5px 0px 5px 0px; }
+        .hero-title { font-size: 1.3rem; line-height: 1.2; }
+        .breadcrumb { max-width: calc(100% - 2px); margin: 5px 1px 5px 1px; padding: 8px 10px; font-size: 0.75rem; }
+        .article-featured-image { height: auto; object-fit: cover; width: 100%; display: block; }
+        .explore-section { margin: 40px 10px 0; padding: 40px 8px; }
+        .tools-grid { gap: 14px; }
+        .tool-card { padding: 20px 14px; }
     }
-}
 </style>
 {% endblock %}
 
 {% block content %}
-<!-- Breadcrumb Navigation -->
 <nav class="breadcrumb">
     <a href="/">Home</a>
     <span>/</span>
@@ -1604,197 +433,93 @@ a {
     {% endif %}
     <span class="current">{{ post.title|truncatewords:5 }}</span>
 </nav>
+
 <!-- Desktop Share Bar -->
 <div class="share-bar">
-    <a href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri }}&text={{ post.title }}" 
-       class="share-item share-twitter" title="Share on Twitter" target="_blank">
-        <i class="fab fa-twitter"></i>
-    </a>
-
-    <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" 
-       class="share-item share-facebook" title="Share on Facebook" target="_blank">
-        <i class="fab fa-facebook-f"></i>
-    </a>
-
-    <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.build_absolute_uri }}" 
-       class="share-item share-linkedin" title="Share on LinkedIn" target="_blank">
-        <i class="fab fa-linkedin-in"></i>
-    </a>
-
-    <a href="https://api.whatsapp.com/send?text={{ post.title }}%20{{ request.build_absolute_uri }}" 
-       class="share-item share-whatsapp fa-2x" title="Share on WhatsApp" target="_blank">
-        <i class="fab fa-whatsapp"></i>
-    </a>
-
-   
-
-    <a href="mailto:?subject={{ post.title }}&body={{ request.build_absolute_uri }}" 
-       class="share-item share-email" title="Share via Email">
-        <i class="fas fa-envelope"></i>
-    </a>
+    <a href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri }}&text={{ post.title }}" class="share-item share-twitter" title="Share on Twitter" target="_blank"><i class="fab fa-twitter"></i></a>
+    <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" class="share-item share-facebook" title="Share on Facebook" target="_blank"><i class="fab fa-facebook-f"></i></a>
+    <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.build_absolute_uri }}" class="share-item share-linkedin" title="Share on LinkedIn" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+    <a href="https://api.whatsapp.com/send?text={{ post.title }}%20{{ request.build_absolute_uri }}" class="share-item share-whatsapp fa-2x" title="Share on WhatsApp" target="_blank"><i class="fab fa-whatsapp"></i></a>
+    <a href="mailto:?subject={{ post.title }}&body={{ request.build_absolute_uri }}" class="share-item share-email" title="Share via Email"><i class="fas fa-envelope"></i></a>
 </div>
-
 
 <!-- Mobile Share Bar -->
 <div class="mobile-share-bar">
-    <a href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri }}&text={{ post.title }}" class="mobile-share-item" title="Share on Twitter" target="_blank">
-        <div class="mobile-share-icon share-twitter">
-            <i class="fab fa-twitter"></i>
-        </div>
-        <span>Twitter</span>
-    </a>
-    <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" class="mobile-share-item" title="Share on Facebook" target="_blank">
-        <div class="mobile-share-icon share-facebook">
-            <i class="fab fa-facebook-f"></i>
-        </div>
-        <span>Facebook</span>
-    </a>
-    
-    <a href="https://api.whatsapp.com/send?text={{ post.title }}%20{{ request.build_absolute_uri }}" class="mobile-share-item" title="Share on WhatsApp" target="_blank">
-        <div class="mobile-share-icon share-whatsapp">
-            <i class="fab fa-whatsapp"></i>
-        </div>
-        <span>WhatsApp</span>
-    </a>
-    
-    <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.build_absolute_uri }}" class="mobile-share-item" title="Share on LinkedIn" target="_blank">
-        <div class="mobile-share-icon share-linkedin">
-            <i class="fab fa-linkedin-in"></i>
-        </div>
-        <span>LinkedIn</span>
-    </a>
-   
+    <a href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri }}&text={{ post.title }}" class="mobile-share-item" target="_blank"><div class="mobile-share-icon share-twitter"><i class="fab fa-twitter"></i></div><span>Twitter</span></a>
+    <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" class="mobile-share-item" target="_blank"><div class="mobile-share-icon share-facebook"><i class="fab fa-facebook-f"></i></div><span>Facebook</span></a>
+    <a href="https://api.whatsapp.com/send?text={{ post.title }}%20{{ request.build_absolute_uri }}" class="mobile-share-item" target="_blank"><div class="mobile-share-icon share-whatsapp"><i class="fab fa-whatsapp"></i></div><span>WhatsApp</span></a>
+    <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.build_absolute_uri }}" class="mobile-share-item" target="_blank"><div class="mobile-share-icon share-linkedin"><i class="fab fa-linkedin-in"></i></div><span>LinkedIn</span></a>
 </div>
 
-<!-- Hero Section -->
 <div class="bg">
 <section class="article-hero">
     <div class="hero-content">
-        {% if post.category %}
-        <span class="hero-category">{{ post.category.name }}</span>
-        {% endif %}
+        {% if post.category %}<span class="hero-category">{{ post.category.name }}</span>{% endif %}
         <h1 class="hero-title">{{ post.title }}</h1>
         <div class="hero-meta">
             <div class="meta-item">
-             {% if post.author.author_profile.has_profile_picture %}
-<img src="{% url 'serve_profile_picture' post.author.username %}" alt="{{ post.author.username }}" class="bio-avatar">
-{% else %}
-<div class="bio-avatar-placeholder">
-    <i class="fas fa-user"></i>
-</div>
-{% endif %}
+                {% if post.author.author_profile.has_profile_picture %}
+                <img src="{% url 'serve_profile_picture' post.author.username %}" alt="{{ post.author.username }}" class="bio-avatar">
+                {% else %}
+                <div class="bio-avatar-placeholder"><i class="fas fa-user"></i></div>
+                {% endif %}
                 <div>
                     <div class="author-name">
-                        <a href="{% url 'author_profile' post.author.username %}" style="color: white; text-decoration: none;">
-                            {{ post.author.get_full_name|default:post.author.username }}
-                        </a>
+                        <a href="{% url 'author_profile' post.author.username %}" style="color:white;text-decoration:none;">{{ post.author.get_full_name|default:post.author.username }}</a>
                     </div>
-                    {% if post.author.author_profile.job_title %}
-                    <div class="author-job">{{ post.author.author_profile.job_title }}</div>
-                    {% endif %}
+                    {% if post.author.author_profile.job_title %}<div class="author-job">{{ post.author.author_profile.job_title }}</div>{% endif %}
                 </div>
             </div>
-            <div class="meta-item">
-                <i class="far fa-calendar"></i>
-                <span>{{ post.published_at|date:"M d, Y" }}</span>
-            </div>
-            <div class="meta-item">
-                <i class="far fa-clock"></i>
-                <span>{{ reading_time }} min read</span>
-            </div>
+            <div class="meta-item"><i class="far fa-calendar"></i><span>{{ post.published_at|date:"M d, Y" }}</span></div>
+            <div class="meta-item"><i class="far fa-clock"></i><span>{{ reading_time }} min read</span></div>
         </div>
     </div>
 </section>
 
-<!-- Main Article -->
 <div class="article-wrapper">
     <main class="article-content-area">
-        <!-- Featured Image -->
-       {% if post.has_thumbnail %}
-<img src="{% url 'serve_blog_thumbnail' post.slug %}" alt="{{ post.title }}" class="article-featured-image">
-{% else %}
-<div class="article-featured-placeholder">
-    <i class="fas fa-image"></i>
-</div>
-{% endif %}
+        {% if post.has_thumbnail %}
+        <img src="{% url 'serve_blog_thumbnail' post.slug %}" alt="{{ post.title }}" class="article-featured-image">
+        {% else %}
+        <div class="article-featured-placeholder"><i class="fas fa-image"></i></div>
+        {% endif %}
 
-        <!-- Article Body -->
         <div class="article-body">
             {{ post.content|safe }}
 
-            <!-- Tags Section -->
             {% if post.tags.all %}
             <div class="post-tags">
-                <h4><i class="fas fa-tags" style="margin-right: 8px;"></i>Tags</h4>
+                <h4><i class="fas fa-tags" style="margin-right:8px;"></i>Tags</h4>
                 {% for tag in post.tags.all %}
                 <a href="{% url 'tag_posts' tag.slug %}" class="tag">{{ tag.name }}</a>
                 {% endfor %}
             </div>
             {% endif %}
 
-            <!-- Article Footer with Share -->
             <div class="article-footer">
                 <div class="article-footer-left">
                     <h3>Share This Article</h3>
-                    <p>Help others discover this valuable content</p>
+                    <p>Help others discover this content</p>
                 </div>
                 <div class="share-buttons-inline">
-                    <a href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri }}&text={{ post.title }}" class="share-btn-inline share-btn-twitter" title="Share on Twitter" target="_blank">
-                        <i class="fab fa-twitter"></i>
-                    </a>
-                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" class="share-btn-inline share-btn-facebook" title="Share on Facebook" target="_blank">
-                        <i class="fab fa-facebook-f"></i>
-                    </a>
-                    <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.build_absolute_uri }}" class="share-btn-inline share-btn-linkedin" title="Share on LinkedIn" target="_blank">
-                        <i class="fab fa-linkedin-in"></i>
-                    </a>
-                    <a href="mailto:?subject={{ post.title }}&body={{ request.build_absolute_uri }}" class="share-btn-inline share-btn-email" title="Share via Email">
-                        <i class="fas fa-envelope"></i>
-                    </a>
+                    <a href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri }}&text={{ post.title }}" class="share-btn-inline share-btn-twitter" target="_blank"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" class="share-btn-inline share-btn-facebook" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.build_absolute_uri }}" class="share-btn-inline share-btn-linkedin" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="mailto:?subject={{ post.title }}&body={{ request.build_absolute_uri }}" class="share-btn-inline share-btn-email"><i class="fas fa-envelope"></i></a>
                 </div>
             </div>
 
-            <!-- Author Bio Card >
-            <section class="author-bio-section">
-                {% if post.author.author_profile.profile_picture %}
-                <img src="{{ post.author.author_profile.profile_picture.url }}" alt="{{ post.author.username }}" class="bio-avatar">
-                {% else %}
-                <div class="bio-avatar-placeholder">
-                    <i class="fas fa-user"></i>
-                </div>
-                {% endif %}
-                <div class="bio-content">
-                    <h3>
-                        <a href="{% url 'author_profile' post.author.username %}">
-                            {{ post.author.get_full_name|default:post.author.username }}
-                        </a>
-                    </h3>
-                    {% if post.author.author_profile.job_title %}
-                    <div class="bio-title">{{ post.author.author_profile.job_title }}</div>
-                    {% endif %}
-                    {% if post.author.author_profile.bio %}
-                    <p class="bio-desc">{{ post.author.author_profile.bio }}</p>
-                    {% endif %}
-                    <a href="{% url 'author_profile' post.author.username %}" class="bio-cta">
-                        View Profile <i class="fas fa-arrow-right" style="margin-left: 6px;"></i>
-                    </a>
-                </div>
-            </section-->
-
-            <!-- Related Articles -->
             {% if related_posts %}
             <section class="related-section">
                 <h2 class="related-title">Related Articles</h2>
                 <div class="related-grid">
                     {% for related in related_posts %}
                     <article class="related-card">
-                      {% if related.has_thumbnail %}
-<img src="{% url 'serve_blog_thumbnail' related.slug %}" alt="{{ related.title }}" class="related-image">
-{% else %}
-<div class="related-image-placeholder">
-    <i class="fas fa-image"></i>
-</div>
-{% endif %}
+                        {% if related.has_thumbnail %}
+                        <img src="{% url 'serve_blog_thumbnail' related.slug %}" alt="{{ related.title }}" class="related-image">
+                        {% else %}
+                        <div class="related-image-placeholder"><i class="fas fa-image"></i></div>
+                        {% endif %}
                         <div class="related-body">
                             <h4><a href="{% url 'blog_detail' related.slug %}" class="related-link">{{ related.title }}</a></h4>
                             <div class="related-meta">{{ related.published_at|date:"M d, Y" }}</div>
@@ -1806,84 +531,48 @@ a {
             </section>
             {% endif %}
 
-            <!-- Comments Section -->
             <section class="comments-section">
-                <h2 class="comments-title">
-                    <i class="fas fa-comments" style="margin-right: 10px;"></i>
-                    Comments ({{ comment_count }})
-                </h2>
-                
-                <!-- Comment Form -->
+                <h2 class="comments-title"><i class="fas fa-comments" style="margin-right:10px;"></i>Comments ({{ comment_count }})</h2>
                 <div class="comment-form">
-                    <h4><i class="fas fa-pen-fancy" style="margin-right: 8px;"></i>Leave a Comment</h4>
+                    <h4><i class="fas fa-pen-fancy" style="margin-right:8px;"></i>Leave a Comment</h4>
                     {% if messages %}
-                    <div style="background: #d4edda; border: 1px solid #c3e6cb; color: #155724; padding: 12px; border-radius: 8px; margin-bottom: 20px;">
-                        {% for message in messages %}
-                        <p style="margin: 0;">{{ message }}</p>
-                        {% endfor %}
+                    <div style="background:#d4edda;border:1px solid #c3e6cb;color:#155724;padding:12px;border-radius:8px;margin-bottom:20px;">
+                        {% for message in messages %}<p style="margin:0;">{{ message }}</p>{% endfor %}
                     </div>
                     {% endif %}
                     <form method="post">
                         {% csrf_token %}
-                        <div class="form-group">
-                            <label for="id_name">Name *</label>
-                            {{ form.name }}
-                        </div>
-                        <div class="form-group">
-                            <label for="id_email">Email *</label>
-                            {{ form.email }}
-                        </div>
-                        <div class="form-group">
-                            <label for="id_content">Comment *</label>
-                            {{ form.content }}
-                        </div>
-                        <button type="submit" class="comment-btn">
-                            <i class="fas fa-paper-plane" style="margin-right: 8px;"></i>Post Comment
-                        </button>
+                        <div class="form-group"><label for="id_name">Name *</label>{{ form.name }}</div>
+                        <div class="form-group"><label for="id_email">Email *</label>{{ form.email }}</div>
+                        <div class="form-group"><label for="id_content">Comment *</label>{{ form.content }}</div>
+                        <button type="submit" class="comment-btn"><i class="fas fa-paper-plane" style="margin-right:8px;"></i>Post Comment</button>
                     </form>
                 </div>
-
-                <!-- Comments List -->
                 <div class="comments-list">
                     {% for comment in comments %}
                     <div class="comment-item">
-                        <div class="comment-avatar">
-                            <i class="fas fa-user"></i>
-                        </div>
+                        <div class="comment-avatar"><i class="fas fa-user"></i></div>
                         <div class="comment-body">
                             <h5>{{ comment.name }}</h5>
-                            <div class="comment-time">
-                                <i class="far fa-calendar" style="margin-right: 4px;"></i>
-                                {{ comment.created_at|date:"M d, Y" }} at {{ comment.created_at|time:"g:i A" }}
-                            </div>
+                            <div class="comment-time"><i class="far fa-calendar" style="margin-right:4px;"></i>{{ comment.created_at|date:"M d, Y" }} at {{ comment.created_at|time:"g:i A" }}</div>
                             <p class="comment-text">{{ comment.content }}</p>
                         </div>
                     </div>
                     {% empty %}
-                    <div class="no-comments">
-                        <i class="fas fa-comment-slash" style="margin-right: 8px;"></i>
-                        <p>No comments yet. Be the first to share your thoughts!</p>
-                    </div>
+                    <div class="no-comments"><i class="fas fa-comment-slash" style="margin-right:8px;"></i><p>No comments yet. Be the first to share your thoughts!</p></div>
                     {% endfor %}
                 </div>
             </section>
         </div>
     </main>
 
-    <!-- Sidebar -->
     <aside class="article-sidebar">
-        <!-- Table of Contents -->
         <div class="sidebar-widget">
             <h4><i class="fas fa-list"></i> Contents</h4>
             <ul class="toc-list" id="toc-list">
                 <li><a href="#introduction">Introduction</a></li>
-                <li><a href="#getting-started">Getting Started</a></li>
-                <li><a href="#features">Features</a></li>
-                <li><a href="#conclusion">Conclusion</a></li>
             </ul>
         </div>
-
-        <!-- Recent Posts -->
         <div class="sidebar-widget">
             <h4><i class="fas fa-clock"></i> Recent</h4>
             {% for recent in recent_posts %}
@@ -1892,143 +581,77 @@ a {
                 <div class="post-date">{{ recent.published_at|date:"M d, Y" }}</div>
             </div>
             {% empty %}
-            <p style="color: var(--secondary); font-size: 0.9rem;">No recent posts</p>
+            <p style="color:var(--secondary);font-size:0.9rem;">No recent posts</p>
             {% endfor %}
         </div>
-
-        <!-- Categories -->
         <div class="sidebar-widget">
             <h4><i class="fas fa-folder"></i> Categories</h4>
             <ul class="toc-list">
                 {% for category in categories %}
                 <li><a href="{% url 'category_posts' category.slug %}">{{ category.name }}</a></li>
                 {% empty %}
-                <li style="color: var(--secondary); font-size: 0.9rem;">No categories</li>
+                <li style="color:var(--secondary);font-size:0.9rem;">No categories</li>
                 {% endfor %}
             </ul>
         </div>
     </aside>
 </div>
 </div>
-<!-- Explore Tools Section -->
+
 <section class="explore-section">
     <h2 class="explore-title">Explore Our Tools</h2>
-    <p class="explore-desc">Discover our collection of powerful tools to make your work easier. Visit 21k.tools for all available tools and resources.</p>
-    
+    <p class="explore-desc">Free browser-based tools — no sign-up, no installation, no limits.</p>
     <div class="tools-grid">
-        <a href="https://21k.tools/urlshortener" class="tool-card" target="_blank">
-            <i class="tool-icon fas fa-link"></i>
-            <h5>URL Shortener</h5>
-            <p class="tool-desc">Create short, shareable links instantly.</p>
-        </a>
-          <a href="https://21k.tools/qrcodeandscanner" class="tool-card" target="_blank">
-            <i class="tool-icon fas fa-qrcode"></i>
-            <h5>QR Tools</h5>
-            <p class="tool-desc">Generate and Scan QR codes smartly.</p>
-        </a>
-        <a href="https://21k.tools/pdftools" class="tool-card" target="_blank">
-            <i class="tool-icon fas fa-file-pdf"></i>
-            <h5>PDF Tools</h5>
-            <p class="tool-desc">Merge, split, and edit PDF files easily.</p>
-        </a>
-        <a href="https://21k.tools/unitconverter" class="tool-card" target="_blank">
-            <i class="tool-icon fas fa-balance-scale"></i>
-            <h5>Unit Converter</h5>
-            <p class="tool-desc">convert units from one to another easily .</p>
-        </a>
-        <a href="https://21k.tools/fileconverter" class="tool-card" target="_blank">
-            <i class="tool-icon fas fa-file"></i>
-            <h5>File Converter</h5>
-            <p class="tool-desc">Convert between multiple file formats.</p>
-        </a>
-        <a href="https://21k.tools/imageresizer" class="tool-card" target="_blank">
-            <i class="tool-icon fas fa-image"></i>
-            <h5>Image Resizer</h5>
-            <p class="tool-desc">Resize and optimize images for any use.</p>
-        </a>
-        <a href="https://21k.tools/#" class="tool-card" target="_blank">
-            <i class="tool-icon fas fa-robot"></i>
-            <h5>AI Generator</h5>
-            <p class="tool-desc">Generate content with AI technology.</p>
-        </a>
-        <a href="https://21k.tools/agecalculator/" class="tool-card" target="_blank">
-            <i class="tool-icon fas fa-birthday-cake"></i>
-            <h5>Age Calculator</h5>
-            <p class="tool-desc">Calculate age in years, months, and days.</p>
-        </a>
-        <a href="https://21k.tools/interestcalculator/" class="tool-card" target="_blank">
-            <i class="tool-icon fas fa-percentage"></i>
-            <h5>Interest Calculator</h5>
-            <p class="tool-desc">Calculate simple and compound interest.</p>
-        </a>
+        <a href="https://21k.tools/urlshortener" class="tool-card" target="_blank"><i class="tool-icon fas fa-link"></i><h5>URL Shortener</h5><p class="tool-desc">Create short, shareable links instantly.</p></a>
+        <a href="https://21k.tools/qrcodeandscanner" class="tool-card" target="_blank"><i class="tool-icon fas fa-qrcode"></i><h5>QR Tools</h5><p class="tool-desc">Generate and scan QR codes.</p></a>
+        <a href="https://21k.tools/pdftools" class="tool-card" target="_blank"><i class="tool-icon fas fa-file-pdf"></i><h5>PDF Tools</h5><p class="tool-desc">Merge, split, and compress PDFs.</p></a>
+        <a href="https://21k.tools/unitconverter" class="tool-card" target="_blank"><i class="tool-icon fas fa-balance-scale"></i><h5>Unit Converter</h5><p class="tool-desc">Convert units instantly.</p></a>
+        <a href="https://21k.tools/fileconverter" class="tool-card" target="_blank"><i class="tool-icon fas fa-file"></i><h5>File Converter</h5><p class="tool-desc">Convert between 100+ formats.</p></a>
+        <a href="https://21k.tools/imageresizer" class="tool-card" target="_blank"><i class="tool-icon fas fa-image"></i><h5>Image Resizer</h5><p class="tool-desc">Resize and optimize images.</p></a>
+        <a href="https://21k.tools/agecalculator/" class="tool-card" target="_blank"><i class="tool-icon fas fa-birthday-cake"></i><h5>Age Calculator</h5><p class="tool-desc">Exact age in years, months, days.</p></a>
+        <a href="https://21k.tools/interestcalculator/" class="tool-card" target="_blank"><i class="tool-icon fas fa-percentage"></i><h5>Interest Calculator</h5><p class="tool-desc">Simple and compound interest.</p></a>
     </div>
-    
     <a href="https://21k.tools" class="explore-cta" target="_blank">View All Tools</a>
 </section>
 {% endblock %}
 
 {% block extra_js %}
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Dynamic Table of Contents
-        const tocList = document.getElementById('toc-list');
-        const headings = document.querySelectorAll('.article-body h2, .article-body h3');
-        
-        if (headings.length > 0 && tocList) {
-            tocList.innerHTML = '';
-            
-            headings.forEach((heading, index) => {
-                const id = heading.textContent.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-                heading.id = id || `heading-${index}`;
-                
-                const listItem = document.createElement('li');
-                const link = document.createElement('a');
-                link.href = `#${heading.id}`;
-                link.textContent = heading.textContent;
-                
-                if (heading.tagName === 'H3') {
-                    link.style.paddingLeft = '20px';
-                    link.style.fontSize = '0.85rem';
-                    link.style.opacity = '0.8';
-                }
-                
-                listItem.appendChild(link);
-                tocList.appendChild(listItem);
-            });
-        }
-        
-        // Smooth Scroll for TOC
-        document.querySelectorAll('.toc-list a').forEach(link => {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href');
-                const targetElement = document.querySelector(targetId);
-                
-                if (targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 100,
-                        behavior: 'smooth'
-                    });
-                }
-            });
+document.addEventListener('DOMContentLoaded', function() {
+    const tocList = document.getElementById('toc-list');
+    const headings = document.querySelectorAll('.article-body h2, .article-body h3');
+    if (headings.length > 0 && tocList) {
+        tocList.innerHTML = '';
+        headings.forEach((heading, index) => {
+            const id = heading.textContent.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+            heading.id = id || `heading-${index}`;
+            const listItem = document.createElement('li');
+            const link = document.createElement('a');
+            link.href = `#${heading.id}`;
+            link.textContent = heading.textContent;
+            if (heading.tagName === 'H3') { link.style.paddingLeft = '20px'; link.style.fontSize = '0.85rem'; link.style.opacity = '0.8'; }
+            listItem.appendChild(link);
+            tocList.appendChild(listItem);
         });
-        
-        // Highlight Active TOC Item
-        window.addEventListener('scroll', function() {
-            const headings = document.querySelectorAll('.article-body h2, .article-body h3');
-            const tocLinks = document.querySelectorAll('.toc-list a');
-            
-            headings.forEach((heading, index) => {
-                const rect = heading.getBoundingClientRect();
-                if (rect.top >= 0 && rect.top <= window.innerHeight / 2) {
-                    tocLinks.forEach(link => link.style.color = 'var(--text-dark)');
-                    if (tocLinks[index]) {
-                        tocLinks[index].style.color = 'var(--primary)';
-                        tocLinks[index].style.borderLeftColor = 'var(--primary)';
-                    }
-                }
-            });
+    }
+    document.querySelectorAll('.toc-list a').forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetEl = document.querySelector(this.getAttribute('href'));
+            if (targetEl) window.scrollTo({ top: targetEl.offsetTop - 100, behavior: 'smooth' });
         });
     });
+    window.addEventListener('scroll', function() {
+        const heads = document.querySelectorAll('.article-body h2, .article-body h3');
+        const tocLinks = document.querySelectorAll('.toc-list a');
+        heads.forEach((heading, index) => {
+            const rect = heading.getBoundingClientRect();
+            if (rect.top >= 0 && rect.top <= window.innerHeight / 2) {
+                tocLinks.forEach(l => { l.style.color = 'var(--text-dark)'; l.style.borderLeftColor = 'transparent'; });
+                if (tocLinks[index]) { tocLinks[index].style.color = 'var(--primary)'; tocLinks[index].style.borderLeftColor = 'var(--primary)'; }
+            }
+        });
+    });
+});
 </script>
 {% endblock %}
