@@ -8,50 +8,7 @@
    Previously these were inside {% block extra_css %} which put
    them inside a <style> tag — the browser ignored them completely.
 ════════════════════════════════════════════════════════════════ #}
-{% block meta_tags %}
-<meta name="description" content="{{ post.excerpt|striptags|truncatewords:30 }}">
-<meta name="keywords" content="{% for tag in post.tags.all %}{{ tag.name }}{% if not forloop.last %}, {% endif %}{% endfor %}">
-<meta name="author" content="{{ post.author.get_full_name|default:post.author.username }}">
-<meta name="robots" content="index, follow">
 
-<!-- Open Graph -->
-<meta property="og:type" content="article">
-<meta property="og:site_name" content="21K Tools">
-<meta property="og:url" content="https://{{ request.get_host }}{{ request.path }}">
-<meta property="og:title" content="{{ post.title }} | 21K Tools">
-<meta property="og:description" content="{{ post.excerpt|striptags|truncatewords:30 }}">
-{% if post.has_thumbnail %}
-<meta property="og:image" content="https://{{ request.get_host }}{% url 'serve_blog_thumbnail' post.slug %}">
-<meta property="og:image:secure_url" content="https://{{ request.get_host }}{% url 'serve_blog_thumbnail' post.slug %}">
-<meta property="og:image:type" content="image/jpeg">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="{{ post.title }}">
-{% else %}
-<meta property="og:image" content="https://{{ request.get_host }}/static/21k.png">
-<meta property="og:image:secure_url" content="https://{{ request.get_host }}/static/21k.png">
-{% endif %}
-
-<!-- Twitter Card -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:site" content="@21ktools">
-<meta name="twitter:creator" content="@21ktools">
-<meta name="twitter:title" content="{{ post.title }} | 21K Tools">
-<meta name="twitter:description" content="{{ post.excerpt|striptags|truncatewords:30 }}">
-{% if post.has_thumbnail %}
-<meta name="twitter:image" content="https://{{ request.get_host }}{% url 'serve_blog_thumbnail' post.slug %}">
-{% else %}
-<meta name="twitter:image" content="https://{{ request.get_host }}/static/21k.png">
-{% endif %}
-
-<!-- Article meta -->
-<meta property="article:published_time" content="{{ post.published_at|date:'c' }}">
-<meta property="article:modified_time" content="{{ post.updated_at|date:'c' }}">
-<meta property="article:author" content="{{ post.author.get_full_name|default:post.author.username }}">
-{% if post.category %}
-<meta property="article:section" content="{{ post.category.name }}">
-{% endif %}
-{% endblock %}
 
 {# ═══════════════════════════════════════════════════════════════
    SCHEMA MARKUP BLOCK
