@@ -39,9 +39,9 @@ INSTALLED_APPS = [
     # Custom apps
     'main',
     'textutils',
-  #  'fileconverter',
+    'fileconverter',
     'image_resizer',
-    'videodownloader',
+    #'videodownloader',
     'pdftools',
     'shortener',
     #'qrscanner',
